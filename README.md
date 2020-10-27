@@ -10,7 +10,7 @@
 
 ## 4. WBS
 
-![]()
+![](https://github.com/HYKim8/BIG_HIT/blob/main/img/wbs.jpg)
 
 ## 5. 개발 아키텍처 : MVC
 
