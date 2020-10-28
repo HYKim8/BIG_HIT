@@ -1,5 +1,5 @@
 package com.bighit.on.file;
 
-public class FileDao {
+public class FileVO {
 
 }
