@@ -2,11 +2,13 @@ package com.bighit.on.test;
 
 import static org.junit.Assert.*;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -43,12 +45,16 @@ public class JUnitTestReminder {
 	public void setUp() throws Exception {
 		reminder01 = new ReminderVO();
 		reminder01.setRegId("KIM");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		String sdftime = sdf.format(System.currentTimeMillis());
-		reminder01.setRemindTime(sdftime);
-		reminder01.setThrKey("1");
+		String time = "1992/04/20 19:12";
+		reminder01.setRemindTime(time);
 		
-		LOG.debug("In setUp Param" + reminder01);
+		
+		reminder01.setThrKey("1");
+		LOG.debug("---------------------------");
+		LOG.debug("-In setUp Param-" + reminder01);
+		LOG.debug("---------------------------");
 		
 	}
 
@@ -57,10 +63,29 @@ public class JUnitTestReminder {
 	}
 
 	@Test
-	public void test() {
-		LOG.debug("In test Param" + reminder01);
-		reminderDao.doInsert(reminder01);
+//	@Ignore
+	public void doUpdate() {
 		
+		
+		
+		String time = "2020/04/20 19:12";
+		reminder01.setRemindTime(time);
+		reminder01.setRemindId("30");
+		
+		LOG.debug("---------------------------");
+		LOG.debug("-In doUpdate test Param-" + reminder01);
+		LOG.debug("---------------------------");
+		reminderDao.doUpdate(reminder01);
+	}
+	
+	
+	@Test
+	@Ignore
+	public void doInsert() {
+		LOG.debug("---------------------------");
+		LOG.debug("-In doInsert test Param-" + reminder01);
+		LOG.debug("---------------------------");
+		reminderDao.doInsert(reminder01);
 	}
 
 }
