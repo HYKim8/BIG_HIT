@@ -2,7 +2,29 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="datasource"/>
+	</bean>
+	
+	<bean id="datasource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- 최대 접속 허용 개수 -->
+		<property name="maxActive" value="10" />
+		<!-- 여분으로 남겨질 Connection -->
+		<property name="maxIdle" value="8" />
+		<!-- DB연결이 반환되는 Timeout =-1(무한대기) -->
+		<property name="maxWait" value="50000" />
+		<!-- Connection이 잘못관리되어 버려진 연결을 찾아 재활용 여부 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 버려진 연결로 인식할 기본 시간(초) -->
+		<property name="removeAbandonedTimeout" value="60" />
+
+	</bean>
 </beans>

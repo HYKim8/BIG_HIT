@@ -1,6 +1,8 @@
 package com.bighit.on.reminder;
 
-public class ReminderVO  {
+import com.bighit.on.cmn.DTO;
+
+public class ReminderVO extends DTO{
 
 	/**
 	 * 리마인드 아이디
