@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.bighit.on.cmn.DTO;
 import com.bighit.on.cmn.DaoInterface;
 
-@Repository("reminderDao")
+@Repository("ReminderDaoImpl")
 public class ReminderDaoImpl implements DaoInterface {
 	final static Logger LOG = LoggerFactory.getLogger(ReminderDaoImpl.class);
 	
@@ -23,8 +23,32 @@ public class ReminderDaoImpl implements DaoInterface {
 	
 	@Override
 	public int doInsert(DTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int flag = 0;
+		ReminderVO inVO = new ReminderVO();
+		inVO = (ReminderVO) dto;
+		Object[] args = {
+			inVO.getThrKey(),
+			inVO.getRemindTime(),
+			inVO.getRegId()
+		};
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("INSERT INTO reminder (remind_id,                    \n");
+		sb.append("						thr_key,                       \n");
+		sb.append("						remind_time,                   \n");
+		sb.append("						reg_id,                        \n");
+		sb.append("						reg_dt) VALUES                 \n");
+		sb.append("					(remind_seq.nextVal,?,?,?,sysdate) \n");
+		
+		LOG.debug("-------------------------");
+		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("=param=\n"+inVO);
+		LOG.debug("-------------------------");
+		
+		flag = this.JdbcTemplate.update(sb.toString(), args);
+		LOG.debug("-flag-"+flag);
+		
+		return flag;
 	}
 
 	@Override
