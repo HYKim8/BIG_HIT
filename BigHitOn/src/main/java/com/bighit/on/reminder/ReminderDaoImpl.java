@@ -70,7 +70,7 @@ public class ReminderDaoImpl {
 		flag = this.jdbcTemplate.update(sb.toString(), args);
 		
 		LOG.debug("---------------------------");
-		LOG.debug("-flag-"+flag);
+		LOG.debug("-doInsert flag-"+flag);
 		LOG.debug("---------------------------");
 		
 		return flag;
@@ -98,85 +98,117 @@ public class ReminderDaoImpl {
 		
 		flag = this.jdbcTemplate.update(sb.toString(), args);
 		LOG.debug("---------------------------");
-		LOG.debug("-flag-" + flag);
+		LOG.debug("-doDelete flag-" + flag);
 		LOG.debug("---------------------------");
 		
 		return flag;
 	}
 
-	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		Connection conn = null;
-		final String DB_URL = "jdbc:oracle:thin:@211.238.142.124:1521:orcl";
-		final String DB_USER = "BIG_HIT";// 접근 user id
-		final String DB_PASSWD = "bighit1119";// 접근 비번
-		// 1.JDBC DRIVER LOADING
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		conn  = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-		return conn;
-	}
 	
-	public int doUpdate(DTO dto) {
+	
+	public int doUpdateTest(DTO dto) {
 		int flag = 0;
 		ReminderVO inVO = (ReminderVO) dto;
+		Object[] args = {
+			inVO.getRemindTime(),
+			inVO.getRemindId()
+		};
 		
-		Connection connection = null;
-		PreparedStatement pstmt = null;
+		StringBuilder sb = new StringBuilder();
+		sb.append("UPDATE reminder         \n");
+		sb.append("SET                     \n");
+		sb.append("    remind_time = TO_DATE(?,'yyyy/MM/dd hh24:mi'),    \n");
+		sb.append("    reg_dt = sysdate    \n");
+		sb.append("WHERE                   \n");
+		sb.append("    remind_id = ?       \n");
 		
-		try {
-			connection = getConnection();
-			connection.setAutoCommit(true);
-			StringBuilder sb = new StringBuilder();
-			sb.append("UPDATE reminder         \n");
-			sb.append("SET                     \n");
-			sb.append("    remind_time = TO_DATE(?,'yyyy/MM/dd hh24:mi'),    \n");
-			sb.append("    reg_dt = sysdate    \n");
-			sb.append("WHERE                   \n");
-			sb.append("    remind_id = ?       \n");
-			
-			LOG.debug("---------------------------");
-			LOG.debug("-sql-\n" + sb.toString());
-			LOG.debug("-param-\n" + inVO);
-			LOG.debug("---------------------------");
-			
-			pstmt = connection.prepareStatement(sb.toString());
-			pstmt.setString(1, inVO.getRemindTime());
-			pstmt.setString(2, inVO.getRemindId());
-			
-			flag = pstmt.executeUpdate();
-			LOG.debug("---------------------------");
-			LOG.debug("-doUpdate flag-" + flag);
-			LOG.debug("---------------------------");
-			
-			
-		} catch (Exception e) {
-			LOG.debug("---------------");
-			LOG.debug(e.getMessage());
-			LOG.debug("---------------");
-			e.printStackTrace();
-		} finally {
-			if (null != pstmt) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					LOG.debug("---------------------");
-					LOG.debug("-PreparedStatement close--" + e.getMessage());
-					LOG.debug("---------------------");
-					e.printStackTrace();
-				}
-			}
-			if (null != connection) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					LOG.debug("---------------------");
-					LOG.debug("-Connection close--" + e.getMessage());
-					LOG.debug("---------------------");
-					e.printStackTrace();
-				}
-			}
-		}
+		LOG.debug("---------------------------");
+		LOG.debug("-sql-\n" + sb.toString());
+		LOG.debug("-param-\n" + inVO);
+		LOG.debug("---------------------------");
+		
+		flag = this.jdbcTemplate.update(sb.toString(), args);
+		LOG.debug("---------------------------");
+		LOG.debug("-doUpdate flag-" + flag);
+		LOG.debug("---------------------------");
+		
 		return flag;
+		
 	}
+	
+//	public Connection getConnection() throws ClassNotFoundException, SQLException {
+//		Connection conn = null;
+//		final String DB_URL = "jdbc:oracle:thin:@211.238.142.124:1521:orcl";
+//		final String DB_USER = "BIG_HIT";// 접근 user id
+//		final String DB_PASSWD = "bighit1119";// 접근 비번
+//		// 1.JDBC DRIVER LOADING
+//		Class.forName("oracle.jdbc.driver.OracleDriver");
+//		conn  = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+//		return conn;
+//	}
+//	
+//	public int doUpdate(DTO dto) {
+//		int flag = 0;
+//		ReminderVO inVO = (ReminderVO) dto;
+//		
+//		Connection connection = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//			connection = getConnection();
+//			connection.setAutoCommit(true);
+//			StringBuilder sb = new StringBuilder();
+//			sb.append("UPDATE reminder         \n");
+//			sb.append("SET                     \n");
+//			sb.append("    remind_time = TO_DATE(?,'yyyy/MM/dd hh24:mi'),    \n");
+//			sb.append("    reg_dt = sysdate    \n");
+//			sb.append("WHERE                   \n");
+//			sb.append("    remind_id = ?       \n");
+//			
+//			LOG.debug("---------------------------");
+//			LOG.debug("-sql-\n" + sb.toString());
+//			LOG.debug("-param-\n" + inVO);
+//			LOG.debug("---------------------------");
+//			
+//			pstmt = connection.prepareStatement(sb.toString());
+//			pstmt.setString(1, inVO.getRemindTime());
+//			pstmt.setString(2, inVO.getRemindId());
+//			
+//			flag = pstmt.executeUpdate();
+//			LOG.debug("---------------------------");
+//			LOG.debug("-doUpdate flag-" + flag);
+//			LOG.debug("---------------------------");
+//			
+//			
+//		} catch (Exception e) {
+//			LOG.debug("---------------");
+//			LOG.debug(e.getMessage());
+//			LOG.debug("---------------");
+//			e.printStackTrace();
+//		} finally {
+//			if (null != pstmt) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException e) {
+//					LOG.debug("---------------------");
+//					LOG.debug("-PreparedStatement close--" + e.getMessage());
+//					LOG.debug("---------------------");
+//					e.printStackTrace();
+//				}
+//			}
+//			if (null != connection) {
+//				try {
+//					connection.close();
+//				} catch (SQLException e) {
+//					LOG.debug("---------------------");
+//					LOG.debug("-Connection close--" + e.getMessage());
+//					LOG.debug("---------------------");
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return flag;
+//	}
 
 	/**
 	 * need remindId
@@ -201,7 +233,7 @@ public class ReminderDaoImpl {
 		sb.append("    remind_id = ?      \n");
 		
 		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n"+sb.toString());
+		LOG.debug("-doSelectOne sql-\n"+sb.toString());
 		LOG.debug("-param-\n"+inVO);
 		LOG.debug("---------------------------");
 		
@@ -233,10 +265,10 @@ public class ReminderDaoImpl {
 		sb.append("    reminder             \n");
 		sb.append("WHERE                    \n");
 		sb.append("    reg_id = ?           \n");
-		sb.append("    and thr_key = ?;     \n");
+		sb.append("    and thr_key = ?      \n");
 		
 		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n"+sb.toString());
+		LOG.debug("-doSelectList sql-\n"+sb.toString());
 		LOG.debug("-param-\n"+inVO);
 		LOG.debug("---------------------------");
 		

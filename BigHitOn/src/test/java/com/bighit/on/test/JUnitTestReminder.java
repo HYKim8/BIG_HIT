@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,20 +41,33 @@ public class JUnitTestReminder {
 	ReminderDaoImpl reminderDao;
 	
 	ReminderVO reminder01;
+	ReminderVO reminder02;
+	ReminderVO reminder03;
 
 	@Before
 	public void setUp() throws Exception {
 		reminder01 = new ReminderVO();
+		reminder02 = new ReminderVO();
+		reminder03 = new ReminderVO();
+				
+		String time01 = "1992/04/20 19:12";
+		String time02 = "1994/04/20 19:12";
+		String time03 = "1995/04/20 19:12";
+				
 		reminder01.setRegId("KIM");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-		String sdftime = sdf.format(System.currentTimeMillis());
-		String time = "1992/04/20 19:12";
-		reminder01.setRemindTime(time);
-		
-		
+		reminder01.setRemindTime(time01);
 		reminder01.setThrKey("1");
+		reminder02.setRegId("KIM");
+		reminder02.setRemindTime(time02);
+		reminder02.setThrKey("1");
+		reminder03.setRegId("KIM");
+		reminder03.setRemindTime(time03);
+		reminder03.setThrKey("1");
+				
 		LOG.debug("---------------------------");
 		LOG.debug("-In setUp Param-" + reminder01);
+		LOG.debug("-In setUp Param-" + reminder02);
+		LOG.debug("-In setUp Param-" + reminder03);
 		LOG.debug("---------------------------");
 		
 	}
@@ -63,19 +77,65 @@ public class JUnitTestReminder {
 	}
 
 	@Test
+	@Ignore
+	public void doSelectList() {
+		reminderDao.doSelectList(reminder01);
+	}
+	
+	@Test
 //	@Ignore
+	public void all() {
+		reminderDao.doInsert(reminder01);
+		reminderDao.doInsert(reminder02);
+		reminderDao.doInsert(reminder03);
+		
+		List<ReminderVO> list = reminderDao.doSelectList(reminder01);
+		
+		String remindId01 = list.get(0).getRemindId();
+		String remindId02 = list.get(1).getRemindId();
+		String remindId03 = list.get(2).getRemindId();
+		
+		reminder01.setRemindId(remindId01);
+		reminder02.setRemindId(remindId02);
+		reminder03.setRemindId(remindId03);
+		
+		reminderDao.doSelectOne(reminder01);
+		reminderDao.doSelectOne(reminder02);
+		reminderDao.doSelectOne(reminder03);
+		
+		String time01 = "2002/04/20 19:12";
+		String time02 = "2004/04/20 19:12";
+		String time03 = "2005/04/20 19:12";
+		
+		reminder01.setRemindTime(time01);
+		reminder02.setRemindTime(time02);
+		reminder03.setRemindTime(time03);
+		
+		reminderDao.doUpdateTest(reminder01);
+		reminderDao.doUpdateTest(reminder02);
+		reminderDao.doUpdateTest(reminder03);
+		
+		reminderDao.doDelete(reminder01);
+		reminderDao.doDelete(reminder02);
+		reminderDao.doDelete(reminder03);
+	}
+	
+	
+	
+	@Test
+	@Ignore
 	public void doUpdate() {
 		
 		
 		
 		String time = "2020/04/20 19:12";
 		reminder01.setRemindTime(time);
-		reminder01.setRemindId("30");
+		reminder01.setRemindId("27");
 		
 		LOG.debug("---------------------------");
 		LOG.debug("-In doUpdate test Param-" + reminder01);
 		LOG.debug("---------------------------");
-		reminderDao.doUpdate(reminder01);
+		reminderDao.doUpdateTest(reminder01);
 	}
 	
 	
