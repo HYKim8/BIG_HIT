@@ -20,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.bighit.on.reminder.ReminderDaoImpl;
 import com.bighit.on.reminder.ReminderVO;
 
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)//스프랭 테스트 컨텍스트 프레임워크의 JUnit기능 확장

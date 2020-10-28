@@ -29,6 +29,7 @@ public class FileVO extends DTO{
 	 */
 	String RegDt;
 
+	
 	public FileVO() {
 		super();
 	}
