@@ -1,9 +1,5 @@
 package com.bighit.on.test;
 
-import static org.junit.Assert.*;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.junit.After;

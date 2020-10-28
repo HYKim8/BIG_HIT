@@ -1,8 +1,5 @@
 package com.bighit.on.reminder;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -61,18 +58,18 @@ public class ReminderDaoImpl {
 		sb.append("						reg_id,                        \n");
 		sb.append("						reg_dt) VALUES                 \n");
 		sb.append("					(remind_seq.nextVal,?,TO_DATE(?,'yyyy/MM/dd hh24:mi'),?,sysdate) \n");
-		
+
 		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n"+sb.toString());
-		LOG.debug("-param-\n"+inVO);
+		LOG.debug("-sql-\n" + sb.toString());
+		LOG.debug("-param-\n" + inVO);
 		LOG.debug("---------------------------");
 		
 		flag = this.jdbcTemplate.update(sb.toString(), args);
-		
+
 		LOG.debug("---------------------------");
-		LOG.debug("-doInsert flag-"+flag);
+		LOG.debug("-doInsert flag-" + flag);
 		LOG.debug("---------------------------");
-		
+
 		return flag;
 	}
 
@@ -233,14 +230,14 @@ public class ReminderDaoImpl {
 		sb.append("    remind_id = ?      \n");
 		
 		LOG.debug("---------------------------");
-		LOG.debug("-doSelectOne sql-\n"+sb.toString());
-		LOG.debug("-param-\n"+inVO);
+		LOG.debug("-sql-\n" + sb.toString());
+		LOG.debug("-param-\n" + inVO);
 		LOG.debug("---------------------------");
 		
 		outVO = (ReminderVO) this.jdbcTemplate.queryForObject(sb.toString(), args, rowMapper);
 		
 		LOG.debug("---------------------------");
-		LOG.debug("-outVO-" + outVO);
+		LOG.debug("-doSelectOne outVO-" + outVO);
 		LOG.debug("---------------------------");
 		
 		return outVO;
@@ -268,15 +265,15 @@ public class ReminderDaoImpl {
 		sb.append("    and thr_key = ?      \n");
 		
 		LOG.debug("---------------------------");
-		LOG.debug("-doSelectList sql-\n"+sb.toString());
-		LOG.debug("-param-\n"+inVO);
+		LOG.debug("-sql-\n" + sb.toString());
+		LOG.debug("-param-\n" + inVO);
 		LOG.debug("---------------------------");
 		
 		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
 		
 		for(ReminderVO vo : outList) {
 			LOG.debug("---------------------------");
-			LOG.debug("-outVO-" + vo);
+			LOG.debug("-doSelectList outVO-" + vo);
 			LOG.debug("---------------------------");
 		}
 		
