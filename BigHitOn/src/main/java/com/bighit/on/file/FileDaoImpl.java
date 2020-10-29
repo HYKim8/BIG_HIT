@@ -25,15 +25,19 @@ public class FileDaoImpl {
 	public FileDaoImpl() {
 		super();
 	}
-
+	
 	RowMapper rowMapper = new RowMapper<FileVO>() {
 		@Override
 		public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
 			FileVO outVO = new FileVO();
 			
-			
-			
+			outVO.setFileName(rs.getString("file_name"));
+			outVO.setThrKey(rs.getString("thr_key"));
+			outVO.setFileUrl(rs.getString("file_url"));
+			outVO.setRegDt(rs.getString("reg_dt"));
+			outVO.setRegId(rs.getString("reg_id"));
+						
 			return outVO;
 		}
 
