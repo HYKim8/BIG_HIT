@@ -31,7 +31,7 @@ public class SaveThrDaoImpl {
 	};
 	/**
 	 * 쓰레드 저장 
-	 * @param dto
+	 * @param saveThrVO
 	 * @return
 	 */
 	
@@ -57,7 +57,7 @@ public class SaveThrDaoImpl {
 	}
 	/**
 	 * 쓰레드 저장 취소
-	 * @param dto
+	 * @param saveThrVO
 	 * @return
 	 */
 	public int doDelete(SaveThrVO saveThrVO) {
