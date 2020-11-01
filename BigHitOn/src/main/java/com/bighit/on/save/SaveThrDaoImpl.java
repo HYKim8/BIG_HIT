@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bighit.on.cmn.DTO;
 import com.bighit.on.cmn.DaoInterface;
+import com.bighit.on.reminder.ReminderVO;
 
 @Repository("SaveThrDaoImpl")
 public class SaveThrDaoImpl {
@@ -84,10 +85,25 @@ public class SaveThrDaoImpl {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public List<DTO> doSelectList(DTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<SaveThrVO> doSelectList(DTO dto) {
+		SaveThrVO inVO = (SaveThrVO) dto;
+		List<SaveThrVO> outList = null;
+		Object[] args = {
+			inVO.getRegId()
+		};
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT                   \n");
+		sb.append("    thr_key,             \n");
+		sb.append("    reg_id,              \n");
+		sb.append("    reg_dt               \n");
+		sb.append("FROM                     \n");
+		sb.append("    save_thr             \n");
+		sb.append("WHERE                    \n");
+		sb.append("    reg_id = ?           \n");
+		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
+		return outList;
 	}
 
 }
