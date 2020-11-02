@@ -75,7 +75,11 @@ public class ChannelDaoImpl {
 		sb.append("     sysdate            \n");
 		sb.append(" )                      \n");
 		
+		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("=param ==="+channelVO);
+		
 		flag = this.jdbcTemplate.update(sb.toString(), args);
+		LOG.debug("-doInsert flag=" + flag);
 		return flag;
 	}
 	
@@ -91,7 +95,11 @@ public class ChannelDaoImpl {
 		sb.append("DELETE FROM channels  \n");
 		sb.append("WHERE ch_link = ?     \n");
 		
+		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("-param==" + channelVO);
+		
 		Object[] args = {channelVO.getChLink()};
+		LOG.debug("-doDelete flag==" + flag);
 		flag = this.jdbcTemplate.update(sb.toString(), args);
 		return flag;
 	}
@@ -101,7 +109,7 @@ public class ChannelDaoImpl {
 	 * @param chLink
 	 * @return
 	 */
-	public ChannelVO doSelectOne(String chLink) {
+	public ChannelVO doSelectOne(ChannelVO channel) {
 		ChannelVO outVO = null;
 		
 		StringBuilder  sb=new StringBuilder();
@@ -117,7 +125,10 @@ public class ChannelDaoImpl {
 		sb.append("FROM channels      \n");
 		sb.append("WHERE ch_link = ?  \n");
 		
-		Object args[] = {chLink};
+		LOG.debug("=sql="+sb.toString());
+		LOG.debug("=param=="+channel);
+		
+		Object args[] = {channel};
 		outVO = (ChannelVO) this.jdbcTemplate.queryForObject(sb.toString(), args,rowMapper);
 		LOG.debug("=doSelectOne outVO="+outVO);
 		
@@ -125,6 +136,11 @@ public class ChannelDaoImpl {
 		
 	}
 	
+	/**
+	 * 채널 리스트
+	 * @param channelVO
+	 * @return
+	 */
 	public List<ChannelVO> doSelectList(ChannelVO channelVO) {
 		List<ChannelVO> list = null;
 		
