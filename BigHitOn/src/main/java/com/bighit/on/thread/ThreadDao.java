@@ -48,6 +48,8 @@ public class ThreadDao {
 			}
 	   };
 	   
+	   
+	   
 	   public int doInsert(ThreadVO threadVO) 
 		{
 		   int flag = 0;
