@@ -99,8 +99,9 @@ public class ChannelDaoImpl {
 		LOG.debug("-param==" + channelVO);
 		
 		Object[] args = {channelVO.getChLink()};
-		LOG.debug("-doDelete flag==" + flag);
+		
 		flag = this.jdbcTemplate.update(sb.toString(), args);
+		LOG.debug("-doDelete flag==" + flag);
 		return flag;
 	}
 	

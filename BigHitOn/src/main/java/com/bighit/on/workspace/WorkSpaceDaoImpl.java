@@ -62,7 +62,11 @@ public class WorkSpaceDaoImpl {
 		sb.append("    sysdate             \n");
 		sb.append(")                       \n");
 		
+		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("=param ==="+workSpaceVO);
+		
 		flag = this.jdbcTemplate.update(sb.toString(), args);
+		LOG.debug("-doInsert flag=" + flag);
 		return flag;
 	}
 	
@@ -78,8 +82,12 @@ public class WorkSpaceDaoImpl {
 		sb.append(" DELETE FROM workspace \n");
 		sb.append(" WHERE ws_link = ?     \n");
 		
+		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("=param=="+workSpaceVO);
+		
 		Object[] args = {workSpaceVO.getWsLink()};
 		flag = this.jdbcTemplate.update(sb.toString(), args);		
+		LOG.debug("-doDelete flag==" + flag);
 		return flag;
 	}
 	
@@ -88,7 +96,7 @@ public class WorkSpaceDaoImpl {
 	 * @param wsLink
 	 * @return
 	 */
-	public WorkSpaceVO doSelectOne(String wsLink) {
+	public WorkSpaceVO doSelectOne(WorkSpaceVO wsLink) {
 		WorkSpaceVO outVO = null;
 		
 		StringBuilder sb = new StringBuilder();
@@ -101,11 +109,14 @@ public class WorkSpaceDaoImpl {
 		sb.append("FROM workspace    \n");
 		sb.append("WHERE ws_link = ? \n");
 		
-		Object[] args = {wsLink};
+		LOG.debug("=sql="+sb.toString());
+		LOG.debug("=param=="+wsLink);
+		
+		Object[] args = {wsLink.getWsLink()};
 		outVO = (WorkSpaceVO) this.jdbcTemplate.queryForObject(sb.toString(), 
     			                        args, 
     			                        rowMapper);
-		LOG.debug("outVO = "+outVO);
+		LOG.debug("doSelectOne outVO = "+outVO);
 		
 		return outVO;
 	}
