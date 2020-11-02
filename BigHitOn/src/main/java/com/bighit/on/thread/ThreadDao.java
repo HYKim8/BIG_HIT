@@ -49,8 +49,12 @@ public class ThreadDao {
 	   };
 	   
 	   
+	   public RowMapper getRowMapper() {
+			return rowMapper;
+		}
 	   
-	   public int doInsert(ThreadVO threadVO) 
+
+	public int doInsert(ThreadVO threadVO) 
 		{
 		   int flag = 0;
 		   Object[] args = { threadVO.getThrKey(),
