@@ -106,7 +106,9 @@ public class TestChannel {
 		//List
 		List<ChannelVO> list = channelDao.doSelectList(channel01);
 
-		
+		//단건조회
+		channelDao.doSelectOne(channel01);
+		channelDao.doSelectOne(channel02);
 		
 		
 	}

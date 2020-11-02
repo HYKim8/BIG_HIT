@@ -128,7 +128,7 @@ public class ChannelDaoImpl {
 		LOG.debug("=sql="+sb.toString());
 		LOG.debug("=param=="+channel);
 		
-		Object args[] = {channel};
+		Object args[] = {channel.getChLink()};
 		outVO = (ChannelVO) this.jdbcTemplate.queryForObject(sb.toString(), args,rowMapper);
 		LOG.debug("=doSelectOne outVO="+outVO);
 		
