@@ -2,7 +2,7 @@ package com.bighit.on.file;
 
 import com.bighit.on.cmn.DTO;
 
-public class FileVO extends DTO{
+public class FileVO extends DTO {
 
 	/**
 	 * 파일명
@@ -22,25 +22,37 @@ public class FileVO extends DTO{
 	/**
 	 * 작성자
 	 */
-	String RegId;
+	String regId;
 
 	/**
 	 * 작성 시간
 	 */
-	String RegDt;
+	String regDt;
 
-	
+	/**
+	 * 파일 아이디
+	 */
+	int fileId;
+
+	/**
+	 * 채널 링크
+	 */
+	String chLink;
+
 	public FileVO() {
 		super();
 	}
 
-	public FileVO(String fileName, String thrKey, String fileUrl, String regId, String regDt) {
+	public FileVO(String fileName, String thrKey, String fileUrl, String regId, String regDt, int fileId,
+			String chLink) {
 		super();
 		this.fileName = fileName;
 		this.thrKey = thrKey;
 		this.fileUrl = fileUrl;
-		RegId = regId;
-		RegDt = regDt;
+		this.regId = regId;
+		this.regDt = regDt;
+		this.fileId = fileId;
+		this.chLink = chLink;
 	}
 
 	public String getFileName() {
@@ -68,25 +80,41 @@ public class FileVO extends DTO{
 	}
 
 	public String getRegId() {
-		return RegId;
+		return regId;
 	}
 
 	public void setRegId(String regId) {
-		RegId = regId;
+		this.regId = regId;
 	}
 
 	public String getRegDt() {
-		return RegDt;
+		return regDt;
 	}
 
 	public void setRegDt(String regDt) {
-		RegDt = regDt;
+		this.regDt = regDt;
+	}
+
+	public int getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
+
+	public String getChLink() {
+		return chLink;
+	}
+
+	public void setChLink(String chLink) {
+		this.chLink = chLink;
 	}
 
 	@Override
 	public String toString() {
-		return "FileVO [fileName=" + fileName + ", thrKey=" + thrKey + ", fileUrl=" + fileUrl + ", RegId=" + RegId
-				+ ", RegDt=" + RegDt + "]";
+		return "FileVO [fileName=" + fileName + ", thrKey=" + thrKey + ", fileUrl=" + fileUrl + ", regId=" + regId
+				+ ", regDt=" + regDt + ", fileId=" + fileId + ", chLink=" + chLink + "]";
 	}
 
 }
