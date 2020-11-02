@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.bighit.on.cmn.AccessKey;
 import com.bighit.on.file.FileDaoImpl;
 import com.bighit.on.file.FileVO;
 
@@ -32,6 +33,9 @@ public class JUnitTestFile {
 
 	@Autowired
 	FileDaoImpl fileDao;
+
+	@Autowired
+	AccessKey ack;
 	
 	FileVO fileVO01;
 	FileVO fileVO02;
@@ -61,6 +65,7 @@ public class JUnitTestFile {
 		fileVO03.setFileUrl("Hello03.com");
 		fileVO03.setRegId("KIM");
 		fileVO03.setChLink("ChLink03");
+		
 		
 		LOG.debug("---------------------------");
 		LOG.debug("-In setUp Param-" + fileVO01);
