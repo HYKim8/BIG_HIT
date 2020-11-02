@@ -3,13 +3,19 @@ package com.bighit.on.workspace;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+
 @Repository("WorkSpaceDaoImpl")
 public class WorkSpaceDaoImpl {
+	final static Logger   LOG = LoggerFactory.getLogger(WorkSpaceDaoImpl.class);
+
+	
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -76,4 +82,33 @@ public class WorkSpaceDaoImpl {
 		flag = this.jdbcTemplate.update(sb.toString(), args);		
 		return flag;
 	}
+	
+	/**
+	 * 워크스페이스 단건 조회
+	 * @param wsLink
+	 * @return
+	 */
+	public WorkSpaceVO doSelectOne(String wsLink) {
+		WorkSpaceVO outVO = null;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT            \n");
+		sb.append("    ws_link,      \n");
+		sb.append("    ws_name,      \n");
+		sb.append("    project,      \n");
+		sb.append("    reg_id,       \n");
+		sb.append("    reg_dt        \n");
+		sb.append("FROM workspace    \n");
+		sb.append("WHERE ws_link = ? \n");
+		
+		Object[] args = {wsLink};
+		outVO = (WorkSpaceVO) this.jdbcTemplate.queryForObject(sb.toString(), 
+    			                        args, 
+    			                        rowMapper);
+		LOG.debug("outVO = "+outVO);
+		
+		return outVO;
+	}
+	
+	
 }
