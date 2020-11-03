@@ -1,5 +1,7 @@
 package com.bighit.on.test;
 
+import java.io.File;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -17,15 +19,16 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.cmn.AccessKey;
 import com.bighit.on.file.FileDaoImpl;
+import com.bighit.on.file.FileExtractor;
 import com.bighit.on.file.FileVO;
+import com.bighit.on.file.S3Utill;
 import com.bighit.on.file.UploadFileUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)//스프랭 테스트 컨텍스트 프레임워크의 JUnit기능 확장
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml",
-                                   "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"		
-})
+@RunWith(SpringJUnit4ClassRunner.class) // 스프랭 테스트 컨텍스트 프레임워크의 JUnit기능 확장
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml",
+		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" })
 public class JUnitTestFile {
 
 	Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -35,86 +38,75 @@ public class JUnitTestFile {
 
 	@Autowired
 	FileDaoImpl fileDao;
-	
+
 	FileVO fileVO01;
 	FileVO fileVO02;
 	FileVO fileVO03;
-	
+
 	@Before
 	public void setUp() throws Exception {
-		
+
 		fileVO01 = new FileVO();
 		fileVO02 = new FileVO();
 		fileVO03 = new FileVO();
-		
+
 		fileVO01.setFileName("Test01");
 		fileVO01.setThrKey("1");
 		fileVO01.setFileUrl("Hello01.com");
 		fileVO01.setRegId("KIM");
 		fileVO01.setChLink("ChLink01");
-		
+
 		fileVO02.setFileName("Test02");
 		fileVO02.setThrKey("1");
 		fileVO02.setFileUrl("Hello02.com");
 		fileVO02.setRegId("KIM");
 		fileVO02.setChLink("ChLink02");
-		
+
 		fileVO03.setFileName("Test03");
 		fileVO03.setThrKey("1");
 		fileVO03.setFileUrl("Hello03.com");
 		fileVO03.setRegId("KIM");
 		fileVO03.setChLink("ChLink03");
-		
-		
+
 		LOG.debug("---------------------------");
 		LOG.debug("-In setUp Param-" + fileVO01);
 		LOG.debug("-In setUp Param-" + fileVO02);
 		LOG.debug("-In setUp Param-" + fileVO03);
 		LOG.debug("---------------------------");
-		
-//		UploadFileUtils ufu = new UploadFileUtils();
-//		
-//		byte[] testImage = extractBytes("/BigHitOn/src/main/java/com/bighit/on/file/Test.jpg");
-		
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
 	@Test
-	public void fileUpload() {
-		
-	}
-	
-	@Test
-	@Ignore
 	public void test() {
-		
+
 		fileDao.doInsert(fileVO01);
 		fileDao.doInsert(fileVO02);
 		fileDao.doInsert(fileVO03);
-		
+
 		fileVO01 = fileDao.doSelectListThrKey(fileVO01).get(0);
 		fileVO02 = fileDao.doSelectListThrKey(fileVO02).get(1);
 		fileVO03 = fileDao.doSelectListThrKey(fileVO03).get(2);
-		
+
 		fileDao.doSelectListChLink(fileVO01);
 		fileDao.doSelectListChLink(fileVO02);
 		fileDao.doSelectListChLink(fileVO03);
-		
+
 		fileVO01.setFileName(fileVO01.getFileName() + "Test");
 		fileVO02.setFileName(fileVO02.getFileName() + "Test");
 		fileVO03.setFileName(fileVO03.getFileName() + "Test");
-		
+
 		fileDao.doUpdate(fileVO01);
 		fileDao.doUpdate(fileVO02);
 		fileDao.doUpdate(fileVO03);
-		
+
 		fileDao.doSelectOne(fileVO01);
 		fileDao.doSelectOne(fileVO02);
 		fileDao.doSelectOne(fileVO03);
-		
+
 		fileDao.doDelete(fileVO01);
 		fileDao.doDelete(fileVO02);
 		fileDao.doDelete(fileVO03);
