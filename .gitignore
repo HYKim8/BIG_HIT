@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/maven,java,windows,web
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,java,windows,web
 ### Java ###
+AccessKey.java
 # Compiled class file
 *.class
 # Log file
