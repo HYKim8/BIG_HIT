@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.user.dao.UsersDaoImpl;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -43,19 +44,21 @@ public class JUnitTestUsers {
 	UsersVO users02;
 	UsersVO users03;
 	
+	ChannelVO channelVO;
+	
 	
 	@Test
 	@Ignore
 	public void doSelectList() {
-		usersDaoImpl.doSelectList(users01);
+		usersDaoImpl.doSelectList(channelVO);
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void doUpdate() throws Exception{
-		usersDaoImpl.doDelete(users01);
-		usersDaoImpl.doDelete(users02);
-		usersDaoImpl.doDelete(users03);
+//		usersDaoImpl.doDelete(users01);
+//		usersDaoImpl.doDelete(users02);
+//		usersDaoImpl.doDelete(users03);
 		
 		int flag = usersDaoImpl.doInsert(users01);
 		assertThat(1, is(1));
@@ -87,10 +90,16 @@ public class JUnitTestUsers {
 	}
 
 	@Test
+	@Ignore
 	public void test() {
+		usersDaoImpl.doDelete(users01);
+		usersDaoImpl.doDelete(users02);
+		usersDaoImpl.doDelete(users03);
+		
 		usersDaoImpl.doInsert(users01);
 		usersDaoImpl.doInsert(users02);
 		usersDaoImpl.doInsert(users03);
+		
 		LOG.debug("============================");
 		LOG.debug("test doInsert 성공 ");
 		
