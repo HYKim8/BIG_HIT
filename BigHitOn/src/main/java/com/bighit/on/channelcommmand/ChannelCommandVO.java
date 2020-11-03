@@ -10,6 +10,7 @@ public class ChannelCommandVO extends DTO {
 		com_id 는 int
 		ch_link는 string로 주면된다.
 	 */
+	//
 	private int comId;
 	
 	private String chLink;

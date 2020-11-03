@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository("ChannelCommandDao")
 public class ChannelCommandDao {
 	final static Logger   LOG = LoggerFactory.getLogger(ChannelCommandDao.class);
-	
+	//
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	RowMapper rowMapper = new RowMapper<ChannelCommandVO>() {
