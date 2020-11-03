@@ -3,6 +3,7 @@ package com.bighit.on.test;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -17,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.bighit.on.cmn.AccessKey;
 import com.bighit.on.file.FileDaoImpl;
 import com.bighit.on.file.FileVO;
+import com.bighit.on.file.UploadFileUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
@@ -33,9 +35,6 @@ public class JUnitTestFile {
 
 	@Autowired
 	FileDaoImpl fileDao;
-
-	@Autowired
-	AccessKey ack;
 	
 	FileVO fileVO01;
 	FileVO fileVO02;
@@ -73,6 +72,10 @@ public class JUnitTestFile {
 		LOG.debug("-In setUp Param-" + fileVO03);
 		LOG.debug("---------------------------");
 		
+//		UploadFileUtils ufu = new UploadFileUtils();
+//		
+//		byte[] testImage = extractBytes("/BigHitOn/src/main/java/com/bighit/on/file/Test.jpg");
+		
 	}
 
 	@After
@@ -80,6 +83,12 @@ public class JUnitTestFile {
 	}
 	
 	@Test
+	public void fileUpload() {
+		
+	}
+	
+	@Test
+	@Ignore
 	public void test() {
 		
 		fileDao.doInsert(fileVO01);
