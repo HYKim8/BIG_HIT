@@ -138,7 +138,6 @@ public class UsersDaoImpl {
 						usersVO.getCountry(),
 						usersVO.getState(),
 						usersVO.getOnline_state(),
-						usersVO.getReg_id(),	
 						usersVO.getUser_serial()
 		};
 		

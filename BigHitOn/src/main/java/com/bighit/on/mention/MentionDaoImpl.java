@@ -121,13 +121,12 @@ public class MentionDaoImpl {
 				inVO.getUser_serial()
 		};
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT *                                         \n");
-		sb.append("FROM thread                                      \n");
-		sb.append("WHERE                                            \n");
-		sb.append("    thr_key = (SELECT DISTINCT t.thr_key         \n");
-		sb.append("                FROM thread t JOIN mention m    \n");
-		sb.append("                ON  m.res_id = ?                 \n");
-		sb.append("                and m.thr_key = t.thr_key)		\n");
+		sb.append("SELECT *                                                 \n");
+		sb.append("FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key \n");     
+		sb.append("					FROM thread t JOIN mention m           \n");
+		sb.append("					ON  m.res_id = ?                        \n");
+		sb.append("					and m.thr_key = t.thr_key) b            \n");
+		sb.append("ON a.thr_key = b.thr_key									\n");
 		outList = this.jdbcTemplate.query(sb.toString(), args, threadDao.getRowMapper() );
 		return outList;
 	}

@@ -56,7 +56,7 @@ public class JUnitTestUsers {
 	@Test
 	//@Ignore
 	public void doUpdate() throws Exception{
-//		usersDaoImpl.doDelete(users01);
+		usersDaoImpl.doDelete(users01);
 //		usersDaoImpl.doDelete(users02);
 //		usersDaoImpl.doDelete(users03);
 		
