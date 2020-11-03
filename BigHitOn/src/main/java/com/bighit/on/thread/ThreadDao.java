@@ -86,8 +86,8 @@ public class ThreadDao {
 		sb.append(" ?,                      \n");
 		sb.append(" ?,                      \n");
 		sb.append(" ?,                      \n");
-		sb.append(" sysdate,                \n");
-		sb.append(" sysdate,                \n");
+		sb.append(" ?,                \n");
+		sb.append(" ?,                \n");
 		sb.append(" ?                       \n");
 		sb.append(" )                       \n");
 		LOG.debug("========================");
@@ -138,12 +138,79 @@ public class ThreadDao {
 		  Object[] args = {threadVO.getChLink(), 
 			        threadVO.getContents(),
 			        threadVO.getIsPin(),
-			        threadVO.getParentKey()};
+			        threadVO.getParentKey(),
+			        threadVO.getThrKey()};
 		  flag = this.jdbcTemplate.update(sb.toString(), args);
 		  LOG.debug("=flag="+flag);		
 			
 		  return flag;				
 	  }
+	  
+	  public List<ThreadVO> doSelectChildList(ThreadVO threadVO) {
+	        List<ThreadVO> list = null;
+	        StringBuilder sb=new StringBuilder();
+	        sb.append("SELECT thr_key,                                       \n");
+	         sb.append(" ch_link,                                             \n");
+	         sb.append(" contents,                                            \n");
+	         sb.append(" is_pin,                                              \n");
+	         sb.append(" pin_id,                                              \n");
+	         sb.append(" reg_id,                                              \n");
+	         sb.append(" TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,     \n");
+	         sb.append(" TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS mod_dt,     \n");
+	         sb.append(" parent_key                                           \n");
+	         sb.append(" FROM THREAD                                          \n");
+	         sb.append(" WHERE parent_key = ?                                 \n");
+	         
+	        LOG.debug("========================");
+	         //LOG.debug("=sql\n="+sb.toString());
+	        LOG.debug("=param="+threadVO);
+	        LOG.debug("========================");
+	        
+	        list = this.jdbcTemplate.query(sb.toString(), 
+	                  new Object[] {"%"+threadVO.getThrKey()+"%"}, 
+	                  rowMapper);
+	        
+	          for(ThreadVO vo:list) {
+	          LOG.debug("====================================");
+	          LOG.debug("=vo="+vo);
+	          LOG.debug("====================================");
+	          }
+	          
+	          return list;                                                                       
+	     }
+	public List<ThreadVO> doSelectPinList(ThreadVO threadVO) {
+	        List<ThreadVO> list = null;
+	        StringBuilder sb=new StringBuilder();
+	        sb.append("SELECT thr_key,                                       \n");
+	         sb.append(" ch_link,                                             \n");
+	         sb.append(" contents,                                            \n");
+	         sb.append(" is_pin,                                              \n");
+	         sb.append(" pin_id,                                              \n");
+	         sb.append(" reg_id,                                              \n");
+	         sb.append(" TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,     \n");
+	         sb.append(" TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS mod_dt,     \n");
+	         sb.append(" parent_key                                           \n");
+	         sb.append(" FROM THREAD                                          \n");
+	         sb.append(" WHERE ch_link =?                                       \n");
+	        sb.append("    AND is_pin = 1                                       \n");
+	         sb.append(" ORDER BY thr_key                                     \n");
+	         LOG.debug("========================");
+	         //LOG.debug("=sql\n="+sb.toString());
+	        LOG.debug("=param="+threadVO);
+	        LOG.debug("========================");
+	        
+	        list = this.jdbcTemplate.query(sb.toString(), 
+	                  new Object[] {"%"+threadVO.getThrKey()+"%"}, 
+	                  rowMapper);
+	        
+	          for(ThreadVO vo:list) {
+	          LOG.debug("====================================");
+	          LOG.debug("=vo="+vo);
+	          LOG.debug("====================================");
+	          }
+	          
+	          return list;                                                                       
+	     }
 	  
 	  public List<ThreadVO> doSelectAll(ThreadVO threadVO) {
 		  List<ThreadVO> list = null;
@@ -177,6 +244,7 @@ public class ThreadDao {
           
           return list;		                                                                 
 	  }
+	  
 	  
 	  
 	  public ThreadVO doSelectOne(String thrKey){

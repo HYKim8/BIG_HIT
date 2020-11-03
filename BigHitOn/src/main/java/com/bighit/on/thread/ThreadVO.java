@@ -1,6 +1,8 @@
 package com.bighit.on.thread;
 
-public class ThreadVO {
+import com.bighit.on.cmn.DTO;
+
+public class ThreadVO extends DTO {
 	/**
 	 * 쓰레드 키
 	 */

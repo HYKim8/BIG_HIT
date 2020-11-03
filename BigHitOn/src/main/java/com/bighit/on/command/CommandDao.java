@@ -29,6 +29,20 @@ public class CommandDao {
 	
 	DataSource dataSource;
 	
+	RowMapper rowMapper02 = new RowMapper<ComChLinkVO>() {
+		public ComChLinkVO mapRow(ResultSet rs, int rowNum) throws SQLException 
+		{
+			ComChLinkVO vo = new ComChLinkVO();
+			vo.setComId(rs.getInt("com_id"));
+			vo.setAppName(rs.getString("app_name"));
+			vo.setCmdName(rs.getString("cmd_name"));
+			vo.setParamCnt(rs.getInt("param_cnt"));
+			vo.setChLink(rs.getInt("ch_link"));
+			
+			return vo;
+		}
+	};
+	
 	RowMapper rowMapper= new RowMapper<CommandVO>() 
     {
 		public CommandVO mapRow(ResultSet rs, int rowNum) throws SQLException 
@@ -65,7 +79,7 @@ public class CommandDao {
 		 sb.append("           ?,            \n");
 		 sb.append("           ?,            \n");
 		 sb.append("           ?,            \n");
-		 sb.append("           ?);           \n");
+		 sb.append("           ?)           \n");
 		 LOG.debug("===========================");
 		 LOG.debug("===param==="+commandVO);
 		 LOG.debug("===========================");
@@ -116,6 +130,30 @@ public class CommandDao {
 			return flag;
 			}
 			
+		 public List<ComChLinkVO> doSelectListChLink(ComChLinkVO ComChLinkVO){
+			 List<ComChLinkVO> list = null;
+			 
+			StringBuilder sb = new StringBuilder();
+			sb.append(" SELECT a.ch_link,                          \n");
+		    sb.append("   b.com_id,                                \n");
+		    sb.append("   b.app_name,                              \n");
+		    sb.append("   b.cmd_name,                              \n");
+		    sb.append("   b.param_cnt                              \n");
+		    sb.append("   FROM channel_command a, command b        \n");
+		    sb.append("   WHERE a.ch_link = ?                      \n");
+		    sb.append("		   AND a.com_id = b.com_id             \n");
+		    
+		    list = this.jdbcTemplate.query(sb.toString(), new Object[] {ComChLinkVO.getChLink()},rowMapper02);
+		    
+		    for(ComChLinkVO vo:list) {
+				LOG.debug("====================================");
+				LOG.debug("=vo="+vo);
+				LOG.debug("====================================");
+			}
+		 return list;
+		 
+		 }
+		 
 		 public List<CommandVO> doSelectList(CommandVO commandVO){
 			 List<CommandVO> list = null;
 			 
@@ -126,7 +164,7 @@ public class CommandDao {
 			 sb.append("       param_cnt            \n");
 			 sb.append("FROM COMMAND                \n");
 			 sb.append("WHERE com_id like ?         \n");
-			 sb.append("ORDER BY com_id;            \n");
+			 sb.append("ORDER BY com_id            \n");
 			 LOG.debug("======================");
 			 LOG.debug("==param=="+commandVO);
 			 LOG.debug("======================");
@@ -152,7 +190,7 @@ public class CommandDao {
 			 sb.append("       param_cnt            \n");
 			 sb.append("FROM COMMAND                \n");
 			 sb.append("WHERE com_id = ?         \n");
-			 sb.append("ORDER BY com_id;            \n");
+			 sb.append("ORDER BY com_id            \n");
 			 LOG.debug("======================");
 			 LOG.debug("==param=="+comId);
 			 LOG.debug("======================");
