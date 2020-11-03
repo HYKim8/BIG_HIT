@@ -40,6 +40,14 @@
   	
 	
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+	<dependency>
+		<groupId>com.amazonaws</groupId>
+		<artifactId>aws-java-sdk</artifactId>
+		<version>1.11.856</version>
+	</dependency>
+	
+	
 	<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 	<dependency>
 	    <groupId>org.springframework</groupId>

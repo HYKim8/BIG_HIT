@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.bighit.on.channel.ChannelVO;
+
 
 @Repository("UsersDaoImpl")
 public class UsersDaoImpl {
@@ -47,33 +49,21 @@ public class UsersDaoImpl {
 	
 	public UsersDaoImpl() {}
 	
-	public List<UsersVO> doSelectList(UsersVO usersVO){
+	public List<UsersVO> doSelectList(ChannelVO channelVO){
 		List<UsersVO> list  = null;
 		
 		StringBuilder sb=new StringBuilder();
-		sb.append(" SELECT                   \n");
-		sb.append("     user_serial,         \n");
-		sb.append("     ws_link,             \n");
-		sb.append("     email,               \n");
-		sb.append("     password,            \n");
-		sb.append("     name,                \n");
-		sb.append("     nickname,            \n");
-		sb.append("     profile_img,         \n");
-		sb.append("     position,            \n");
-		sb.append("     phone_num,           \n");
-		sb.append("     country,             \n");
-		sb.append("     state,               \n");
-		sb.append("     online_state,        \n");
-		sb.append("     reg_id,              \n");
-		sb.append("     reg_dt               \n");
-		sb.append(" FROM users               \n");
-		sb.append(" WHERE ws_link = ?        \n");
+		sb.append(" SELECT  users.*                                    \n");
+		sb.append(" FROM users                                         \n");
+		sb.append(" JOIN channel_users                                 \n");
+		sb.append(" ON users.user_serial = channel_users.user_serial   \n");
+		sb.append(" AND channel_users.ch_link = ?                      \n");
 		LOG.debug("========================");
 		LOG.debug("=sql\n="+sb.toString());
-		LOG.debug("=param="+usersVO);
+		LOG.debug("=param="+channelVO);
 		LOG.debug("========================");
 		
-		list = this.jdbcTemplate.query(sb.toString(), new Object[] {"%"+usersVO.getWs_link()+"%"}, rowMapper);
+		list = this.jdbcTemplate.query(sb.toString(), new Object[] {"%"+channelVO.getWsLink()+"%"}, rowMapper);
 		for(UsersVO vo:list) {
 			LOG.debug("====================================");
 			LOG.debug("=vo="+vo);

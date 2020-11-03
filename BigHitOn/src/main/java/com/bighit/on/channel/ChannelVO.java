@@ -129,8 +129,9 @@ public class ChannelVO extends DTO {
 	public String toString() {
 		return "ChannelVO [chLink=" + chLink + ", wsLink=" + wsLink + ", chName=" + chName + ", topic=" + topic
 				+ ", chDescription=" + chDescription + ", chAccess=" + chAccess + ", regId=" + regId + ", regDt="
-				+ regDt + "]";
+				+ regDt + ", toString()=" + super.toString() + "]";
 	}
+
 	
 	
 	

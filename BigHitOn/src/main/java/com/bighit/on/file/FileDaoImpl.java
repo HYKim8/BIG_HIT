@@ -32,11 +32,13 @@ public class FileDaoImpl {
 			
 			FileVO outVO = new FileVO();
 			
+			outVO.setFileId(rs.getInt("file_id"));
 			outVO.setFileName(rs.getString("file_name"));
 			outVO.setThrKey(rs.getString("thr_key"));
 			outVO.setFileUrl(rs.getString("file_url"));
 			outVO.setRegDt(rs.getString("reg_dt"));
 			outVO.setRegId(rs.getString("reg_id"));
+			outVO.setChLink(rs.getString("ch_link"));
 						
 			return outVO;
 		}
@@ -54,11 +56,30 @@ public class FileDaoImpl {
 		Object[] args = {
 				inVO.getFileName(),
 				inVO.getThrKey(),
-				inVO.getRegId()
+				inVO.getFileUrl(),
+				inVO.getRegId(),
+				inVO.getChLink()
 		};
 		
 		StringBuilder sb = new StringBuilder();
-
+		sb.append("INSERT INTO file_thr (     \n");
+		sb.append("    file_id,               \n");
+		sb.append("    file_name,             \n");
+		sb.append("    thr_key,               \n");
+		sb.append("    file_url,              \n");
+		sb.append("    reg_id,                \n");
+		sb.append("    reg_dt,                \n");
+		sb.append("    ch_link                \n");
+		sb.append(") VALUES (                 \n");
+		sb.append("    file_seq.nextVal,      \n");
+		sb.append("    ?,                     \n");
+		sb.append("    ?,                     \n");
+		sb.append("    ?,                     \n");
+		sb.append("    ?,                     \n");
+		sb.append("    SYSDATE,               \n");
+		sb.append("    ?                      \n");
+		sb.append(")                          \n");
+		
 		LOG.debug("---------------------------");
 		LOG.debug("-sql-\n" + sb.toString());
 		LOG.debug("-param-\n" + inVO);
@@ -81,11 +102,15 @@ public class FileDaoImpl {
 		int flag = 0;
 		FileVO inVO = (FileVO) dto;
 		Object[] args = {
-				inVO.getFileName(),
-				inVO.getThrKey()
+			inVO.getFileId(),
+			inVO.getRegId()
 		};
 		
 		StringBuilder sb = new StringBuilder();
+		sb.append("DELETE FROM file_thr       \n");
+		sb.append("WHERE                      \n");
+		sb.append("        file_id = ? and    \n");
+		sb.append("        reg_id = ?         \n");
 		
 		LOG.debug("---------------------------");
 		LOG.debug("-sql-\n" + sb.toString());
@@ -109,10 +134,18 @@ public class FileDaoImpl {
 		int flag = 0;
 		FileVO inVO = (FileVO) dto;
 		Object[] args = {
-				
+			inVO.getFileName(),
+			inVO.getFileId(),
+			inVO.getRegId()
 		};
 		
 		StringBuilder sb = new StringBuilder();
+		sb.append("UPDATE file_thr           \n");
+		sb.append("SET                       \n");
+		sb.append("    file_name = ?         \n");
+		sb.append("WHERE                     \n");
+		sb.append("        file_id = ?       \n");
+		sb.append("    AND reg_id = ?        \n");
 		
 		LOG.debug("---------------------------");
 		LOG.debug("-sql-\n" + sb.toString());
@@ -136,10 +169,22 @@ public class FileDaoImpl {
 		FileVO inVO = (FileVO) dto;
 		FileVO outVO = null;
 		Object[] args = {
-				
+			inVO.getFileId()
 		};
 		
 		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT                    \n");
+		sb.append("    file_id,              \n");
+		sb.append("    file_name,            \n");
+		sb.append("    thr_key,              \n");
+		sb.append("    file_url,             \n");
+		sb.append("    reg_id,               \n");
+		sb.append("    reg_dt,               \n");
+		sb.append("    ch_link               \n");
+		sb.append("FROM                      \n");
+		sb.append("    file_thr              \n");
+		sb.append("WHERE                     \n");
+		sb.append("    file_id = ?           \n");
 		
 		LOG.debug("---------------------------");
 		LOG.debug("-sql-\n" + sb.toString());
@@ -161,14 +206,27 @@ public class FileDaoImpl {
 	 * @param dto
 	 * @return
 	 */
-	public List<FileVO> doSelectList(DTO dto) {
+	public List<FileVO> doSelectListThrKey(DTO dto) {
 		FileVO inVO = (FileVO) dto;
 		List<FileVO> outList = null;
 		Object[] args = {
-				
+			inVO.getThrKey()
 		};
 		
 		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT                     \n");
+		sb.append("    file_id,               \n");
+		sb.append("    file_name,             \n");
+		sb.append("    thr_key,               \n");
+		sb.append("    file_url,              \n");
+		sb.append("    reg_id,                \n");
+		sb.append("    reg_dt,                \n");
+		sb.append("    ch_link                \n");
+		sb.append("FROM                       \n");
+		sb.append("    file_thr               \n");
+		sb.append("WHERE                      \n");
+		sb.append("    thr_key = ?            \n");
+		sb.append("order by file_id           \n");
 		
 		LOG.debug("---------------------------");
 		LOG.debug("-sql-\n" + sb.toString());
@@ -177,11 +235,49 @@ public class FileDaoImpl {
 		
 		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
 		
+		LOG.debug("---------------------------");
 		for(FileVO vo : outList) {
-			LOG.debug("---------------------------");
 			LOG.debug("-doSelectList outVO-" + vo);
-			LOG.debug("---------------------------");
 		}
+		LOG.debug("---------------------------");
+		
+		return outList;
+	}
+	
+	public List<FileVO> doSelectListChLink(DTO dto) {
+		FileVO inVO = (FileVO) dto;
+		List<FileVO> outList = null;
+		Object[] args = {
+			inVO.getChLink()
+		};
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT                     \n");
+		sb.append("    file_id,               \n");
+		sb.append("    file_name,             \n");
+		sb.append("    thr_key,               \n");
+		sb.append("    file_url,              \n");
+		sb.append("    reg_id,                \n");
+		sb.append("    reg_dt,                \n");
+		sb.append("    ch_link                \n");
+		sb.append("FROM                       \n");
+		sb.append("    file_thr               \n");
+		sb.append("WHERE                      \n");
+		sb.append("    ch_link = ?            \n");
+		sb.append("order by file_id           \n");
+		
+		LOG.debug("---------------------------");
+		LOG.debug("-sql-\n" + sb.toString());
+		LOG.debug("-param-\n" + inVO);
+		LOG.debug("---------------------------");
+		
+		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
+		
+		LOG.debug("---------------------------");
+		for(FileVO vo : outList) {
+			LOG.debug("-doSelectList outVO-" + vo);
+		}
+		LOG.debug("---------------------------");
 		
 		return outList;
 	}
