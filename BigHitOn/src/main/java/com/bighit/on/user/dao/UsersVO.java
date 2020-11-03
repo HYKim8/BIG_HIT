@@ -1,6 +1,8 @@
 package com.bighit.on.user.dao;
 
-public class UsersVO {
+import com.bighit.on.cmn.DTO;
+
+public class UsersVO extends DTO {
 	private String user_serial; /* 계정시리얼키 */
 	private String ws_link; /* 워크스페이스 링크 */
 	private String email; /* 이메일 */

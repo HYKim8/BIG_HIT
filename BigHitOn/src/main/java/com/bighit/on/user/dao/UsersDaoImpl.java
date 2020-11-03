@@ -63,7 +63,7 @@ public class UsersDaoImpl {
 		LOG.debug("=param="+channelVO);
 		LOG.debug("========================");
 		
-		list = this.jdbcTemplate.query(sb.toString(), new Object[] {"%"+channelVO.getWsLink()+"%"}, rowMapper);
+		list = this.jdbcTemplate.query(sb.toString(), new Object[] {channelVO.getChLink()}, rowMapper);
 		for(UsersVO vo:list) {
 			LOG.debug("====================================");
 			LOG.debug("=vo="+vo);

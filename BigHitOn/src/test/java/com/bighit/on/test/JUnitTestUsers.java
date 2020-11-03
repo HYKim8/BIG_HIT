@@ -21,6 +21,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.channelusers.ChannelUsersDao;
+import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.user.dao.UsersDaoImpl;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -39,12 +41,17 @@ public class JUnitTestUsers {
 
 	@Autowired
 	UsersDaoImpl usersDaoImpl;
+	@Autowired
+	ChannelUsersDao channelUserDao;
 	
 	UsersVO users01;
 	UsersVO users02;
 	UsersVO users03;
 	
 	ChannelVO channelVO;
+	ChannelUsersVO cu1;
+	ChannelUsersVO cu2;
+	ChannelUsersVO cu3;
 	
 	
 	@Test
@@ -53,13 +60,14 @@ public class JUnitTestUsers {
 		usersDaoImpl.doSelectList(channelVO);
 	}
 	
+	
 	@Test
-	//@Ignore
+	@Ignore
 	public void doUpdate() throws Exception{
 		usersDaoImpl.doDelete(users01);
 //		usersDaoImpl.doDelete(users02);
 //		usersDaoImpl.doDelete(users03);
-		
+				
 		int flag = usersDaoImpl.doInsert(users01);
 		assertThat(1, is(1));
 		
@@ -79,6 +87,12 @@ public class JUnitTestUsers {
 		users01=new UsersVO("1111", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
     	users02=new UsersVO("2222", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
     	users03=new UsersVO("3333", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
+    	channelVO = new ChannelVO();
+    	channelVO.setChLink("1");
+    	
+    	cu1 = new ChannelUsersVO(channelVO.getChLink(),users01.getUser_serial(),0);
+    	cu2 = new ChannelUsersVO(channelVO.getChLink(),users02.getUser_serial(),0);
+    	cu3 = new ChannelUsersVO(channelVO.getChLink(),users03.getUser_serial(),0);
     	LOG.debug("** setup() **");
     	LOG.debug("***************************************");
 	}
@@ -90,8 +104,10 @@ public class JUnitTestUsers {
 	}
 
 	@Test
-	@Ignore
+//	@Ignore
 	public void test() {
+		channelUserDao.doDeleteAll(channelVO);		
+		
 		usersDaoImpl.doDelete(users01);
 		usersDaoImpl.doDelete(users02);
 		usersDaoImpl.doDelete(users03);
@@ -99,6 +115,13 @@ public class JUnitTestUsers {
 		usersDaoImpl.doInsert(users01);
 		usersDaoImpl.doInsert(users02);
 		usersDaoImpl.doInsert(users03);
+		
+		channelUserDao.doInsert(cu1);
+		channelUserDao.doInsert(cu2);
+		channelUserDao.doInsert(cu3);	
+		
+		List<UsersVO> list = usersDaoImpl.doSelectList(channelVO);
+		assertThat(list.size(), is(3));
 		
 		LOG.debug("============================");
 		LOG.debug("test doInsert 성공 ");

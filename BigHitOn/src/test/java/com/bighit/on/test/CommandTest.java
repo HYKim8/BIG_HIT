@@ -1,5 +1,6 @@
 package com.bighit.on.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -19,6 +20,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.bighit.on.channelcommmand.ChannelCommandDao;
+import com.bighit.on.channelcommmand.ChannelCommandVO;
 import com.bighit.on.command.ComChLinkVO;
 import com.bighit.on.command.CommandDao;
 import com.bighit.on.command.CommandVO;
@@ -39,21 +42,19 @@ public class CommandTest {
 	@Autowired
 	CommandDao commandDao;
 	
+	@Autowired
+	ChannelCommandDao channelCommandDao; 
 	
 	CommandVO command01;
 	CommandVO command02;
 	
-	ComChLinkVO comChLink01;
-	ComChLinkVO comChLink02;
-	
+	ChannelCommandVO ccv1;
+	ChannelCommandVO ccv2;
 	
 	@Before
 	public void setUp() throws Exception {
 		command01 = new CommandVO();
-		command02 = new CommandVO();
-		
-		comChLink01 = new ComChLinkVO();
-		comChLink02 = new ComChLinkVO();
+		command02 = new CommandVO();		
 		
 		command01.setComId(4);
 		command01.setCmdName("test");
@@ -63,20 +64,10 @@ public class CommandTest {
 		command02.setComId(2);
 		command02.setCmdName("test02");
 		command02.setAppName("test02");
-		command02.setParamCnt(1);
+		command02.setParamCnt(1);	
 		
-		//comChLink01.setComId(1);
-		//comChLink01.setCmdName("test");
-		//comChLink01.setAppName("test");
-		comChLink01.setChLink(1);
-		//comChLink01.setParamCnt(1);
-		
-		//comChLink02.setComId(1);
-		//comChLink02.setCmdName("test");
-		//comChLink02.setAppName("test");
-		comChLink02.setChLink(1);
-		//comChLink02.setParamCnt(1);
-		
+		ccv1 = new ChannelCommandVO(command01.getComId(),"1");
+		ccv2 = new ChannelCommandVO(command02.getComId(),"1");
 	}
 
 	@After
@@ -113,11 +104,11 @@ public class CommandTest {
 		commandDao.doSelectOne(1);
 	}
 	
-	@Test
-	@Ignore
-	public void doSelectListChLink() {
-		commandDao.doSelectListChLink(comChLink02);
-	}
+//	@Test
+//	@Ignore
+//	public void doSelectListChLink() {
+//		commandDao.doSelectListChLink(comChLink02);
+//	}
 	@Test
 	@Ignore
 	public void doSelectList() {
@@ -126,11 +117,23 @@ public class CommandTest {
 	
 	@Test
 	public void all() {
+		channelCommandDao.doDeleteAll(command01);
+		channelCommandDao.doDeleteAll(command02);
+		
 		commandDao.doDelete(command01);
 		commandDao.doDelete(command02);
 		
 		commandDao.doInsert(command01);
-		commandDao.doInsert(command02);
+		commandDao.doInsert(command02);		
+		
+		
+		channelCommandDao.doInsert(ccv1);
+		channelCommandDao.doInsert(ccv2);
+		ComChLinkVO link = new ComChLinkVO();
+		link.setChLink(1);
+		
+		List<ComChLinkVO> listFromChannel = commandDao.doSelectListChLink(link);
+		assertThat(listFromChannel.size(), is(2));
 		
 		List<CommandVO> list = commandDao.doSelectList(command01);
 		
