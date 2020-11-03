@@ -1,11 +1,8 @@
 package com.bighit.on.test;
 
-import java.io.File;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -17,12 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.bighit.on.cmn.AccessKey;
 import com.bighit.on.file.FileDaoImpl;
-import com.bighit.on.file.FileExtractor;
 import com.bighit.on.file.FileVO;
-import com.bighit.on.file.S3Utill;
-import com.bighit.on.file.UploadFileUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration

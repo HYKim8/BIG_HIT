@@ -9,37 +9,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UploadFileUtils {
-
-	private static final Logger logger = LoggerFactory.getLogger(UploadFileUtils.class);
-
-	public static String uploadFile(String uploadPath, String originalName, byte[] byteData) throws Exception {
-		S3Utill s3 = new S3Utill();
+	
+	private static final Logger LOG = LoggerFactory.getLogger(UploadFileUtils.class);
+	
+	public static String uploadFile(String uploadPath, String originalName, byte[] byteData) {
+		S3Util s3 = new S3Util();
 		String bucketName = "kghbucket";
-		// 랜덤의 uid 를 만들어준다.
+		
+		// uid 생성
 		UUID uid = UUID.randomUUID();
-
-		// savedName : 570d570a-7af1-4afe-8ed5-391d660084b7_g.JPG 같은 형식으로 만들어준다.
+		
 		String savedName = "/" + uid.toString() + "_" + originalName;
-
-		logger.info("업로드 경로 : " + uploadPath);
-		// \2017\12\27 같은 형태로 저장해준다.
-		String savedPath = calcPath(uploadPath);
-
+		
+		LOG.debug("업로드 경로 : " + uploadPath);
+		
+		String savedPath = makePath(uploadPath);
+		
 		String uploadedFileName = null;
-
+		
 		uploadedFileName = (savedPath + savedName).replace(File.separatorChar, '/');
-		// S3Util 의 fileUpload 메서드로 파일을 업로드한다.
-		s3.fileUpload(bucketName, uploadPath + uploadedFileName, byteData);
-
-		logger.info(uploadedFileName);
-// s3.fileUpload(bucketName, new File(fileName))
-
+		
+		LOG.debug(uploadedFileName);
+		
 		return uploadedFileName;
-
+		
 	}
-
-	private static String calcPath(String uploadPath) {
-
+	
+	private static String makePath(String uploadPath) {
+		
 		Calendar cal = Calendar.getInstance();
 
 		String yearPath = File.separator + cal.get(Calendar.YEAR);
@@ -50,11 +47,12 @@ public class UploadFileUtils {
 
 		makeDir(uploadPath, yearPath, monthPath, datePath);
 
-		logger.info(datePath);
+		LOG.debug(datePath);
 
 		return datePath;
+		
 	}
-
+	
 	private static void makeDir(String uploadPath, String... paths) {
 
 		if (new File(paths[paths.length - 1]).exists()) {
@@ -70,4 +68,5 @@ public class UploadFileUtils {
 			}
 		}
 	}
+	
 }
