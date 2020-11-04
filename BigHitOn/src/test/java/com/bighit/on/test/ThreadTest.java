@@ -105,7 +105,7 @@ public class ThreadTest {
 		
 		List<ThreadVO> list = threadDao.doSelectAll(thread01);
 		
-		threadDao.doSelectOne("test");
+		threadDao.doSelectOne("2");
 		
 		thread01.setContents("changeTest");
 		threadDao.doUpdate(thread01);
