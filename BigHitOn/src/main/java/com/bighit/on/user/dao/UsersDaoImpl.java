@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.workspace.WorkSpaceVO;
 
 
 @Repository("UsersDaoImpl")
@@ -48,6 +49,32 @@ public class UsersDaoImpl {
 	};
 	
 	public UsersDaoImpl() {}
+	
+	/**
+	 * 워크스페이스에 소속된 유저들
+	 * @param workSpaceVO
+	 * @return
+	 */
+	public List<UsersVO> doSelectList2(WorkSpaceVO workSpaceVO){
+		 List<UsersVO> list = null;
+		 
+		 StringBuilder sb=new StringBuilder();
+		 sb.append(" SELECT users.*                                      \n");
+		 sb.append(" FROM users                                          \n");
+		 sb.append(" JOIN workspace                                      \n");
+		 sb.append(" ON users.ws_link = workspace.ws_link                \n");
+		 sb.append(" AND workspace.ws_link = ?                           \n");
+		 
+		 
+		 list = this.jdbcTemplate.query(sb.toString(), new Object[] {workSpaceVO.getWsLink()}, rowMapper);
+			for(UsersVO vo:list) {
+				LOG.debug("====================================");
+				LOG.debug("=vo="+vo);
+				LOG.debug("====================================");
+			}
+			
+			return list;
+	}
 	
 	public List<UsersVO> doSelectList(ChannelVO channelVO){
 		List<UsersVO> list  = null;
