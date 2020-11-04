@@ -25,6 +25,7 @@ import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.user.dao.UsersDaoImpl;
 import com.bighit.on.user.dao.UsersVO;
+import com.bighit.on.workspace.WorkSpaceVO;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -53,7 +54,15 @@ public class JUnitTestUsers {
 	ChannelUsersVO cu2;
 	ChannelUsersVO cu3;
 	
+	WorkSpaceVO workSpaceVO;
 	
+	/** workspace에 포함된 users list */
+	@Test
+	public void doSelectList2() {
+		usersDaoImpl.doSelectList2(workSpaceVO);
+	}
+	
+	/** channel에 소속된 users list */
 	@Test
 	@Ignore
 	public void doSelectList() {
