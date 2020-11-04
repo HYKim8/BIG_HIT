@@ -48,6 +48,7 @@ public class CommandTest {
 	CommandVO command01;
 	CommandVO command02;
 	
+	
 	ChannelCommandVO ccv1;
 	ChannelCommandVO ccv2;
 	
@@ -130,7 +131,7 @@ public class CommandTest {
 		channelCommandDao.doInsert(ccv1);
 		channelCommandDao.doInsert(ccv2);
 		ComChLinkVO link = new ComChLinkVO();
-		link.setChLink(1);
+		link.setChLink("1");
 		
 		List<ComChLinkVO> listFromChannel = commandDao.doSelectListChLink(link);
 		assertThat(listFromChannel.size(), is(2));

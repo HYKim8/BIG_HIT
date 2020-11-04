@@ -27,12 +27,12 @@ public class ComChLinkVO extends DTO {
 	/**
 	 * 채널링크
 	 */
-	private int chLink;
+	private String chLink;
 	
 	public ComChLinkVO() {		
 	}
 
-	public ComChLinkVO(int comId, String appName, String cmdName, int paramCnt, int chLink) {
+	public ComChLinkVO(int comId, String appName, String cmdName, int paramCnt, String chLink) {
 		super();
 		this.comId = comId;
 		this.appName = appName;
@@ -42,11 +42,11 @@ public class ComChLinkVO extends DTO {
 	}
 
 
-	public int getChLink() {
+	public String getChLink() {
 		return chLink;
 	}
 
-	public void setChLink(int chLink) {
+	public void setChLink(String chLink) {
 		this.chLink = chLink;
 	}
 

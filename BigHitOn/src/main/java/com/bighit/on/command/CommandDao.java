@@ -37,7 +37,7 @@ public class CommandDao {
 			vo.setAppName(rs.getString("app_name"));
 			vo.setCmdName(rs.getString("cmd_name"));
 			vo.setParamCnt(rs.getInt("param_cnt"));
-			vo.setChLink(rs.getInt("ch_link"));
+			vo.setChLink(rs.getString("ch_link"));
 			
 			return vo;
 		}
