@@ -22,6 +22,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.channelcommmand.ChannelCommandDao;
+import com.bighit.on.channelusers.ChannelUsersDao;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
@@ -37,6 +39,10 @@ public class TestChannel {
 	
 	@Autowired
 	ChannelDaoImpl channelDao;
+	@Autowired
+	ChannelUsersDao channelUsersDao;
+	@Autowired
+	ChannelCommandDao channelCommandDao;
 	
 	ChannelVO channel01;
 	ChannelVO channel02;
@@ -94,6 +100,11 @@ public class TestChannel {
 	
 	@Test
 	public void all() {
+		channelCommandDao.doDeleteAll(channel01);
+		channelCommandDao.doDeleteAll(channel02);
+		
+		channelUsersDao.doDeleteAll(channel01);
+		channelUsersDao.doDeleteAll(channel02);
 		//채널삭제T
 		channelDao.doDelete(channel01);
 		channelDao.doDelete(channel02);
