@@ -59,13 +59,10 @@ public class UsersDaoImpl {
 		 List<UsersVO> list = null;
 		 
 		 StringBuilder sb=new StringBuilder();
-		 sb.append(" SELECT users.*                                      \n");
+		 sb.append(" SELECT *                                   	     \n");
 		 sb.append(" FROM users                                          \n");
-		 sb.append(" JOIN workspace                                      \n");
-		 sb.append(" ON users.ws_link = workspace.ws_link                \n");
-		 sb.append(" AND workspace.ws_link = ?                           \n");
-		 
-		 
+		 sb.append(" WHERE ws_link = ?                                   \n");
+
 		 list = this.jdbcTemplate.query(sb.toString(), new Object[] {workSpaceVO.getWsLink()}, rowMapper);
 			for(UsersVO vo:list) {
 				LOG.debug("====================================");
