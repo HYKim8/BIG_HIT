@@ -98,6 +98,8 @@ public class JUnitTestUsers {
     	users03=new UsersVO("3333", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
     	channelVO = new ChannelVO();
     	channelVO.setChLink("1");
+    	workSpaceVO = new WorkSpaceVO();
+    	workSpaceVO.setWsLink("1");
     	
     	cu1 = new ChannelUsersVO(channelVO.getChLink(),users01.getUser_serial(),0);
     	cu2 = new ChannelUsersVO(channelVO.getChLink(),users02.getUser_serial(),0);
