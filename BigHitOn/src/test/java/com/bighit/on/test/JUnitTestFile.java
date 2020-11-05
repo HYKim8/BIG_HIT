@@ -3,6 +3,7 @@ package com.bighit.on.test;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -107,6 +108,7 @@ public class JUnitTestFile {
 		fileService.doDelete(fileVO02);
 		fileService.doDelete(fileVO03);
 	}
+	
 	
 	
 	@Test

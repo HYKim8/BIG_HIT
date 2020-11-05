@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class ReminderDaoImpl {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String NAMESPACE = "com.bighit.on.reminder.";
 	
 	public ReminderDaoImpl() {}
 
@@ -38,207 +44,65 @@ public class ReminderDaoImpl {
 
 	};
 	
+	
+	
 	/**
 	 * need thrKey, remindTime, getId
 	 */
-	public int doInsert(DTO dto) {
-		int flag = 0;
-		ReminderVO inVO = new ReminderVO();
-		inVO = (ReminderVO) dto;
-		Object[] args = {
-			inVO.getThrKey(),
-			inVO.getRemindTime(),
-			inVO.getRegId()
-		};
+	public int doInsert(ReminderVO reminderVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doInsert====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO reminder (remind_id,                    \n");
-		sb.append("						thr_key,                       \n");
-		sb.append("						remind_time,                   \n");
-		sb.append("						reg_id,                        \n");
-		sb.append("						reg_dt) VALUES                 \n");
-		sb.append("					(remind_seq.nextVal,?,TO_DATE(?,'yyyy/MM/dd hh24:mi'),?,sysdate) \n");
-
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
+		String statement = NAMESPACE + "doInsert";
 		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-
-		LOG.debug("---------------------------");
-		LOG.debug("-doInsert flag-" + flag);
-		LOG.debug("---------------------------");
-
-		return flag;
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====reminderVO===="+reminderVO);
+		
+		return sqlSessionTemplate.insert(statement, reminderVO);
 	}
 
 	/**
 	 * need reminderId
 	 */
-	public int doDelete(DTO dto) {
-		int flag = 0;
-		ReminderVO inVO = (ReminderVO) dto;
-		// inVO id 체크 후 다르면 거절할 것. view 단에서 할 수 있으면 거기서 짜를 것.
-		Object[] args = {
-			inVO.getRemindId()
-		};
+	public int doDelete(ReminderVO reminderVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doDelete====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" DELETE FROM reminder       \n");
-		sb.append(" WHERE remind_id = ?        \n");
+		String statement = NAMESPACE + "doDelete";
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====reminderVO===="+reminderVO);
 		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("---------------------------");
-		LOG.debug("-doDelete flag-" + flag);
-		LOG.debug("---------------------------");
-		
-		return flag;
-	}
-
-	
-	
-	public int doUpdateTest(DTO dto) {
-		int flag = 0;
-		ReminderVO inVO = (ReminderVO) dto;
-		Object[] args = {
-			inVO.getRemindTime(),
-			inVO.getRemindId()
-		};
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("UPDATE reminder         \n");
-		sb.append("SET                     \n");
-		sb.append("    remind_time = TO_DATE(?,'yyyy/MM/dd hh24:mi'),    \n");
-		sb.append("    reg_dt = sysdate    \n");
-		sb.append("WHERE                   \n");
-		sb.append("    remind_id = ?       \n");
-		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
-		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("---------------------------");
-		LOG.debug("-doUpdate flag-" + flag);
-		LOG.debug("---------------------------");
-		
-		return flag;
-		
+		return sqlSessionTemplate.delete(statement, reminderVO);
 	}
 	
-//	public Connection getConnection() throws ClassNotFoundException, SQLException {
-//		Connection conn = null;
-//		final String DB_URL = "jdbc:oracle:thin:@211.238.142.124:1521:orcl";
-//		final String DB_USER = "BIG_HIT";// 접근 user id
-//		final String DB_PASSWD = "bighit1119";// 접근 비번
-//		// 1.JDBC DRIVER LOADING
-//		Class.forName("oracle.jdbc.driver.OracleDriver");
-//		conn  = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-//		return conn;
-//	}
-//	
-//	public int doUpdate(DTO dto) {
-//		int flag = 0;
-//		ReminderVO inVO = (ReminderVO) dto;
-//		
-//		Connection connection = null;
-//		PreparedStatement pstmt = null;
-//		
-//		try {
-//			connection = getConnection();
-//			connection.setAutoCommit(true);
-//			StringBuilder sb = new StringBuilder();
-//			sb.append("UPDATE reminder         \n");
-//			sb.append("SET                     \n");
-//			sb.append("    remind_time = TO_DATE(?,'yyyy/MM/dd hh24:mi'),    \n");
-//			sb.append("    reg_dt = sysdate    \n");
-//			sb.append("WHERE                   \n");
-//			sb.append("    remind_id = ?       \n");
-//			
-//			LOG.debug("---------------------------");
-//			LOG.debug("-sql-\n" + sb.toString());
-//			LOG.debug("-param-\n" + inVO);
-//			LOG.debug("---------------------------");
-//			
-//			pstmt = connection.prepareStatement(sb.toString());
-//			pstmt.setString(1, inVO.getRemindTime());
-//			pstmt.setString(2, inVO.getRemindId());
-//			
-//			flag = pstmt.executeUpdate();
-//			LOG.debug("---------------------------");
-//			LOG.debug("-doUpdate flag-" + flag);
-//			LOG.debug("---------------------------");
-//			
-//			
-//		} catch (Exception e) {
-//			LOG.debug("---------------");
-//			LOG.debug(e.getMessage());
-//			LOG.debug("---------------");
-//			e.printStackTrace();
-//		} finally {
-//			if (null != pstmt) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException e) {
-//					LOG.debug("---------------------");
-//					LOG.debug("-PreparedStatement close--" + e.getMessage());
-//					LOG.debug("---------------------");
-//					e.printStackTrace();
-//				}
-//			}
-//			if (null != connection) {
-//				try {
-//					connection.close();
-//				} catch (SQLException e) {
-//					LOG.debug("---------------------");
-//					LOG.debug("-Connection close--" + e.getMessage());
-//					LOG.debug("---------------------");
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return flag;
-//	}
-
-	/**
-	 * need remindId
-	 */
-	public DTO doSelectOne(DTO dto) {
-		ReminderVO inVO = (ReminderVO) dto;
-		ReminderVO outVO = null;
-		Object[] args = {
-				inVO.getRemindId()
-		};
+	public int doUpdateTest(ReminderVO reminderVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doUpdate====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT                 \n");
-		sb.append("    remind_id,         \n");
-		sb.append("    thr_key,           \n");
-		sb.append("    remind_time,       \n");
-		sb.append("    reg_id,            \n");
-		sb.append("    reg_dt             \n");
-		sb.append("FROM                   \n");
-		sb.append("    reminder           \n");
-		sb.append("WHERE                  \n");
-		sb.append("    remind_id = ?      \n");
+		String statement = NAMESPACE + "doUpdate";
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====reminderVO===="+reminderVO);
 		
-		outVO = (ReminderVO) this.jdbcTemplate.queryForObject(sb.toString(), args, rowMapper);
+		return sqlSessionTemplate.update(statement, reminderVO);
+	}
+	
+	public ReminderVO doSelectOne(ReminderVO reminderVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doSelectOne====");
+		LOG.debug("=======================");
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-doSelectOne outVO-" + outVO);
-		LOG.debug("---------------------------");
+		String statement = NAMESPACE + "doSelectOne";
+		
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====reminderVO===="+reminderVO);
+		
+		ReminderVO outVO = sqlSessionTemplate.selectOne(statement, reminderVO);
+		LOG.debug("====outVO====" + outVO);
 		
 		return outVO;
 	}

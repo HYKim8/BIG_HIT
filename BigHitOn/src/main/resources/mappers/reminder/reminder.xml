@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.reminder">
+
+	<update id="doUpdate" parameterType="ReminderVO">
+		UPDATE reminder        
+		SET                    
+		    remind_time = TO_DATE(#{remindTime},'yyyy/MM/dd hh24:mi'),   
+		    reg_dt = sysdate  
+		WHERE                 
+		    remind_id = #{remindId}     
+	</update>
+	
+	<insert id="doInsert" parameterType="ReminderVO">
+		INSERT INTO reminder (remind_id,                   
+						thr_key,                   
+						remind_time,               
+						reg_id,                    
+						reg_dt) VALUES             
+					(remind_seq.nextVal,#{thrKey},TO_DATE(#{remindTime},'yyyy/MM/dd hh24:mi'),#{regId},sysdate)
+	</insert>
+
+	<delete id="doDelete" parameterType="ReminderVO">
+		DELETE FROM reminder    
+		WHERE remind_id = #{remindId}     
+	</delete>
+
+	<select id="doSelectOne" parameterType="ReminderVO" resultType="ReminderVO">
+		SELECT               
+		    remind_id,       
+		    thr_key,         
+		    remind_time,     
+		    reg_id,          
+		    reg_dt           
+		FROM                 
+		    reminder         
+		WHERE                
+		    remind_id = #{remindId}    
+	</select>
+
+</mapper>

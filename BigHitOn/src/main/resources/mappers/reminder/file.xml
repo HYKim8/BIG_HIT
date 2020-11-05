@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.file">
+	
+	
+	<sql id="fileColumns">
+		SELECT                 
+		    file_id as fileId,           
+		    file_name as fileName,         
+		    thr_key as thrKey,           
+		    file_url as fileUrl,          
+		    reg_id as regId,            
+		    reg_dt as regDt,            
+		    ch_link as chLink            
+		FROM                   
+		    file_thr
+	</sql>
+	
+	<select id="doSelectListChLink" parameterType="FileVO" resultType="FileVO">
+		<include refid="fileColumns"/>         
+		WHERE                  
+		    ch_link = #{chLink}        
+		order by file_id       
+	</select>
+	
+	<select id="doSelectListThrKey" parameterType="FileVO" resultType="FileVO">
+		<include refid="fileColumns"/>                  
+		    file_thr           
+		WHERE                  
+		    thr_key = #{thrKey}        
+		order by file_id       
+	</select>
+	
+	<select id="doSelectOne" parameterType="FileVO" resultType="FileVO">
+		<include refid="fileColumns"/>          
+		WHERE                   
+		    file_id = #{fileId}         
+	</select>
+	
+	<update id="doUpdate" parameterType="FileVO">
+		UPDATE file_thr          
+		SET                      
+		    file_name = #{fileName}        
+		WHERE                    
+		        file_id = #{fileId}      
+		    AND reg_id = #{regId}       
+	</update>
+	
+	<delete id="doDelete" parameterType="FileVO">
+	DELETE FROM file_thr     
+	WHERE                    
+        file_id = #{fileId} and  
+        reg_id = #{regId}       
+	</delete>
+	
+	<insert id="doInsert" parameterType="FileVO">
+		INSERT INTO file_thr (
+					file_id,
+					file_name,
+					thr_key,
+					file_url,
+					reg_id,
+					reg_dt,
+					ch_link
+		) VALUES (
+					file_seq.nextVal,
+					#{fileName},
+					#{thrKey},
+					#{fileUrl},
+					#{regId},
+					SYSDATE,
+					#{chLink}
+		)
+	</insert>
+
+
+</mapper>

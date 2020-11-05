@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,268 +21,108 @@ public class FileDaoImpl {
 	final static Logger LOG = LoggerFactory.getLogger(ReminderDaoImpl.class);
 	
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	SqlSessionTemplate sqlSessionTemplate;
 
+	private final String NAMESPACE = "com.bighit.on.file.";
+	
 	public FileDaoImpl() {
 		super();
 	}
 	
-	RowMapper rowMapper = new RowMapper<FileVO>() {
-		@Override
-		public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			FileVO outVO = new FileVO();
-			
-			outVO.setFileId(rs.getInt("file_id"));
-			outVO.setFileName(rs.getString("file_name"));
-			outVO.setThrKey(rs.getString("thr_key"));
-			outVO.setFileUrl(rs.getString("file_url"));
-			outVO.setRegDt(rs.getString("reg_dt"));
-			outVO.setRegId(rs.getString("reg_id"));
-			outVO.setChLink(rs.getString("ch_link"));
-						
-			return outVO;
-		}
-
-	};
+	public int doInsert(FileVO fileVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doInsert====");
+		LOG.debug("=======================");
+		
+		String statement = NAMESPACE + "doInsert";
+		
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====fileVO===="+fileVO);
+		
+		return sqlSessionTemplate.insert(statement, fileVO);
+	}
 	
-	/**
-	 * doInsert
-	 * @param dto
-	 * @return
-	 */
-	public int doInsert(DTO dto) {
-		int flag = 0;
-		FileVO inVO = (FileVO) dto;
-		Object[] args = {
-				inVO.getFileName(),
-				inVO.getThrKey(),
-				inVO.getFileUrl(),
-				inVO.getRegId(),
-				inVO.getChLink()
-		};
+	public int doDelete(FileVO fileVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doDelete====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO file_thr (     \n");
-		sb.append("    file_id,               \n");
-		sb.append("    file_name,             \n");
-		sb.append("    thr_key,               \n");
-		sb.append("    file_url,              \n");
-		sb.append("    reg_id,                \n");
-		sb.append("    reg_dt,                \n");
-		sb.append("    ch_link                \n");
-		sb.append(") VALUES (                 \n");
-		sb.append("    file_seq.nextVal,      \n");
-		sb.append("    ?,                     \n");
-		sb.append("    ?,                     \n");
-		sb.append("    ?,                     \n");
-		sb.append("    ?,                     \n");
-		sb.append("    SYSDATE,               \n");
-		sb.append("    ?                      \n");
-		sb.append(")                          \n");
+		String statement = NAMESPACE + "doDelete";
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
-
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("---------------------------");
-		LOG.debug("-doInsert flag-" + flag);
-		LOG.debug("---------------------------");
-
-		return flag;
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====fileVO===="+fileVO);
+		
+		return sqlSessionTemplate.delete(statement, fileVO);
 	}
 
-	/**
-	 * doDelete
-	 * @param dto
-	 * @return
-	 */
-	public int doDelete(DTO dto) {
-		int flag = 0;
-		FileVO inVO = (FileVO) dto;
-		Object[] args = {
-			inVO.getFileId(),
-			inVO.getRegId()
-		};
+	public int doUpdate(FileVO fileVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doUpdate====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM file_thr       \n");
-		sb.append("WHERE                      \n");
-		sb.append("        file_id = ? and    \n");
-		sb.append("        reg_id = ?         \n");
+		String statement = NAMESPACE + "doUpdate";
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
-
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("---------------------------");
-		LOG.debug("-doDelete flag-" + flag);
-		LOG.debug("---------------------------");
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====fileVO===="+fileVO);
 		
-		return flag;
+		return sqlSessionTemplate.update(statement, fileVO);
 	}
 
-	/**
-	 * doUpdate
-	 * @param dto
-	 * @return
-	 */
-	public int doUpdate(DTO dto) {
-		int flag = 0;
-		FileVO inVO = (FileVO) dto;
-		Object[] args = {
-			inVO.getFileName(),
-			inVO.getFileId(),
-			inVO.getRegId()
-		};
+	public FileVO doSelectOne(FileVO fileVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doSelectOne====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("UPDATE file_thr           \n");
-		sb.append("SET                       \n");
-		sb.append("    file_name = ?         \n");
-		sb.append("WHERE                     \n");
-		sb.append("        file_id = ?       \n");
-		sb.append("    AND reg_id = ?        \n");
+		String statement = NAMESPACE + "doSelectOne";
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====fileVO===="+fileVO);
 		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("---------------------------");
-		LOG.debug("-doUpdate flag-" + flag);
-		LOG.debug("---------------------------");
-		
-		return flag;
-	}
-
-	/**
-	 * doSelectOne
-	 * @param dto
-	 * @return
-	 */
-	public DTO doSelectOne(DTO dto) {
-		FileVO inVO = (FileVO) dto;
-		FileVO outVO = null;
-		Object[] args = {
-			inVO.getFileId()
-		};
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT                    \n");
-		sb.append("    file_id,              \n");
-		sb.append("    file_name,            \n");
-		sb.append("    thr_key,              \n");
-		sb.append("    file_url,             \n");
-		sb.append("    reg_id,               \n");
-		sb.append("    reg_dt,               \n");
-		sb.append("    ch_link               \n");
-		sb.append("FROM                      \n");
-		sb.append("    file_thr              \n");
-		sb.append("WHERE                     \n");
-		sb.append("    file_id = ?           \n");
-		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
-
-		outVO = (FileVO) this.jdbcTemplate.queryForObject(sb.toString(), 
-				args, rowMapper);
-
-		LOG.debug("---------------------------");
-		LOG.debug("-doSelectOne outVO-" + outVO);
-		LOG.debug("---------------------------");
+		FileVO outVO = sqlSessionTemplate.selectOne(statement, fileVO);
+		LOG.debug("====outVO====" + outVO);
 		
 		return outVO;
 	}
+	
+	public List<FileVO> doSelectListThrKey(FileVO fileVO){
+		LOG.debug("=======================");
+		LOG.debug("====doSelectListThrKey====");
+		LOG.debug("=======================");
+		
+		String statement = NAMESPACE + "doSelectListThrKey";
+		
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====fileVO===="+fileVO);
+		
+		List<FileVO> outList = sqlSessionTemplate.selectList(statement, fileVO);
+		
+		for(FileVO vo : outList) {
+			LOG.debug("====outVO====" + vo);
+		}
+		
+		return outList;
+	}
+	
+	public List<FileVO> doSelectListChLink(FileVO fileVO){
+		LOG.debug("=======================");
+		LOG.debug("====doSelectListChLink====");
+		LOG.debug("=======================");
+		
+		String statement = NAMESPACE + "doSelectListChLink";
+		
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====fileVO===="+fileVO);
+		
+		List<FileVO> outList = sqlSessionTemplate.selectList(statement, fileVO);
+		
+		for(FileVO vo : outList) {
+			LOG.debug("====outVO====" + vo);
+		}
+		
+		return outList;
+	}
+	
 
-	/**
-	 * doSelectList
-	 * @param dto
-	 * @return
-	 */
-	public List<FileVO> doSelectListThrKey(DTO dto) {
-		FileVO inVO = (FileVO) dto;
-		List<FileVO> outList = null;
-		Object[] args = {
-			inVO.getThrKey()
-		};
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT                     \n");
-		sb.append("    file_id,               \n");
-		sb.append("    file_name,             \n");
-		sb.append("    thr_key,               \n");
-		sb.append("    file_url,              \n");
-		sb.append("    reg_id,                \n");
-		sb.append("    reg_dt,                \n");
-		sb.append("    ch_link                \n");
-		sb.append("FROM                       \n");
-		sb.append("    file_thr               \n");
-		sb.append("WHERE                      \n");
-		sb.append("    thr_key = ?            \n");
-		sb.append("order by file_id           \n");
-		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
-		
-		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
-		
-		LOG.debug("---------------------------");
-		for(FileVO vo : outList) {
-			LOG.debug("-doSelectList outVO-" + vo);
-		}
-		LOG.debug("---------------------------");
-		
-		return outList;
-	}
-	
-	public List<FileVO> doSelectListChLink(DTO dto) {
-		FileVO inVO = (FileVO) dto;
-		List<FileVO> outList = null;
-		Object[] args = {
-			inVO.getChLink()
-		};
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT                     \n");
-		sb.append("    file_id,               \n");
-		sb.append("    file_name,             \n");
-		sb.append("    thr_key,               \n");
-		sb.append("    file_url,              \n");
-		sb.append("    reg_id,                \n");
-		sb.append("    reg_dt,                \n");
-		sb.append("    ch_link                \n");
-		sb.append("FROM                       \n");
-		sb.append("    file_thr               \n");
-		sb.append("WHERE                      \n");
-		sb.append("    ch_link = ?            \n");
-		sb.append("order by file_id           \n");
-		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
-		
-		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
-		
-		LOG.debug("---------------------------");
-		for(FileVO vo : outList) {
-			LOG.debug("-doSelectList outVO-" + vo);
-		}
-		LOG.debug("---------------------------");
-		
-		return outList;
-	}
-	
 	
 	
 	
