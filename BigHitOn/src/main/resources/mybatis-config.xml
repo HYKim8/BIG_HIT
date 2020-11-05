@@ -11,5 +11,6 @@
 		<!-- type별칭 VO이름을 간략히 사용 -->
 		<typeAlias type="com.bighit.on.reminder.ReminderVO" alias="ReminderVO" />
 		<typeAlias type="com.bighit.on.file.FileVO" alias="FileVO"/>
+		<typeAlias type="com.bighit.on.thread.ThreadVO" alias="ThreadVO"/>
 	</typeAliases>
 </configuration>
