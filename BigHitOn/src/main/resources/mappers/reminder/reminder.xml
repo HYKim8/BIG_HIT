@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bighit.on.reminder">
 
+	<sql id="columns">
+		remind_id as remindId,           
+	    thr_key as thrKey,             
+	    remind_time as remindTime,         
+	    reg_id as regId,              
+	    reg_dt as regDt 
+	</sql>
+	
+	<select id="doSelectList" parameterType="ReminderVO" resultType="ReminderVO">
+		SELECT                   
+		    <include refid="columns"/>               
+		FROM                     
+		    reminder             
+		WHERE                    
+		    reg_id = #{regId}           
+		    and thr_key = #{thrKey}      
+	</select>
+
 	<update id="doUpdate" parameterType="ReminderVO">
 		UPDATE reminder        
 		SET                    
@@ -27,11 +45,7 @@
 
 	<select id="doSelectOne" parameterType="ReminderVO" resultType="ReminderVO">
 		SELECT               
-		    remind_id,       
-		    thr_key,         
-		    remind_time,     
-		    reg_id,          
-		    reg_dt           
+		    <include refid="columns"/>          
 		FROM                 
 		    reminder         
 		WHERE                

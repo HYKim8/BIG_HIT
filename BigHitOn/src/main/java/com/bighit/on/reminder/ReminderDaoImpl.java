@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bighit.on.cmn.DTO;
+import com.bighit.on.file.FileVO;
 
 @Repository("ReminderDaoImpl")
 public class ReminderDaoImpl {
@@ -27,24 +28,6 @@ public class ReminderDaoImpl {
 	private final String NAMESPACE = "com.bighit.on.reminder.";
 	
 	public ReminderDaoImpl() {}
-
-	RowMapper rowMapper = new RowMapper<ReminderVO>() {
-		@Override
-		public ReminderVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			ReminderVO outVO = new ReminderVO();
-			
-			outVO.setThrKey(rs.getString("thr_key"));
-			outVO.setRegDt(rs.getString("reg_dt"));
-			outVO.setRegId(rs.getString("reg_id"));
-			outVO.setRemindTime(rs.getString("remind_time"));
-			outVO.setRemindId(rs.getString("remind_id"));
-			
-			return outVO;
-		}
-
-	};
-	
-	
 	
 	/**
 	 * need thrKey, remindTime, getId
@@ -107,38 +90,20 @@ public class ReminderDaoImpl {
 		return outVO;
 	}
 
-	public List<ReminderVO> doSelectList(DTO dto) {
-		ReminderVO inVO = (ReminderVO) dto;
-		List<ReminderVO> outList = null;
-		Object[] args = {
-			inVO.getRegId(),
-			inVO.getThrKey()
-		};
+	public List<ReminderVO> doSelectList(ReminderVO reminderVO) {
+		LOG.debug("=======================");
+		LOG.debug("====doSelectList====");
+		LOG.debug("=======================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT                   \n");
-		sb.append("    remind_id,           \n");
-		sb.append("    thr_key,             \n");
-		sb.append("    remind_time,         \n");
-		sb.append("    reg_id,              \n");
-		sb.append("    reg_dt               \n");
-		sb.append("FROM                     \n");
-		sb.append("    reminder             \n");
-		sb.append("WHERE                    \n");
-		sb.append("    reg_id = ?           \n");
-		sb.append("    and thr_key = ?      \n");
+		String statement = NAMESPACE + "doSelectList";
 		
-		LOG.debug("---------------------------");
-		LOG.debug("-sql-\n" + sb.toString());
-		LOG.debug("-param-\n" + inVO);
-		LOG.debug("---------------------------");
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====reminderVO===="+reminderVO);
 		
-		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
+		List<ReminderVO> outList = sqlSessionTemplate.selectList(statement, reminderVO);
 		
 		for(ReminderVO vo : outList) {
-			LOG.debug("---------------------------");
-			LOG.debug("-doSelectList outVO-" + vo);
-			LOG.debug("---------------------------");
+			LOG.debug("====outVO====" + vo);
 		}
 		
 		return outList;
