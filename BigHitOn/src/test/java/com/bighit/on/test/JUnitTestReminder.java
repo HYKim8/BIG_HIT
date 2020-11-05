@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.reminder.ReminderDaoImpl;
+import com.bighit.on.reminder.ReminderService;
 import com.bighit.on.reminder.ReminderVO;
 
 
@@ -36,6 +37,9 @@ public class JUnitTestReminder {
 
 	@Autowired
 	ReminderDaoImpl reminderDao;
+	
+	@Autowired
+	ReminderService reminderService;
 	
 	ReminderVO reminder01;
 	ReminderVO reminder02;
@@ -74,14 +78,50 @@ public class JUnitTestReminder {
 	}
 
 	@Test
+	public void serviceTest() {
+		reminderService.doInsert(reminder01);
+		reminderService.doInsert(reminder01);
+		reminderService.doInsert(reminder01);
+		
+		List<ReminderVO> list = reminderService.doSelectList(reminder01);
+		
+		String remindId01 = list.get(0).getRemindId();
+		String remindId02 = list.get(1).getRemindId();
+		String remindId03 = list.get(2).getRemindId();
+		
+		reminder01.setRemindId(remindId01);
+		reminder02.setRemindId(remindId02);
+		reminder03.setRemindId(remindId03);
+		
+		reminderService.doSelectOne(reminder01);
+		reminderService.doSelectOne(reminder02);
+		reminderService.doSelectOne(reminder03);
+		
+		String time01 = "2002/04/20 19:12";
+		String time02 = "2004/04/20 19:12";
+		String time03 = "2005/04/20 19:12";
+		
+		reminder01.setRemindTime(time01);
+		reminder02.setRemindTime(time02);
+		reminder03.setRemindTime(time03);
+		
+		reminderService.doUpdate(reminder01);
+		reminderService.doUpdate(reminder02);
+		reminderService.doUpdate(reminder03);
+		
+		reminderService.doDelete(reminder01);
+		reminderService.doDelete(reminder02);
+		reminderService.doDelete(reminder03);
+	}
+	
+	@Test
 	@Ignore
 	public void doSelectList() {
 		reminderDao.doSelectList(reminder01);
 	}
 	
 	@Test
-//	@Ignore
-	public void all() {
+	public void daoTest() {
 		reminderDao.doInsert(reminder01);
 		reminderDao.doInsert(reminder02);
 		reminderDao.doInsert(reminder03);

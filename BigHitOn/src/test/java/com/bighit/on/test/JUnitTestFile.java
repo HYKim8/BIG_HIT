@@ -15,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.file.FileDaoImpl;
+import com.bighit.on.file.FileService;
 import com.bighit.on.file.FileVO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -31,6 +32,9 @@ public class JUnitTestFile {
 
 	@Autowired
 	FileDaoImpl fileDao;
+	
+	@Autowired
+	FileService	fileService;
 
 	FileVO fileVO01;
 	FileVO fileVO02;
@@ -74,7 +78,39 @@ public class JUnitTestFile {
 	}
 
 	@Test
-	public void test() {
+	public void serviceTest() {
+		fileService.doInsert(fileVO01);
+		fileService.doInsert(fileVO02);
+		fileService.doInsert(fileVO03);
+
+		fileVO01 = fileService.doSelectListThrKey(fileVO01).get(0);
+		fileVO02 = fileService.doSelectListThrKey(fileVO02).get(1);
+		fileVO03 = fileService.doSelectListThrKey(fileVO03).get(2);
+
+		fileService.doSelectListChLink(fileVO01);
+		fileService.doSelectListChLink(fileVO02);
+		fileService.doSelectListChLink(fileVO03);
+
+		fileVO01.setFileName(fileVO01.getFileName() + "Test");
+		fileVO02.setFileName(fileVO02.getFileName() + "Test");
+		fileVO03.setFileName(fileVO03.getFileName() + "Test");
+
+		fileService.doUpdate(fileVO01);
+		fileService.doUpdate(fileVO02);
+		fileService.doUpdate(fileVO03);
+
+		fileService.doSelectOne(fileVO01);
+		fileService.doSelectOne(fileVO02);
+		fileService.doSelectOne(fileVO03);
+
+		fileService.doDelete(fileVO01);
+		fileService.doDelete(fileVO02);
+		fileService.doDelete(fileVO03);
+	}
+	
+	
+	@Test
+	public void daoTest() {
 
 		fileDao.doInsert(fileVO01);
 		fileDao.doInsert(fileVO02);
