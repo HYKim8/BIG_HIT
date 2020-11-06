@@ -3,6 +3,7 @@ package com.bighit.on.workspace;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,11 @@ import org.springframework.stereotype.Repository;
 @Repository("WorkSpaceDaoImpl")
 public class WorkSpaceDaoImpl {
 	final static Logger   LOG = LoggerFactory.getLogger(WorkSpaceDaoImpl.class);
-
 	
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String NAMESPACE = "com.bighit.on.workspace";
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -40,32 +44,16 @@ public class WorkSpaceDaoImpl {
 	 * @return
 	 */
 	public int doInsert(WorkSpaceVO workSpaceVO) {
-		int flag = 0;
-		Object[] args = { workSpaceVO.getWsLink(),
-						  workSpaceVO.getWsName(),
-						  workSpaceVO.getProject(),
-						  workSpaceVO.getRegId()							
-		};
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO workspace ( \n");
-		sb.append("    ws_link,            \n");
-		sb.append("    ws_name,            \n");
-		sb.append("    project,            \n");
-		sb.append("    reg_id,             \n");
-		sb.append("    reg_dt              \n");
-		sb.append(") VALUES (              \n");
-		sb.append("    ?,                  \n");
-		sb.append("    ?,                  \n");
-		sb.append("    ?,                  \n");
-		sb.append("    ?,                  \n");
-		sb.append("    sysdate             \n");
-		sb.append(")                       \n");
-		
-		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("=====================");
+		LOG.debug("=doInsert=");
+		LOG.debug("=====================");
+		//등록 : namespace+id = com.bighit.on.workspace.doInsert
+		String statement = NAMESPACE +".doInsert";
+		LOG.debug("=statement="+statement);
 		LOG.debug("=param ==="+workSpaceVO);
 		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
+		int flag = sqlSessionTemplate.insert(statement, workSpaceVO);
+		
 		LOG.debug("-doInsert flag=" + flag);
 		return flag;
 	}
@@ -76,17 +64,15 @@ public class WorkSpaceDaoImpl {
 	 * @return
 	 */
 	public int doDelete(WorkSpaceVO workSpaceVO) {
-		int flag =0;
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" DELETE FROM workspace \n");
-		sb.append(" WHERE ws_link = ?     \n");
-		
-		LOG.debug("=sql=\n"+sb.toString());
+		LOG.debug("=====================");
+		LOG.debug("=doDelete=");
+		LOG.debug("=====================");
+		//삭제 : namespace+id = com.bighit.on.workspace.doDelete
+		String statement = NAMESPACE +".doDelete";
+		LOG.debug("=statement="+statement);
 		LOG.debug("=param=="+workSpaceVO);
 		
-		Object[] args = {workSpaceVO.getWsLink()};
-		flag = this.jdbcTemplate.update(sb.toString(), args);		
+		int flag = sqlSessionTemplate.delete(statement,workSpaceVO);
 		LOG.debug("-doDelete flag==" + flag);
 		return flag;
 	}
@@ -97,25 +83,17 @@ public class WorkSpaceDaoImpl {
 	 * @return
 	 */
 	public WorkSpaceVO doSelectOne(WorkSpaceVO wsLink) {
-		WorkSpaceVO outVO = null;
+		LOG.debug("=====================");
+		LOG.debug("=doSelectOne=");
+		LOG.debug("=====================");	
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT            \n");
-		sb.append("    ws_link,      \n");
-		sb.append("    ws_name,      \n");
-		sb.append("    project,      \n");
-		sb.append("    reg_id,       \n");
-		sb.append("    reg_dt        \n");
-		sb.append("FROM workspace    \n");
-		sb.append("WHERE ws_link = ? \n");
-		
-		LOG.debug("=sql="+sb.toString());
+		//단건조회 : namespace+id = com.bighit.on.workspace.doSelectOne		
+		String statement = NAMESPACE +".doSelectOne";
+		LOG.debug("=statement="+statement);
 		LOG.debug("=param=="+wsLink);
 		
-		Object[] args = {wsLink.getWsLink()};
-		outVO = (WorkSpaceVO) this.jdbcTemplate.queryForObject(sb.toString(), 
-    			                        args, 
-    			                        rowMapper);
+		WorkSpaceVO outVO = sqlSessionTemplate.selectOne(statement,wsLink);
+		
 		LOG.debug("doSelectOne outVO = "+outVO);
 		
 		return outVO;

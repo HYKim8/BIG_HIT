@@ -1,10 +1,12 @@
 package com.bighit.on.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -52,6 +54,7 @@ public class TestWorkSpace {
 	}
 
 	@Test
+	@Ignore
 	public void all() {
 		LOG.debug("** test **");
 		//워크스페이스삭제T
@@ -66,5 +69,28 @@ public class TestWorkSpace {
 		workSpaceDao.doSelectOne(workSpace01);
 		workSpaceDao.doSelectOne(workSpace02);
 	}
-
+	
+	//성공
+	@Test
+	@Ignore
+	public void doInsert() {
+		int flag = workSpaceDao.doInsert(workSpace01);
+		assertThat(flag, is(1));
+	}
+	
+	//성공
+	@Test
+	@Ignore
+	public void doDelete() {
+		int flag = workSpaceDao.doDelete(workSpace01);
+		assertThat(flag, is(1));
+	}
+	
+	//성공
+	@Test
+	public void doSelectOne() {
+		workSpaceDao.doSelectOne(workSpace01);
+		
+	}
+	
 }

@@ -12,5 +12,6 @@
 		<typeAlias type="com.bighit.on.reminder.ReminderVO" alias="ReminderVO" />
 		<typeAlias type="com.bighit.on.file.FileVO" alias="FileVO"/>
 		<typeAlias type="com.bighit.on.thread.ThreadVO" alias="ThreadVO"/>
+		<typeAlias type="com.bighit.on.workspace.WorkSpaceVO" alias="WorkSpaceVO"/>
 	</typeAliases>
 </configuration>

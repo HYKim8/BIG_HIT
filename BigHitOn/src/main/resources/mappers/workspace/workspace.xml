@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.workspace">
+	
+	<!-- 단건조회 -->
+	<!-- com.bighit.on.workspace.doSelectOne -->
+	<select id="doSelectOne" parameterType="WorkSpaceVO" resultType="WorkSpaceVO">
+		SELECT           
+		    ws_link,     
+		    ws_name,     
+		    project,     
+		    reg_id,      
+		    reg_dt       
+		FROM workspace   
+		WHERE ws_link = #{wsLink}		
+	</select>
+	
+	<!-- 삭제 -->
+	<!-- com.bighit.on.workspace.doDelete -->
+	<delete id="doDelete" parameterType="WorkSpaceVO">
+		<![CDATA[
+		DELETE FROM workspace
+		WHERE ws_link = #{wsLink}  
+		]]>  		
+	</delete>
+	
+	<!-- 등록 -->
+	<!-- com.bighit.on.workspace.doInsert -->
+	<insert id="doInsert" parameterType="WorkSpaceVO" >
+		INSERT INTO workspace ( 
+		    ws_link,            
+		    ws_name,            
+		    project,            
+		    reg_id,             
+		    reg_dt              
+		) VALUES (              
+		    #{wsLink},                  
+		    #{wsName},                  
+		    #{project},                  
+		    #{regId},                  
+		    SYSDATE             
+		)     	
+	</insert>
+	
+</mapper>	
+                  
+	
+
+
