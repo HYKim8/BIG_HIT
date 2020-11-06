@@ -72,7 +72,10 @@ public class ReminderController {
 		LOG.debug("-flag-" + flag);
 		LOG.debug("-------------------------");
 		
-		return "reminder/reminder";
+		Gson gson = new Gson();
+		String json = gson.toJson(flag);
+		
+		return json;
 	}
 	
 }
