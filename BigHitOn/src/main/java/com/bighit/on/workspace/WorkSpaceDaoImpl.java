@@ -21,8 +21,6 @@ public class WorkSpaceDaoImpl {
 	
 	private final String NAMESPACE = "com.bighit.on.workspace";
 	
-	@Autowired
-	JdbcTemplate jdbcTemplate;
 	RowMapper rowMapper = new RowMapper<WorkSpaceVO>() {
 		@Override
 		public WorkSpaceVO mapRow(ResultSet rs, int rowNum) throws SQLException {

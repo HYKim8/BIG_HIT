@@ -79,7 +79,24 @@ public class TestChannel {
 	public void tearDown() throws Exception {
 		LOG.debug("** tearDown() **");
 	}
-
+	
+	//성공
+	@Test
+	@Ignore
+	public void doSelectOne() {
+		channelDao.doSelectOne(channel01);
+		channelDao.doSelectOne(channel02);
+	}
+	
+	//성공
+	@Test
+	@Ignore
+	public void doDelete() {
+		channelDao.doDelete(channel01);
+		channelDao.doDelete(channel02);
+	}
+	
+	//성공
 	@Test
 	@Ignore
 	public void doInsert() {
@@ -88,8 +105,8 @@ public class TestChannel {
 		channelDao.doInsert(channel02);
 	}
 	
+	//성공
 	@Test
-	@Ignore
 	public void doSelectList() {
 //		ChannelVO cntChnnel = new ChannelVO();
 //		cntChnnel.setWsLink("1");
@@ -99,29 +116,31 @@ public class TestChannel {
 	}
 	
 	@Test
+	@Ignore
 	public void all() {
-		channelCommandDao.doDeleteAll(channel01);
-		channelCommandDao.doDeleteAll(channel02);
-		
-		channelUsersDao.doDeleteAll(channel01);
-		channelUsersDao.doDeleteAll(channel02);
+//		channelCommandDao.doDeleteAll(channel01);
+//		channelCommandDao.doDeleteAll(channel02);
+//		
+//		channelUsersDao.doDeleteAll(channel01);
+//		channelUsersDao.doDeleteAll(channel02);
 		//채널삭제T
 		channelDao.doDelete(channel01);
 		channelDao.doDelete(channel02);
 				
-		//채널 생성T
-		channelDao.doInsert(channel01);
-		channelDao.doInsert(channel02);
-		
-		
-		//List
-		List<ChannelVO> list = channelDao.doSelectList(channel01);
-
-		//단건조회
-		channelDao.doSelectOne(channel01);
-		channelDao.doSelectOne(channel02);
+//		//채널 생성T
+//		channelDao.doInsert(channel01);
+//		channelDao.doInsert(channel02);
+//		
+//		
+//		//List
+//		List<ChannelVO> list = channelDao.doSelectList(channel01);
+//
+//		//단건조회
+//		channelDao.doSelectOne(channel01);
+//		channelDao.doSelectOne(channel02);
 		
 		
 	}
+
 
 }

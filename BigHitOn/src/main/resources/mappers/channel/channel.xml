@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.channel">
+	
+	<!-- 목록조회 -->
+	<!-- com.bighit.on.workspace.doSelectList -->
+	<select id="doSelectList" parameterType="ChannelVO" resultType="ChannelVO">
+		SELECT             
+		    ch_link,       
+		    ws_link,       
+		    ch_name,       
+		    topic,         
+		    ch_description,
+		    ch_access,     
+		    reg_id,        
+		    reg_dt         
+		FROM channels      
+		WHERE ws_link = #{wsLink}  		
+	</select>
+	
+	<!-- 단건조회 -->
+	<!-- com.bighit.on.workspace.doDelete -->
+	<select id="doSelectOne" parameterType="ChannelVO" resultType="ChannelVO">
+		SELECT             
+		    ch_link,       
+		    ws_link,       
+		    ch_name,       
+		    topic,         
+		    ch_description,
+		    ch_access,     
+		    reg_id,        
+		    reg_dt         
+		FROM channels      
+		WHERE ch_link = #{chLink}  
+	</select>
+	
+	<!-- 삭제 -->
+	<!-- com.bighit.on.workspace.doDelete -->
+	<delete id="doDelete" parameterType="ChannelVO">
+		<![CDATA[
+		DELETE FROM channels
+		WHERE ch_link = #{chLink}  
+		]]>  		
+	</delete>
+	
+	<!-- 등록 -->
+	<!-- com.bighit.on.workspace.doInsert -->
+	<insert id="doInsert" parameterType="ChannelVO">
+		 INSERT INTO channels (
+		     ch_link,          
+		     ws_link,          
+		     ch_name,          
+		     topic,            
+		     ch_description,   
+		     ch_access,        
+		     reg_id,           
+		     reg_dt            
+		 ) VALUES (            
+		     #{chLink},                
+		     #{wsLink},                
+		     #{chName},                
+		     #{topic},                
+		     #{chDescription},                
+		     #{chAccess},                
+		     #{regId},                
+		     SYSDATE           
+		 )                     		
+	</insert>
+
+
+</mapper>
