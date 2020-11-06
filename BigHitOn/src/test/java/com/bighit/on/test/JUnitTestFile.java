@@ -1,5 +1,8 @@
 package com.bighit.on.test;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -79,6 +82,23 @@ public class JUnitTestFile {
 	}
 
 	@Test
+	@Ignore
+	public void doFile() throws IOException {
+		String filePath = "./src/main/java/com/bighit/on/file/Test.jpg";
+		// 나중에 controller로 profileimg, file 등 분류를 하면 될 듯. ID도 받고.
+		String upPath = "profileimg/"+Paths.get(filePath).getFileName().toString();
+		
+		int flag = fileDao.doFileUpload(filePath, upPath);
+		
+		LOG.debug("==================");
+		LOG.debug("upload flag : "+flag);
+		LOG.debug("==================");
+		
+		// file로 받는다 이 부분은 controller랑 할 때..
+		fileDao.doFileDownload(upPath, filePath);
+	}
+	
+	@Test
 	public void serviceTest() {
 		fileService.doInsert(fileVO01);
 		fileService.doInsert(fileVO02);
@@ -112,6 +132,7 @@ public class JUnitTestFile {
 	
 	
 	@Test
+	@Ignore
 	public void daoTest() {
 
 		fileDao.doInsert(fileVO01);

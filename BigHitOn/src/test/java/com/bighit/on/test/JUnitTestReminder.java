@@ -109,9 +109,9 @@ public class JUnitTestReminder {
 		reminderService.doUpdate(reminder02);
 		reminderService.doUpdate(reminder03);
 		
-		reminderService.doDelete(reminder01);
-		reminderService.doDelete(reminder02);
-		reminderService.doDelete(reminder03);
+//		reminderService.doDelete(reminder01);
+//		reminderService.doDelete(reminder02);
+//		reminderService.doDelete(reminder03);
 	}
 	
 	@Test
