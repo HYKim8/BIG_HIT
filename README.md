@@ -23,7 +23,7 @@
 ```
 
 ## 3. 요구사항 정의서
-[요구사항 정의서]:(https://github.com/HYKim8/BIG_HIT/blob/main/document/BIGHIT%20%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C(%EC%B4%88%EC%95%88)_201028.xlsx)
+[요구사항 정의서](https://github.com/HYKim8/BIG_HIT/blob/main/document/BIGHIT%20%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C(%EC%B4%88%EC%95%88)_201028.xlsx)
 
 ## 4. WBS
 
