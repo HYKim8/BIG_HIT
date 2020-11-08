@@ -35,4 +35,15 @@ public class FileService {
 		return fileDao.doSelectListThrKey(fileVO);
 	}
 	
+	/**
+	 * 
+	 * @param filePath (file URL)
+	 * @param upPath (S3 URL(key_name))
+	 * @return
+	 */
+	public int doFileUpload(String filePath, String upPath) {
+		
+		return fileDao.doFileUpload(filePath, upPath);
+	}
+	
 }

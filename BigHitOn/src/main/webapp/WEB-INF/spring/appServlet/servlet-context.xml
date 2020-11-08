@@ -21,8 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+	
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"> 
+		<beans:property name="contentType" value="application/json;charset=UTF-8" /> 
+	</beans:bean>
+
 	<context:component-scan base-package="com.bighit.on" />
-	
-	
-	
+
 </beans:beans>
