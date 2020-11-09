@@ -7,6 +7,7 @@
     	ch_link,
     	com_id
 	FROM channel_command;
+	WHERE ch_link = #{chLink}
 </select>
 <insert id="doInsert" parameterType="ChannelCommandVO">
 	INSERT INTO channel_command (
