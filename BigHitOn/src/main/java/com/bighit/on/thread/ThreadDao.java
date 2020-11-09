@@ -41,6 +41,8 @@ public class ThreadDao {
 	LOG.debug("====statement===="+statement);
 	LOG.debug("====threadVO===="+threadVO);
 	int flag = sqlSessionTemplate.insert(statement, threadVO);
+	LOG.debug("-doInsert flag=" + flag);
+	
 	
 	return flag;
 	}
@@ -54,6 +56,7 @@ public class ThreadDao {
 		  LOG.debug("====statement===="+statement);
 	      LOG.debug("====threadVO===="+threadVO);
 		  int flag = sqlSessionTemplate.delete(statement, threadVO);
+		  LOG.debug("-doDelete flag=" + flag);
 			
 		  return flag;
 	  }
@@ -161,7 +164,7 @@ public class ThreadDao {
 			LOG.debug("====statement===="+statement);
 			LOG.debug("====threadVO===="+threadVO);
 			
-			List<ThreadVO> outVO = this.sqlSessionTemplate.selectOne(statement,threadVO);
+			List<ThreadVO> outVO = this.sqlSessionTemplate.selectList(statement,threadVO);
 			LOG.debug("=outVO="+outVO);
 			
 			return outVO;

@@ -45,8 +45,7 @@ public class TestThreadController {
 	final Logger LOG = LoggerFactory.getLogger(TestThreadController.class);
 	
 	@Autowired
-	WebApplicationContext webApplicationContext;
-	
+	WebApplicationContext webApplicationContext;  
 	@Autowired
 	ThreadService threadService;
 	

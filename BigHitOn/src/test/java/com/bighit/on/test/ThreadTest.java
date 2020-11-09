@@ -48,13 +48,13 @@ public class ThreadTest {
 
 		thread01.setThrKey("test1");
 		thread01.setChLink("12");
-		//thread01.setContents("test");
-		//thread01.setIsPin(1);
-		//thread01.setParentKey("1");
-		//thread01.setPinId("abc");
-		//thread01.setRegId("abc");
-		//thread01.setRegDt("2020-11-03");
-		//thread01.setModDt("2020-11-03");
+		thread01.setContents("test");
+		thread01.setIsPin(1);
+		thread01.setParentKey("1");
+		thread01.setPinId("abc");
+		thread01.setRegId("abc");
+		thread01.setRegDt("2020-11-03");
+		thread01.setModDt("2020-11-03");
 		
 		thread02.setThrKey("test");
 		thread02.setChLink("123");
@@ -72,11 +72,11 @@ public class ThreadTest {
 	public void doSelectAll() {
 		threadDao.doSelectAll(thread01);
 	}
-	@Test
-	@Ignore
-	public void doSelectOne() {
-		threadDao.doSelectOne("test");
-	}
+	//@Test
+	//@Ignore
+	//public void doSelectOne() {
+	//	threadDao.doSelectOne("test");
+	//}
 	@Test
 	@Ignore
 	public void doInsert() {
@@ -105,7 +105,7 @@ public class ThreadTest {
 		
 		List<ThreadVO> list = threadDao.doSelectAll(thread01);
 		
-		threadDao.doSelectOne("2");
+		threadDao.doSelectOne(thread01);
 		
 		thread01.setContents("changeTest");
 		threadDao.doUpdate(thread01);

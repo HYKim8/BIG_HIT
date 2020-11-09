@@ -48,7 +48,7 @@ public class ChannelCommandDao {
 		LOG.debug("=statement="+statement);
 		LOG.debug("=param ==="+channelCommandVO);
 		
-		int flag = sqlSessionTemplate.delete(statement, channelCommandVO);
+		int flag = sqlSessionTemplate.insert(statement, channelCommandVO);
 		LOG.debug("-doInsert flag=" + flag);
 		return flag;		
 				
@@ -79,24 +79,10 @@ public class ChannelCommandDao {
 	 * @param dto
 	 * @return
 	 */
-	public int doDeleteAll(DTO dto) {
-		if(!(dto instanceof ChannelVO) && !(dto instanceof CommandVO)) {
-			return 0;
-		}
-		
-		
-		StringBuilder sb = new StringBuilder();
-		Object arg =null;
-		sb.append("DELETE FROM channel_command  \n");
-		if(dto instanceof ChannelVO) {
-			sb.append("WHERE ch_link = ?            \n");
-			arg = ((ChannelVO)dto).getChLink();
-		}
-		else {
-			sb.append("WHERE com_id = ?             \n");
-			arg = ((CommandVO)dto).getComId();
-		}		
-		int flag = this.sqlSessionTemplate.update(sb.toString(), arg);
-		return flag;		
+	public int doDeleteAll(ChannelVO inVO) {
+		return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInChannel", inVO);		
+	}
+	public int doDeleteAll(CommandVO inVO) {
+		return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInCommand", inVO);		
 	}
 }

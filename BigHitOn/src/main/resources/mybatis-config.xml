@@ -16,7 +16,9 @@
 		<typeAlias type="com.bighit.on.channel.ChannelVO" alias="ChannelVO"/>
 		<typeAlias type="com.bighit.on.reaction.ReactionVO" alias="ReactionVO"/>
 		<typeAlias type="com.bighit.on.mention.MentionVO" alias="MentionVO"/>
-		<typeAlias type="com.bighit.on.save.SaveThrVO" alias="SaveThrVO"/>	
-		<typeAlias type="com.bighit.on.channelcommmand.ChannelCommandVO" alias="ChannelCommandVO"/>
+		<typeAlias type="com.bighit.on.save.SaveThrVO" alias="SaveThrVO"/>
+		<typeAlias type="com.bighit.on.command.CommandVO" alias="CommandVO"/>
+		<typeAlias type="com.bighit.on.user.dao.UsersVO" alias="UsersVO"/>
+		<typeAlias type="com.bighit.on.channelcommand.ChannelCommandVO" alias="ChannelCommandVO"/>
 	</typeAliases>
 </configuration>
