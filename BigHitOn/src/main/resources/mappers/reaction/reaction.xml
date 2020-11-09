@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bighit.on.reaction">
-
+<select id="doCheck" parameterType="ReactionVO" resultType="int">
+	SELECT COUNT(*)
+	FROM reaction
+	WHERE 
+	    reg_id = #{regId}
+	    AND emoji = #{emoji}
+	    AND thr_key = #{thrKey}
+</select>
 <select id="doSelectList" parameterType="ReactionVO" resultType="ReactionVO">
 	SELECT          
 	    emoji,      
@@ -26,7 +33,7 @@
 <delete id="doDelete" parameterType="ReactionVO">
 	DELETE FROM reaction 
 	WHERE                
-	    reg_id = #{resId}       
+	    reg_id = #{regId}       
 	    AND thr_key = #{thrKey}
 	    AND emoji = #{emoji}	
 
