@@ -3,6 +3,7 @@ package com.bighit.on.channelcommand;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,19 @@ public class ChannelCommandDao {
 	final static Logger   LOG = LoggerFactory.getLogger(ChannelCommandDao.class);
 	//
 	@Autowired
-	JdbcTemplate jdbcTemplate;
-	RowMapper rowMapper = new RowMapper<ChannelCommandVO>() {
-		@Override
-		public ChannelCommandVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			ChannelCommandVO outVO = new ChannelCommandVO();
-			outVO.setChLink(rs.getString("ch_link"));
-			outVO.setComId(rs.getInt("com_id"));
-			return outVO;
-		}
-	};
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String NAMESPACE = "com.bighit.on.channelcommand";
+	
+	//RowMapper rowMapper = new RowMapper<ChannelCommandVO>() {
+	//	@Override
+	//	public ChannelCommandVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+	//		ChannelCommandVO outVO = new ChannelCommandVO();
+	//		outVO.setChLink(rs.getString("ch_link"));
+	//		outVO.setComId(rs.getInt("com_id"));
+	//		return outVO;
+	//	}
+	//};
 	/**
 	 * 채널링크 생성
 	 * @param channelLinkVO
@@ -50,7 +54,7 @@ public class ChannelCommandDao {
 		sb.append("    ?,                         \n");
 		sb.append("    ?                          \n");
 		sb.append(" )                             \n");
-		flag = this.jdbcTemplate.update(sb.toString(), args);
+		flag = this.sqlSessionTemplate.update(sb.toString(), args);
 		return flag;
 	}
 	
@@ -69,7 +73,7 @@ public class ChannelCommandDao {
 				 channelCommandVO.getComId()
 		};
 		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
+		flag = this.sqlSessionTemplate.update(sb.toString(), args);
 		return flag;		
 	}
 	/**
@@ -97,7 +101,7 @@ public class ChannelCommandDao {
 			sb.append("WHERE com_id = ?             \n");
 			arg = ((CommandVO)dto).getComId();
 		}		
-		int flag = this.jdbcTemplate.update(sb.toString(), arg);
+		int flag = this.sqlSessionTemplate.update(sb.toString(), arg);
 		return flag;		
 	}
 }
