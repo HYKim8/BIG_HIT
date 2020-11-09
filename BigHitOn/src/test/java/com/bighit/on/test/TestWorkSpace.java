@@ -19,6 +19,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.workspace.WorkSpaceDaoImpl;
+import com.bighit.on.workspace.WorkSpaceService;
+import com.bighit.on.workspace.WorkSpaceServiceImpl;
 import com.bighit.on.workspace.WorkSpaceVO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -35,6 +37,9 @@ public class TestWorkSpace {
 	
 	@Autowired
 	WorkSpaceDaoImpl workSpaceDao;
+	
+	@Autowired
+	WorkSpaceServiceImpl workSpaceServiceImpl; 
 	
 	WorkSpaceVO workSpace01;
 	WorkSpaceVO workSpace02;
@@ -88,9 +93,15 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doSelectOne() {
 		workSpaceDao.doSelectOne(workSpace01);
 		
+	}
+	
+	@Test
+	public void doworkCkService() {
+		workSpaceServiceImpl.workSpaceCK(workSpace01);
 	}
 	
 }

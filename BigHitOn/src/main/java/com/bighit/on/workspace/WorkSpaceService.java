@@ -7,4 +7,6 @@ public interface WorkSpaceService {
 	public int doDelete(WorkSpaceVO workSpaceVO);
 	
 	public WorkSpaceVO doSelectOne(WorkSpaceVO wsLink);
+	
+	public int workSpaceCK(WorkSpaceVO workSpaceVO);
 }
