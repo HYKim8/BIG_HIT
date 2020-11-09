@@ -1,8 +1,7 @@
 package com.bighit.on.file;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Controller
 public class FileController {
 
-	final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	FileService fileService;
@@ -38,17 +37,23 @@ public class FileController {
 	
 	@RequestMapping(value = "file/doUpload.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView fileUpload(MultipartHttpServletRequest request) {
+	public String uploadFile(MultipartFile filename) throws IllegalStateException, IOException {
 		LOG.debug("-------------------------");
 		LOG.debug("-file/doUpload.do-");
 		LOG.debug("-------------------------");
 		
+		String filePath = "temp value";
 		
+		// 나중에 controller로 profileimg, file 등 분류를 하면 될 듯. ID도 받고.
+		String upPath = "profileimg/"+filename.getOriginalFilename();
+		fileService.doFileUpload(filePath, upPath, filename);
+		try {
+			LOG.debug("file is :" + filename.toString());
+		} catch(Exception e) {
+			return "error occured" + e.getMessage();
+		}
 		
-		
-		
-		
-		return null;
+		return "file/file";
 	}
 	
 	
