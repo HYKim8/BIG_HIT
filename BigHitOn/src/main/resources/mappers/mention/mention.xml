@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.mention">
+
+<select id="doSelectList" parameterType="MentionVO" resultType="MentionVO">
+	SELECT                  
+	    res_id,             
+	    thr_key,            
+	    reg_id,             
+	    reg_dt              
+	FROM                    
+	    mention             
+	WHERE                   
+	    thr_key = #{thrKey}         
+</select>
+<!--<select id="doSelectList" parameterType="UsersVO" resultType="ThreadVO"></select>-->
+<delete id="doDelete" parameterType="MentionVO">
+	DELETE FROM mention  
+	WHERE                
+	    res_id = #{resId}       
+	    AND thr_key = #{thrKey}	
+
+</delete>
+<insert id="doInsert" parameterType="MentionVO">
+	INSERT INTO mention (    
+    res_id,              
+    thr_key,             
+    reg_id,              
+    reg_dt               
+) VALUES (               
+    #{resId},                   
+    #{thrKey},                   
+    #{regId},                   
+    SYSDATE             
+)						
+</insert>
+
+
+</mapper>
