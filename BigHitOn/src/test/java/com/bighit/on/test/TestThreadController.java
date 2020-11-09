@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -56,26 +58,50 @@ public class TestThreadController {
 	//String thrKey, String chLink, String contents, int isPin, String pinId, String regId, String regDt,String modDt, String parentKey
 	@Before
 	public void setUp() throws Exception {
-		threads = Arrays.asList( new ThreadVO("5","1","testTest",1,"11111","HOON","2020-11-06","2020-11-06","aaaa"));
-		
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		LOG.debug("=mockMvc=" + mockMvc);
 		assertThat(mockMvc, is(notNullValue()));
+		
+		threads = Arrays.asList( new ThreadVO("5","1","testTest",1,"11111","HOON","2020-11-06","2020-11-06","1"));
 	}
 	
 	@Test
+	@Ignore
+	public void doDelete() throws Exception {
+		ThreadVO threadVO = threads.get(0);
+		threadVO.setThrKey("1");
+		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.post("/thread/doDelete.do")
+				.param("thrKey", String.valueOf(threadVO.getThrKey()));
+		
+		ResultActions resultActions = mockMvc.perform(createMessage)
+				//.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is2xxSuccessful());
+		
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("result = " + result);
+		//json -> Message
+		Gson gson=new Gson();
+		Message message = gson.fromJson(result, Message.class);
+		LOG.debug("message = " + message);
+
+	}
+	
+	@Test
+	@Ignore
 	public void doInsert() throws Exception {
 		//(#{parent_key}, #{ch_link}, #{contents},#{reg_id},#{reg_dt})
 		ThreadVO threadVO = threads.get(0);
 		MockHttpServletRequestBuilder createMessage = 
 				 MockMvcRequestBuilders.post("/thread/doInsert.do")
-				 .param("parentKey", threadVO.getParentKey()+"")
-				 .param("chLink", threadVO.getChLink()+"")
-				 .param("contents", threadVO.getContents()+"")
-				 .param("regId", threadVO.getRegId()+"")
-				 .param("regDt", threadVO.getRegDt()+"");
+				 .param("thrKey", threadVO.getThrKey())
+				 .param("parentKey", threadVO.getParentKey())
+				 .param("chLink", threadVO.getChLink())
+				 .param("contents", threadVO.getContents())
+				 .param("regId", threadVO.getRegId())
+				 .param("regDt", threadVO.getRegDt());
 		
-		ResultActions resultActions =mockMvc.perform(createMessage)		
+		ResultActions resultActions =mockMvc.perform(createMessage)	
+				  //.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
 				  .andExpect(status().is2xxSuccessful());
 		
 		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
@@ -91,5 +117,37 @@ public class TestThreadController {
 		LOG.debug("=message=" + message);
 		LOG.debug("===========================");	
 	}
+	
+	@Test
+	public void doUpdate() throws Exception {
+		ThreadVO threadVO = threads.get(0);
+		threadVO.setContents(threadVO.getContents()+"testUpdate");
+		threadVO.setModDt("2020-11-09");
+		threadVO.setThrKey("5");
+		
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.post("/thread/doUpdate.do")
+				 .param("thrKey", threadVO.getThrKey())				
+				 .param("contents", threadVO.getContents())
+				 .param("modDt", threadVO.getRegDt());
+		
+		ResultActions resultActions =mockMvc.perform(createMessage)	
+				  //.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+				  .andExpect(status().is2xxSuccessful());
+		
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+		
+		//json -> Message
+		Gson gson=new Gson();
+		
+		Message message = gson.fromJson(result, Message.class);
+		LOG.debug("===========================");
+		LOG.debug("=message=" + message);
+		LOG.debug("===========================");
+	}
+	
 
 }

@@ -7,6 +7,8 @@ public class Message extends DTO {
 	 */
 	private String regId;
 	
+	private String thrKey;
+	
 	/**
 	 * 메시지 내용: 등록되었습니다.
 	 */
@@ -32,10 +34,21 @@ public class Message extends DTO {
 		this.msgContents = msgContents;
 	}
 
+	
+	public String getThrKey() {
+		return thrKey;
+	}
+
+	public void setThrKey(String thrKey) {
+		this.thrKey = thrKey;
+	}
+
 	@Override
 	public String toString() {
-		return "Message [regId=" + regId + ", msgContents=" + msgContents + ", toString()=" + super.toString() + "]";
+		return "Message [regId=" + regId + ", thrKey=" + thrKey + ", msgContents=" + msgContents + ", toString()="
+				+ super.toString() + "]";
 	}
+
 	
 	
 	

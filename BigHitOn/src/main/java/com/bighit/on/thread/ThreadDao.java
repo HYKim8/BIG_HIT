@@ -25,7 +25,7 @@ public class ThreadDao {
 	 @Autowired
 	 SqlSessionTemplate sqlSessionTemplate;
 	 
-	 private final String NAMESPACE = "com.bighit.on.thread";
+	 final String NAMESPACE = "com.bighit.on.thread";
 	 
 	public ThreadDao() {		
 	}
