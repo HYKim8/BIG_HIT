@@ -37,8 +37,8 @@ public class ReactionDaoImpl {
 	 */
 	
 	
-	public int doCheck(ReactionVO reactionVO) {
-		return sqlSessionTemplate.selectOne( NAMESPACE +".doCheck", reactionVO);		
+	public boolean doCheck(ReactionVO reactionVO) {
+		return (int)(sqlSessionTemplate.selectOne( NAMESPACE +".doCheck", reactionVO)) == 1;		
 	}
 	/**
 	 * 반응 기능
