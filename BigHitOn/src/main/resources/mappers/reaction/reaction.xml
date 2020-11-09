@@ -9,6 +9,15 @@
 	    AND emoji = #{emoji}
 	    AND thr_key = #{thrKey}
 </select>
+<select id="doSelectListFromUsers" parameterType="UsersVO" resultType="ThreadVO">
+	SELECT *                                                 
+	FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key 
+						FROM thread t JOIN reaction r           
+						ON  r.res_id = #{user_serial}                        
+						and r.thr_key = t.thr_key) b            
+	ON a.thr_key = b.thr_key								
+
+</select>
 <select id="doSelectList" parameterType="ReactionVO" resultType="ReactionVO">
 	SELECT          
 	    emoji,      

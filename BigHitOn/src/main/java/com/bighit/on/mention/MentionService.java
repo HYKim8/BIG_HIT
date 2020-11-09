@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bighit.on.thread.ThreadVO;
+import com.bighit.on.user.dao.UsersVO;
+
 public class MentionService {
 	final static Logger LOG = LoggerFactory.getLogger(MentionService.class);
 	@Autowired
@@ -24,6 +27,10 @@ public class MentionService {
 		return mentionDaoImpl.doDelete(mentionVO);
 	}
 	public List<MentionVO> doSelectList(MentionVO inVO)
+	{
+		return mentionDaoImpl.doSelectList(inVO);
+	}
+	public List<ThreadVO> doSelectList(UsersVO inVO)
 	{
 		return mentionDaoImpl.doSelectList(inVO);
 	}

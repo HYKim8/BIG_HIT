@@ -66,11 +66,11 @@ public class ReactionTest {
 		assertThat(tmplist.size(), is(3));
 		
 		assertThat(reactionDaoImpl.doCheck(in1),is(1));
-//		UsersVO user = new UsersVO();
-//		user.setUser_serial("yeo");
-//		//해당 유저가 받은 반응 갯수
-//		List<ThreadVO> threadlist = reactionDaoImpl.doSelectList(user);
-//		assertThat(threadlist.size(), is(1));
+		UsersVO user = new UsersVO();
+		user.setUser_serial("yeo");
+		//해당 유저가 받은 반응 갯수
+		List<ThreadVO> threadlist = reactionDaoImpl.doSelectList(user);
+		assertThat(threadlist.size(), is(1));
 	}
 	@Test
 	public void bean()
