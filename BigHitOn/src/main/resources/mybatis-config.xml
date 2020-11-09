@@ -13,6 +13,9 @@
 		<typeAlias type="com.bighit.on.file.FileVO" alias="FileVO"/>
 		<typeAlias type="com.bighit.on.thread.ThreadVO" alias="ThreadVO"/>
 		<typeAlias type="com.bighit.on.workspace.WorkSpaceVO" alias="WorkSpaceVO"/>
-		<typeAlias type="com.bighit.on.channel.ChannelVO" alias="ChannelVO"/>	
+		<typeAlias type="com.bighit.on.channel.ChannelVO" alias="ChannelVO"/>
+		<typeAlias type="com.bighit.on.reaction.ReactionVO" alias="ReactionVO"/>
+		<typeAlias type="com.bighit.on.mention.MentionVO" alias="MentionVO"/>
+		<typeAlias type="com.bighit.on.save.SaveThrVO" alias="SaveThrVO"/>	
 	</typeAliases>
 </configuration>
