@@ -4,12 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bighit.on.cmn.DTO;
+import com.bighit.on.mention.MentionDaoImpl;
+import com.bighit.on.mention.MentionVO;
 import com.bighit.on.save.SaveThrVO;
 import com.bighit.on.thread.ThreadDao;
 import com.bighit.on.thread.ThreadVO;
@@ -18,23 +23,13 @@ import com.bighit.on.user.dao.UsersVO;
 
 @Repository("ReactionDaoImpl")
 public class ReactionDaoImpl {
+	final static Logger   LOG = LoggerFactory.getLogger(MentionDaoImpl.class);
+	
 	@Autowired
-	JdbcTemplate jdbcTemplate;
-	@Autowired
-	ThreadDao threadDao;
-	RowMapper rowMapper = new RowMapper<ReactionVO>() {
-		@Override
-		public ReactionVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			ReactionVO outVO = new ReactionVO();
-			outVO.setEmoji(rs.getInt("emoji"));
-			outVO.setResId(rs.getString("res_id"));
-			outVO.setThrKey(rs.getString("thr_key"));
-			outVO.setRegDt(rs.getString("reg_dt"));
-			outVO.setRegId(rs.getString("reg_id"));
-			
-			return outVO;
-		}
-	};
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String NAMESPACE = "com.bighit.on.reaction";
+	
 	/**
 	 * 반응 기능
 	 * 키는 반응키 누른 사람,반응 종류,반응을 한 쓰레드
@@ -44,30 +39,16 @@ public class ReactionDaoImpl {
 	 */
 	public int doInsert(ReactionVO reactionVO)
 	{
-		int flag =0;
+		LOG.debug("=====================");
+		LOG.debug("=doInsert=");
+		LOG.debug("=====================");
+		//등록 : namespace+id = com.bighit.on.channel.doInsert
+		String statement = NAMESPACE +".doInsert";
+		LOG.debug("=statement="+statement);
+		LOG.debug("=param ==="+reactionVO);
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO reaction (   \n");
-		sb.append("    emoji,              	\n");
-		sb.append("    thr_key,             \n");
-		sb.append("    res_id,              \n");		
-		sb.append("    reg_id,              \n");
-		sb.append("    reg_dt               \n");
-		sb.append(") VALUES (               \n");
-		sb.append("    ?,                   \n");
-		sb.append("    ?,                   \n");
-		sb.append("    ?,                   \n");
-		sb.append("    ?,                   \n");
-		sb.append("    sysdate              \n");
-		sb.append(")						\n");
-		
-		Object[] args = {	
-				reactionVO.getEmoji(),
-				reactionVO.getThrKey(),
-				reactionVO.getResId(),				
-				reactionVO.getRegId()
-		};
-		flag = this.jdbcTemplate.update(sb.toString(), args);
+		int flag = sqlSessionTemplate.insert(statement, reactionVO);
+		LOG.debug("-doInsert flag=" + flag);
 		return flag;		
 	}
 	/**
@@ -77,21 +58,16 @@ public class ReactionDaoImpl {
 	 */
 	public int doDelete(ReactionVO reactionVO)
 	{
-		int flag =0;
+		LOG.debug("=====================");
+		LOG.debug("=doInsert=");
+		LOG.debug("=====================");
+		String statement = NAMESPACE +".doDelete";
+		LOG.debug("=statement="+statement);
+		LOG.debug("=param ==="+reactionVO);
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM reaction  \n");
-		sb.append("WHERE                \n");
-		sb.append("    reg_id = ?       \n");
-		sb.append("    AND thr_key = ?	\n");
-		sb.append("    AND emoji = ?	\n");
-		Object[] args = {				
-				reactionVO.getRegId(),
-				reactionVO.getThrKey(),
-				reactionVO.getEmoji()
-		};
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		return flag;		
+		int flag = sqlSessionTemplate.delete(statement, reactionVO);
+		LOG.debug("-doInsert flag=" + flag);
+		return flag;			
 	}
 	/**
 	 * 쓰레드키를 참조하여 해당 쓰레드의 
@@ -100,24 +76,23 @@ public class ReactionDaoImpl {
 	 * @return 
 	 */
 	public List<ReactionVO> doSelectList(ReactionVO inVO){
-		List<ReactionVO> outList = null;
-		Object[] args = {
-			inVO.getThrKey()
-		};
+		LOG.debug("=====================");
+		LOG.debug("=doSelectList=");
+		LOG.debug("=====================");
+		//등록 : namespace+id = com.sist.ehr.channel.doSelectList
+		String statement = NAMESPACE +".doSelectList";		
+		LOG.debug("=statement="+statement);
+		LOG.debug("-param-\n" + inVO);
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT                   \n");
-		sb.append("    emoji,             \n");
-		sb.append("    res_id,             \n");
-		sb.append("    thr_key,             \n");
-		sb.append("    reg_id,              \n");
-		sb.append("    reg_dt               \n");
-		sb.append("FROM                     \n");
-		sb.append("    reaction             \n");
-		sb.append("WHERE                    \n");
-		sb.append("    thr_key = ?           \n");
-		outList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
-		return outList;		
+		List<ReactionVO> list = this.sqlSessionTemplate.selectList(statement, inVO);
+		
+		for(ReactionVO vo : list) {
+			LOG.debug("===========================");
+			LOG.debug("=doSelectList vo="+vo);
+			LOG.debug("===========================");
+		}
+		
+		return list;	
 	}
 	/**
 	 * 유저 키를 참조하여 
@@ -126,19 +101,19 @@ public class ReactionDaoImpl {
 	 * @param inVO
 	 * @return ThreadVO list
 	 */
-	public List<ThreadVO> doSelectList(UsersVO inVO){
-		List<ThreadVO> outList = null;
-		Object[] args = {
-				inVO.getUser_serial()
-		};
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT *                                                 \n");
-		sb.append("FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key \n");     
-		sb.append("					FROM thread t JOIN reaction r           \n");
-		sb.append("					ON  r.res_id = ?                        \n");
-		sb.append("					and r.thr_key = t.thr_key) b            \n");
-		sb.append("ON a.thr_key = b.thr_key									\n");
-		outList = this.jdbcTemplate.query(sb.toString(), args, threadDao.getRowMapper() );
-		return outList;
-	}
+//	public List<ThreadVO> doSelectList(UsersVO inVO){
+//		List<ThreadVO> outList = null;
+//		Object[] args = {
+//				inVO.getUser_serial()
+//		};
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("SELECT *                                                 \n");
+//		sb.append("FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key \n");     
+//		sb.append("					FROM thread t JOIN reaction r           \n");
+//		sb.append("					ON  r.res_id = ?                        \n");
+//		sb.append("					and r.thr_key = t.thr_key) b            \n");
+//		sb.append("ON a.thr_key = b.thr_key									\n");
+//		outList = this.jdbcTemplate.query(sb.toString(), args, threadDao.getRowMapper() );
+//		return outList;
+//	}
 }

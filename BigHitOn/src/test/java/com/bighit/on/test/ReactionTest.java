@@ -46,12 +46,9 @@ public class ReactionTest {
 		list = new ArrayList<ReactionVO>();
 		
 		in1= new ReactionVO(1, "yeo", "1", "yeo", "");
-		in2= new ReactionVO(1, "yeo", "1", "kim", "");
-		in3= new ReactionVO(1, "kim", "2", "yeo", "");
 		
 		list.add(in1);
-		list.add(in2);
-		list.add(in3);
+		
 	}
 
 	@After
@@ -67,11 +64,11 @@ public class ReactionTest {
 		assertThat(tmplist.size(), is(2));
 		
 		
-		UsersVO user = new UsersVO();
-		user.setUser_serial("yeo");
-		//해당 유저가 받은 반응 갯수
-		List<ThreadVO> threadlist = reactionDaoImpl.doSelectList(user);
-		assertThat(threadlist.size(), is(1));
+//		UsersVO user = new UsersVO();
+//		user.setUser_serial("yeo");
+//		//해당 유저가 받은 반응 갯수
+//		List<ThreadVO> threadlist = reactionDaoImpl.doSelectList(user);
+//		assertThat(threadlist.size(), is(1));
 	}
 	@Test
 	public void bean()
