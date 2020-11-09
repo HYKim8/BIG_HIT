@@ -62,7 +62,7 @@ public class SaveTest {
 		List<SaveThrVO> tmplist = saveThDaoImpl.doSelectList(in1);
 		//해당 쓰레드의 반응 갯수
 		assertThat(tmplist.size(), is(2));
-		
+		assertThat(saveThDaoImpl.doCheck(in1),is(true));
 		
 		
 	}

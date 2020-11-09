@@ -27,6 +27,12 @@ public class SaveThrDaoImpl {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	private final String NAMESPACE = "com.bighit.on.save";
+	
+	public boolean doCheck(SaveThrVO saveThrVO)
+	{
+		return (int)(sqlSessionTemplate.selectOne(NAMESPACE+".doCheck", saveThrVO)) == 1 ;	
+	}
+	
 	/**
 	 * 쓰레드 저장 
 	 * @param saveThrVO
