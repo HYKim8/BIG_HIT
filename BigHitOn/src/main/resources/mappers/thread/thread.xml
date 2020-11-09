@@ -3,12 +3,12 @@
 <mapper namespace="com.bighit.on.thread">
 
 	<insert id ="doInsert">
-		INSERT INTO THREAD (parent_key,ch_link,contents,reg_id,reg_dt) VALUES 
-		    (#{parent_key}, #{ch_link}, #{contents},#{reg_id},#{reg_dt})
+		INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES 
+		    (#{thrKey},#{parentKey}, #{chLink}, #{contents},#{regId},#{regDt})
 	</insert>
 	
 	<insert id = "doInsertReplay">
-		INSERT INTO THREAD (thr_key,contents,reg_id,reg_dt) VALUE (#{thr_key}, #{contents}, #{reg_id}, #{reg_dt})
+		INSERT INTO THREAD (thr_key,contents,reg_id,reg_dt) VALUE (#{thrKey}, #{contents}, #{regId}, #{regDt})
 	</insert>
 	
 	<!-- 계층형 쿼리로 작성할 것 -->
@@ -18,11 +18,16 @@
 	</select>
 	
 	<delete id = "doDelete">
-		DELETE FROM thread WHERE thr_key = #{thr_key}
+		DELETE FROM thread WHERE thr_key = #{thrKey}
 	</delete>
 	
 	<update id="doUpdate">
-		UPDATE THREAD SET contents,mod_dt WHERE thr_key = #{thr_key}
+		UPDATE THREAD SET contents=#{contents},mod_dt=#{modDt} WHERE thr_key = #{thrKey}
 	</update>
+	
+	<select id = "doSelectOne"
+	resultType = "com.bighit.on.thread.ThreadVO">
+	SELECT parent_key,thr_key,reg_id,reg_dt,contents FROM thread Where thr_key = #{thrKey}	
+	</select>
 </mapper>
 	
