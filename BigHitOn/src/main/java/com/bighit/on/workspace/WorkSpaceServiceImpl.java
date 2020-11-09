@@ -13,7 +13,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	private WorkSpaceDaoImpl workSpaceDao;
 	
 	@Override
-	public int workSpaceCK(WorkSpaceVO workSpaceVO) {
+	public int workSpaceLinkCK(WorkSpaceVO workSpaceVO) {
 		WorkSpaceVO workSpaceCheck = workSpaceDao.doSelectOne(workSpaceVO);
 		LOG.debug("workSpaceCheck.getWsLink():"+workSpaceCheck.getWsLink());
 		if(null != workSpaceCheck.getWsLink()) {
@@ -27,8 +27,34 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	}
 	
 	@Override
-	public int doInsert(WorkSpaceVO workSpaceVO) {
+	public int workSpaceNameCK(WorkSpaceVO workSpaceVO) {
+		if(workSpaceVO.getWsName().length()<=8) {
+			LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
+			LOG.debug("워크스페이스 이름이 짧습니다. 다시 지어주세요");
+			
+			return 1;
+		}
+		LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
+		LOG.debug("이름 생성 완료");
+		return 0;
+	}
+	
+	@Override
+	public int workSpacePCK(WorkSpaceVO workSpaceVO) {
 		
+		if(workSpaceVO.getProject().length()<=10) {
+			LOG.debug("workSpaceVO.getProject().length():"+workSpaceVO.getProject().length());
+			LOG.debug("프로젝트 이름이 짧습니다. 다시 지어주세요");
+			
+			return 1;
+		}
+		LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
+		LOG.debug("프로젝트 생성 완료");
+		return 0;
+	}
+	
+	@Override
+	public int doInsert(WorkSpaceVO workSpaceVO) {
 		
 		return 0;
 		
@@ -43,7 +69,6 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	public WorkSpaceVO doSelectOne(WorkSpaceVO wsLink) {
 		return workSpaceDao.doSelectOne(wsLink);
 	}
-
 
 
 }

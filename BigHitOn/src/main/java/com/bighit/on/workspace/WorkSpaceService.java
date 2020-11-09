@@ -8,5 +8,9 @@ public interface WorkSpaceService {
 	
 	public WorkSpaceVO doSelectOne(WorkSpaceVO wsLink);
 	
-	public int workSpaceCK(WorkSpaceVO workSpaceVO);
+	public int workSpaceLinkCK(WorkSpaceVO workSpaceVO);
+	
+	public int workSpaceNameCK(WorkSpaceVO workSpaceVO);
+	
+	public int workSpacePCK(WorkSpaceVO workSpaceVO);
 }

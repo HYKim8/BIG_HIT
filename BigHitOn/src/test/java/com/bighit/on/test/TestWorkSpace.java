@@ -46,7 +46,7 @@ public class TestWorkSpace {
 	
 	@Before
 	public void setUp() throws Exception {
-		workSpace01 = new WorkSpaceVO("2","jhs_ws","bighit","jhs","");
+		workSpace01 = new WorkSpaceVO("2","정현수정현수정현수","정현수정현수정현수정현수","jhs","");
 		workSpace02 = new WorkSpaceVO("3","jhs_ws","bighit","jhs","");
 	
 		LOG.debug("** setup() **");
@@ -100,8 +100,26 @@ public class TestWorkSpace {
 	}
 	
 	@Test
+	//성공
 	public void doworkCkService() {
-		workSpaceServiceImpl.workSpaceCK(workSpace01);
+		workSpaceServiceImpl.workSpaceNameCK(workSpace01);
 	}
 	
+	//성공
+	@Test
+	@Ignore
+	public void doInserta() {
+		workSpaceServiceImpl.doInsert(workSpace01);
+		
+	}
+	
+	@Test
+	public void workSpacePCK() {
+		workSpaceServiceImpl.workSpacePCK(workSpace01);
+	}
+	
+	@Test
+	public void workSpaceLinkCK() {
+		workSpaceServiceImpl.workSpaceLinkCK(workSpace01);
+	}
 }
