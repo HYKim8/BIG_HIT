@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.save">
+<insert id="doInsert" parameterType="SaveThrVO">
+	INSERT INTO save_thr (   
+	    reg_id,              
+	    thr_key,             
+	    reg_dt               
+	) VALUES (               
+	    #{regId},                   
+	    #{thrKey},                   
+	    SYSDATE              
+	)						
+</insert>
+<delete id="doDelete" parameterType="SaveThrVO">
+	DELETE FROM save_thr 
+	WHERE                
+	    reg_id = #{regId}       
+	    AND thr_key = #{thrKey}
+</delete>
+<select id="doSelectList" parameterType="SaveThrVO" resultType="SaveThrVO">
+	SELECT                   
+	    thr_key,             
+	    reg_id,              
+	    reg_dt               
+	FROM                     
+	    save_thr             
+	WHERE                    
+	    reg_id = #{regId}           
+</select>
+</mapper>
