@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mappers.channelcommmand.channelcommmand">
+<mapper namespace="com.bighit.on.channelcommand">
 
 <select id="doSelectList" parameterType="ChannelCommandVO" resultType="ChannelCommandVO"> 
 	SELECT
@@ -8,22 +8,29 @@
     	com_id
 	FROM channel_command;
 </select>
+<insert id="doInsert" parameterType="ChannelCommandVO">
+	INSERT INTO channel_command (
+	   ch_link,                  
+	   com_id                    
+	) VALUES (                   
+	   #{chLink},                        
+	   #{comId}                         
+	)                            
+</insert>
 <delete id="doDelete" parameterType="ChannelCommandVO">
 	DELETE FROM channel_command
 	WHERE
     	ch_link = #{chLink}
     	AND com_id = #{comId}
 </delete>
-<delete id="doDeleteAll" parameterType="ChannelVO">
+<delete id="doDeleteAllInChannel" parameterType="ChannelVO">
 	DELETE FROM channel_command
 	WHERE
     	ch_link = #{chLink}
-    	AND com_id = #{comId}
 </delete>
-<delete id="doDeleteAll" parameterType="ChannelCommandVO">
+<delete id="doDeleteAllInCommand" parameterType="CommandVO">
 	DELETE FROM channel_command
 	WHERE
-    	ch_link = #{chLink}
-    	AND com_id = #{comId}
+		com_id = #{comId}
 </delete>
 </mapper>
