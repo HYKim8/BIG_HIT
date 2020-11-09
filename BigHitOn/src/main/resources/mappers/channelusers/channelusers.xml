@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.channelusers"></mapper>
+
+<insert id="doInsert" parameterType="ChannelUsersVO">
+	INSERT INTO channel_users (
+     ch_link,
+     user_serial,
+     notification
+   ) VALUES (
+    #{chLink},
+    #{userSerial},
+    #{notification}
+   )
+</insert>
+<delete id="doDelete" parameterType="ChannelUsersVO">
+	DELETE FROM channel_users
+	WHERE
+    	ch_link = #{chLink}
+   		AND user_serial = #{userSerial}
+</delete>
+
+ 

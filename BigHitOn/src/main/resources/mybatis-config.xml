@@ -20,5 +20,6 @@
 		<typeAlias type="com.bighit.on.command.CommandVO" alias="CommandVO"/>
 		<typeAlias type="com.bighit.on.user.dao.UsersVO" alias="UsersVO"/>
 		<typeAlias type="com.bighit.on.channelcommand.ChannelCommandVO" alias="ChannelCommandVO"/>
+		<typeAlias type="com.bighit.on.channelusers.ChannelUsersVO" alias="ChannelUsersVO"/>
 	</typeAliases>
 </configuration>
