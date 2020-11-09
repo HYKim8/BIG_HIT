@@ -14,4 +14,16 @@
     	ch_link = #{chLink}
     	AND com_id = #{comId}
 </delete>
+<delete id="doDeleteAll" parameterType="ChannelVO">
+	DELETE FROM channel_command
+	WHERE
+    	ch_link = #{chLink}
+    	AND com_id = #{comId}
+</delete>
+<delete id="doDeleteAll" parameterType="ChannelCommandVO">
+	DELETE FROM channel_command
+	WHERE
+    	ch_link = #{chLink}
+    	AND com_id = #{comId}
+</delete>
 </mapper>
