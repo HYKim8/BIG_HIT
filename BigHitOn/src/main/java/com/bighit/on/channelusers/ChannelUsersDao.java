@@ -37,7 +37,7 @@ public class ChannelUsersDao {
 //	};
 	/**
 	 * doInsert
-	 * 
+	 * l
 	 * @param inVO
 	 * @return
 	 */
