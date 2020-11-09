@@ -39,42 +39,37 @@ public class ChannelCommandDao {
 	 * @param channelLinkVO
 	 * @return
 	 */
-	public int doInsert(ChannelCommandVO channelCommandVO) {
-		int flag=0;
-		Object[] args = {channelCommandVO.getChLink(),
-						 channelCommandVO.getComId()
-				
-		};
+	public int doInsert(ChannelCommandVO channelCommandVO) 
+	{
+		LOG.debug("=====================");
+		LOG.debug("=doInsert=");
+		LOG.debug("=====================");
+		String statement = NAMESPACE +".doInsert";
+		LOG.debug("=statement="+statement);
+		LOG.debug("=param ==="+channelCommandVO);
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" INSERT INTO channel_command ( \n");
-		sb.append("    ch_link,                   \n");
-		sb.append("    com_id                     \n");
-		sb.append(" ) VALUES (                    \n");
-		sb.append("    ?,                         \n");
-		sb.append("    ?                          \n");
-		sb.append(" )                             \n");
-		flag = this.sqlSessionTemplate.update(sb.toString(), args);
-		return flag;
+		int flag = sqlSessionTemplate.delete(statement, channelCommandVO);
+		LOG.debug("-doInsert flag=" + flag);
+		return flag;		
+				
 	}
 	
 	/**
 	 * 
 	 */
 	public int doDelete(ChannelCommandVO channelCommandVO) {
-		int flag = 0;
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM channel_command  \n");
-		sb.append("WHERE ch_link = ?            \n");
-		sb.append("    AND com_id = ?           \n");
-		
-		Object[] args = {channelCommandVO.getChLink(),
-				 channelCommandVO.getComId()
-		};
-		
-		flag = this.sqlSessionTemplate.update(sb.toString(), args);
-		return flag;		
+		{
+			LOG.debug("=====================");
+			LOG.debug("=doInsert=");
+			LOG.debug("=====================");
+			String statement = NAMESPACE +".doDelete";
+			LOG.debug("=statement="+statement);
+			LOG.debug("=param ==="+channelCommandVO);
+			
+			int flag = sqlSessionTemplate.delete(statement, channelCommandVO);
+			LOG.debug("-doInsert flag=" + flag);
+			return flag;			
+		}		
 	}
 	/**
 	 * 채널 VO입력시
