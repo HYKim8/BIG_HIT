@@ -42,7 +42,6 @@ public class ReactionDaoImpl {
 		LOG.debug("=====================");
 		LOG.debug("=doInsert=");
 		LOG.debug("=====================");
-		//등록 : namespace+id = com.bighit.on.channel.doInsert
 		String statement = NAMESPACE +".doInsert";
 		LOG.debug("=statement="+statement);
 		LOG.debug("=param ==="+reactionVO);

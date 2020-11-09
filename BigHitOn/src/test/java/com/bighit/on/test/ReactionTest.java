@@ -61,6 +61,7 @@ public class ReactionTest {
 		for(ReactionVO vo : list) reactionDaoImpl.doInsert(vo);
 		List<ReactionVO> tmplist = reactionDaoImpl.doSelectList(in1);
 		//해당 쓰레드의 반응 갯수
+		
 		assertThat(tmplist.size(), is(2));
 		
 		
