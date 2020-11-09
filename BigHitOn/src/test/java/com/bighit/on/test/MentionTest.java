@@ -66,13 +66,13 @@ public class MentionTest {
 		//해당 쓰레드의 반응 갯수
 		assertThat(tmplist.size(), is(2));
 		
-		assertThat(mentionDaoImpl.doCheck(in1),is(1));
+		assertThat(mentionDaoImpl.doCheck(in1),is(true));
 		
-//		UsersVO user = new UsersVO();
-//		user.setUser_serial("yeo");
-		//해당 유저가 받은 반응 갯수
-//		List<ThreadVO> threadlist = mentionDaoImpl.doSelectList(user);
-//		assertThat(threadlist.size(), is(2));
+		UsersVO user = new UsersVO();
+		user.setUser_serial("yeo");
+//		해당 유저가 받은 반응 갯수
+		List<ThreadVO> threadlist = mentionDaoImpl.doSelectList(user);
+		assertThat(threadlist.size(), is(2));
 	}
 	@Test
 	public void bean()
