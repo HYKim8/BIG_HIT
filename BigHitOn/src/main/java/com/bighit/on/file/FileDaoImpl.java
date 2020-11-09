@@ -136,7 +136,7 @@ public class FileDaoImpl {
 		return outList;
 	}
 	
-	public int doFileUpload(String filePath, String key_name, MultipartFile multiFile) throws IllegalStateException, IOException {
+	public int doFileUpload(String key_name, MultipartFile multiFile) throws IllegalStateException, IOException {
 		int flag = 0;
 		String accessKey = ack.getACCESS_KEY();
 		String secretKey = ack.getSECRET_KEY();
@@ -164,7 +164,7 @@ public class FileDaoImpl {
         return flag;
 	}
 	
-	public File doFileDownload(String upPath, String downloadPath) throws IOException {
+	public File doFileDownload(String keyName) throws IOException {
 		int flag = 0;
 		String bucket_name = "kghbucket";
 		String accessKey = ack.getACCESS_KEY();
@@ -176,9 +176,13 @@ public class FileDaoImpl {
 		
 		final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.AP_NORTHEAST_2).build();
 		
-		downloadFile = s3.getObject(new GetObjectRequest(bucket_name, upPath));
+		downloadFile = s3.getObject(new GetObjectRequest(bucket_name, keyName));
         System.out.println("Content-Type: " + downloadFile.getObjectMetadata().getContentType());
 		
+        String redirectionLocation = downloadFile.getRedirectLocation();
+        
+        LOG.debug("redirectionLoacation : "+ redirectionLocation);
+        
         S3ObjectInputStream s3is = downloadFile.getObjectContent();
         FileOutputStream fos = new FileOutputStream(new File("./src/main/java/com/bighit/on/file/TestDownload.jpg"));
         byte[] read_buf = new byte[1024];

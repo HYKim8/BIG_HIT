@@ -45,9 +45,9 @@ public class FileService {
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	public int doFileUpload(String filePath, String upPath, MultipartFile multiFile) throws IllegalStateException, IOException {
+	public int doFileUpload(String upPath, MultipartFile multiFile) throws IllegalStateException, IOException {
 		
-		return fileDao.doFileUpload(filePath, upPath, multiFile);
+		return fileDao.doFileUpload(upPath, multiFile);
 	}
 	
 }

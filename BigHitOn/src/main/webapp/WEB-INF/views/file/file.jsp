@@ -16,6 +16,7 @@
 		<label>Select File</label> <br /> 
 		<input type="file" name="filename" id="file_test"/>
 		<input type="button" value="테스트" id="test">
+		<input type="button" value="다운로드" id="download"/>
 		<input type="text" id="real_path" name="real_path" value="" />
 	</form>
 	
@@ -24,11 +25,23 @@
     <!-- javascript -->
     <script type="text/javascript">
 		$("#test").on("click", function(){
-			console.log("Test Clicked");
-			doInsert();			
-		})
+				console.log("Test Clicked");
+				doInsert();			
+			})
+		
+		$("#download").on("click", function(){
+				console.log("download Clicked");
+				doDownload();
+
+			})
+		
+		function doDownload(){
+				console.log("doDownload()");
+				
+			}
 		
 		function doInsert(){
+			console.log("doInsert()");
 			var formData = new FormData($("#form_data")[0]);
 			console.log("formData : " + formData);
 			$.ajax({

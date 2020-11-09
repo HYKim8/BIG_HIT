@@ -45,6 +45,7 @@ public class JUnitTestFile {
 	FileVO fileVO03;
 
 	@Before
+	@Ignore
 	public void setUp() throws Exception {
 
 		fileVO01 = new FileVO();
@@ -81,9 +82,13 @@ public class JUnitTestFile {
 	public void tearDown() throws Exception {
 	}
 
-	
+	@Test
+	public void file() throws IOException {
+		fileDao.doFileDownload("profileimg/testimg.png");
+	}
 	
 	@Test
+	@Ignore
 	public void serviceTest() {
 		fileService.doInsert(fileVO01);
 		fileService.doInsert(fileVO02);
