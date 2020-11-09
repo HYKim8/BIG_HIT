@@ -23,7 +23,7 @@ import com.bighit.on.user.dao.UsersVO;
 
 @Repository("ReactionDaoImpl")
 public class ReactionDaoImpl {
-	final static Logger   LOG = LoggerFactory.getLogger(MentionDaoImpl.class);
+	final static Logger   LOG = LoggerFactory.getLogger(ReactionDaoImpl.class);
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;

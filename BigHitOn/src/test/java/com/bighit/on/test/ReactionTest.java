@@ -46,7 +46,8 @@ public class ReactionTest {
 		list = new ArrayList<ReactionVO>();
 		
 		in1= new ReactionVO(1, "yeo", "1", "yeo", "");
-		
+		in1= new ReactionVO(2, "yeo", "1", "yeo", "");
+		in1= new ReactionVO(3, "yeo", "1", "yeo", "");
 		list.add(in1);
 		
 	}

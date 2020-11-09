@@ -14,7 +14,15 @@
 	WHERE           
 	    thr_key = #{thrKey}        
 </select>
-<!--<select id="doSelectList" parameterType="UsersVO" resultType="ThreadVO"></select>-->
+<!--<select id="doSelectList" parameterType="UsersVO" resultType="ThreadVO">
+	SELECT *                                                 
+	FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key 
+						FROM thread t JOIN reaction r           
+						ON  r.res_id = ?                        
+						and r.thr_key = t.thr_key) b            
+	ON a.thr_key = b.thr_key									
+
+</select>-->
 <delete id="doDelete" parameterType="ReactionVO">
 	DELETE FROM reaction 
 	WHERE                
