@@ -12,6 +12,9 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	@Autowired
 	private WorkSpaceDaoImpl workSpaceDao;
 	
+	/**
+	 * 워크스페이스링크 중복 체크
+	 */
 	@Override
 	public int workSpaceLinkCK(WorkSpaceVO workSpaceVO) {
 		WorkSpaceVO workSpaceCheck = workSpaceDao.doSelectOne(workSpaceVO);
@@ -22,7 +25,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 		}
 		else {
 			LOG.debug("중복되지않는 workspace입니다");
-			return workSpaceDao.doInsert(workSpaceVO);
+			return 0;
 		}
 	}
 	
@@ -56,7 +59,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	@Override
 	public int doInsert(WorkSpaceVO workSpaceVO) {
 		
-		return 0;
+		return workSpaceDao.doInsert(workSpaceVO);
 		
 	}
 
