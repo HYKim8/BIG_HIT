@@ -22,7 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelVO;
-import com.bighit.on.channelcommmand.ChannelCommandDao;
+import com.bighit.on.channelcommand.ChannelCommandDao;
 import com.bighit.on.channelusers.ChannelUsersDao;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

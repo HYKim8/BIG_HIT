@@ -20,8 +20,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.bighit.on.channelcommmand.ChannelCommandDao;
-import com.bighit.on.channelcommmand.ChannelCommandVO;
+import com.bighit.on.channelcommand.ChannelCommandDao;
+import com.bighit.on.channelcommand.ChannelCommandVO;
 import com.bighit.on.command.ComChLinkVO;
 import com.bighit.on.command.CommandDao;
 import com.bighit.on.command.CommandVO;
