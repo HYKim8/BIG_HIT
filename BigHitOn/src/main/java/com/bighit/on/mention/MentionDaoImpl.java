@@ -27,6 +27,11 @@ public class MentionDaoImpl {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	private final String NAMESPACE = "com.bighit.on.mention";
+	
+	public int doCheck(MentionVO mentionVO)
+	{
+		return sqlSessionTemplate.selectOne(NAMESPACE+".doCheck", mentionVO);		
+	}
 	/**
 	 * 언급
 	 * @param mentionVO

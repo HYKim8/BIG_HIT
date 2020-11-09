@@ -29,7 +29,17 @@ public class ReactionDaoImpl {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	private final String NAMESPACE = "com.bighit.on.reaction";
+	/**
+	 * 중복 체크
+	 * @param reactionVO(작성자,이모티콘,쓰레드키)
+	 * @return
+	 * 	
+	 */
 	
+	
+	public int doCheck(ReactionVO reactionVO) {
+		return sqlSessionTemplate.selectOne( NAMESPACE +".doCheck", reactionVO);		
+	}
 	/**
 	 * 반응 기능
 	 * 키는 반응키 누른 사람,반응 종류,반응을 한 쓰레드
