@@ -4,6 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,10 @@ public class UsersDaoImpl {
 	 final static Logger   LOG = LoggerFactory.getLogger(UsersDaoImpl.class);
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String NAMESPACE = "com.bighit.on.workspace";
+	
 	RowMapper rowMapper = new RowMapper<UsersVO>() {
 
 		@Override
@@ -56,42 +62,35 @@ public class UsersDaoImpl {
 	 * @return
 	 */
 	public List<UsersVO> doSelectList2(WorkSpaceVO workSpaceVO){
-		 List<UsersVO> list = null;
+		LOG.debug("===========================");
+		LOG.debug("=doSelectList2=");
+		LOG.debug("===========================");
 		 
-		 StringBuilder sb=new StringBuilder();
-		 sb.append(" SELECT *                                   	     \n");
-		 sb.append(" FROM users                                          \n");
-		 sb.append(" WHERE ws_link = ?                                   \n");
+		String statement = NAMESPACE + ".doSelectList2";
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=workSpaceVO="+workSpaceVO);                             
 
-		 list = this.jdbcTemplate.query(sb.toString(), new Object[] {workSpaceVO.getWsLink()}, rowMapper);
-			for(UsersVO vo:list) {
-				LOG.debug("====================================");
-				LOG.debug("=vo="+vo);
-				LOG.debug("====================================");
-			}
-			
-			return list;
+		List<UsersVO> list = this.sqlSessionTemplate.selectList(statement, workSpaceVO);
+		
+		for(UsersVO vo : list) {
+			LOG.debug("=vo="+vo);
+		}
+		
+		return list;
 	}
 	
 	public List<UsersVO> doSelectList(ChannelVO channelVO){
-		List<UsersVO> list  = null;
+		LOG.debug("===========================");
+		LOG.debug("=doSelectList=");
+		LOG.debug("===========================");
 		
-		StringBuilder sb=new StringBuilder();
-		sb.append(" SELECT  users.*                                    \n");
-		sb.append(" FROM users                                         \n");
-		sb.append(" JOIN channel_users                                 \n");
-		sb.append(" ON users.user_serial = channel_users.user_serial   \n");
-		sb.append(" AND channel_users.ch_link = ?                      \n");
-		LOG.debug("========================");
-		LOG.debug("=sql\n="+sb.toString());
-		LOG.debug("=param="+channelVO);
-		LOG.debug("========================");
+		String statement = NAMESPACE + ".doSelectList";
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=channelVO="+channelVO);
 		
-		list = this.jdbcTemplate.query(sb.toString(), new Object[] {channelVO.getChLink()}, rowMapper);
+		List<UsersVO> list = this.sqlSessionTemplate.selectList(statement, channelVO);
 		for(UsersVO vo:list) {
-			LOG.debug("====================================");
 			LOG.debug("=vo="+vo);
-			LOG.debug("====================================");
 		}
 		
 		return list;
@@ -99,154 +98,67 @@ public class UsersDaoImpl {
 	}
 	
 	public UsersVO doSelectOne(String userSerial) throws Exception{
-		UsersVO outVO = null; 
+		LOG.debug("===========================");
+		LOG.debug("=doSelectOne=");
+		LOG.debug("===========================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" SELECT                   \n");
-		sb.append("     user_serial,         \n");
-		sb.append("     ws_link,             \n");
-		sb.append("     email,               \n");
-		sb.append("     password,            \n");
-		sb.append("     name,                \n");
-		sb.append("     nickname,            \n");
-		sb.append("     profile_img,         \n");
-		sb.append("     position,            \n");
-		sb.append("     phone_num,           \n");
-		sb.append("     country,             \n");
-		sb.append("     state,               \n");
-		sb.append("     online_state,        \n");
-		sb.append("     reg_id,              \n");
-		sb.append("     reg_dt               \n");
-		sb.append(" FROM users               \n");
-		sb.append(" WHERE user_serial = ?    \n");
-		LOG.debug("========================");
-		LOG.debug("=sql="+sb.toString());
-		LOG.debug("=param="+userSerial);
-		LOG.debug("========================");
+		String statement = NAMESPACE + ".doSelectOne";
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=userSerial="+userSerial);
 		
 		Object[] args = {userSerial};
-		outVO = (UsersVO) this.jdbcTemplate.queryForObject(sb.toString(), args, rowMapper);
+		UsersVO outVO = (UsersVO) this.sqlSessionTemplate.selectOne(statement, userSerial);
 		LOG.debug("outVO = "+outVO);
 		
 		return outVO;
 	}
 	
 	public int doUpdate(UsersVO usersVO) {
-		int flag = 0;
+		LOG.debug("===========================");
+		LOG.debug("=doUpdate=");
+		LOG.debug("===========================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" UPDATE users              \n");
-		sb.append(" SET  email = ?            \n");
-		sb.append("     ,password = ?         \n");
-		sb.append("     ,name = ?             \n");
-		sb.append("     ,nickname = ?         \n");
-		sb.append("     ,profile_img = ?      \n");
-		sb.append("     ,position = ?         \n");
-		sb.append("     ,phone_num = ?        \n");
-		sb.append("     ,country = ?          \n");
-		sb.append("     ,state = ?            \n");
-		sb.append("     ,online_state = ?     \n");
-		sb.append(" WHERE user_serial = ?     \n");
-		LOG.debug("========================");
-		LOG.debug("=sql=\n"+sb.toString());
-		LOG.debug("=param="+usersVO);
-		LOG.debug("========================");
+		String statement = NAMESPACE + ".doUpdate";
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=usersVO : "+usersVO);
+		LOG.debug("===========================");
 		
-		Object[] args = { usersVO.getEmail(),
-						usersVO.getPassword(),
-						usersVO.getName(),
-						usersVO.getNickname(),
-						usersVO.getProfile_img(),
-						usersVO.getPosition(),
-						usersVO.getPhone_num(),
-						usersVO.getCountry(),
-						usersVO.getState(),
-						usersVO.getOnline_state(),
-						usersVO.getUser_serial()
-		};
-		
-		flag = this.jdbcTemplate.update(sb.toString(), args);
+		int flag = sqlSessionTemplate.update(statement,usersVO);
 		LOG.debug("=flag="+flag);
+		
 		return flag;
 		
 	}
 	
 	public int doDelete(UsersVO usersVO) {
-		int flag = 0;
+		LOG.debug("===========================");
+		LOG.debug("=doDelete=");
+		LOG.debug("===========================");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" DELETE FROM users        \n");
-		sb.append(" WHERE user_serial = ?    \n");
+		String statement = NAMESPACE + ".doDelete";
+		LOG.debug("===========================");
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=usersVO : "+usersVO);
+		LOG.debug("===========================");
 		
-		LOG.debug("=====================================");
-		LOG.debug("=sql=\n"+sb.toString());
-		LOG.debug("=param="+usersVO);
-		LOG.debug("=====================================");
-		
-		Object[] args = {usersVO.getUser_serial()};
-		flag = this.jdbcTemplate.update(sb.toString(),args);
-		LOG.debug("flag = "+flag);
+		int flag = sqlSessionTemplate.delete(statement, usersVO);
+		LOG.debug("=flag="+flag);
 		
 		return flag;
 	}
 	
 	public int doInsert(UsersVO usersVO) {
-		int flag = 0;
+		LOG.debug("===========================");
+		LOG.debug("=doInsert=");
+		LOG.debug("===========================");
+		//등록 : namespace+id = com.sist.ehr.board.doInsert
+		String statement = NAMESPACE + ".doInsert";
+		LOG.debug("===========================");
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=usersVO : "+usersVO);
+		LOG.debug("===========================");
 		
-		Object[] args = { 	usersVO.getUser_serial(),
-							usersVO.getWs_link(),
-							usersVO.getEmail(),
-							usersVO.getPassword(),
-							usersVO.getName(),
-							usersVO.getNickname(),
-							usersVO.getProfile_img(),
-							usersVO.getPosition(),
-							usersVO.getPhone_num(),
-							usersVO.getCountry(),
-							usersVO.getState(),
-							usersVO.getOnline_state(),
-							usersVO.getReg_id()	
-		};
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append(" INSERT INTO users (      \n");
-		sb.append("     user_serial,         \n");
-		sb.append("     ws_link,             \n");
-		sb.append("     email,               \n");
-		sb.append("     password,            \n");
-		sb.append("     name,                \n");
-		sb.append("     nickname,            \n");
-		sb.append("     profile_img,         \n");
-		sb.append("     position,            \n");
-		sb.append("     phone_num,           \n");
-		sb.append("     country,             \n");
-		sb.append("     state,               \n");
-		sb.append("     online_state,        \n");
-		sb.append("     reg_id,              \n");
-		sb.append("     reg_dt               \n");
-		sb.append(" ) VALUES (               \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("     ?,                   \n");
-		sb.append("      SYSDATE             \n");
-		sb.append(" )                        \n");
-		LOG.debug("========================");
-		LOG.debug("=sql=\n"+sb.toString());
-		LOG.debug("=param="+usersVO);
-		LOG.debug("========================");
-		
-		flag= this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("flag = "+flag);
+		int flag = sqlSessionTemplate.insert(statement, usersVO);
 		
 		return flag;
 
