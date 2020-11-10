@@ -46,7 +46,7 @@ public class TestWorkSpace {
 	
 	@Before
 	public void setUp() throws Exception {
-		workSpace01 = new WorkSpaceVO("2","정현수정현수정현수","정현수정현수정현수정현수","jhs","");
+		workSpace01 = new WorkSpaceVO("2","정현수","정현수","jhs","");
 		workSpace02 = new WorkSpaceVO("3","jhs_ws","bighit","jhs","");
 	
 		LOG.debug("** setup() **");
@@ -77,9 +77,10 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doInsert() {
 		int flag = workSpaceDao.doInsert(workSpace01);
+		assertThat(flag, is(1));
+		flag = workSpaceDao.doInsert(workSpace02);
 		assertThat(flag, is(1));
 	}
 	
@@ -88,6 +89,8 @@ public class TestWorkSpace {
 	@Ignore
 	public void doDelete() {
 		int flag = workSpaceDao.doDelete(workSpace01);
+		assertThat(flag, is(1));
+		flag = workSpaceDao.doDelete(workSpace02);
 		assertThat(flag, is(1));
 	}
 	
