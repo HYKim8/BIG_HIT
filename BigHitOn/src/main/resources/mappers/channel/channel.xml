@@ -6,14 +6,14 @@
 	<!-- com.bighit.on.workspace.doSelectList -->
 	<select id="doSelectList" parameterType="ChannelVO" resultType="ChannelVO">
 		SELECT             
-		    ch_link,       
-		    ws_link,       
-		    ch_name,       
+		    ch_link AS chLink,       
+		    ws_link AS wsLink,       
+		    ch_name AS chName,       
 		    topic,         
-		    ch_description,
-		    ch_access,     
-		    reg_id,        
-		    reg_dt         
+		    ch_description AS chDescription,
+		    ch_access AS chAccess,     
+		    reg_id AS regId,        
+		    reg_dt AS regDt        
 		FROM channels      
 		WHERE ws_link = #{wsLink}  		
 	</select>
@@ -22,14 +22,14 @@
 	<!-- com.bighit.on.workspace.doDelete -->
 	<select id="doSelectOne" parameterType="ChannelVO" resultType="ChannelVO">
 		SELECT             
-		    ch_link,       
-		    ws_link,       
-		    ch_name,       
+		    ch_link AS chLink,       
+		    ws_link AS wsLink,       
+		    ch_name AS chName,       
 		    topic,         
-		    ch_description,
-		    ch_access,     
-		    reg_id,        
-		    reg_dt         
+		    ch_description AS chDescription,
+		    ch_access AS chAccess,     
+		    reg_id AS regId,        
+		    reg_dt AS regDt        
 		FROM channels      
 		WHERE ch_link = #{chLink}  
 	</select>

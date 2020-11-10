@@ -71,6 +71,7 @@ public class TestChannelController {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doInsert() throws Exception {
 		ChannelVO channelVO = channels.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -150,6 +151,26 @@ public class TestChannelController {
 		Message message = gson.fromJson(result, Message.class);
 		LOG.debug("===========================");
 		LOG.debug("=message=" + message);
+		LOG.debug("===========================");
+		
+	}
+	
+	//성공
+	@Test
+	@Ignore
+	public void doSelectList() throws Exception {
+		ChannelVO channelVO = channels.get(0);
+		
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.get("/channel/doSelectList.do")
+				 .param("wsLink", channelVO.getWsLink());
+		
+		ResultActions resultActions = mockMvc.perform(createMessage)
+				.andExpect(status().is2xxSuccessful());	
+	
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
 		LOG.debug("===========================");
 		
 	}

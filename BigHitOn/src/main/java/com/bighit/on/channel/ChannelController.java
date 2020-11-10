@@ -1,10 +1,13 @@
 package com.bighit.on.channel;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -94,5 +97,24 @@ public class ChannelController {
 		return json;
 	}
 	
+	@RequestMapping(value = "channel/doSelectList.do", method = RequestMethod.GET
+			,produces = "application/json;charset=UTF-8"	)
+	@ResponseBody
+	public String doSelectList(ChannelVO channelVO, Model model) {
+		LOG.debug("-------------------------");
+		LOG.debug("-doSelectList-");
+		LOG.debug("-------------------------");
+		
+		List<ChannelVO> list = this.channelService.doSelectList(channelVO);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		
+		LOG.debug("-------------------------");
+		LOG.debug("-json-"+json);
+		LOG.debug("-------------------------");
+		
+		return json;
+	}
 	
 }
