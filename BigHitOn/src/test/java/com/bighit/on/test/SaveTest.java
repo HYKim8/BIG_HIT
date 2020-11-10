@@ -63,8 +63,12 @@ public class SaveTest {
 		//해당 쓰레드의 반응 갯수
 		assertThat(tmplist.size(), is(2));
 		assertThat(saveThDaoImpl.doCheck(in1),is(true));
+		UsersVO user = new UsersVO();
+		user.setUser_serial("yeo");
+		user.setReg_id("yeo");
+		List<ThreadVO> li = saveThDaoImpl.doSelectList(user);
 		
-		
+		for(ThreadVO vo : li) LOG.debug(vo.toString());
 	}
 	@Test
 	public void bean()

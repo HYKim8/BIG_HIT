@@ -17,6 +17,8 @@ import com.bighit.on.cmn.DaoInterface;
 import com.bighit.on.mention.MentionDaoImpl;
 import com.bighit.on.mention.MentionVO;
 import com.bighit.on.reminder.ReminderVO;
+import com.bighit.on.thread.ThreadVO;
+import com.bighit.on.user.dao.UsersVO;
 
 @Repository("SaveThrDaoImpl")
 public class SaveThrDaoImpl {
@@ -79,5 +81,16 @@ public class SaveThrDaoImpl {
 		
 		return list;
 	}
-
+	public List<ThreadVO> doSelectList(UsersVO inVO) {
+		String statement = NAMESPACE +".doSelectSavedThreadList";
+		List<ThreadVO> list = this.sqlSessionTemplate.selectList(statement, inVO);
+		LOG.debug("param:"+inVO);
+		for(ThreadVO vo : list) {
+			LOG.debug("===========================");
+			LOG.debug("=doSelectList vo="+vo);
+			LOG.debug("===========================");
+		}
+		
+		return list;
+	}
 }

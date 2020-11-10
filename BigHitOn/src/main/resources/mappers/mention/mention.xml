@@ -9,7 +9,16 @@
 	    AND thr_key = #{thrKey}
 </select>
 <select id="doSelectListFromUser" parameterType="UsersVO" resultType="ThreadVO">
-	SELECT *                                                 
+	SELECT 
+		a.THR_KEY	 as	ThrKey	,
+		a.CH_LINK    as ChLink    ,
+		a.CONTENTS   as Contents    ,
+		a.IS_PIN     as IsPin    ,
+		a.PIN_ID     as PinId    ,
+		a.REG_ID     as RegId    ,
+		a.REG_DT     as RegDt    ,
+		a.MOD_DT     as ModDt    ,
+		a.PARENT_KEY as ParentKey                                                     
 	FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key 
 						FROM thread t JOIN mention m           
 						ON  m.res_id = #{user_serial}                        
@@ -18,10 +27,10 @@
 </select>
 <select id="doSelectList" parameterType="MentionVO" resultType="MentionVO">
 	SELECT                  
-	    res_id,             
-	    thr_key,            
-	    reg_id,             
-	    reg_dt              
+	    res_id AS resId,             
+	    thr_key AS thrKey,            
+	    reg_id AS regId,             
+	    reg_dt AS regDt             
 	FROM                    
 	    mention             
 	WHERE                   

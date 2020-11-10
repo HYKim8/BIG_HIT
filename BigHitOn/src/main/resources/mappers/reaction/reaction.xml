@@ -10,7 +10,16 @@
 	    AND thr_key = #{thrKey}
 </select>
 <select id="doSelectListFromUsers" parameterType="UsersVO" resultType="ThreadVO">
-	SELECT *                                                 
+	SELECT 
+		a.THR_KEY	 as	ThrKey	,
+		a.CH_LINK    as ChLink    ,
+		a.CONTENTS   as Contents    ,
+		a.IS_PIN     as IsPin    ,
+		a.PIN_ID     as PinId    ,
+		a.REG_ID     as RegId    ,
+		a.REG_DT     as RegDt    ,
+		a.MOD_DT     as ModDt    ,
+		a.PARENT_KEY as ParentKey                                                     
 	FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key 
 						FROM thread t JOIN reaction r           
 						ON  r.res_id = #{user_serial}                        

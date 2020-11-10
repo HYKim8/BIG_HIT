@@ -35,4 +35,27 @@
 	WHERE                    
 	    reg_id = #{regId}           
 </select>
+<select id="doSelectSavedThreadList" parameterType="UsersVO" resultType="ThreadVO">
+	SELECT 
+		a.THR_KEY	 as	ThrKey	,
+		a.CH_LINK    as ChLink    ,
+		a.CONTENTS   as Contents    ,
+		a.IS_PIN     as IsPin    ,
+		a.PIN_ID     as PinId    ,
+		a.REG_ID     as RegId    ,
+		a.REG_DT     as RegDt    ,
+		a.MOD_DT     as ModDt    ,
+		a.PARENT_KEY as ParentKey    
+	FROM thread a JOIN 
+	(
+	    SELECT                   
+		    thr_key,             
+		    reg_id,              
+		    reg_dt               
+		FROM                     
+		    save_thr             
+		WHERE                    
+		    reg_id = #{user_serial}
+	) b ON a.thr_key = b.thr_key
+</select>
 </mapper>
