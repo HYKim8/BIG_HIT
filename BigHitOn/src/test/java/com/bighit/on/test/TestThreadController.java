@@ -119,6 +119,7 @@ public class TestThreadController {
 	}
 	
 	@Test
+	@Ignore
 	public void doUpdate() throws Exception {
 		ThreadVO threadVO = threads.get(0);
 		threadVO.setContents(threadVO.getContents()+"testUpdate");

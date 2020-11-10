@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bighit.on.command">
+
+<insert id="doInsert" parameterType="CommandVO">
+	INSERT INTO command (com_id, app_name, cmd_name, param_cnt)
+						VALUES
+						(#{comId},#{appName},#{cmdName},#{paramCnt})
+</insert>
+
+<delete id="doDelete" parameterType="CommandVO">
+	DELETE FROM command WHERE com_id = #{comId}
+</delete>
+
+<update id="doUpdate" parameterType="CommandVO">
+	UPDATE command SET app_name = #{appName},
+					   cmd_name = #{cmdName},
+					   param_cnt = #{paramCnt}
+				   WHERE com_id = #{comId}					   
+</update>
+<select id="doSelectListChLink" parameterType="CommandVO">
+	SELECT a.ch_link, b.com_id, b.app_name, b.cmd_name, b.param_cnt
+	FROM channel_command a, command b
+	WHERE a.ch_link = #{chLink}
+	AND a.com_id = b.com_id
+</select>
+
+<select id="doSelectOne" parameterType="CommandVO">
+	SELECT com_id, app_name, cmd_name, param_cnt FROM command WHERE com_id = #{comId}
+	ORDER BY com_id
+</select>
+<select id="doSelectList" parameterType="CommandVO">
+	SELECT * FROM command where com_id = #{comId}
+</select>
+</mapper>

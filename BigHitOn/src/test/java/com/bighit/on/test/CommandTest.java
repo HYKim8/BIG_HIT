@@ -102,7 +102,7 @@ public class CommandTest {
 	@Test
 	@Ignore
 	public void doSelectOne() {
-		commandDao.doSelectOne(1);
+		commandDao.doSelectOne(command01);
 	}
 	
 //	@Test
@@ -139,7 +139,7 @@ public class CommandTest {
 		List<CommandVO> list = commandDao.doSelectList(command01);
 		
 		
-		commandDao.doSelectOne(4);
+		commandDao.doSelectOne(command01);
 		
 		
 		command01.setCmdName("changeTest02");

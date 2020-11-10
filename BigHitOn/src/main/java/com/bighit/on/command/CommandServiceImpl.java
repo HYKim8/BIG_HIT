@@ -2,11 +2,13 @@ package com.bighit.on.command;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CommandServiceImpl implements CommandService {
-
+	
+	@Autowired
 	CommandDao cmdDao;
 	
 	@Override

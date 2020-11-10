@@ -1,5 +1,7 @@
 package com.bighit.on.thread;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class ThreadController {
 		LOG.debug("=doInsert=");
 		LOG.debug("=param="+threadVO);
 		
-		int flag = threadService.doInsert(threadVO);
+		 int flag = threadService.doInsert(threadVO);
 		 LOG.debug("==================");
 	     LOG.debug("=flag="+flag);
 	     LOG.debug("==================");   
@@ -106,8 +108,10 @@ public class ThreadController {
 	     LOG.debug("==================");         
 	        
 	     return json;
-	    
-	    
 	}
+	//public List<ThreadVO> doSelectAll(ThreadVO threadVO){
+	//
+	//}
+	
 	
 }
