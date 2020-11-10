@@ -27,7 +27,6 @@ public class UsersController {
 	@Autowired
 	MessageSource messageSource;
 	
-
 	@RequestMapping(value="users/doSelectList2.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String doSelectList2(WorkSpaceVO workSpaceVO) {
