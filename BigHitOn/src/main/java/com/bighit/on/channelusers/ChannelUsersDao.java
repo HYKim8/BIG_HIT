@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.DTO;
+import com.bighit.on.command.CommandVO;
 import com.bighit.on.user.dao.UsersVO;
 
 
@@ -80,24 +81,10 @@ public class ChannelUsersDao {
 	 * @param dto
 	 * @return
 	 */
-	public int doDeleteAll(DTO dto) {
-		if(!(dto instanceof ChannelVO) && !(dto instanceof UsersVO)) {
-			return 0;
+		public int doDeleteAll(ChannelVO inVO) {
+			return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInUser", inVO);		
 		}
-		StringBuilder sb = new StringBuilder();
-		Object arg = null;
-		sb.append("DELETE FROM channel_users  \n");
-		sb.append("WHERE                      \n");		
-		if(dto instanceof ChannelVO) {
-			sb.append("    ch_link = ?            \n");
-			arg = ((ChannelVO)dto).getChLink();
+		public int doDeleteAll(CommandVO inVO) {
+			return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInUser", inVO);		
 		}
-		else {
-			sb.append("    user_serial = ?	  	  \n");
-			arg = ((UsersVO)dto).getUser_serial();
-		}
-		int flag = this.sqlSessionTemplate.update(sb.toString(), arg);
-		return flag;		
 	}
-	
-}
