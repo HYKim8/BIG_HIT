@@ -1,6 +1,7 @@
 package com.bighit.on.file;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,14 @@ public class FileService {
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	public int doFileUpload(String upPath, MultipartFile multiFile) throws IllegalStateException, IOException {
+	public int doFileUpload(String key_name, MultipartFile multiFile) throws IllegalStateException, IOException {
 		
-		return fileDao.doFileUpload(upPath, multiFile);
+		return fileDao.doFileUpload(key_name, multiFile);
+	}
+	
+	public URL doFileDownload(String key_name){
+		
+		return fileDao.doFileDownload(key_name);
 	}
 	
 }

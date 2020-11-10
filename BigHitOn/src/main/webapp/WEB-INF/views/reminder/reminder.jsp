@@ -67,12 +67,14 @@
 		 * need thrKey, remindTime, getId
 		 */
 		 -->
-			
-			
+		
+			<label>시간 입력 폼</label>
+			<input type="text" id="time_input">	
+			<input type="button" id="input_button" value="입력">
 	
 		</form>
 		
-		
+		<label>자동완성 테스트</label>
 		<input type="text" id="city">
 		<input onclick="setTimeout(time1, 1000)" type="button" id="start_timeinterval" value="타임인터벌">
 	</div>
@@ -96,13 +98,65 @@
 
     function time1(){
 			console.log("doChkAlarm");
+			setTimeout(time2, 60000);
 			doChkAlarm();
         }
 
+    function time2(){
+	    	console.log("doChkAlarm");
+			setTimeout(time1, 60000);
+			doChkAlarm();
+
+
+        }
+
 	function doChkAlarm(){
-		
+		$.ajax({
+			type:"POST",
+            url:"${hContext}/reminder/doChkAlarm.do",
+            dataType:"html",
+            async: true,
+			data:{},
+			success: function(data){
+				var parseData = JSON.parse(data);
+
+					console.log("parseData" + parseData);
+					$.each(parseData, function(i, value){
+						let today = new Date();
+						//console.log("value.remindTime : "+value.remindTime);
+						//console.log("today : "+today);
+	
+						let remindTime = new Date(value.remindTime);
+						//console.log("remindTime : " + remindTime);
+						
+						let calTime = Math.floor((today-remindTime)/1000);
+						console.log("calTime : " + calTime);
+						
+						if(calTime < 60 && calTime > (-60)){
+							console.log("작동해요~");
+							doDelete(value.remindId);
+							} else {
+							console.log("작동 안해요~");
+							}
+						});
+				}
+		});
 	}
 
+	function doDelete(remindId){
+			$.ajax({
+				type:"POST",
+				url:"${hContext}/reminder/doDelete.do",
+				dataType:"html",
+				async:true,
+				data:{
+					"remindId":remindId
+					},
+				success:function(){
+					console.log("delete complete");
+					}
+				})
+		}
 	
 	  $(function() {
 	      var key_word = ["remind @사용자 시간(17:12)"];
@@ -119,16 +173,17 @@
 	  });
 
     
-	$("#submit_button").on("click",function(){
-			doInsert();
-
-
-		});
+	
 
 	$("#go").on("click", function(){
 			doSelectList();
 			console.log("yo");
 		});
+
+	$("#input_button").on("click",function(){
+		console.log("click input_button");
+		doInsert();
+	});
 
 	function doInsert(){
 			$.ajax({
@@ -137,16 +192,14 @@
 	                dataType:"html",
 	                async: true,
 					data:{
-						"thrKey":$("#thr_key").val(),
-						"remindTime":$("#remind_time").val(),
-						"regId":$("#user_id").val()
+						"remindTime":$("#time_input").val()
 						},
 					success: function(data){
 						var parseData = JSON.parse(data);
-
+						console.log("성공!");
 						}
 				});
-		};
+		}
 
 
 
@@ -183,7 +236,7 @@
 
 		               }
 				});
-		};
+		}
 
     
     </script>

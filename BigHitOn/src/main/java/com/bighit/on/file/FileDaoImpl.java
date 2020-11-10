@@ -1,10 +1,9 @@
 package com.bighit.on.file;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,15 +14,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.bighit.on.cmn.AccessKey;
 import com.bighit.on.reminder.ReminderDaoImpl;
 
@@ -164,37 +162,32 @@ public class FileDaoImpl {
         return flag;
 	}
 	
-	public File doFileDownload(String keyName) throws IOException {
-		int flag = 0;
+	public URL doFileDownload(String keyName){
 		String bucket_name = "kghbucket";
 		String accessKey = ack.getACCESS_KEY();
 		String secretKey = ack.getSECRET_KEY();
 		
-		S3Object downloadFile = new S3Object();
-		
 		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 		
 		final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.AP_NORTHEAST_2).build();
+
+        // Set the presigned URL to expire after one hour.
+        Date expiration = new Date();
+        long expTimeMillis = expiration.getTime();
+        expTimeMillis += 1000 * 60 * 60;
+        expiration.setTime(expTimeMillis);
+
+        // Generate the presigned URL.
+        System.out.println("Generating pre-signed URL.");
+        GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                new GeneratePresignedUrlRequest(bucket_name, keyName)
+                        .withMethod(HttpMethod.GET)
+                        .withExpiration(expiration);
+        URL url = s3.generatePresignedUrl(generatePresignedUrlRequest);
+
+        LOG.debug("Pre-Signed URL : " + url.toString());
 		
-		downloadFile = s3.getObject(new GetObjectRequest(bucket_name, keyName));
-        System.out.println("Content-Type: " + downloadFile.getObjectMetadata().getContentType());
-		
-        String redirectionLocation = downloadFile.getRedirectLocation();
-        
-        LOG.debug("redirectionLoacation : "+ redirectionLocation);
-        
-        S3ObjectInputStream s3is = downloadFile.getObjectContent();
-        FileOutputStream fos = new FileOutputStream(new File("./src/main/java/com/bighit/on/file/TestDownload.jpg"));
-        byte[] read_buf = new byte[1024];
-        int read_len = 0;
-        while ((read_len = s3is.read(read_buf)) > 0) {
-            fos.write(read_buf, 0, read_len);
-        }
-        s3is.close();
-        fos.close();
-        
-        return (new File("./src/main/java/com/bighit/on/file/TestDownload.jpg"));
-        
+        return url;
 	}
 	
 	

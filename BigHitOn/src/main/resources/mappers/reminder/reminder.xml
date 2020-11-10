@@ -16,7 +16,8 @@
 		FROM                     
 		    reminder             
 		WHERE
-			thr_key = #{thrKey}      
+			thr_key = #{thrKey}
+		ORDER BY remindTime      
 	</select>
 
 	<update id="doUpdate" parameterType="ReminderVO">

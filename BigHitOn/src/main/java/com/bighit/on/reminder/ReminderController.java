@@ -37,19 +37,27 @@ public class ReminderController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "reminder/doInsert.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "reminder/doDelete.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView doInsert() {
+	public String doDelete(ReminderVO reminderVO) {
+		LOG.debug("-------------------------");
+		LOG.debug("-reminder/doDelete.do-");
+		LOG.debug("-------------------------");
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("reminder/reminder");
+		int flag = reminderService.doDelete(reminderVO);
 		
-		return mav;
+		LOG.debug("-------------------------");
+		LOG.debug("-doDelete-Controller-");
+		LOG.debug("-flag-" + flag);
+		LOG.debug("-------------------------");
+		
+		
+		return "reminder/reminder";
 	}
 	
 	@RequestMapping(value = "reminder/doChkAlarm.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public ModelAndView doChkAlarm(HttpServletRequest req) {
+	public String doChkAlarm(HttpServletRequest req) {
 		LOG.debug("-------------------------");
 		LOG.debug("-reminder/doChkAlarm.do-");
 		LOG.debug("-------------------------");
@@ -57,9 +65,11 @@ public class ReminderController {
 		
 		
 		HttpSession session = req.getSession();
+		
 		// for Test
 		session.setAttribute("thrKey", "1");
 		// for Test
+		
 		String thrKey = (String) session.getAttribute("thrKey");
 		
 		ReminderVO reminderVO = new ReminderVO();
@@ -67,12 +77,14 @@ public class ReminderController {
 		
 		List<ReminderVO> outList = reminderService.doSelectList(reminderVO);
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject(outList);
-		mav.setViewName("reminder/reminder");
+		Gson gson = new Gson();
+		String json = gson.toJson(outList);
+		
+		LOG.debug(json);
 		
 		
-		return mav;
+		
+		return json;
 	}
 	
 	@RequestMapping(value = "reminder/doSelectList.do",method = RequestMethod.GET
@@ -104,6 +116,10 @@ public class ReminderController {
 		LOG.debug("-doInsert-");
 		LOG.debug("-reminderVO-" + reminderVO);
 		LOG.debug("-------------------------");
+		
+		// session으로 받을 것.
+		reminderVO.setThrKey("1");
+		reminderVO.setRegId("KIM");
 		
 		int flag = reminderService.doInsert(reminderVO);
 		
