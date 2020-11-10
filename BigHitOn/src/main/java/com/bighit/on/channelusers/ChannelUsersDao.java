@@ -77,7 +77,7 @@ public class ChannelUsersDao {
 	 * 채널VO 입력시 
 	 * 해당 채널에 걸려있는 모든 행 삭제,
 	 * 유저VO 입력시 
-	 * 해당 유저한테 걸려있는 모든 행 삭제
+	 * 해당 유저한테 걸려있는 모든 행 삭제,
 	 * @param dto
 	 * @return
 	 */
