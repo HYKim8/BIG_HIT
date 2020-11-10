@@ -29,7 +29,17 @@ public class ReactionDaoImpl {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	private final String NAMESPACE = "com.bighit.on.reaction";
+	/**
+	 * 중복 체크
+	 * @param reactionVO(작성자,이모티콘,쓰레드키)
+	 * @return
+	 * 	
+	 */
 	
+	
+	public boolean doCheck(ReactionVO reactionVO) {
+		return (int)(sqlSessionTemplate.selectOne( NAMESPACE +".doCheck", reactionVO)) == 1;		
+	}
 	/**
 	 * 반응 기능
 	 * 키는 반응키 누른 사람,반응 종류,반응을 한 쓰레드
@@ -100,19 +110,22 @@ public class ReactionDaoImpl {
 	 * @param inVO
 	 * @return ThreadVO list
 	 */
-//	public List<ThreadVO> doSelectList(UsersVO inVO){
-//		List<ThreadVO> outList = null;
-//		Object[] args = {
-//				inVO.getUser_serial()
-//		};
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("SELECT *                                                 \n");
-//		sb.append("FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key \n");     
-//		sb.append("					FROM thread t JOIN reaction r           \n");
-//		sb.append("					ON  r.res_id = ?                        \n");
-//		sb.append("					and r.thr_key = t.thr_key) b            \n");
-//		sb.append("ON a.thr_key = b.thr_key									\n");
-//		outList = this.jdbcTemplate.query(sb.toString(), args, threadDao.getRowMapper() );
-//		return outList;
-//	}
+	public List<ThreadVO> doSelectList(UsersVO inVO){
+		LOG.debug("=====================");
+		LOG.debug("=doSelectList=");
+		LOG.debug("=====================");
+		String statement = NAMESPACE +".doSelectListFromUsers";		
+		LOG.debug("=statement="+statement);
+		LOG.debug("-param-\n" + inVO);
+		
+		List<ThreadVO> list = this.sqlSessionTemplate.selectList(statement, inVO);
+		
+		for(ThreadVO vo : list) {
+			LOG.debug("===========================");
+			LOG.debug("=doSelectList vo="+vo);
+			LOG.debug("===========================");
+		}
+		
+		return list;	
+	}
 }

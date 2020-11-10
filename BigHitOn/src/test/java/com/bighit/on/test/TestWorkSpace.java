@@ -19,6 +19,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.workspace.WorkSpaceDaoImpl;
+import com.bighit.on.workspace.WorkSpaceService;
+import com.bighit.on.workspace.WorkSpaceServiceImpl;
 import com.bighit.on.workspace.WorkSpaceVO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -36,12 +38,15 @@ public class TestWorkSpace {
 	@Autowired
 	WorkSpaceDaoImpl workSpaceDao;
 	
+	@Autowired
+	WorkSpaceServiceImpl workSpaceServiceImpl; 
+	
 	WorkSpaceVO workSpace01;
 	WorkSpaceVO workSpace02;
 	
 	@Before
 	public void setUp() throws Exception {
-		workSpace01 = new WorkSpaceVO("2","jhs_ws","bighit","jhs","");
+		workSpace01 = new WorkSpaceVO("2","정현수정현수정현수","정현수정현수정현수정현수","jhs","");
 		workSpace02 = new WorkSpaceVO("3","jhs_ws","bighit","jhs","");
 	
 		LOG.debug("** setup() **");
@@ -88,9 +93,33 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doSelectOne() {
 		workSpaceDao.doSelectOne(workSpace01);
 		
 	}
 	
+	@Test
+	//성공
+	public void doworkCkService() {
+		workSpaceServiceImpl.workSpaceNameCK(workSpace01);
+	}
+	
+	//성공
+	@Test
+	@Ignore
+	public void doInserta() {
+		workSpaceServiceImpl.doInsert(workSpace01);
+		
+	}
+	
+	@Test
+	public void workSpacePCK() {
+		workSpaceServiceImpl.workSpacePCK(workSpace01);
+	}
+	
+	@Test
+	public void workSpaceLinkCK() {
+		workSpaceServiceImpl.workSpaceLinkCK(workSpace01);
+	}
 }

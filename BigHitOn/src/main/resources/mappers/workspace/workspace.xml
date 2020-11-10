@@ -6,11 +6,11 @@
 	<!-- com.bighit.on.workspace.doSelectOne -->
 	<select id="doSelectOne" parameterType="WorkSpaceVO" resultType="WorkSpaceVO">
 		SELECT           
-		    ws_link,     
-		    ws_name,     
+		    ws_link AS wsLink,     
+		    ws_name AS wsName,     
 		    project,     
-		    reg_id,      
-		    reg_dt       
+		    reg_id AS regId,      
+		    reg_dt AS regDt      
 		FROM workspace   
 		WHERE ws_link = #{wsLink}		
 	</select>

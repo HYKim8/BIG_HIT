@@ -27,6 +27,11 @@ public class MentionDaoImpl {
 	SqlSessionTemplate sqlSessionTemplate;
 	
 	private final String NAMESPACE = "com.bighit.on.mention";
+	
+	public boolean doCheck(MentionVO mentionVO)
+	{
+		return (int)(sqlSessionTemplate.selectOne(NAMESPACE+".doCheck", mentionVO)) == 1;		
+	}
 	/**
 	 * 언급
 	 * @param mentionVO
@@ -96,19 +101,24 @@ public class MentionDaoImpl {
 	 * @param inVO
 	 * @return ThreadVO list
 	 */
-//	public List<ThreadVO> doSelectList(UsersVO inVO){
-//		List<ThreadVO> outList = null;
-//		Object[] args = {
-//				inVO.getUser_serial()
-//		};
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("SELECT *                                                 \n");
-//		sb.append("FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key \n");     
-//		sb.append("					FROM thread t JOIN mention m           \n");
-//		sb.append("					ON  m.res_id = ?                        \n");
-//		sb.append("					and m.thr_key = t.thr_key) b            \n");
-//		sb.append("ON a.thr_key = b.thr_key									\n");
-//		outList = this.jdbcTemplate.query(sb.toString(), args, threadDao.getRowMapper() );
-//		return outList;
-//	}
+	public List<ThreadVO> doSelectList(UsersVO inVO){
+//		doSelectListFromUser
+		LOG.debug("=====================");
+		LOG.debug("=doSelectList=");
+		LOG.debug("=====================");
+		//등록 : namespace+id = com.sist.ehr.channel.doSelectList
+		String statement = NAMESPACE +".doSelectListFromUser";		
+		LOG.debug("=statement="+statement);
+		LOG.debug("-param-\n" + inVO);
+		
+		List<ThreadVO> list = this.sqlSessionTemplate.selectList(statement, inVO);
+		
+		for(ThreadVO vo : list) {
+			LOG.debug("===========================");
+			LOG.debug("=doSelectList vo="+vo);
+			LOG.debug("===========================");
+		}
+		
+		return list;
+	}
 }

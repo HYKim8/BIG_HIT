@@ -1,9 +1,11 @@
 package com.bighit.on.file;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileService {
@@ -40,10 +42,12 @@ public class FileService {
 	 * @param filePath (file URL)
 	 * @param upPath (S3 URL(key_name))
 	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
-	public int doFileUpload(String filePath, String upPath) {
+	public int doFileUpload(String upPath, MultipartFile multiFile) throws IllegalStateException, IOException {
 		
-		return fileDao.doFileUpload(filePath, upPath);
+		return fileDao.doFileUpload(upPath, multiFile);
 	}
 	
 }

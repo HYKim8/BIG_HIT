@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bighit.on.mention">
-
+<select id="doCheck" parameterType="MentionVO" resultType="int">
+	SELECT COUNT(*)
+	FROM mention
+	WHERE 
+	    res_id = #{resId}
+	    AND thr_key = #{thrKey}
+</select>
+<select id="doSelectListFromUser" parameterType="UsersVO" resultType="ThreadVO">
+	SELECT *                                                 
+	FROM thread a JOIN (SELECT DISTINCT t.thr_key as thr_key 
+						FROM thread t JOIN mention m           
+						ON  m.res_id = #{user_serial}                        
+						and m.thr_key = t.thr_key) b            
+	ON a.thr_key = b.thr_key									
+</select>
 <select id="doSelectList" parameterType="MentionVO" resultType="MentionVO">
 	SELECT                  
 	    res_id,             

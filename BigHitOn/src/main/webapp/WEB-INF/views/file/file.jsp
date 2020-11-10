@@ -11,11 +11,12 @@
 </head>
 <body>
 	<form name="fileUpload" method="post"
-		action="file_test.do"
+		action="file_test.do" id="form_data"
 		enctype="multipart/form-data">
 		<label>Select File</label> <br /> 
-		<input type="file" name="file" id="file_test"/>
+		<input type="file" name="filename" id="file_test"/>
 		<input type="button" value="테스트" id="test">
+		<input type="button" value="다운로드" id="download"/>
 		<input type="text" id="real_path" name="real_path" value="" />
 	</form>
 	
@@ -24,26 +25,39 @@
     <!-- javascript -->
     <script type="text/javascript">
 		$("#test").on("click", function(){
-			var formData = new FormData();
-			formData.append("file", $("#file_test")[0].files[0]);
+				console.log("Test Clicked");
+				doInsert();			
+			})
+		
+		$("#download").on("click", function(){
+				console.log("download Clicked");
+				doDownload();
 
-			
-			console.log("on doUpload()");
-			type:"POST",
-			url:"${hContext}/file/doUpload.do",
-			processData: false,
-			contentType: false,
-			data: formData,
-			success: function(data){
-
-				}
-
-
-
-
-			
-		})
-
+			})
+		
+		function doDownload(){
+				console.log("doDownload()");
+				
+			}
+		
+		function doInsert(){
+			console.log("doInsert()");
+			var formData = new FormData($("#form_data")[0]);
+			console.log("formData : " + formData);
+			$.ajax({
+		        url: '${hContext}/file/doUpload.do',
+		        data: formData,
+		        processData: false,
+		        contentType: false,
+		        type: 'POST',
+		        success: function(data){
+		            console.log("success");
+		        },
+		        error: function(err){
+		            console.log("error");
+		        }
+		    });
+		}
 		
 		
 	    
