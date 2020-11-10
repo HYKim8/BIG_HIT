@@ -15,9 +15,8 @@
 		    <include refid="columns"/>               
 		FROM                     
 		    reminder             
-		WHERE                    
-		    reg_id = #{regId}           
-		    and thr_key = #{thrKey}      
+		WHERE
+			thr_key = #{thrKey}      
 	</select>
 
 	<update id="doUpdate" parameterType="ReminderVO">

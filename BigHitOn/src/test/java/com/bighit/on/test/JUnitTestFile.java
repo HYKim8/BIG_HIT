@@ -83,12 +83,12 @@ public class JUnitTestFile {
 	}
 
 	@Test
+	@Ignore
 	public void file() throws IOException {
 		fileDao.doFileDownload("profileimg/testimg.png");
 	}
 	
 	@Test
-	@Ignore
 	public void serviceTest() {
 		fileService.doInsert(fileVO01);
 		fileService.doInsert(fileVO02);
@@ -122,7 +122,6 @@ public class JUnitTestFile {
 	
 	
 	@Test
-	@Ignore
 	public void daoTest() {
 
 		fileDao.doInsert(fileVO01);

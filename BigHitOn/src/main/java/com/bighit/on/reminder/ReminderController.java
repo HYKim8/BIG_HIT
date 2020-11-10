@@ -3,6 +3,7 @@ package com.bighit.on.reminder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
@@ -24,16 +26,54 @@ public class ReminderController {
 	ReminderService reminderService;
 	
 	@RequestMapping(value = "reminder/reminder_view.do", method = RequestMethod.GET)
-	public String reminder_view() {
+	public ModelAndView reminder_view(HttpServletRequest req) {
 		LOG.debug("-------------------------");
 		LOG.debug("-reminder_view.do-");
 		LOG.debug("-------------------------");
 		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("reminder/reminder");
 		
-		return "reminder/reminder";
+		return mav;
 	}
 	
+	@RequestMapping(value = "reminder/doInsert.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ModelAndView doInsert() {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("reminder/reminder");
+		
+		return mav;
+	}
 	
+	@RequestMapping(value = "reminder/doChkAlarm.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ModelAndView doChkAlarm(HttpServletRequest req) {
+		LOG.debug("-------------------------");
+		LOG.debug("-reminder/doChkAlarm.do-");
+		LOG.debug("-------------------------");
+		
+		
+		
+		HttpSession session = req.getSession();
+		// for Test
+		session.setAttribute("thrKey", "1");
+		// for Test
+		String thrKey = (String) session.getAttribute("thrKey");
+		
+		ReminderVO reminderVO = new ReminderVO();
+		reminderVO.setThrKey(thrKey);
+		
+		List<ReminderVO> outList = reminderService.doSelectList(reminderVO);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(outList);
+		mav.setViewName("reminder/reminder");
+		
+		
+		return mav;
+	}
 	
 	@RequestMapping(value = "reminder/doSelectList.do",method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8" )
