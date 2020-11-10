@@ -1,5 +1,6 @@
 package com.bighit.on.test;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.junit.After;
@@ -51,7 +52,7 @@ public class JUnitTestReminder {
 		reminder02 = new ReminderVO();
 		reminder03 = new ReminderVO();
 				
-		String time01 = "1992/04/20 19:12";
+		String time01 = "2025/04/20 19:12";
 		String time02 = "1994/04/20 19:12";
 		String time03 = "1995/04/20 19:12";
 				
@@ -78,6 +79,12 @@ public class JUnitTestReminder {
 	}
 
 	@Test
+	public void inputZone() {
+		
+	}
+	
+	@Test
+	@Ignore
 	public void serviceTest() {
 		reminderService.doInsert(reminder01);
 		reminderService.doInsert(reminder01);
@@ -109,9 +116,9 @@ public class JUnitTestReminder {
 		reminderService.doUpdate(reminder02);
 		reminderService.doUpdate(reminder03);
 		
-//		reminderService.doDelete(reminder01);
-//		reminderService.doDelete(reminder02);
-//		reminderService.doDelete(reminder03);
+		reminderService.doDelete(reminder01);
+		reminderService.doDelete(reminder02);
+		reminderService.doDelete(reminder03);
 	}
 	
 	@Test
@@ -121,6 +128,7 @@ public class JUnitTestReminder {
 	}
 	
 	@Test
+	@Ignore
 	public void daoTest() {
 		reminderDao.doInsert(reminder01);
 		reminderDao.doInsert(reminder02);

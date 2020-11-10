@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +15,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="${hContext}/resources/img/favicon.ico" > 
     <!-- 부트스트랩 -->
     <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- <link href="/EJDBC/css/layout.css" rel="stylesheet"> -->
 
     <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
@@ -24,6 +28,11 @@
     <![endif]-->
 </head>
 <body>
+	<script>
+		var availableTags = [
+					'remind asdasd'
+				];
+	</script>
 	
 	<div class="container">
 		<div class="page-header">
@@ -49,27 +58,29 @@
 				</table>
 			
 			</div>
-		
+			<!-- end table-responsive -->
 		</div>
+		<!-- end row -->
+		<form action="${hContext }/reminder/doInsert.do" name="reminder_edit" method="post">
+		<!-- 
+		/**
+		 * need thrKey, remindTime, getId
+		 */
+		 -->
+			
+			
+	
+		</form>
+		
+		
+		<input type="text" id="city">
+		<input onclick="setTimeout(time1, 1000)" type="button" id="start_timeinterval" value="타임인터벌">
 	</div>
+	<!-- end container -->
 
 
 
-	<form action="${hContext }/reminder/doInsert.do" name="reminder_edit" method="post">
-	<!-- 
-	/**
-	 * need thrKey, remindTime, getId
-	 */
-	 -->
 	
-		<input type="text" id="thr_key">
-		<input type="text" id="remind_time">
-		<input type="text" id="user_id">
-	
-		<input type="button" value="Submit" id="submit_button">
-	
-	
-	</form>
 
 
 
@@ -78,11 +89,49 @@
 
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <!-- 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    -->
     <script type="text/javascript">
 
+    function time1(){
+			console.log("3sec");
+			setTimeout(time2,1000);
+			doChkAlarm();
+        }
+    function time2(){
+			console.log("3sec");
+			setTimeout(time1,1000);
+        }
 
+	function doChkAlarm(){
+		$.ajax({
+			type:"POST",
+            url:"${hContext}/reminder/doChkAlarm.do",
+            dataType:"html",
+            async: true,
+			data:{
+				},
+			success: function(){
+					console.log("success");
+				}
+		});
+	}
 
+	
+	  $(function() {
+	      var key_word = ["remind @사용자 시간(17:12)"];
+	      $("#city").autocomplete({
+	          source: key_word,
+	          select: function(event, ui) {
+	              console.log(ui.item);
+	          },
+	          focus: function(event, ui) {
+	              return false;
+	              //event.preventDefault();
+	          }
+	      });
+	  });
 
     
 	$("#submit_button").on("click",function(){
@@ -112,7 +161,7 @@
 
 						}
 				});
-		}
+		};
 
 
 
@@ -149,7 +198,7 @@
 
 		               }
 				});
-		}
+		};
 
     
     </script>
