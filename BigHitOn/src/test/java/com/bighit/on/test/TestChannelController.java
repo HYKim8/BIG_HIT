@@ -2,7 +2,7 @@ package com.bighit.on.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,7 +19,6 @@ import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -30,9 +29,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.bighit.on.channel.ChannelDaoImpl;
+import com.bighit.on.channel.ChannelService;
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Message;
-import com.bighit.on.workspace.WorkSpaceService;
-import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -41,102 +41,74 @@ import com.google.gson.Gson;
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml",
                                    "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"		
 })
-public class TestWorkSpaceController {
-	final Logger   LOG = LoggerFactory.getLogger(this.getClass());
+public class TestChannelController {
+	Logger  LOG = LoggerFactory.getLogger(TestChannelController.class);
 	
-	@Autowired
+	@Autowired // 테스트 컨텍스트 프레임워크는 일치하는 컨텍스트를 찾아 DI해 준다.
 	WebApplicationContext webApplicationContext;
 	
 	@Autowired
-	WorkSpaceService workSpaceService;
+	ChannelService channelService;
 	
-	List<WorkSpaceVO> workSpaces;
+	List<ChannelVO> channels;
 	
 	// 브라우저 대신 Mock
 	MockMvc mockMvc;
 	
 	@Before
 	public void setUp() throws Exception {
-		workSpaces=Arrays.asList(new WorkSpaceVO("2","정현수","정현수","jhs","")
-								,new WorkSpaceVO("3","jhs_ws","bighit","jhs","")					
-		);
+		channels=Arrays.asList(new ChannelVO("12","1","testCh1","=testch1test=","testspace","1","jhs",""),
+							   new ChannelVO("123","1","testCh1_U","=testch1test_U=","testspace_U","1","jhs_U",""));
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		LOG.debug("=mockMvc=" + mockMvc);
 		assertThat(mockMvc, is(notNullValue()));
-	}
-	
-	@Test
-	@Ignore
-	public void doInsert() throws Exception {
-		WorkSpaceVO workSpaceVO = workSpaces.get(0);
-		MockHttpServletRequestBuilder createMessage = 
-				 MockMvcRequestBuilders.post("/workspace/doInsert.do")
-				 .param("wsLink", workSpaceVO.getWsLink())
-				 .param("wsName", workSpaceVO.getWsName())
-				 .param("project", workSpaceVO.getProject())
-				 .param("regId", workSpaceVO.getRegId())
-				 .param("regDt", workSpaceVO.getRegDt());
-		
-		ResultActions resultActions = mockMvc.perform(createMessage)
-				.andExpect(status().is2xxSuccessful());	
-	
-		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
-		LOG.debug("===========================");
-		LOG.debug("=result=" + result);
-		LOG.debug("===========================");
-		
-		//json -> Message
-		Gson gson=new Gson();
-		
-		Message message = gson.fromJson(result, Message.class);
-		LOG.debug("===========================");
-		LOG.debug("=message=" + message);
-		LOG.debug("===========================");
 		
 	}
-	
-	
-	//성공
-	@Test
-	public void doDelete() throws Exception {
-		WorkSpaceVO workSpaceVO = workSpaces.get(0);
-		//workSpaceVO.setWsLink(2+"");
-		LOG.debug("workSpaces.get(0):"+workSpaceVO);
-		
-		MockHttpServletRequestBuilder createMessage = 
-				 MockMvcRequestBuilders.post("/workspace/doDelete.do")
-				 .param("wsLink", workSpaceVO.getWsLink()+"");
-		
-		ResultActions resultActions = mockMvc.perform(createMessage)
-				.andExpect(status().is2xxSuccessful());	
-	
-		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
-		LOG.debug("===========================");
-		LOG.debug("=result=" + result);
-		LOG.debug("===========================");
-		
-		//json -> Message
-		Gson gson=new Gson();
-		
-		Message message = gson.fromJson(result, Message.class);
-		LOG.debug("===========================");
-		LOG.debug("=message=" + message);
-		LOG.debug("===========================");
-		
-		
-	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 	}
 	
 	//성공
 	@Test
-	public void doSelectOne() throws Exception {
-		WorkSpaceVO workSpaceVO = workSpaces.get(0);
+	public void doInsert() throws Exception {
+		ChannelVO channelVO = channels.get(0);
 		MockHttpServletRequestBuilder createMessage = 
-				 MockMvcRequestBuilders.get("/workspace/doSelectOne.do")
-				 .param("wsLink", workSpaceVO.getWsLink());
+				 MockMvcRequestBuilders.post("/channel/doInsert.do")
+				 .param("chLink", channelVO.getChLink())
+				 .param("wsLink", channelVO.getWsLink())
+				 .param("chName", channelVO.getChName())
+				 .param("topic", channelVO.getTopic())
+				 .param("chDescription", channelVO.getChDescription())
+				 .param("chAccess", channelVO.getChAccess())
+				 .param("regId", channelVO.getRegId());
+		ResultActions resultActions = mockMvc.perform(createMessage)
+				.andExpect(status().is2xxSuccessful());	
+	
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+		
+		//json -> Message
+		Gson gson=new Gson();
+		
+		Message message = gson.fromJson(result, Message.class);
+		LOG.debug("===========================");
+		LOG.debug("=message=" + message);
+		LOG.debug("===========================");
+	}
+	
+	//성공
+	@Test
+	@Ignore
+	public void doDelete() throws Exception {
+		ChannelVO channelVO = channels.get(0);
+		LOG.debug("channelVO"+channelVO);
+		
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.post("/channel/doDelete.do")
+				 .param("chLink", channelVO.getChLink());
 		
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(status().is2xxSuccessful());	
@@ -153,6 +125,33 @@ public class TestWorkSpaceController {
 		LOG.debug("===========================");
 		LOG.debug("=message=" + message);
 		LOG.debug("===========================");
+	}
+	
+	//성공
+	@Test
+	public void doSelectOne() throws Exception {
+		ChannelVO channelVO = channels.get(0);
+		
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.get("/channel/doSelectOne.do")
+				 .param("chLink", channelVO.getChLink());
+		
+		ResultActions resultActions = mockMvc.perform(createMessage)
+				.andExpect(status().is2xxSuccessful());	
+	
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+		
+		//json -> Message
+		Gson gson=new Gson();
+		
+		Message message = gson.fromJson(result, Message.class);
+		LOG.debug("===========================");
+		LOG.debug("=message=" + message);
+		LOG.debug("===========================");
+		
 	}
 	
 }

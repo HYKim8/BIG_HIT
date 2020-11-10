@@ -90,7 +90,6 @@ public class TestChannel {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doDelete() {
 		channelDao.doDelete(channel01);
 		channelDao.doDelete(channel02);
