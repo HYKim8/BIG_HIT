@@ -84,7 +84,7 @@ public class ChannelUsersDao {
 		public int doDeleteAll(ChannelVO inVO) {
 			return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInUser", inVO);		
 		}
-		public int doDeleteAll(ChannelUsersVO inVO) {
-			return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInUser", inVO);		
+		public int doDeleteAll(UsersVO inVO) {
+			return sqlSessionTemplate.delete(NAMESPACE +".doDeleteAllInUsers", inVO);		
 		}
 	}
