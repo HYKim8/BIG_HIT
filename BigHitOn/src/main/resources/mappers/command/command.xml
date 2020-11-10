@@ -16,20 +16,25 @@
 	UPDATE command SET app_name = #{appName},
 					   cmd_name = #{cmdName},
 					   param_cnt = #{paramCnt}
-				   WHERE com_id = #{comId}					   
+				   WHERE com_id = #{comId}					  
 </update>
-<!-- <select id="doSelectListChLink" parameterType="ComChLinkVO">
+ <select id="doSelectListChLink" parameterType="ComChLinkVO"
+ 	resultType = "ComChLinkVO">
 	SELECT a.ch_link, b.com_id, b.app_name, b.cmd_name, b.param_cnt
 	FROM channel_command a, command b
 	WHERE a.ch_link = #{chLink}
 	AND a.com_id = b.com_id
 </select>
--->
-<select id="doSelectOne" parameterType="CommandVO">
+
+
+<select id="doSelectOne" parameterType="CommandVO"
+	resultType="CommandVO">
+
 	SELECT com_id as comId, app_name as appName, cmd_name as cmdName, param_cnt as paramCnt FROM command WHERE com_id = #{comId}
 	ORDER BY com_id
 </select>
-<select id="doSelectList" parameterType="CommandVO">
+<select id="doSelectList" parameterType="CommandVO"
+	resultType="CommandVO">
 	SELECT * FROM command where com_id = #{comId}
 </select>
 </mapper>

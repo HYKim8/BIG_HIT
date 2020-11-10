@@ -48,7 +48,7 @@ public class CommandTest {
 	CommandVO command01;
 	CommandVO command02;
 	
-
+	ComChLinkVO comChLink01;
 	
 	ChannelCommandVO ccv1;
 	ChannelCommandVO ccv2;
@@ -58,9 +58,11 @@ public class CommandTest {
 		command01 = new CommandVO();
 		command02 = new CommandVO();		
 		
-		command01 = new CommandVO(12,"tests","testt",11);
-		command02 = new CommandVO(13,"t1ests","tes1tt",10);
-	
+		command01 = new CommandVO(12,"tests","testt",2);
+		command02 = new CommandVO(13,"t1ests","tes1tt",1);
+		
+		comChLink01 = new ComChLinkVO(1,"test","test",1,"1");
+		
 		ccv1 = new ChannelCommandVO(command01.getComId(),"1");
 		ccv2 = new ChannelCommandVO(command02.getComId(),"1");
 	}
@@ -94,18 +96,16 @@ public class CommandTest {
 	}
 	
 	@Test
-	
+	@Ignore
 	public void doSelectOne() {
 		commandDao.doSelectOne(command01);
 	}
-	
-//	@Test
-//	@Ignore
-//	public void doSelectListChLink() {
-//		commandDao.doSelectListChLink(comChLink02);
-//	}
 	@Test
-	@Ignore
+	public void doSelectChLink() {
+		commandDao.doSelectListChLink(comChLink01);
+	}
+	
+	@Test
 	public void doSelectList() {
 		commandDao.doSelectList(command01);
 	}
