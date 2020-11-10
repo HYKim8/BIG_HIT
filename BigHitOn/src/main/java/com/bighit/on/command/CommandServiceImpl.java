@@ -25,10 +25,21 @@ public class CommandServiceImpl implements CommandService {
 	public List<CommandVO> doSelectList(CommandVO commandVO) {
 		return cmdDao.doSelectList(commandVO);
 	}
-
+	
 	@Override
 	public int doUpdate(CommandVO commandVO) {
 		return cmdDao.doUpdate(commandVO);
+	}
+
+	@Override
+	public CommandVO doSelectOne(CommandVO commandVO) {
+		return cmdDao.doSelectOne(commandVO);
+	}
+
+	@Override
+	public List<ComChLinkVO> doSelectListChLink(ComChLinkVO comChLinkVO) {
+		
+		return cmdDao.doSelectListChLink(comChLinkVO);
 	}
 
 }

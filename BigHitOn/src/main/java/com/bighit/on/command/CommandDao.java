@@ -66,10 +66,11 @@ import com.bighit.on.cmn.DTO;
 		LOG.debug("=======================");
 		LOG.debug("====doUpdate====");
 		LOG.debug("=======================");	
-	
+		
 		String statement = NAMESPACE+".doUpdate";
 		LOG.debug("====statement===="+statement);
 		LOG.debug("====commandVO===="+commandVO);
+		
 		int flag = sqlSessionTemplate.update(statement, commandVO);
 		LOG.debug("-doDelete flag=" + flag);
 	
@@ -93,9 +94,20 @@ import com.bighit.on.cmn.DTO;
 		
 		return list;
 	}
-	public List<ComChLinkVO> doSelectListChLink(ComChLinkVO ComChLinkVO){
+	public List<ComChLinkVO> doSelectListChLink(ComChLinkVO comChLinkVO){
+		LOG.debug("=======================");
+		LOG.debug("====doSelectListChLink====");
+		LOG.debug("=======================");
+		String statement = NAMESPACE +".doSelectListChLink";		
+		LOG.debug("=statement="+statement);
 		
-		return null;
+		List<ComChLinkVO> list = this.sqlSessionTemplate.selectList(statement, comChLinkVO);
+		
+		for(ComChLinkVO vo : list) {
+			LOG.debug("=vo="+vo);
+		}
+		
+		return list;
 	}
 	public CommandVO doSelectOne(CommandVO commandVO) {
 		LOG.debug("=======================");

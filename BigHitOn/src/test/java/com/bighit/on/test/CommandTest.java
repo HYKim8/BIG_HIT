@@ -48,6 +48,7 @@ public class CommandTest {
 	CommandVO command01;
 	CommandVO command02;
 	
+
 	
 	ChannelCommandVO ccv1;
 	ChannelCommandVO ccv2;
@@ -57,16 +58,9 @@ public class CommandTest {
 		command01 = new CommandVO();
 		command02 = new CommandVO();		
 		
-		command01.setComId(4);
-		command01.setCmdName("test");
-		command01.setAppName("test");
-		command01.setParamCnt(1);
-		
-		command02.setComId(2);
-		command02.setCmdName("test02");
-		command02.setAppName("test02");
-		command02.setParamCnt(1);	
-		
+		command01 = new CommandVO(12,"tests","testt",11);
+		command02 = new CommandVO(13,"t1ests","tes1tt",10);
+	
 		ccv1 = new ChannelCommandVO(command01.getComId(),"1");
 		ccv2 = new ChannelCommandVO(command02.getComId(),"1");
 	}
@@ -100,7 +94,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	@Ignore
+	
 	public void doSelectOne() {
 		commandDao.doSelectOne(command01);
 	}
@@ -117,6 +111,7 @@ public class CommandTest {
 	}
 	
 	@Test
+	@Ignore
 	public void all() {
 		channelCommandDao.doDeleteAll(command01);
 		channelCommandDao.doDeleteAll(command02);
