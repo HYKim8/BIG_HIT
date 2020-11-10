@@ -97,7 +97,7 @@ public class UsersDaoImpl {
 				
 	}
 	
-	public UsersVO doSelectOne(String userSerial) throws Exception{
+	public UsersVO doSelectOne(String userSerial) {
 		LOG.debug("===========================");
 		LOG.debug("=doSelectOne=");
 		LOG.debug("===========================");
