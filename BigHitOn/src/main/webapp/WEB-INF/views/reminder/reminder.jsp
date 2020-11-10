@@ -95,27 +95,12 @@
     <script type="text/javascript">
 
     function time1(){
-			console.log("3sec");
-			setTimeout(time2,1000);
+			console.log("doChkAlarm");
 			doChkAlarm();
-        }
-    function time2(){
-			console.log("3sec");
-			setTimeout(time1,1000);
         }
 
 	function doChkAlarm(){
-		$.ajax({
-			type:"POST",
-            url:"${hContext}/reminder/doChkAlarm.do",
-            dataType:"html",
-            async: true,
-			data:{
-				},
-			success: function(){
-					console.log("success");
-				}
-		});
+		
 	}
 
 	

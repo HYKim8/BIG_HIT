@@ -31,16 +31,8 @@ public class ReminderController {
 		LOG.debug("-reminder_view.do-");
 		LOG.debug("-------------------------");
 		
-		ReminderVO reminderVO = new ReminderVO();
-		reminderVO.setThrKey("1");
-		List<ReminderVO> reminderList = reminderService.doSelectList(reminderVO);
-		HttpSession session = req.getSession();
-			
-		session.setAttribute("reminderList", reminderList);
-		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("reminder/reminder");
-		mav.addObject(reminderList);
 		
 		return mav;
 	}
@@ -62,14 +54,21 @@ public class ReminderController {
 		LOG.debug("-reminder/doChkAlarm.do-");
 		LOG.debug("-------------------------");
 		
-		HttpSession session = req.getSession();
-		List<ReminderVO> list = (List<ReminderVO>) session.getAttribute("reminderList");
 		
-		for(int i = 0; i < list.size(); i++) {
-			LOG.debug("outVO"+list.get(i));
-		}
+		
+		HttpSession session = req.getSession();
+		// for Test
+		session.setAttribute("thrKey", "1");
+		// for Test
+		String thrKey = (String) session.getAttribute("thrKey");
+		
+		ReminderVO reminderVO = new ReminderVO();
+		reminderVO.setThrKey(thrKey);
+		
+		List<ReminderVO> outList = reminderService.doSelectList(reminderVO);
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject(outList);
 		mav.setViewName("reminder/reminder");
 		
 		
