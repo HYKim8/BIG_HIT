@@ -1,5 +1,7 @@
 package com.bighit.on.workspace;
 
+import java.util.List;
+
 public interface WorkSpaceService {
 	
 	public int doInsert(WorkSpaceVO workSpaceVO);
@@ -13,4 +15,6 @@ public interface WorkSpaceService {
 	public int workSpaceNameCK(WorkSpaceVO workSpaceVO);
 	
 	public int workSpacePCK(WorkSpaceVO workSpaceVO);
+	
+	public List<WorkSpaceVO> doSelectList (WorkSpaceVO workSpaceVO);
 }

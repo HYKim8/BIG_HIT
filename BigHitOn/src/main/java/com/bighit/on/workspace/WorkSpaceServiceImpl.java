@@ -1,5 +1,7 @@
 package com.bighit.on.workspace;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,11 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	@Override
 	public WorkSpaceVO doSelectOne(WorkSpaceVO wsLink) {
 		return workSpaceDao.doSelectOne(wsLink);
+	}
+
+	@Override
+	public List<WorkSpaceVO> doSelectList(WorkSpaceVO workSpaceVO) {
+		return workSpaceDao.doSelectList(workSpaceVO);
 	}
 
 

@@ -1,5 +1,6 @@
 package com.bighit.on.workspace;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -97,5 +98,26 @@ public class WorkSpaceController {
 		return json;
 		
 	}
-
+	
+	@RequestMapping(value = "workspace/doSelectList.do", method = RequestMethod.GET
+			,produces = "application/json;charset=UTF-8"	
+			)
+	@ResponseBody
+	public String doSelectList(WorkSpaceVO workSpaceVO, Model model) {
+		LOG.debug("-------------------------");
+		LOG.debug("-doSelectList-");
+		LOG.debug("-------------------------");
+		
+		List<WorkSpaceVO> list = workSpaceService.doSelectList(workSpaceVO);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		
+		LOG.debug("-------------------------");
+		LOG.debug("-json-"+json);
+		LOG.debug("-------------------------");
+		
+		return json;
+	}
+	
 }

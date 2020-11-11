@@ -2,6 +2,7 @@ package com.bighit.on.workspace;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -97,5 +98,23 @@ public class WorkSpaceDaoImpl {
 		return outVO;
 	}
 	
-	
+	public List<WorkSpaceVO> doSelectList (WorkSpaceVO workSpaceVO) {
+		LOG.debug("=====================");
+		LOG.debug("=doSelectList=");
+		LOG.debug("=====================");
+		//등록 : namespace+id = com.sist.ehr.channel.doSelectList
+		String statement = NAMESPACE +".doSelectList";		
+		LOG.debug("=statement="+statement);
+		LOG.debug("-param-\n" + workSpaceVO);
+		
+		List<WorkSpaceVO> list = sqlSessionTemplate.selectList(statement,workSpaceVO);
+		
+		for(WorkSpaceVO vo : list) {
+			LOG.debug("===========================");
+			LOG.debug("=doSelectList vo="+vo);
+			LOG.debug("===========================");
+		}
+		return list;
+		
+	}
 }

@@ -98,6 +98,7 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doDelete() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		//workSpaceVO.setWsLink(2+"");
@@ -132,6 +133,7 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doSelectOne() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -154,5 +156,22 @@ public class TestWorkSpaceController {
 		LOG.debug("=message=" + message);
 		LOG.debug("===========================");
 	}
+	
+	//성공
+	@Test
+	public void doSelectList() throws Exception {
+		WorkSpaceVO workSpaceVO = workSpaces.get(0);
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.get("/workspace/doSelectList.do")
+				 .param("wsLink", workSpaceVO.getWsLink());
+		ResultActions resultActions = mockMvc.perform(createMessage).andExpect(status().is2xxSuccessful());
+
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+
+	}
+
 	
 }

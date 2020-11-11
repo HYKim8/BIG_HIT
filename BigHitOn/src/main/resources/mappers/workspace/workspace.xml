@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bighit.on.workspace">
 	
+	<!-- 목록조회 -->
+	<!-- com.bighit.on.workspace.doSelectOne -->
+	<select id="doSelectList" parameterType="WorkSpaceVO" resultType="WorkSpaceVO">
+		SELECT           
+		    ws_link AS wsLink,     
+		    ws_name AS wsName,     
+		    project,     
+		    reg_id AS regId,      
+		    reg_dt AS regDt      
+		FROM workspace		
+	</select>
+	
+	
 	<!-- 단건조회 -->
 	<!-- com.bighit.on.workspace.doSelectOne -->
 	<select id="doSelectOne" parameterType="WorkSpaceVO" resultType="WorkSpaceVO">
