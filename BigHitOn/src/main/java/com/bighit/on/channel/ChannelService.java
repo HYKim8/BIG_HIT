@@ -2,6 +2,8 @@ package com.bighit.on.channel;
 
 import java.util.List;
 
+import com.bighit.on.email.EmailVO;
+
 public interface ChannelService {
 	
 	public int doInsert(ChannelVO channelVO);
@@ -12,5 +14,4 @@ public interface ChannelService {
 	
 	public List<ChannelVO> doSelectList(ChannelVO channelVO);
 	
-	public void sendEmail(EmailVO emailVO);
 }

@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.bighit.on.email.EmailVO;
 import com.bighit.on.workspace.WorkSpaceDaoImpl;
 import com.bighit.on.workspace.WorkSpaceService;
 import com.bighit.on.workspace.WorkSpaceServiceImpl;
@@ -41,14 +42,20 @@ public class TestWorkSpace {
 	@Autowired
 	WorkSpaceServiceImpl workSpaceServiceImpl; 
 	
+	@Autowired
+	WorkSpaceService workSpaceService;
+	
 	WorkSpaceVO workSpace01;
 	WorkSpaceVO workSpace02;
+	
+	EmailVO email01;
 	
 	@Before
 	public void setUp() throws Exception {
 		workSpace01 = new WorkSpaceVO("2","정현수","정현수","jhs","");
 		workSpace02 = new WorkSpaceVO("3","jhs_ws","bighit","jhs","");
-	
+		
+		email01 = new EmailVO("isc8481@hanmail.net", workSpace01.getWsLink(), workSpace01.getWsName(), "slack");
 		LOG.debug("** setup() **");
 		LOG.debug("** workSpace01 param **:"+workSpace01);
 	}
@@ -77,6 +84,7 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doInsert() {
 		int flag = workSpaceDao.doInsert(workSpace01);
 		assertThat(flag, is(1));
@@ -124,5 +132,12 @@ public class TestWorkSpace {
 	@Test
 	public void workSpaceLinkCK() {
 		workSpaceServiceImpl.workSpaceLinkCK(workSpace01);
+	}
+	
+	//성공
+	@Test
+	public void sendEmail() {
+		
+		workSpaceService.sendEmail(email01);
 	}
 }
