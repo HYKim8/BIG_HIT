@@ -41,7 +41,43 @@
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="datasource" />
 	</bean>
-
+	
+	<!-- PasswordAuthentication -->
+   <bean id="passwordAuth" class="javax.mail.PasswordAuthentication">
+   	  <constructor-arg index="0">
+   	  	<value>gustn4880@naver.com</value>
+   	  </constructor-arg>
+   	  <constructor-arg index="1">
+   	  	<value>비번</value>
+   	  </constructor-arg>
+   </bean>
+   
+   <!-- Authenticator -->
+   <bean id="authenticator" class="javax.mail.Authenticator">
+   	  <lookup-method name="getPasswordAuthentication"
+   	    bean="passwordAuth"
+   	    />
+   </bean>
+   
+   <!-- Session -->
+   <bean id="emailSession" class="javax.mail.Session">
+   		<constructor-arg index="0">
+   			<props>
+   				<prop key="mail.smtp.host">smtp.naver.com</prop>
+   				<prop key="mail.smtp.port">465</prop>
+   				<prop key="mail.smtp.auth">true</prop>
+   				<prop key="mail.smtp.ssl.enable">true</prop>
+   				<prop key="mail.smtp.ssl.trust">smtp.naver.com</prop>
+   			</props>
+   		</constructor-arg>
+   		<constructor-arg index="1" ref="authenticator"/>
+   </bean>
+	
+	<!-- JavaMailSenderImpl:운영(Mail보내기) -->
+    <bean id="mailSenderImpl" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+   		<property name="session" ref="emailSession"></property>
+    </bean>
+	
 	<!--database.properties파일 read -->
 	<context:property-placeholder
 		location="classpath:resources/config/database.properties" />

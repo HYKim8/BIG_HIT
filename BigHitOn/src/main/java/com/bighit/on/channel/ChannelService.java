@@ -12,4 +12,5 @@ public interface ChannelService {
 	
 	public List<ChannelVO> doSelectList(ChannelVO channelVO);
 	
+	public void sendEmail(EmailVO emailVO);
 }
