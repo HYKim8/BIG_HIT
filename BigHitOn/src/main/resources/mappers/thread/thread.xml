@@ -4,7 +4,7 @@
 
 	<insert id ="doInsert">
 		INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES 
-		    (#{thrKey},#{parentKey}, #{chLink}, #{contents},#{regId},#{regDt})
+		    ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) ,#{parentKey}, #{chLink}, #{contents},#{regId},#{regDt})
 	</insert>
 	
 	<insert id = "doInsertReplay">
