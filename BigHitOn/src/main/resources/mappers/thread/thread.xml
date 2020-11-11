@@ -14,7 +14,7 @@
 	<!-- 계층형 쿼리로 작성할 것 -->
 	<select id = "doSelectAll" 
 	resultType = "com.bighit.on.thread.ThreadVO">
-	SELECT parent_key,thr_key,reg_id,reg_dt,contents FROM thread 
+	SELECT thr_key,reg_id,reg_dt,contents FROM thread 
 	</select>
 	
 	<delete id = "doDelete">

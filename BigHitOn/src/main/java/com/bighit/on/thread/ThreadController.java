@@ -6,11 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.mention.MentionService;
+import com.bighit.on.reaction.ReactionService;
+import com.bighit.on.save.SaveThrService;
 import com.google.gson.Gson;
 
 @Controller
@@ -22,6 +26,15 @@ public class ThreadController {
 	
 	@Autowired
 	ThreadService threadService;
+	
+	@Autowired
+	MentionService mentionService;
+	
+	@Autowired
+	ReactionService reactionService;
+	
+	@Autowired
+	SaveThrService saveThrService;
 	
 	@RequestMapping(value="thread/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -109,9 +122,22 @@ public class ThreadController {
 	        
 	     return json;
 	}
-	//public List<ThreadVO> doSelectAll(ThreadVO threadVO){
-	//
-	//}
+	
+	@RequestMapping(value="thread/doSelectAll.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String doSelectAll(ThreadVO threadVO, Model model){
+		LOG.debug("===================================");
+		LOG.debug("=doSelectAll=");
+		
+		
+		List<ThreadVO> threadList = this.threadService.doSelectAll(threadVO);
+		model.addAttribute("list", threadList);
+		for(ThreadVO vo:threadList) {
+		LOG.debug(vo.toString());
+		}
+		String view = "thread/thread_list";
+		return view;
+	}
 	
 	
 }

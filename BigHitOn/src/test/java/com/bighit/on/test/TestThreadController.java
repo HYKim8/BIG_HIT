@@ -149,6 +149,4 @@ public class TestThreadController {
 		LOG.debug("=message=" + message);
 		LOG.debug("===========================");
 	}
-	
-
 }

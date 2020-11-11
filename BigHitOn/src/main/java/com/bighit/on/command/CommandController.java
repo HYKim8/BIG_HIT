@@ -88,7 +88,7 @@ public class CommandController {
 	
 	@RequestMapping(value="command/doUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Message doUpdate(CommandVO commandVO,Locale locale) {
+	public String doUpdate(CommandVO commandVO) {
 		LOG.debug("===================================");
 		LOG.debug("=doUpdate=");
 		LOG.debug("=param="+commandVO);
@@ -99,19 +99,21 @@ public class CommandController {
 	    LOG.debug("==================");
 	    
 	    Message message = new Message();
-	    message.setRegId(String.valueOf(flag));
+	    message.setRegId(flag+"");
 	    
-	    if(flag >0 ) {
-	    	Object[] args01 = new String[] {"수정"};
-	    	String msgConfirm = this.messageSource.getMessage("message.common.message.confirm", args01, locale);
-	    	message.setMsgContents(msgConfirm);
+	    if(flag ==1 ) {
+        	message.setMsgContents(commandVO.getComId()+"수정 성공.");
         }else {
-        	message.setMsgContents("수정 실패.");
+        	message.setMsgContents(commandVO.getComId()+"수정 실패.");
         }
-	    LOG.debug("=message="+message);
-		LOG.debug("===================================");		
+	    Gson gson=new Gson();
+	     String json = gson.toJson(message);
+	     LOG.debug("==================");
+	     LOG.debug("=json="+json);
+	     LOG.debug("==================");         
+	        
+	     return json;
 		
-		return message;
 	}
 	
 	@RequestMapping(value="command/doSelect.do", method = RequestMethod.POST)

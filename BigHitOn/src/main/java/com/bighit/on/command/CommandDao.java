@@ -72,7 +72,7 @@ import com.bighit.on.cmn.DTO;
 		LOG.debug("====commandVO===="+commandVO);
 		
 		int flag = sqlSessionTemplate.update(statement, commandVO);
-		LOG.debug("-doDelete flag=" + flag);
+		LOG.debug("-doUpdate flag=" + flag);
 	
 	
 		return flag;

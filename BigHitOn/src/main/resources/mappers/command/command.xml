@@ -13,14 +13,13 @@
 </delete>
 
 <update id="doUpdate" parameterType="CommandVO">
-	UPDATE command SET app_name = #{appName},
-					   cmd_name = #{cmdName},
-					   param_cnt = #{paramCnt}
-				   WHERE com_id = #{comId}					  
+	UPDATE command SET app_name  = #{appName},
+					   cmd_name  = #{cmdName}					   
+				   WHERE com_id  = #{comId}					  
 </update>
  <select id="doSelectListChLink" parameterType="ComChLinkVO"
  	resultType = "ComChLinkVO">
-	SELECT a.ch_link, b.com_id, b.app_name, b.cmd_name, b.param_cnt
+	SELECT a.ch_link as chLink, b.com_id as comId, b.app_name as appName, b.cmd_name as cmdName, b.param_cnt as paramCnt
 	FROM channel_command a, command b
 	WHERE a.ch_link = #{chLink}
 	AND a.com_id = b.com_id

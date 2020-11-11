@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -64,6 +65,7 @@ public class TestCommandController {
 	}
 	
 	@Test
+	@Ignore
 	public void doInsert() throws Exception {
 		CommandVO commandVO = commands.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -90,5 +92,56 @@ public class TestCommandController {
 		LOG.debug("=message=" + message);
 		LOG.debug("===========================");	
 	}
-
+	
+	@Test
+	@Ignore
+	public void doDelete() throws Exception {
+		CommandVO commandVO = commands.get(0);
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.post("/command/doDelete.do")
+				 .param("comId", commandVO.getComId()+"");
+		
+		ResultActions resultActions =mockMvc.perform(createMessage)	
+		//.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+		.andExpect(status().is2xxSuccessful());	
+		
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+		
+		Gson gson=new Gson();
+		
+		Message message = gson.fromJson(result, Message.class);
+		LOG.debug("===========================");
+		LOG.debug("=message=" + message);
+		LOG.debug("===========================");
+	}
+	
+	@Test
+	public void doUpdate() throws Exception {
+		CommandVO commandVO = commands.get(0);
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.post("/command/doUpdate.do")	
+				 .param("appName", commandVO.getAppName()+"t")
+				 .param("cmdName", commandVO.getCmdName()+"a")
+				 .param("comId", commandVO.getComId()+"");
+		
+		ResultActions resultActions =mockMvc.perform(createMessage)	
+				//.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is2xxSuccessful());	
+				
+				String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+				LOG.debug("===========================");
+				LOG.debug("=result=" + result);
+				LOG.debug("===========================");
+				
+				Gson gson=new Gson();
+				
+				Message message = gson.fromJson(result, Message.class);
+				LOG.debug("===========================");
+				LOG.debug("=message=" + message);
+				LOG.debug("===========================");
+	}
+	
 }
