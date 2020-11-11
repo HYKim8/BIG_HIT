@@ -85,7 +85,10 @@
 		    reg_id,        
 		    reg_dt         
 		) VALUES (         
-		    #{user_serial},             
+		    (SELECT serial_key
+				FROM userserial
+				WHERE is_used = 0
+				AND ROWNUM = 1),             
 		    #{ws_link},             
 		    #{email},             
 		    #{password},             
@@ -102,6 +105,13 @@
 		)                  
 	
 	</insert>
-	
+	<update id="updateKey">
+	UPDATE userserial
+	SET
+	    is_used = 1
+	WHERE
+	    is_used = 0
+	    AND ROWNUM = 1
+	</update>
 	
 </mapper>

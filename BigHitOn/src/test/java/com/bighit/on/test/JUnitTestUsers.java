@@ -58,6 +58,7 @@ public class JUnitTestUsers {
 	
 	/** workspace에 포함된 users list */
 	@Test
+//	@Ignore
 	public void doSelectList2() {
 		usersDaoImpl.doSelectList2(workSpaceVO);
 	}
@@ -117,22 +118,22 @@ public class JUnitTestUsers {
 	@Test
 //	@Ignore
 	public void test() {
-		channelUserDao.doDeleteAll(channelVO);		
+//		channelUserDao.doDeleteAll(channelVO);		
 		
-		usersDaoImpl.doDelete(users01);
-		usersDaoImpl.doDelete(users02);
-		usersDaoImpl.doDelete(users03);
+//		usersDaoImpl.doDelete(users01);
+//		usersDaoImpl.doDelete(users02);
+//		usersDaoImpl.doDelete(users03);
 		
 		usersDaoImpl.doInsert(users01);
 		usersDaoImpl.doInsert(users02);
 		usersDaoImpl.doInsert(users03);
 		
-		channelUserDao.doInsert(cu1);
-		channelUserDao.doInsert(cu2);
-		channelUserDao.doInsert(cu3);	
-		
-		List<UsersVO> list = usersDaoImpl.doSelectList(channelVO);
-		assertThat(list.size(), is(3));
+//		channelUserDao.doInsert(cu1);
+//		channelUserDao.doInsert(cu2);
+//		channelUserDao.doInsert(cu3);	
+//		
+//		List<UsersVO> list = usersDaoImpl.doSelectList(channelVO);
+//		assertThat(list.size(), is(3));
 		
 		LOG.debug("============================");
 		LOG.debug("test doInsert 성공 ");

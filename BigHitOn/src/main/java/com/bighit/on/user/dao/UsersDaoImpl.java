@@ -25,7 +25,7 @@ public class UsersDaoImpl {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	private final String NAMESPACE = "com.bighit.on.workspace";
+	private final String NAMESPACE = "com.bighit.on.users";
 	
 	RowMapper rowMapper = new RowMapper<UsersVO>() {
 
@@ -159,7 +159,7 @@ public class UsersDaoImpl {
 		LOG.debug("===========================");
 		
 		int flag = sqlSessionTemplate.insert(statement, usersVO);
-		
+		sqlSessionTemplate.update(NAMESPACE+".updateKey");
 		return flag;
 
 	}

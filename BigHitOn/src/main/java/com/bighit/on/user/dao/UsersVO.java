@@ -54,6 +54,9 @@ public class UsersVO extends DTO {
 		return ws_link;
 	}
 
+	public String getWsLink() {
+		return ws_link;
+	}
 	public void setWs_link(String ws_link) {
 		this.ws_link = ws_link;
 	}
