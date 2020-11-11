@@ -13,6 +13,37 @@
     #{notification}
    )
 </insert>
+<insert id="generalInsert" parameterType="UsersVO">
+	INSERT INTO channel_users (
+     ch_link,
+     user_serial,
+     notification
+   ) VALUES (
+    (SELECT ch_link
+	FROM channels
+	WHERE ws_link = ?
+	AND ch_name  = '일반'
+   	),
+    #{userSerial},
+    #{notification}
+   )
+	
+</insert>
+<insert id="randomInsert" parameterType="UsersVO">
+	INSERT INTO channel_users (
+     ch_link,
+     user_serial,
+     notification
+   ) VALUES (
+    (SELECT ch_link
+	FROM channels
+	WHERE ws_link = ?
+	AND ch_name  = '랜덤'
+   	),
+    #{userSerial},
+    #{notification}
+   )
+</insert>
 <delete id="doDelete" parameterType="ChannelUsersVO">
 	DELETE FROM channel_users
 	WHERE
