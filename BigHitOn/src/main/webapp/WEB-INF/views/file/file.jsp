@@ -104,7 +104,7 @@
 		//let today = new Date();
 		//today - ~~ 큰 3days
 		//	{ 파일 만료로 변환 }
-		//쓰레드는 몇일치만 보여줄 것인지?	
+		//쓰레드는 몇일치만 보여줄 것인지?	 
 		
 		//MQ를 써서 doUpdateProfileImg() 를 했을 경우 다른 client들에게 다시 전송하라고 메시지 전송.
 		
