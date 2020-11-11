@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bighit.on.user.dao.UsersVO;
+
 @Service("ChannelServiceImpl")
 public class ChannelServiceImpl implements ChannelService {
 	
@@ -31,4 +33,5 @@ public class ChannelServiceImpl implements ChannelService {
 		return channelDao.doSelectList(channelVO);
 	}
 
+	
 }
