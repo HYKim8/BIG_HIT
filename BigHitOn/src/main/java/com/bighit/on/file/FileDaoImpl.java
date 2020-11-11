@@ -140,13 +140,15 @@ public class FileDaoImpl {
 		String secretKey = ack.getSECRET_KEY();
 		
 		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-		File transferFile = new File(multiFile.getOriginalFilename());;
+		File transferFile = new File(multiFile.getOriginalFilename());
 		multiFile.transferTo(transferFile);
 		
 		String bucket_name = "kghbucket";
 		
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.AP_NORTHEAST_2).build();
-        
+        LOG.debug("=====================");
+        LOG.debug("====uploading....====");
+        LOG.debug("=====================");
         try {
         	s3.putObject(bucket_name, key_name, transferFile);
         	flag = 1;
@@ -171,22 +173,26 @@ public class FileDaoImpl {
 		
 		final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.AP_NORTHEAST_2).build();
 
+		LOG.debug("=====================");
+        LOG.debug("==Set presigned URL==");
+        LOG.debug("=====================");
         // Set the presigned URL to expire after one hour.
+		// expire 기한 일정 기간 주고 지나면 만료되도록
         Date expiration = new Date();
         long expTimeMillis = expiration.getTime();
-        expTimeMillis += 1000 * 60 * 60;
+        expTimeMillis += 1000 * 60 * 60 * 24 * 3;
         expiration.setTime(expTimeMillis);
 
         // Generate the presigned URL.
-        System.out.println("Generating pre-signed URL.");
+        LOG.debug("Generate the presigned URL.");
         GeneratePresignedUrlRequest generatePresignedUrlRequest =
                 new GeneratePresignedUrlRequest(bucket_name, keyName)
                         .withMethod(HttpMethod.GET)
                         .withExpiration(expiration);
         URL url = s3.generatePresignedUrl(generatePresignedUrlRequest);
-
+        LOG.debug("=====================");
         LOG.debug("Pre-Signed URL : " + url.toString());
-		
+        LOG.debug("=====================");
         return url;
 	}
 	

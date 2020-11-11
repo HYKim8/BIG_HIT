@@ -33,8 +33,10 @@
 		enctype="multipart/form-data">
 		<div>
 			<label>Select File</label> <br /> 
-			<input type="file" name="file" id="file_test"/>
-			<input type="button" value="업로드" id="upload">
+			<!-- 확장자 제한 걸 것. -->
+			<input type="file" name="file" id="file_test" accept=".jpg, .zip, .7z, .pdf"/>
+			<input type="button" value="업로드" id="upload"/>
+			<input type="button" value="프로필업로드" id="uploadProfileImg"/>
 		</div>
 		
 		<div>
@@ -42,7 +44,7 @@
 			<input type="text" id="file_id" name="file_id"/>
 			<input type="button" id="submit_download" name="submit_download" value="다운로드"/>
 			<label>filedownload url</label>
-			<a id="url_value" href="" download>Download Receipt</a>
+			<a id="url_value" href="" rel="nofollow" download>Download Receipt</a>
 		</div>
 		
 		<div>
@@ -75,17 +77,14 @@
     <!-- javascript -->
     <script type="text/javascript">
 
-    /* function fileTypeCheck(evt){
-        	var fileVal = document.getElementById("file_test").value;
-        	var type = fileVal.split(".")[1];
-        	
-			console.log(type);
-        } */
-    // document.getElementById("file_test").value.split(".")[1]
-    
+        <!-- 확장자 jpg로 통일할 것 -->
+		$("#uploadProfileImg").on("click", function(){
+				console.log("uploadProfileImg Clicked");
+				doUpdateProfileImg();
+			})
+        
 		$("#upload").on("click", function(){
 				console.log("upload Clicked");
-				
 				doUpload();			
 			})
 		
@@ -99,6 +98,36 @@
 				doSelectList();
 			})
 		
+		<!-- 
+		let today = new Date();
+		today - ~~ > 3days
+			{ 파일 만료로 변환 }
+		쓰레드는 몇일치만 보여줄 것인지?	
+		-->
+		
+		<!-- 확장자 jpg로 통일할 것 -->
+		function doUpdateProfileImg(){
+				console.log("doUpdateProfileImg")
+				var fileType = document.getElementById("file_test").value.split(".");
+				var last_element = fileType[fileType.length - 1];
+				console.log(last_element);
+				var formData = new FormData($("#form_data")[0]);
+				formData.append("fileType", last_element);
+				console.log("formData : " + formData);
+				$.ajax({
+			        url: '${hContext}/file/doUpdateProfileImg.do',
+			        data: formData,
+			        processData: false,
+			        contentType: false,
+			        type: 'POST',
+			        success: function(data){
+			            console.log("success");
+			        },
+			        error: function(err){
+			            console.log("error");
+			        }
+			    });
+    		}
 		
 		function doDownload(){
 				console.log("doDownload()");
@@ -115,47 +144,7 @@
 				        		var parseData = JSON.parse(data);
 								console.log("get download url success!");
 								console.log("parseData : " + parseData);
-
-								function downloadFile(data, fileName, type="text/plain") {
-									  // Create an invisible A element
-									  const a = document.createElement("a");
-									  a.style.display = "none";
-									  document.body.appendChild(a);
-
-									  // Set the HREF to a Blob representation of the data to be downloaded
-									  a.href = window.URL.createObjectURL(
-									    new Blob([data], { type })
-									  );
-
-									  // Use download attribute to set set desired file name
-									  a.setAttribute("download", fileName);
-
-									  // Trigger the download by simulating click
-									  a.click();
-
-									  // Cleanup
-									  window.URL.revokeObjectURL(a.href);
-									  document.body.removeChild(a);
-									}
-								
-							    
-								//window.open(parseData);
-								 //chrome
-							    /* var filename = parseData;
-							    var xhr = new XMLHttpRequest();
-							    xhr.responseType = 'blob';
-							    xhr.onload = function () {
-							        var a = document.createElement('a');
-							        a.href = window.URL.createObjectURL(xhr.response); // xhr.response is a blob
-							        a.download = filename; // Set the file name.
-							        a.style.display = 'none';
-							        document.body.appendChild(a);
-							        a.click();
-							        delete a;
-							    };
-							    xhr.open('GET', parseData);
-							    xhr.send(); */
-								
+								document.getElementById("url_value").href = parseData;								
 				        	}  
 					});
 			}
@@ -208,8 +197,6 @@
 						  });
 						
 						$("#file_table>tbody").append(html);
-
-
 		               }
 				});
 		}

@@ -32,7 +32,6 @@ public class ReminderVO extends DTO {
 	private String regDt;
 
 	public ReminderVO() {
-		super();
 	}
 
 	public ReminderVO(String remindId, String thrKey, String remindTime, String regId, String regDt) {
@@ -43,7 +42,7 @@ public class ReminderVO extends DTO {
 		this.regId = regId;
 		this.regDt = regDt;
 	}
-
+	
 	public String getRemindId() {
 		return remindId;
 	}

@@ -98,16 +98,14 @@
 
     function time1(){
 			console.log("doChkAlarm");
-			setTimeout(time2, 60000);
+			setTimeout(time2, 59000);
 			doChkAlarm();
         }
 
     function time2(){
 	    	console.log("doChkAlarm");
-			setTimeout(time1, 60000);
+			setTimeout(time1, 59000);
 			doChkAlarm();
-
-
         }
 
 	function doChkAlarm(){
@@ -123,18 +121,13 @@
 					console.log("parseData" + parseData);
 					$.each(parseData, function(i, value){
 						let today = new Date();
-						//console.log("value.remindTime : "+value.remindTime);
-						//console.log("today : "+today);
-	
 						let remindTime = new Date(value.remindTime);
-						//console.log("remindTime : " + remindTime);
-						
 						let calTime = Math.floor((today-remindTime)/1000);
 						console.log("calTime : " + calTime);
 						
-						if(calTime < 60 && calTime > (-60)){
+						if(calTime < 60 && calTime > 0 && (value.status == "0")){
 							console.log("작동해요~");
-							doDelete(value.remindId);
+							<!-- 작동 후 어떻게 알릴건지 -->
 							} else {
 							console.log("작동 안해요~");
 							}
@@ -143,6 +136,7 @@
 		});
 	}
 
+	
 	function doDelete(remindId){
 			$.ajax({
 				type:"POST",

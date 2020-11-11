@@ -1,15 +1,26 @@
 package com.bighit.on.file;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.google.gson.Gson;
@@ -99,6 +111,45 @@ public class FileController {
 		return json;
 	}
 	
+	@RequestMapping(value = "file/doUpdateProfileImg.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String doUpdateProfileImg(HttpServletRequest req, MultipartFile file, String fileType) throws IllegalStateException, IOException {
+		LOG.debug("-------------------------");
+		LOG.debug("-file/doUpdateProfileImg.do-");
+		LOG.debug("-------------------------");
+		
+		LOG.debug("file type : " + fileType);
+		
+		HttpSession session = req.getSession();
+		
+		// for test
+		session.setAttribute("id", "KIM");
+		session.setAttribute("thrKey", "1");
+		session.setAttribute("chLink", "1");
+		// for test
+		
+		String userId = (String) session.getAttribute("id");
+		String profileImg = userId + "_profile";
+		String thumbImg = userId + "_thumb";
+		String keyNameProfile = profileImg + "/" + userId + "_profile." + fileType;
+		String keyNameThumb = thumbImg + "/" + userId + "_thumb." + fileType;
+		
+		
+		// Resize를 통한 썸네일 s3에 저장
+		MultipartFile resizeImg = doResize(file);
+		fileService.doFileUpload(keyNameThumb, resizeImg);
+		
+		// profile img s3에 저장.
+		fileService.doFileUpload(keyNameProfile, file);
+		
+		// UserService를 이용하여 profile 이미지 등록
+		// UserVO에 thumb 이미지 추가
+		
+		// MQ 통해 이미지 수정했다고 알리기.
+		
+		return "file/file";
+	}
+	
 	
 	@RequestMapping(value = "file/doUpload.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -126,8 +177,9 @@ public class FileController {
 		
 		String calVal = getCalender();
 		
+		// inputstream을 써서 거쳐서 다운로드를 받을 수 있게
 		// 나중에 service로 profileimg, file 등 분류를 하면 될 듯. ID도 받고 UUID도 추가하고.
-		String keyName = calVal + "/" + fileType + "/" + uid + file.getOriginalFilename();
+		String keyName = calVal + "/" + fileType + "/" + uid + "/" + file.getOriginalFilename();
 		fileService.doFileUpload(keyName, file);
 		
 		FileVO fileVO = new FileVO();
@@ -159,5 +211,41 @@ public class FileController {
 		return nowTime;
 	}
 	
-	
+	public MultipartFile doResize(MultipartFile multiFile) throws IOException {
+		
+		File transferFile = new File(multiFile.getOriginalFilename());
+		multiFile.transferTo(transferFile);
+		
+		Image img;
+		img = ImageIO.read(transferFile);
+		
+		int w = 60;
+		int h = 60;
+		
+		Image imgResize = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+		
+		BufferedImage outImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		Graphics g = outImg.getGraphics();
+		g.drawImage(imgResize, 0, 0, null);
+		g.dispose();
+		
+		File file = new File("test_resize.jpg");
+		try {
+			ImageIO.write(outImg, "jpg", file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, "testYong.jpg", (int) file.length() , file.getParentFile());
+	       
+		InputStream input = new FileInputStream(file);
+		OutputStream os = fileItem.getOutputStream();
+		IOUtils.copy(input, os);
+			        
+		MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+		
+		return multipartFile;
+		
+	}
 }
