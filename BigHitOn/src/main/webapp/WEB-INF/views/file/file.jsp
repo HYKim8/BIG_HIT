@@ -108,6 +108,9 @@
 		
 		//MQ를 써서 doUpdateProfileImg() 를 했을 경우 다른 client들에게 다시 전송하라고 메시지 전송.
 		
+		//thumbnail은 db에 thumbnail 칼럼 하나 만들어서 거기다가 주소 넣고, 이미지 변경을 했을 때 그 주소로 넣기
+		//새로운 thumbnail 추가
+		
 		<!-- 확장자 jpg로 통일할 것 -->
 		function doUpdateProfileImg(){
 				console.log("doUpdateProfileImg")
