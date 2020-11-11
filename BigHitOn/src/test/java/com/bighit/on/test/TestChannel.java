@@ -23,9 +23,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelService;
 import com.bighit.on.channel.ChannelVO;
-import com.bighit.on.channel.EmailVO;
 import com.bighit.on.channelcommand.ChannelCommandDao;
 import com.bighit.on.channelusers.ChannelUsersDao;
+import com.bighit.on.email.EmailVO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
@@ -150,10 +150,5 @@ public class TestChannel {
 
 	}
 	
-	//성공
-	@Test
-	public void sendEmail() {
-		channelService.sendEmail(email01);
-	}
 
 }

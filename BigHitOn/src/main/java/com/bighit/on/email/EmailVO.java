@@ -1,4 +1,4 @@
-package com.bighit.on.channel;
+package com.bighit.on.email;
 
 import com.bighit.on.cmn.DTO;
 
