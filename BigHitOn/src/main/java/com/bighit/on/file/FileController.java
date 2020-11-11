@@ -2,7 +2,13 @@ package com.bighit.on.file;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,31 +102,42 @@ public class FileController {
 	
 	@RequestMapping(value = "file/doUpload.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String doUpload(MultipartFile file) throws IllegalStateException, IOException {
+	public String doUpload(HttpServletRequest req, MultipartFile file, String fileType) throws IllegalStateException, IOException {
 		LOG.debug("-------------------------");
 		LOG.debug("-file/doUpload.do-");
 		LOG.debug("-------------------------");
 		
-//		INSERT INTO file_thr (
-//				file_id,
-//				file_name,
-//				thr_key,
-//				file_url,
-//				reg_id,
-//				reg_dt,
-//				ch_link
-//	) VALUES (
-//				file_seq.nextVal,
-//				#{fileName},
-//				#{thrKey},
-//				#{fileUrl},
-//				#{regId},
-//				SYSDATE,
-//				#{chLink}
+		LOG.debug("file Type : " + fileType);
 		
-		// 나중에 controller로 profileimg, file 등 분류를 하면 될 듯. ID도 받고 UUID도 추가하고.
-		String keyName = "profileimg/"+file.getOriginalFilename();
+		UUID uuid = UUID.randomUUID();
+		String uid = uuid.toString();
+		LOG.debug("uuid" + uid);
+		
+		HttpSession session = req.getSession();
+		// for test
+		session.setAttribute("id", "KIM");
+		session.setAttribute("thrKey", "1");
+		session.setAttribute("chLink", "1");
+		// for test
+		
+		String userId = (String) session.getAttribute("id");
+		String thrKey = (String) session.getAttribute("thrKey");
+		String chLink = (String) session.getAttribute("chLink");
+		
+		String calVal = getCalender();
+		
+		// 나중에 service로 profileimg, file 등 분류를 하면 될 듯. ID도 받고 UUID도 추가하고.
+		String keyName = calVal + "/" + fileType + "/" + uid + file.getOriginalFilename();
 		fileService.doFileUpload(keyName, file);
+		
+		FileVO fileVO = new FileVO();
+		fileVO.setChLink(chLink);
+		fileVO.setFileName(file.getOriginalFilename());
+		fileVO.setFileUrl(keyName);
+		fileVO.setThrKey(thrKey);
+		fileVO.setRegId(userId);
+		
+		fileService.doInsert(fileVO);
 		
 		try {
 			LOG.debug("file is :" + file.toString());
@@ -129,6 +146,17 @@ public class FileController {
 		}
 		
 		return "file/file";
+	}
+	
+	public String getCalender() {
+		long time = System.currentTimeMillis();
+		String formatType = "yy/MM/dd";
+
+		SimpleDateFormat dayTime = new SimpleDateFormat(formatType);
+
+		String nowTime = dayTime.format(new Date(time));
+		
+		return nowTime;
 	}
 	
 	

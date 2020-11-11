@@ -75,9 +75,17 @@
     <!-- javascript -->
     <script type="text/javascript">
 
+    /* function fileTypeCheck(evt){
+        	var fileVal = document.getElementById("file_test").value;
+        	var type = fileVal.split(".")[1];
+        	
+			console.log(type);
+        } */
+    // document.getElementById("file_test").value.split(".")[1]
     
 		$("#upload").on("click", function(){
 				console.log("upload Clicked");
+				
 				doUpload();			
 			})
 		
@@ -154,7 +162,11 @@
 		
 		function doUpload(){
 			console.log("doUpload()");
+			var fileType = document.getElementById("file_test").value.split(".");
+			var last_element = fileType[fileType.length - 1];
+			console.log(last_element);
 			var formData = new FormData($("#form_data")[0]);
+			formData.append("fileType", last_element);
 			console.log("formData : " + formData);
 			$.ajax({
 		        url: '${hContext}/file/doUpload.do',
