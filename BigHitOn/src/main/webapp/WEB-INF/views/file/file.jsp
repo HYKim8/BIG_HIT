@@ -45,6 +45,8 @@
 			<input type="button" id="submit_download" name="submit_download" value="다운로드"/>
 			<label>filedownload url</label>
 			<a id="url_value" href="" rel="nofollow" download>Download Receipt</a>
+			<label>test img</label>
+			<img alt="" src="" id="test_view_img">
 		</div>
 		
 		<div>
@@ -98,12 +100,13 @@
 				doSelectList();
 			})
 		
-		<!-- 
-		let today = new Date();
-		today - ~~ > 3days
-			{ 파일 만료로 변환 }
-		쓰레드는 몇일치만 보여줄 것인지?	
-		-->
+		
+		//let today = new Date();
+		//today - ~~ 큰 3days
+		//	{ 파일 만료로 변환 }
+		//쓰레드는 몇일치만 보여줄 것인지?	 
+		
+		//MQ를 써서 doUpdateProfileImg() 를 했을 경우 다른 client들에게 다시 전송하라고 메시지 전송.
 		
 		<!-- 확장자 jpg로 통일할 것 -->
 		function doUpdateProfileImg(){
@@ -144,7 +147,8 @@
 				        		var parseData = JSON.parse(data);
 								console.log("get download url success!");
 								console.log("parseData : " + parseData);
-								document.getElementById("url_value").href = parseData;								
+								document.getElementById("url_value").href = parseData;
+								document.getElementById("test_view_img").src = parseData;								
 				        	}  
 					});
 			}
