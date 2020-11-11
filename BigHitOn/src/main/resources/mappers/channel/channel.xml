@@ -46,17 +46,20 @@
 	<!-- 등록 -->
 	<!-- com.bighit.on.workspace.doInsert -->
 	<insert id="doInsert" parameterType="ChannelVO">
-		 INSERT INTO channels (
-		     ch_link,          
-		     ws_link,          
+		  INSERT INTO channels (	 
+		 	 ch_link, 
+		 	 ws_link,         
 		     ch_name,          
 		     topic,            
 		     ch_description,   
 		     ch_access,        
 		     reg_id,           
 		     reg_dt            
-		 ) VALUES (            
-		     #{chLink},                
+		 ) VALUES ( 
+		     (	SELECT serial_key
+				FROM channelserial
+				WHERE is_used = 0
+				AND ROWNUM = 1),		                     
 		     #{wsLink},                
 		     #{chName},                
 		     #{topic},                
@@ -66,6 +69,13 @@
 		     SYSDATE           
 		 )                     		
 	</insert>
-
+	<update id="updateKey">
+	UPDATE channelserial
+	SET
+	    is_used = 1
+	WHERE
+	    is_used = 0
+	    AND ROWNUM = 1
+	</update>
 
 </mapper>

@@ -56,6 +56,7 @@ public class ChannelDaoImpl {
 		LOG.debug("=param ==="+channelVO);
 		
 		int flag = sqlSessionTemplate.insert(statement, channelVO);
+		sqlSessionTemplate.update(NAMESPACE+".updateKey");
 		LOG.debug("-doInsert flag=" + flag);
 		return flag;
 	}
