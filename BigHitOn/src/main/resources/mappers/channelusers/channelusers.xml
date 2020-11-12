@@ -50,12 +50,12 @@
    		AND user_serial = #{userSerial}
 </delete>
 <delete id="doDeleteAllInChannel" parameterType="ChannelVO">
-	DELETE FROM channel_command
+	DELETE FROM channel_users
 	WHERE
     	ch_link = #{chLink}
 </delete>
 <delete id="doDeleteAllInUsers" parameterType="UsersVO">
-	DELETE FROM channel_command
+	DELETE FROM channel_users
 	WHERE
 		user_serial = #{user_serial}
 </delete>

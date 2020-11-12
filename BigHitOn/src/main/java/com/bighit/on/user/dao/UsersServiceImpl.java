@@ -33,7 +33,7 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public int doDelete(UsersVO usersVO) {
-		
+		chUserDao.doDeleteAll(usersVO);
 		return usersDaoImpl.doDelete(usersVO);
 	}
 
