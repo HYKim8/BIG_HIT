@@ -12,7 +12,7 @@
 	<select id="doSelectList2" parameterType="WorkSpaceVO" resultType="UsersVO">
 		SELECT *                                   
 		FROM users                                    
-		WHERE ws_link = #{ws_link}  
+		WHERE ws_link = #{wsLink}  
 	</select>
 	
 	<!-- list 조회(채널에 소속된 유저들)-->
