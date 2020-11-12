@@ -22,7 +22,7 @@
 		FROM users                                         
 		JOIN channel_users                                 
 		ON users.user_serial = channel_users.user_serial   
-		AND channel_users.ch_link = #{ch_link}  
+		AND channel_users.ch_link = #{chLink}  
 	</select>
 	
 	<!-- 단건조회 -->

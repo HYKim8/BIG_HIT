@@ -136,6 +136,7 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
+	@Ignore
 	public void sendEmail() {
 		
 		workSpaceService.sendEmail(email01);
