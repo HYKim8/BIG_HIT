@@ -1,5 +1,7 @@
 package com.bighit.on.file;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -42,14 +45,12 @@ public class FileController {
 	// json 데이터로 응답을 보내기 위한 
     @Autowired
     MappingJackson2JsonView jsonView;
-	
+    
 	@RequestMapping(value = "file/file_view.do", method = RequestMethod.GET)
 	public String file_view(Model model) {
 		LOG.debug("-------------------------");
 		LOG.debug("-file/file_view.do-");
 		LOG.debug("-------------------------");
-		
-		model.addAttribute("imgsrc", "C:\\BIGHIT_thumbnail\\1.jpg");
 		
 		return "file/file";
 	}
@@ -72,7 +73,6 @@ public class FileController {
 		usersVO.setThumb("C:\\BIGHIT_thumbnail\\2.jpg");
 		// for Test
 		
-		fileService.doMakeDir();
 		
 		
 		
@@ -131,10 +131,13 @@ public class FileController {
 	
 	@RequestMapping(value = "file/doUpdateProfileImg.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String doUpdateProfileImg(HttpServletRequest req, MultipartFile file, String fileType) throws IllegalStateException, IOException {
+	public String doUpdateProfileImg(HttpServletRequest req, MultipartFile file, String fileType, UsersVO usersVO) throws IllegalStateException, IOException {
 		LOG.debug("-------------------------");
 		LOG.debug("-file/doUpdateProfileImg.do-");
 		LOG.debug("-------------------------");
+		
+		MultipartFile profileImgResized;
+		MultipartFile thumbImgResized;
 		
 		// fileType 제한 걸 것 jpg만 되게.
 		LOG.debug("file type : " + fileType);
@@ -153,22 +156,30 @@ public class FileController {
 		String userId = (String) session.getAttribute("id");
 		String profileImg = userId + "_profile";
 		String thumbImg = userId + "_thumb";
-		String keyNameProfile = "profileImg" + profileImg + "/" + userId + "_profile." + fileType;
-		String keyNameThumb = "C:\\BIGHIT_thumbnail\\" + uuid + "_" + thumbImg + "." +fileType;
-	
-		LOG.debug("Profile image Upload to S3");
-		fileService.doFileUpload(keyNameProfile, file);
+		String keyNameProfile = "profileImg/" + profileImg + "/" + uuid + "_profile." + fileType;
+		String keyNameThumb = "thumbImg/" + thumbImg + "/" + uuid + "_thumb." + fileType;
 		
-		LOG.debug("Thumbnail image Upload to Server's disk");
-		MultipartFile resizeImg = fileService.doResize(file);
-		fileService.doSaveDisk(resizeImg, keyNameThumb);
+		try {
+			profileImgResized = fileService.doResizeProfile(file);
+			thumbImgResized = fileService.doResizeThumb(file);
+		} catch (Exception e) {
+			LOG.debug("-------------------------");
+			LOG.debug("not select img file");
+			LOG.debug("-------------------------");
+			
+			return "file/file";
+		}
+		
+		
+			LOG.debug("Profile image Upload to S3");
+			fileService.doFileUpload(keyNameProfile, profileImgResized);
+			LOG.debug("Thumbnail image Upload to S3");
+			fileService.doFileUpload(keyNameThumb, thumbImgResized);
 		
 		// UserService를 이용하여 profile keyName, thumb keyName 등록
-//		UsersVO usersVO = new UsersVO();
 //		usersVO.setThumb(keyNameThumb);
 //		usersVO.setProfile_img(keyNameProfile);
 //		userService.doUpdate(usersVO);
-		
 		
 		return "file/file";
 	}

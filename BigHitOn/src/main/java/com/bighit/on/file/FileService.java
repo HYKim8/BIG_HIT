@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,27 +83,7 @@ public class FileService {
 		return fileDao.doFileDownload(key_name);
 	}
 
-	/**
-	 * "C:\\BIGHIT_thumbnail" 에 저장
-	 */
-	public void doMakeDir() {
-		String path = "/resources/thumbnail"; // 폴더 경로
-		File Folder = new File(path);
-
-		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
-		if (!Folder.exists()) {
-			try {
-				Folder.mkdir(); // 폴더 생성합니다.
-				System.out.println("폴더가 생성되었습니다.");
-			} catch (Exception e) {
-				e.getStackTrace();
-			}
-		} else {
-			System.out.println("이미 폴더가 생성되어 있습니다.");
-		}
-
-	}
-
+	
 	/**
 	 * doSaveDisk
 	 * @param multipartFile
@@ -116,22 +95,83 @@ public class FileService {
 		LOG.debug("-doSaveDisk-");
 		LOG.debug("-------------------------");
 		File file = new File(keyName);
+		
 		file.createNewFile();
 		FileOutputStream fos = new FileOutputStream(file);
 		fos.write(multipartFile.getBytes());
 		fos.close();
 	}
 
+	public MultipartFile doResizeProfile(MultipartFile multiFile) throws IOException {
+		
+		LOG.debug("-------------------------");
+		LOG.debug("-doResizeProfile-");
+		LOG.debug("-------------------------");
+		
+		int w;
+		int h;
+		
+		File transferFile = new File(multiFile.getOriginalFilename());
+		multiFile.transferTo(transferFile);
+		
+		Image img;
+		img = ImageIO.read(transferFile);
+		
+		int originalWidth = img.getWidth(null);
+		int originalHeight = img.getHeight(null);
+		double ratio = (double)originalHeight / (double)originalWidth;
+		
+		if(originalWidth > originalHeight) {
+			w = 350;
+			h = (int) (350*ratio);
+		}else if (originalWidth < originalHeight) {
+			h = 350;
+			w = (int) (350/ratio);
+		}else {
+			w = 350;
+			h = 350;
+		}
+		
+		Image imgResize = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+		
+		BufferedImage outImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		Graphics g = outImg.getGraphics();
+		g.drawImage(imgResize, 0, 0, null);
+		g.dispose();
+		
+		File file = new File("test_resize.jpg");
+		try {
+			ImageIO.write(outImg, "jpg", file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, "testYong.jpg",
+				(int) file.length(), file.getParentFile());
+
+		InputStream input = new FileInputStream(file);
+		OutputStream os = fileItem.getOutputStream();
+		IOUtils.copy(input, os);
+
+		MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+
+		LOG.debug("-------------------------");
+		LOG.debug("-End doResizeProfile-");
+		LOG.debug("-------------------------");
+
+		return multipartFile;
+	}
+	
 	/**
 	 * 이미지 thumbnail 크기로 조정
 	 * @param multiFile
 	 * @return MultipartFile
 	 * @throws IOException
 	 */
-	public MultipartFile doResize(MultipartFile multiFile) throws IOException {
+	public MultipartFile doResizeThumb(MultipartFile multiFile) throws IOException {
 
 		LOG.debug("-------------------------");
-		LOG.debug("-doResize-");
+		LOG.debug("-doResizeThumb-");
 		LOG.debug("-------------------------");
 
 		File transferFile = new File(multiFile.getOriginalFilename());
@@ -167,7 +207,7 @@ public class FileService {
 		MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
 
 		LOG.debug("-------------------------");
-		LOG.debug("-End doResize-");
+		LOG.debug("-End doResizeThumb-");
 		LOG.debug("-------------------------");
 
 		return multipartFile;

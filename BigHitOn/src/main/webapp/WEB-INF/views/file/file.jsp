@@ -45,12 +45,8 @@
 			<input type="button" id="submit_download" name="submit_download" value="다운로드"/>
 			<label>filedownload url</label>
 			<a id="url_value" href="" rel="nofollow" download>Download Receipt</a>
-			<label>test img</label>
 			<!-- img 없을 경우(404) 이미지 다시 불러오기. thumbnail에 이용 -->
-			<img alt="" src="" id="test_view_img">
-			<div id="test_thumb">
-				<img alt="" src="C|BIGHIT_thumbnail\1.jpg">
-			</div>
+			<img alt="" src="asd" id="test_view_img">
 			<input type="button" name="thumb_test_btn" id="thumb_test_btn" value="thumb"/>
 		</div>
 		
@@ -83,27 +79,10 @@
     <!-- javascript -->
     <script type="text/javascript">
 
-
-    	
-		$("#thumb_test_btn").on("click", function(){
-				console.log("thumb_test_btn Clicked");
-				doTestMakeDir();
-			})
-			// folder 만들기
-		function doTestMakeDir(){
-			$.ajax({
-				type:'POST',
-				url:'${hContext}/file/do404Chk.do',
-				dataType:"html",
-	            async: true,
-	            data:{
-		            },
-		        success:function(data){
-			        		console.log("success");							
-			        	}  
-				});
-
-			}
+	    $('#test_view_img').error(function() {
+	        console.log("404error!");
+	        // 그 유저의 serial로 thumb 가져오기.
+	    });
 	
         <!-- 확장자 jpg로 통일할 것 -->
 		$("#uploadProfileImg").on("click", function(){
@@ -176,8 +155,7 @@
 				        		var parseData = JSON.parse(data);
 								console.log("get download url success!");
 								console.log("parseData : " + parseData);
-								document.getElementById("url_value").href = parseData;
-								document.getElementById("test_view_img").src = parseData;								
+								document.getElementById("url_value").href = parseData;							
 				        	}  
 					});
 			}

@@ -123,6 +123,7 @@ public class JUnitTestFile {
 	
 	
 	@Test
+	@Ignore
 	public void mkDir() {
 		String path = "./src/main/webapp/resources/thumbnail"; //폴더 경로
 		File Folder = new File(path);
