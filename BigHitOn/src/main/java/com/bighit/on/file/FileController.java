@@ -55,6 +55,8 @@ public class FileController {
 		return "file/file";
 	}
 	
+	
+	
 	@RequestMapping(value = "file/do404Chk.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String do404Chk(HttpServletRequest req, Model model, String userSerial) {
