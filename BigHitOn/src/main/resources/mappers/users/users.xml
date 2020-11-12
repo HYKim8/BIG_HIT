@@ -60,7 +60,8 @@
 		    ,phone_num = #{phone_num, jdbcType=VARCHAR}     
 		    ,country = #{country, jdbcType=INTEGER}       
 		    ,state = #{state, jdbcType=INTEGER}         
-		    ,online_state = #{online_state, jdbcType=INTEGER}  
+		    ,online_state = #{online_state, jdbcType=INTEGER}
+		    ,thumb = #{thumb, jdbcType=VARCHAR}  
 		WHERE user_serial = #{user_serial, jdbcType=VARCHAR} 
 	</update>
 	
@@ -88,7 +89,8 @@
 		    state,         
 		    online_state,  
 		    reg_id,        
-		    reg_dt         
+		    reg_dt,
+		    thumb         
 		) VALUES (         
 		    (SELECT serial_key
 				FROM userserial

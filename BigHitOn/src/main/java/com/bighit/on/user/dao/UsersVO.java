@@ -17,6 +17,7 @@ public class UsersVO extends DTO {
 	private int online_state;  /* 상태(on/off) */
 	private String reg_id;  /* 작성자 */
 	private String reg_dt;  /* 작성시간 */
+	private String thumb;
 	
 	public UsersVO() {
 		
@@ -24,7 +25,7 @@ public class UsersVO extends DTO {
 
 	public UsersVO(String user_serial, String ws_link, String email, String password, String name, String nickname,
 			String profile_img, String position, String phone_num, int country, int state, int online_state,
-			String reg_id, String reg_dt) {
+			String reg_id, String reg_dt, String thumb) {
 		super();
 		this.user_serial = user_serial;
 		this.ws_link = ws_link;
@@ -40,6 +41,16 @@ public class UsersVO extends DTO {
 		this.online_state = online_state;
 		this.reg_id = reg_id;
 		this.reg_dt = reg_dt;
+		this.thumb = thumb;
+	}
+
+	
+	public String getThumb() {
+		return thumb;
+	}
+
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
 	}
 
 	public String getUser_serial() {
