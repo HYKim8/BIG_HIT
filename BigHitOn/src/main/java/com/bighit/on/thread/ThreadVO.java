@@ -48,6 +48,8 @@ public class ThreadVO extends DTO {
 	 */
 	private String ParentKey;
 	
+	private int Child_cnt;
+	
 	public ThreadVO() {
 	}
 
@@ -63,6 +65,14 @@ public class ThreadVO extends DTO {
 		RegDt = regDt;
 		ModDt = modDt;
 		ParentKey = parentKey;
+	}
+
+	public int getChild_cnt() {
+		return Child_cnt;
+	}
+
+	public void setChild_cnt(int child_cnt) {
+		Child_cnt = child_cnt;
 	}
 
 	public String getThrKey() {
@@ -141,8 +151,8 @@ public class ThreadVO extends DTO {
 	public String toString() {
 		return "ThreadVO [ThrKey=" + ThrKey + ", ChLink=" + ChLink + ", Contents=" + Contents + ", IsPin=" + IsPin
 				+ ", PinId=" + PinId + ", RegId=" + RegId + ", RegDt=" + RegDt + ", ModDt=" + ModDt + ", ParentKey="
-				+ ParentKey + ", toString()=" + super.toString() + "]";
+				+ ParentKey + ", Child_cnt=" + Child_cnt + ", toString()=" + super.toString() + "]";
 	}
-	
+
 	
 }

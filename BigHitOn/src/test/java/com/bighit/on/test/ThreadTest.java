@@ -20,6 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.thread.ThreadDao;
+import com.bighit.on.thread.ThreadService;
 import com.bighit.on.thread.ThreadVO;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
@@ -36,6 +37,8 @@ public class ThreadTest {
 	@Autowired
 	ThreadDao threadDao;
 	
+	@Autowired
+	ThreadService threadService;
 	
 	ThreadVO thread01;
 	ThreadVO thread02;
@@ -56,8 +59,10 @@ public class ThreadTest {
 		thread01.setRegDt("2020-11-03");
 		thread01.setModDt("2020-11-03");
 		
-		thread02.setThrKey("test");
+		thread02.setThrKey("2");
 		thread02.setChLink("123");
+		
+		
 		//thread02.setContents("test");
 		//thread02.setIsPin(2);
 		//thread02.setParentKey("2");
@@ -80,7 +85,8 @@ public class ThreadTest {
 	@Test
 	@Ignore
 	public void doInsert() {
-		threadDao.doInsert(thread01);
+		//threadDao.doInsert(thread02);
+		threadService.doInsert(thread02);
 	}
 	@Test
 	@Ignore
@@ -94,10 +100,12 @@ public class ThreadTest {
 	@Test
 	@Ignore
 	public void doDelete() {
-		threadDao.doDelete(thread01);
+		//threadDao.doDelete(thread02);
+		threadService.doDelete(thread02);
 	}
 	
 	@Test
+	@Ignore
 	public void all() {
 		threadDao.doDelete(thread01);
 		

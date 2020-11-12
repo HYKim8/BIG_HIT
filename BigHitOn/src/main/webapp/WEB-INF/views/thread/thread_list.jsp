@@ -34,6 +34,7 @@
 			<th></th>
 			<th></th>
 			<th></th>
+			<th></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -41,6 +42,7 @@
 				<c:when test="${!empty threadList}">
 					<c:forEach var="list" items="${threadList}">
 						<tr>
+							<td><c:out value="${list.thrKey}"/></td>
 							<td><c:out value="${list.contents}"/></td>
 							<td><c:out value="${list.regId}"/></td>
 							<td><c:out value="${list.regDt}"/></td>

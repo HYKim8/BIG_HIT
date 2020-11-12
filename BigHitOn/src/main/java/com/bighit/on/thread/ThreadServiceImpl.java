@@ -16,6 +16,15 @@ public class ThreadServiceImpl implements ThreadService {
 	
 	@Override
 	public int doInsert(ThreadVO threadVO) {
+		ThreadVO parentVO = new ThreadVO(); // 검색할려구 잠깐만듬
+		parentVO.setThrKey(threadVO.getParentKey()); //2
+		parentVO = thrDao.doSelectOne(parentVO);
+		
+		if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
+			parentVO.setChild_cnt(parentVO.getChild_cnt()+1);
+			
+			return thrDao.doUpdate(parentVO);
+		}
 		return thrDao.doInsert(threadVO);
 	}
 	
