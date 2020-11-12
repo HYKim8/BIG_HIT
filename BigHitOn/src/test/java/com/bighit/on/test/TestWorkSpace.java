@@ -125,11 +125,13 @@ public class TestWorkSpace {
 	}
 	
 	@Test
+	@Ignore
 	public void workSpacePCK() {
 		workSpaceServiceImpl.workSpacePCK(workSpace01);
 	}
 	
 	@Test
+	@Ignore
 	public void workSpaceLinkCK() {
 		workSpaceServiceImpl.workSpaceLinkCK(workSpace01);
 	}
@@ -140,5 +142,12 @@ public class TestWorkSpace {
 	public void sendEmail() {
 		
 		workSpaceService.sendEmail(email01);
+	}
+	
+	//성공
+	@Test
+	public void doSelectList() {
+		workSpaceDao.doSelectList(workSpace01);
+			
 	}
 }
