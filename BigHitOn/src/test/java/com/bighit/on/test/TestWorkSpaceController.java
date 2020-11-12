@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.email.EmailVO;
 import com.bighit.on.workspace.WorkSpaceService;
 import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
@@ -51,6 +52,8 @@ public class TestWorkSpaceController {
 	WorkSpaceService workSpaceService;
 	
 	List<WorkSpaceVO> workSpaces;
+	
+	EmailVO emailVO;
 	
 	// 브라우저 대신 Mock
 	MockMvc mockMvc;
@@ -159,6 +162,7 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doSelectList() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -172,6 +176,26 @@ public class TestWorkSpaceController {
 		LOG.debug("===========================");
 
 	}
-
 	
+	//성공
+	@Test
+	@Ignore
+	public void sendEmail() throws Exception {
+		EmailVO emailVO= new EmailVO("isc8481@hanmail.net", "1", "12", "slack");
+		
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.post("/workspace/sendEmail.do")
+				 .param("email", emailVO.getEmail())
+				 .param("wsLink", emailVO.getWsLink())
+				 .param("wsName", emailVO.getWsName())
+				 .param("userId", emailVO.getUserId());
+		
+		LOG.debug("====createMessage==="+createMessage);
+		ResultActions resultActions = mockMvc.perform(createMessage).andExpect(status().is2xxSuccessful());
+		LOG.debug("==resultActions=="+resultActions);
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+	}
 }
