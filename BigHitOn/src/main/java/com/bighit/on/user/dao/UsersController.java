@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +17,7 @@ import com.bighit.on.cmn.Message;
 import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
-
+@Controller
 public class UsersController {
 	
 	final Logger LOG = LoggerFactory.getLogger(UsersController.class);
@@ -27,14 +28,14 @@ public class UsersController {
 	@Autowired
 	MessageSource messageSource;
 	
-	@RequestMapping(value="users/doSelectList2.do", method = RequestMethod.GET)
+	@RequestMapping(value="users/doSelectListFromWs.do", method = RequestMethod.GET)
 	@ResponseBody
-	public String doSelectList2(WorkSpaceVO workSpaceVO) {
+	public String doSelectList(WorkSpaceVO workSpaceVO) {
 		LOG.debug("=====================");
-		LOG.debug("=doSelectList2=");
+		LOG.debug("=doSelectList=");
 		LOG.debug("=param="+workSpaceVO);
 		
-		List<UsersVO> list = this.usersService.doSelectList2(workSpaceVO);
+		List<UsersVO> list = this.usersService.doSelectList(workSpaceVO);
 		
 		Gson gson = new Gson();
 		
@@ -45,7 +46,7 @@ public class UsersController {
 		 return json;
 	}
 	
-	@RequestMapping(value="users/doSelectList.do", method = RequestMethod.GET)
+	@RequestMapping(value="users/doSelectListFromCh.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String doSelectList(ChannelVO channelVO) {
 		LOG.debug("=====================");

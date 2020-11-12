@@ -121,6 +121,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 		mimeMessage.setText(link);
 		
 		LOG.debug("mailSender:"+mailSender);
+		LOG.debug("mimeMessage:"+mimeMessage);
 		//전송
 		this.mailSender.send(mimeMessage);
 	}

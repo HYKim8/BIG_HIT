@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.command.CommandDao;
 import com.bighit.on.command.CommandService;
 import com.bighit.on.command.CommandVO;
 import com.google.gson.Gson;
@@ -50,6 +51,9 @@ public class TestCommandController {
 	@Autowired
 	CommandService commandService;
 	
+	@Autowired
+	CommandDao commandDao;
+	
 	List<CommandVO> commands;
 	
 	MockMvc mockMvc;
@@ -61,13 +65,14 @@ public class TestCommandController {
 		LOG.debug("=mockMvc=" + mockMvc);
 		assertThat(mockMvc, is(notNullValue()));
 		
-		commands = Arrays.asList( new CommandVO(4,"testa","testCmd",1));
+		commands = Arrays.asList( new CommandVO(10,"testa","testCmd",1));
 	}
 	
 	@Test
 	@Ignore
 	public void doInsert() throws Exception {
 		CommandVO commandVO = commands.get(0);
+		commandDao.doDelete(commandVO);
 		MockHttpServletRequestBuilder createMessage = 
 				 MockMvcRequestBuilders.post("/command/doInsert.do")
 				 .param("comId", commandVO.getComId()+"")

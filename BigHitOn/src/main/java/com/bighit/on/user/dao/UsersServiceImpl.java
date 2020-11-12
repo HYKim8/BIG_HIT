@@ -8,24 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.workspace.WorkSpaceVO;
 
-@Service("usersServiceImpl")
+@Service
 public class UsersServiceImpl implements UsersService {
 	final static Logger LOG = LoggerFactory.getLogger(UsersServiceImpl.class);
 
 	@Autowired
 	UsersDaoImpl usersDaoImpl;
+	@Autowired
+	ChannelUsersDao chUserDao;
+	
 	
 	@Override
 	public int doInsert(UsersVO usersVO) {
-
-		return usersDaoImpl.doInsert(usersVO);
+		String key = usersDaoImpl.doGetKey();
+		LOG.debug("keyvalue:"+key);
+		usersVO.setUser_serial(key);
+		return usersDaoImpl.doInsert(usersVO) ==1 && 
+				chUserDao.doWorkSpaceInsert(usersVO)==1 ? 1:0;
+		
 	}
 
 	@Override
 	public int doDelete(UsersVO usersVO) {
-		
+		chUserDao.doDeleteAll(usersVO);
 		return usersDaoImpl.doDelete(usersVO);
 	}
 
@@ -48,9 +56,9 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<UsersVO> doSelectList2(WorkSpaceVO workSpaceVO) {
+	public List<UsersVO> doSelectList(WorkSpaceVO workSpaceVO) {
 		
-		return usersDaoImpl.doSelectList2(workSpaceVO);
+		return usersDaoImpl.doSelectList(workSpaceVO);
 	}
 
 }

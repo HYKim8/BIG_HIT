@@ -36,6 +36,18 @@ public class ChannelUsersDao {
 //			return outVO;
 //		}
 //	};
+	
+	/**
+	 * 유저가 속한 워크스페이스의 일반,랜덤 채널에 유저를 소속시킨다.
+	 * @param inVO
+	 * @return
+	 */
+	public int doWorkSpaceInsert(UsersVO inVO)
+	{
+		
+		return sqlSessionTemplate.insert(NAMESPACE+".generalInsert",inVO) == 1 
+				&& sqlSessionTemplate.insert(NAMESPACE+".randomInsert",inVO) ==1 ? 1:0;		
+	}
 	/**
 	 * doInsert
 	 * l

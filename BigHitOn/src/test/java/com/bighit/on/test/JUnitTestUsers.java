@@ -59,14 +59,14 @@ public class JUnitTestUsers {
 	/** workspace에 포함된 users list */
 	@Test
 //	@Ignore
-	public void doSelectList2() {
-		usersDaoImpl.doSelectList2(workSpaceVO);
+	public void doSelectListFromWs() {
+		usersDaoImpl.doSelectList(workSpaceVO);
 	}
 	
 	/** channel에 소속된 users list */
 	@Test
 	@Ignore
-	public void doSelectList() {
+	public void doSelectListFromCh() {
 		usersDaoImpl.doSelectList(channelVO);
 	}
 	
@@ -94,9 +94,9 @@ public class JUnitTestUsers {
 
 	@Before
 	public void setUp() throws Exception {
-		users01=new UsersVO("1111", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
-    	users02=new UsersVO("2222", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
-    	users03=new UsersVO("3333", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "");
+		users01=new UsersVO("1111", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "", "");
+    	users02=new UsersVO("2222", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "", "");
+    	users03=new UsersVO("3333", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "", "");
     	channelVO = new ChannelVO();
     	channelVO.setChLink("1");
     	workSpaceVO = new WorkSpaceVO();

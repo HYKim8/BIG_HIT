@@ -47,7 +47,7 @@ public class UsersDaoImpl {
 			outVO.setOnline_state(rs.getInt("online_state"));
 			outVO.setReg_id(rs.getString("reg_id"));
 			outVO.setReg_dt(rs.getString("reg_dt"));
-			
+			outVO.setThumb("thumb");
 			return outVO;
 			
 		}
@@ -61,12 +61,12 @@ public class UsersDaoImpl {
 	 * @param workSpaceVO
 	 * @return
 	 */
-	public List<UsersVO> doSelectList2(WorkSpaceVO workSpaceVO){
+	public List<UsersVO> doSelectList(WorkSpaceVO workSpaceVO){
 		LOG.debug("===========================");
-		LOG.debug("=doSelectList2=");
+		LOG.debug("=doSelectList=");
 		LOG.debug("===========================");
 		 
-		String statement = NAMESPACE + ".doSelectList2";
+		String statement = NAMESPACE + ".doSelectListFromWs";
 		LOG.debug("=statement : "+statement);
 		LOG.debug("=workSpaceVO="+workSpaceVO);                             
 
@@ -79,12 +79,17 @@ public class UsersDaoImpl {
 		return list;
 	}
 	
+	/**
+	 * 해당 채널에 소속된 유저들 
+	 * @param channelVO
+	 * @return
+	 */
 	public List<UsersVO> doSelectList(ChannelVO channelVO){
 		LOG.debug("===========================");
 		LOG.debug("=doSelectList=");
 		LOG.debug("===========================");
 		
-		String statement = NAMESPACE + ".doSelectList";
+		String statement = NAMESPACE + ".doSelectListFromCh";
 		LOG.debug("=statement : "+statement);
 		LOG.debug("=channelVO="+channelVO);
 		

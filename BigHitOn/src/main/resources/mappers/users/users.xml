@@ -9,15 +9,15 @@
 	</select>
 	<!-- list 조회(워크스페이스에 소속된 유저들)-->
 	<!-- com.bighit.on.users.doSelectList2 -->
-	<select id="doSelectList2" parameterType="WorkSpaceVO" resultType="UsersVO">
+	<select id="doSelectListFromWs" parameterType="WorkSpaceVO" resultType="UsersVO">
 		SELECT *                                   
 		FROM users                                    
-		WHERE ws_link = #{ws_link}  
+		WHERE ws_link = #{wsLink}  
 	</select>
 	
 	<!-- list 조회(채널에 소속된 유저들)-->
 	<!-- com.bighit.on.users.doSelectList -->
-	<select id="doSelectList" parameterType="channelVO" resultType="UsersVO">
+	<select id="doSelectListFromCh" parameterType="channelVO" resultType="UsersVO">
 		SELECT  users.*                                    
 		FROM users                                         
 		JOIN channel_users                                 
@@ -42,7 +42,8 @@
 		    state,            
 		    online_state,     
 		    reg_id,           
-		    reg_dt            
+		    reg_dt,
+		    thumb            
 		FROM users            
 		WHERE user_serial = #{user_serial} 
 	</select>
@@ -60,7 +61,8 @@
 		    ,phone_num = #{phone_num, jdbcType=VARCHAR}     
 		    ,country = #{country, jdbcType=INTEGER}       
 		    ,state = #{state, jdbcType=INTEGER}         
-		    ,online_state = #{online_state, jdbcType=INTEGER}  
+		    ,online_state = #{online_state, jdbcType=INTEGER}
+		    ,thumb = #{thumb, jdbcType=VARCHAR}  
 		WHERE user_serial = #{user_serial, jdbcType=VARCHAR} 
 	</update>
 	
@@ -88,7 +90,8 @@
 		    state,         
 		    online_state,  
 		    reg_id,        
-		    reg_dt         
+		    reg_dt,
+		    thumb         
 		) VALUES (         
 		    (SELECT serial_key
 				FROM userserial
@@ -105,7 +108,10 @@
 		    #{country},             
 		    #{state},             
 		    #{online_state},             
-		    #{reg_id},             
+		    (SELECT serial_key
+				FROM userserial
+				WHERE is_used = 0
+				AND ROWNUM = 1),             
 		     SYSDATE       
 		)                  
 	

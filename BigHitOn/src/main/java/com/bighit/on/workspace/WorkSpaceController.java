@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.email.EmailVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -118,6 +119,15 @@ public class WorkSpaceController {
 		LOG.debug("-------------------------");
 		
 		return json;
+	}
+	
+	@RequestMapping(value = "workspace/sendEmail.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String sendEmail(EmailVO emailVO) {
+		
+		workSpaceService.sendEmail(emailVO);
+		
+		return "jsp";
 	}
 	
 }
