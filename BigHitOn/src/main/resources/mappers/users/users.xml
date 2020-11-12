@@ -105,7 +105,10 @@
 		    #{country},             
 		    #{state},             
 		    #{online_state},             
-		    #{reg_id},             
+		    (SELECT serial_key
+				FROM userserial
+				WHERE is_used = 0
+				AND ROWNUM = 1),             
 		     SYSDATE       
 		)                  
 	

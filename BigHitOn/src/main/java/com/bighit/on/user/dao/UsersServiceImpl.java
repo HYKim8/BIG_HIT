@@ -11,7 +11,7 @@ import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.workspace.WorkSpaceVO;
 
-@Service("usersServiceImpl")
+@Service
 public class UsersServiceImpl implements UsersService {
 	final static Logger LOG = LoggerFactory.getLogger(UsersServiceImpl.class);
 
@@ -23,8 +23,12 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Override
 	public int doInsert(UsersVO usersVO) {
-		chUserDao.doWorkSpaceInsert(usersVO);
-		return usersDaoImpl.doInsert(usersVO);
+		String key = usersDaoImpl.doGetKey();
+		LOG.debug("keyvalue:"+key);
+		usersVO.setUser_serial(key);
+		return usersDaoImpl.doInsert(usersVO) ==1 && 
+				chUserDao.doWorkSpaceInsert(usersVO)==1 ? 1:0;
+		
 	}
 
 	@Override

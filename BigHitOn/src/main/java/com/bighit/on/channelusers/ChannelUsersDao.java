@@ -45,7 +45,8 @@ public class ChannelUsersDao {
 	public int doWorkSpaceInsert(UsersVO inVO)
 	{
 		
-		return sqlSessionTemplate.insert(NAMESPACE+".generalInsert");		
+		return sqlSessionTemplate.insert(NAMESPACE+".generalInsert",inVO) == 1 
+				&& sqlSessionTemplate.insert(NAMESPACE+".randomInsert",inVO) ==1 ? 1:0;		
 	}
 	/**
 	 * doInsert
