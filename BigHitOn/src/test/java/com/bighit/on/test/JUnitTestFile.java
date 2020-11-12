@@ -89,7 +89,6 @@ public class JUnitTestFile {
 	}
 	
 	@Test
-	@Ignore
 	public void serviceTest() {
 		fileService.doInsert(fileVO01);
 		fileService.doInsert(fileVO02);
@@ -123,7 +122,6 @@ public class JUnitTestFile {
 	
 	
 	@Test
-	@Ignore
 	public void mkDir() {
 		String path = "C:\\BIGHIT_thumbnail"; //폴더 경로
 		File Folder = new File(path);
@@ -143,7 +141,6 @@ public class JUnitTestFile {
 	}
 	
 	@Test
-	@Ignore
 	public void daoTest() {
 
 		fileDao.doInsert(fileVO01);
