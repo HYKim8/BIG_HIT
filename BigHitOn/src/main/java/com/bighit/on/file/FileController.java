@@ -34,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import com.bighit.on.user.dao.UsersServiceImpl;
+import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
 
 @CrossOrigin
@@ -44,6 +46,9 @@ public class FileController {
 	
 	@Autowired
 	FileService fileService;
+	
+	@Autowired
+	UsersServiceImpl userService;
 	
 	@Autowired
 	FileDaoImpl fileDao;
@@ -118,6 +123,7 @@ public class FileController {
 		LOG.debug("-file/doUpdateProfileImg.do-");
 		LOG.debug("-------------------------");
 		
+		// fileType 제한 걸 것 jpg만 되게.
 		LOG.debug("file type : " + fileType);
 		
 		HttpSession session = req.getSession();
@@ -126,26 +132,30 @@ public class FileController {
 		session.setAttribute("id", "KIM");
 		session.setAttribute("thrKey", "1");
 		session.setAttribute("chLink", "1");
+		session.setAttribute("user_serial", "1");
 		// for test
+		
+		String uuid = UUID.randomUUID().toString();
 		
 		String userId = (String) session.getAttribute("id");
 		String profileImg = userId + "_profile";
 		String thumbImg = userId + "_thumb";
-		String keyNameProfile = profileImg + "/" + userId + "_profile." + fileType;
-		String keyNameThumb = thumbImg + "/" + userId + "_thumb." + fileType;
-		
-		
-		// Resize를 통한 썸네일 s3에 저장
-		MultipartFile resizeImg = doResize(file);
-		fileService.doFileUpload(keyNameThumb, resizeImg);
-		
-		// profile img s3에 저장.
+		String keyNameProfile = "profileImg" + profileImg + "/" + userId + "_profile." + fileType;
+		String keyNameThumb = "C:\\BIGHIT_thumbnail\\" + uuid + "_" + thumbImg + "." +fileType;
+	
+		LOG.debug("Profile image Upload to S3");
 		fileService.doFileUpload(keyNameProfile, file);
 		
-		// UserService를 이용하여 profile 이미지 등록
-		// UserVO에 thumb 이미지 추가
+		LOG.debug("Thumbnail image Upload to Server's disk");
+		MultipartFile resizeImg = doResize(file);
+		fileService.doSaveDisk(resizeImg, keyNameThumb);
 		
-		// MQ 통해 이미지 수정했다고 알리기.
+		// UserService를 이용하여 profile keyName, thumb keyName 등록
+//		UsersVO usersVO = new UsersVO();
+//		usersVO.setThumb(keyNameThumb);
+//		usersVO.setProfile_img(keyNameProfile);
+//		userService.doUpdate(usersVO);
+		
 		
 		return "file/file";
 	}
@@ -213,6 +223,10 @@ public class FileController {
 	
 	public MultipartFile doResize(MultipartFile multiFile) throws IOException {
 		
+		LOG.debug("-------------------------");
+		LOG.debug("-doResize-");
+		LOG.debug("-------------------------");
+		
 		File transferFile = new File(multiFile.getOriginalFilename());
 		multiFile.transferTo(transferFile);
 		
@@ -233,7 +247,6 @@ public class FileController {
 		try {
 			ImageIO.write(outImg, "jpg", file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -245,7 +258,10 @@ public class FileController {
 			        
 		MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
 		
-		return multipartFile;
+		LOG.debug("-------------------------");
+		LOG.debug("-End doResize-");
+		LOG.debug("-------------------------");
 		
+		return multipartFile;
 	}
 }

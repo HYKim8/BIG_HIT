@@ -1,7 +1,7 @@
 package com.bighit.on.test;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bighit.on.file.FileDaoImpl;
 import com.bighit.on.file.FileService;
@@ -82,6 +83,7 @@ public class JUnitTestFile {
 	}
 
 	@Test
+	@Ignore
 	public void file() throws IOException {
 		fileDao.doFileDownload("profileimg/testimg.png");
 	}
@@ -119,6 +121,26 @@ public class JUnitTestFile {
 	}
 	
 	
+	
+	@Test
+	@Ignore
+	public void mkDir() {
+		String path = "C:\\BIGHIT_thumbnail"; //폴더 경로
+		File Folder = new File(path);
+
+		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+		if (!Folder.exists()) {
+			try{
+			    Folder.mkdir(); //폴더 생성합니다.
+			    System.out.println("폴더가 생성되었습니다.");
+		        } 
+		        catch(Exception e){
+			    e.getStackTrace();
+			}        
+	         }else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
+		}
+	}
 	
 	@Test
 	@Ignore
