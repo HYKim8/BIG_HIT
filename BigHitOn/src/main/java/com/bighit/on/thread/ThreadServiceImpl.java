@@ -8,12 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bighit.on.cmn.Search;
+
+
 @Service
 public class ThreadServiceImpl implements ThreadService {
 	final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	ThreadDao thrDao;
-	
+	@Override
+	public List<ThreadVO> doSelectList(Search search){
+		if(search.nonValueWord()) { 
+			LOG.debug("here");
+			return null;
+		}
+		
+		return thrDao.doSelectList(search);
+	}
 	@Override
 	public int doInsert(ThreadVO threadVO) {
 		ThreadVO parentVO = new ThreadVO(); // 검색할려구 잠깐만듬
@@ -21,7 +32,7 @@ public class ThreadServiceImpl implements ThreadService {
 		parentVO = thrDao.doSelectOne(parentVO);
 		
 		if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
-			parentVO.setChild_cnt(parentVO.getChild_cnt()+1);
+			parentVO.setChildCnt(parentVO.getChildCnt()+1);
 			
 			return thrDao.doUpdate(parentVO);
 		}

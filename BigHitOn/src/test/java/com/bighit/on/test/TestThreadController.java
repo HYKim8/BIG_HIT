@@ -34,6 +34,7 @@ import com.bighit.on.thread.ThreadVO;
 import com.google.gson.Gson;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.cmn.Search;
 
 //메소드 수행 순서:
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -62,7 +63,7 @@ public class TestThreadController {
 		LOG.debug("=mockMvc=" + mockMvc);
 		assertThat(mockMvc, is(notNullValue()));
 		
-		threads = Arrays.asList( new ThreadVO("5","1","testTest",1,"11111","HOON","2020-11-06","2020-11-06","1"));
+		threads = Arrays.asList( new ThreadVO("5","1","testTest",1,"11111","HOON","2020-11-06","2020-11-06","1",0));
 	}
 	
 	@Test
@@ -117,7 +118,24 @@ public class TestThreadController {
 		LOG.debug("=message=" + message);
 		LOG.debug("===========================");	
 	}
-	
+	@Test
+	public void doSelectList() throws Exception{
+
+		Search search = new Search("","12");
+		MockHttpServletRequestBuilder createMessage = 
+				 MockMvcRequestBuilders.get("/thread/ListView.do")
+				 .param("searchWord", search.getSearchWord())				
+				 .param("pageNum", search.getPageNum()+"")
+				 .param("pageSize", search.getPageSize()+"");
+		ResultActions resultActions =mockMvc.perform(createMessage)	
+				  //.andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+				  .andExpect(status().is2xxSuccessful());
+		
+		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
+		LOG.debug("===========================");
+		LOG.debug("=result=" + result);
+		LOG.debug("===========================");
+	}
 	@Test
 	@Ignore
 	public void doUpdate() throws Exception {

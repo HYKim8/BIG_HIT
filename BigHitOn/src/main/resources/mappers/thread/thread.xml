@@ -29,5 +29,43 @@
 	resultType = "com.bighit.on.thread.ThreadVO">
 	SELECT parent_key,thr_key,reg_id,reg_dt,contents FROM thread Where thr_key = #{thrKey}	
 	</select>
+	<select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
+	SELECT 
+    b.thr_key AS thrKey,
+    b.ch_link AS chLink ,
+    b.contents ,
+    b.is_pin AS isPin,
+    b.pin_id AS pinId,
+    b.reg_id AS regId,
+    b.reg_dt AS regDt,
+    b.mod_dt AS modDt,
+    b.parent_key AS parentKey,
+    b.child_cnt AS childCnt
+FROM
+    (SELECT rownum as rnum,
+        A.*
+    FROM (
+            SELECT 
+                THR_KEY ,
+                CH_LINK ,
+                CONTENTS ,
+                IS_PIN ,
+                PIN_ID ,
+                REG_ID ,
+                REG_DT ,
+                MOD_DT ,
+                PARENT_KEY ,
+                CHILD_CNT
+            FROM THREAD
+            WHERE
+                ch_link = #{searchWord}
+                AND parent_key IS NULL
+            ORDER BY reg_dt
+        ) A
+        WHERE rownum <![CDATA[ <= ]]>  ( #{pageSize} * ( #{pageNum} - 1 ) + #{pageSize})
+    )B
+    WHERE rnum <![CDATA[ >= ]]> ( #{pageSize} * ( #{pageNum} - 1 ) + 1 )
+	ORDER BY rnum DESC 
+	</select>
 </mapper>
 	

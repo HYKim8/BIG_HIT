@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.cmn.Search;
 import com.bighit.on.mention.MentionService;
 import com.bighit.on.reaction.ReactionService;
 import com.bighit.on.save.SaveThrService;
@@ -27,7 +28,7 @@ public class ThreadController {
 	final Logger   LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	ThreadService threadService;
+	ThreadServiceImpl threadService;
 	
 	@Autowired
 	MentionService mentionService;
@@ -38,12 +39,41 @@ public class ThreadController {
 	@Autowired
 	SaveThrService saveThrService;
 	
+	@RequestMapping(value="thread/moreList.do",method = RequestMethod.GET)
+	@ResponseBody
+	public List<ThreadVO> MoreList(Search search) throws Exception {
+		LOG.debug("=thread_view=");
+		
+		if(search.getPageNum()==0) {
+			search.setPageNum(1);
+		}
+		if(search.getPageSize()==0)
+		{
+			search.setPageSize(100);
+		}
+		
+		List<ThreadVO> threadList = this.threadService.doSelectList(search);
+		
+		for(ThreadVO vo:threadList) {
+		LOG.debug(vo.toString());
+		}
+		return threadList;
+	}
 	
 	@RequestMapping(value="thread/ListView.do",method = RequestMethod.GET)
-	public String ListView(ThreadVO threadVO, Model model) throws Exception {
+	public String ListView(Search search, Model model) throws Exception {
 		LOG.debug("=thread_view=");
-	
-		List<ThreadVO> threadList = this.threadService.doSelectAll(threadVO);
+		
+		if(search.getPageNum()==0) {
+			search.setPageNum(1);
+		}
+		if(search.getPageSize()==0)
+		{
+			search.setPageSize(100);
+		}
+		model.addAttribute("vo", search);
+		
+		List<ThreadVO> threadList = this.threadService.doSelectList(search);
 		model.addAttribute("threadList", threadList);
 		for(ThreadVO vo:threadList) {
 		LOG.debug(vo.toString());

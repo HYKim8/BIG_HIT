@@ -23,8 +23,8 @@ public class Search extends DTO {
 	
 	public Search(String searchDiv, String searchWord) {
 		super();
-		this.pageSize = 1;
-		this.pageNum = 10;
+		this.pageSize = 10;
+		this.pageNum = 1;
 		this.searchDiv = searchDiv;
 		this.searchWord = searchWord;
 	}
@@ -75,6 +75,10 @@ public class Search extends DTO {
 				+ pageNum + ", toString()=" + super.toString() + "]";
 	}
 
-
-
+	public boolean nonValueDiv() {
+		return searchDiv == null || searchDiv.equals("");
+	}
+	public boolean nonValueWord() {
+		return searchWord == null || searchWord.equals("");
+	}
 }

@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.bighit.on.cmn.Search;
 import com.bighit.on.thread.ThreadDao;
 import com.bighit.on.thread.ThreadService;
 import com.bighit.on.thread.ThreadVO;
@@ -53,7 +54,7 @@ public class ThreadTest {
 		thread01.setChLink("12");
 		thread01.setContents("test");
 		thread01.setIsPin(1);
-		thread01.setParentKey("1");
+		thread01.setParentKey("");
 		thread01.setPinId("abc");
 		thread01.setRegId("abc");
 		thread01.setRegDt("2020-11-03");
@@ -107,16 +108,23 @@ public class ThreadTest {
 	@Test
 	@Ignore
 	public void all() {
-		threadDao.doDelete(thread01);
-		
+//		threadDao.doDelete(thread01);
+		for(int i=0;i<1000;i++)
 		threadDao.doInsert(thread01);
 		
-		List<ThreadVO> list = threadDao.doSelectAll(thread01);
+//		List<ThreadVO> list = threadDao.doSelectAll(thread01);
 		
-		threadDao.doSelectOne(thread01);
+//		threadDao.doSelectOne(thread01);
 		
-		thread01.setContents("changeTest");
-		threadDao.doUpdate(thread01);
+//		thread01.setContents("changeTest");
+//		threadDao.doUpdate(thread01);
+	}
+	@Test
+//	@Ignore
+	public void chList() {
+		Search search = new Search("","12");
+		threadDao.doSelectList(search);
+		
 	}
 
 }

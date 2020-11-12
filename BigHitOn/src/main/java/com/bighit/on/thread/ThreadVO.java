@@ -6,153 +6,155 @@ public class ThreadVO extends DTO {
 	/**
 	 * 쓰레드 키
 	 */
-	private String ThrKey;
+	private String thrKey;
 	
 	/**
 	 * 채널링크
 	 */
-	private String ChLink;
+	private String chLink;
 	
 	/**
 	 * 내용
 	 */
-	private String Contents;
+	private String contents;
 	
 	/**
 	 * 고정 유무
 	 */
-	private int IsPin;
+	private int isPin;
 	
 	/**
 	 * 고정자
 	 */
-	private String PinId;
+	private String pinId;
 	
 	/**
 	 * 작성자
 	 */
-	private String RegId;
+	private String regId;
 	
 	/**
 	 * 작성일
 	 */
-	private String RegDt;
+	private String regDt;
 	
 	/**
 	 * 수정일
 	 */
-	private String ModDt;
+	private String modDt;
 	
 	/**
 	 * 부모 쓰레드키
 	 */
-	private String ParentKey;
+	private String parentKey;
 	
-	private int Child_cnt;
+	private int childCnt;
 	
 	public ThreadVO() {
 	}
 
 	public ThreadVO(String thrKey, String chLink, String contents, int isPin, String pinId, String regId, String regDt,
-			String modDt, String parentKey) {
+			String modDt, String parentKey, int childCnt) {
 		super();
-		ThrKey = thrKey;
-		ChLink = chLink;
-		Contents = contents;
-		IsPin = isPin;
-		PinId = pinId;
-		RegId = regId;
-		RegDt = regDt;
-		ModDt = modDt;
-		ParentKey = parentKey;
-	}
-
-	public int getChild_cnt() {
-		return Child_cnt;
-	}
-
-	public void setChild_cnt(int child_cnt) {
-		Child_cnt = child_cnt;
+		this.thrKey = thrKey;
+		this.chLink = chLink;
+		this.contents = contents;
+		this.isPin = isPin;
+		this.pinId = pinId;
+		this.regId = regId;
+		this.regDt = regDt;
+		this.modDt = modDt;
+		this.parentKey = parentKey;
+		this.childCnt = childCnt;
 	}
 
 	public String getThrKey() {
-		return ThrKey;
+		return thrKey;
 	}
 
 	public void setThrKey(String thrKey) {
-		ThrKey = thrKey;
+		this.thrKey = thrKey;
 	}
 
 	public String getChLink() {
-		return ChLink;
+		return chLink;
 	}
 
 	public void setChLink(String chLink) {
-		ChLink = chLink;
+		this.chLink = chLink;
 	}
 
 	public String getContents() {
-		return Contents;
+		return contents;
 	}
 
 	public void setContents(String contents) {
-		Contents = contents;
+		this.contents = contents;
 	}
 
 	public int getIsPin() {
-		return IsPin;
+		return isPin;
 	}
 
 	public void setIsPin(int isPin) {
-		IsPin = isPin;
+		this.isPin = isPin;
 	}
 
 	public String getPinId() {
-		return PinId;
+		return pinId;
 	}
 
 	public void setPinId(String pinId) {
-		PinId = pinId;
+		this.pinId = pinId;
 	}
 
 	public String getRegId() {
-		return RegId;
+		return regId;
 	}
 
 	public void setRegId(String regId) {
-		RegId = regId;
+		this.regId = regId;
 	}
 
 	public String getRegDt() {
-		return RegDt;
+		return regDt;
 	}
 
 	public void setRegDt(String regDt) {
-		RegDt = regDt;
+		this.regDt = regDt;
 	}
 
 	public String getModDt() {
-		return ModDt;
+		return modDt;
 	}
 
 	public void setModDt(String modDt) {
-		ModDt = modDt;
+		this.modDt = modDt;
 	}
 
 	public String getParentKey() {
-		return ParentKey;
+		return parentKey;
 	}
 
 	public void setParentKey(String parentKey) {
-		ParentKey = parentKey;
+		this.parentKey = parentKey;
+	}
+
+	public int getChildCnt() {
+		return childCnt;
+	}
+
+	public void setChildCnt(int childCnt) {
+		this.childCnt = childCnt;
 	}
 
 	@Override
 	public String toString() {
-		return "ThreadVO [ThrKey=" + ThrKey + ", ChLink=" + ChLink + ", Contents=" + Contents + ", IsPin=" + IsPin
-				+ ", PinId=" + PinId + ", RegId=" + RegId + ", RegDt=" + RegDt + ", ModDt=" + ModDt + ", ParentKey="
-				+ ParentKey + ", Child_cnt=" + Child_cnt + ", toString()=" + super.toString() + "]";
+		return "ThreadVO [thrKey=" + thrKey + ", chLink=" + chLink + ", contents=" + contents + ", isPin=" + isPin
+				+ ", pinId=" + pinId + ", regId=" + regId + ", regDt=" + regDt + ", modDt=" + modDt + ", parentKey="
+				+ parentKey + ", childCnt=" + childCnt + ", toString()=" + super.toString() + "]";
 	}
 
+	
 	
 }

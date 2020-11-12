@@ -14,6 +14,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.bighit.on.cmn.Search;
+
+
 
 
 
@@ -29,7 +32,19 @@ public class ThreadDao {
 	 
 	public ThreadDao() {		
 	}
-
+	public List<ThreadVO> doSelectList(Search search){
+		LOG.debug("=======================");
+		LOG.debug("====doSelectList====");
+		LOG.debug("=======================");
+		
+		String statement = NAMESPACE+".doSelectList";
+		LOG.debug("====statement===="+statement);
+		LOG.debug("====search===="+search);
+		List<ThreadVO> result = sqlSessionTemplate.selectList(statement, search);
+		LOG.debug(result.toString());
+		for(ThreadVO vo: result) LOG.debug(vo.toString());
+		return result;
+	}
 	   
 
 	public int doInsert(ThreadVO threadVO) {
