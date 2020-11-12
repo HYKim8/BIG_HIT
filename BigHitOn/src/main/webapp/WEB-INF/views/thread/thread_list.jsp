@@ -30,22 +30,24 @@
 	    	</form>
 </div>
 	<table>
-		
+		<!--
 		<colgroup>
 			<col style="width:5%;" />
 			<col style="width:auto;" />
 			<col style="width:15%;" />
 			<col style="width:10%;" />
 			<col style="width:10%;" />
-			<col style="height:100px"/>
 		</colgroup>
-		
+		-->
 		<thead>
 		<tr>
-			<th></th>
-			<th></th>
-			<th></th>
-			<th></th>
+			<th>쓰레드키</th>
+			<th>내용</th>
+			<th>고정유무</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>수정일</th>
+			<th>댓글갯수</th>
 		</tr>
 		</thead>
 		<tbody id="threadList">
@@ -55,8 +57,23 @@
 						<tr>
 							<td><c:out value="${list.thrKey}"/></td>
 							<td><c:out value="${list.contents}"/></td>
+							<td>
+								<c:if test="${list.isPin == 1}">
+									<c:out value="${list.pinId}님이 고정함"/>
+								</c:if>
+							</td>
 							<td><c:out value="${list.regId}"/></td>
 							<td><c:out value="${list.regDt}"/></td>
+							<td data-toggle="tooltip" data-placement="right" title="${list.modDt}">
+								<c:if test="${list.modDt != list.regDt }">
+									<c:out value="편집됨"/>									
+								</c:if>
+							</td>
+							<td>
+								<c:if test="${list.childCnt != 0}">
+									<c:out value="${list.childCnt}"/>
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -93,12 +110,22 @@
 					       var html = "";
 					       for(var i=0;i<list.length;i++){
 								html += '<tr>';
-								html += '<td>'+ list[i].thrKey+'<td>';
-								html += '<td>'+ list[i].contents+'<td>';
-								html += '<td>'+ list[i].regId+'<td>';
-								html += '<td>'+ list[i].regDt;
-								if(list[i].regDt != list[i].modDt ) html += '편집됨';							
-								html += '<td><tr>';
+								html += '<td>'+ list[i].thrKey+'</td>';
+								html += '<td>'+ list[i].contents+'</td>';
+								html += '<td>';
+								if(list[i].isPin==1) html += list[i].pinId + "님이 고정함";
+								html += '</td>';
+								html += '<td>'+ list[i].regId+'</td>';
+								html += '<td>'+ list[i].regDt+'</td>';
+								html += '<td data-toggle=\"tooltip\" data-placement="\right\" title=\"' +list[i].modDt +'\">';
+								if(list[i].regDt != list[i].modDt ) {
+									html += '편집됨';									
+								}
+								html +="</td>"
+								html += '<td>';
+								if(list[i].childCnt != 0 )html += list[i].childCnt+'</td>';
+														
+								html += '<tr>';
 					       }							
 					   
 						   $("#threadList").prepend(html);
@@ -115,6 +142,9 @@
 				  
 				});//--ajax
 				}
+        	});
+    	$(document).on("hover","#modDt",function(){
+			
         	});
     </script>
 </body>
