@@ -56,9 +56,9 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<UsersVO> doSelectList2(WorkSpaceVO workSpaceVO) {
+	public List<UsersVO> doSelectList(WorkSpaceVO workSpaceVO) {
 		
-		return usersDaoImpl.doSelectList2(workSpaceVO);
+		return usersDaoImpl.doSelectList(workSpaceVO);
 	}
 
 }

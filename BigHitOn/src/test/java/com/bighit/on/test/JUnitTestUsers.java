@@ -59,14 +59,14 @@ public class JUnitTestUsers {
 	/** workspace에 포함된 users list */
 	@Test
 //	@Ignore
-	public void doSelectList2() {
-		usersDaoImpl.doSelectList2(workSpaceVO);
+	public void doSelectListFromWs() {
+		usersDaoImpl.doSelectList(workSpaceVO);
 	}
 	
 	/** channel에 소속된 users list */
 	@Test
 	@Ignore
-	public void doSelectList() {
+	public void doSelectListFromCh() {
 		usersDaoImpl.doSelectList(channelVO);
 	}
 	

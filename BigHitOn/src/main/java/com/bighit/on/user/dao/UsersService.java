@@ -46,5 +46,5 @@ public interface UsersService {
 	 * @param workSpaceVO
 	 * @return List<UsersVO>
 	 */
-	List<UsersVO> doSelectList2(WorkSpaceVO workSpaceVO);
+	List<UsersVO> doSelectList(WorkSpaceVO workSpaceVO);
 }
