@@ -60,5 +60,17 @@ public class UsersServiceImpl implements UsersService {
 		
 		return usersDaoImpl.doSelectList(workSpaceVO);
 	}
-
+	
+	@Override
+	public int workSpaceNameCK(WorkSpaceVO workSpaceVO) {
+		if(workSpaceVO.getWsName().length()<=8) {
+			LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
+			LOG.debug("워크스페이스 이름이 짧습니다. 다시 지어주세요.");
+			return 1;
+		}
+		LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
+		LOG.debug("이름 생성 완료");
+		return 0;
+	}
+	
 }

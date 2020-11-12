@@ -112,7 +112,8 @@
 				FROM userserial
 				WHERE is_used = 0
 				AND ROWNUM = 1),             
-		     SYSDATE       
+		     SYSDATE,
+		     #{thumb}       
 		)                  
 	
 	</insert>
