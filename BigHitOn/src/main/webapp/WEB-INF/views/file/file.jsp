@@ -84,12 +84,12 @@
     <script type="text/javascript">
 
 
-    
+    	
 		$("#thumb_test_btn").on("click", function(){
 				console.log("thumb_test_btn Clicked");
 				doTestMakeDir();
 			})
-			
+			// folder 만들기
 		function doTestMakeDir(){
 			$.ajax({
 				type:'POST',

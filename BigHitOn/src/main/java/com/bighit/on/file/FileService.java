@@ -88,7 +88,7 @@ public class FileService {
 	 * "C:\\BIGHIT_thumbnail" 에 저장
 	 */
 	public void doMakeDir() {
-		String path = "./src/main/webapp/resources/thumbnail"; // 폴더 경로
+		String path = "/resources/thumbnail"; // 폴더 경로
 		File Folder = new File(path);
 
 		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
