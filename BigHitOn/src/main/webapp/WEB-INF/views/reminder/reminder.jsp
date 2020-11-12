@@ -26,13 +26,45 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        #modal {
+          display: none;
+          position:relative;
+          width:100%;
+          height:100%;
+          z-index:1;
+        }
+        
+        #modal h2 {
+          margin:0;
+        }
+        #modal button {
+          display:inline-block;
+          width:100px;
+          margin-left:calc(100% - 100px - 10px);
+        }
+        
+        #modal .modal_content {
+          width:300px;
+          margin:100px auto;
+          padding:20px 10px;
+          background:#fff;
+          border:2px solid #666;
+        }
+        
+        #modal .modal_layer {
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.5);
+          z-index:-1;
+        }   
+</style> 
+    
 </head>
 <body>
-	<script>
-		var availableTags = [
-					'remind asdasd'
-				];
-	</script>
 	
 	<div class="container">
 		<div class="page-header">
@@ -71,13 +103,44 @@
 			<label>시간 입력 폼</label>
 			<input type="text" id="time_input">	
 			<input type="button" id="input_button" value="입력">
+			
+			<label>text input</label>
+			<input type="text" id="text_input" onkeyup="enterkey()">
 	
 		</form>
 		
 		<label>자동완성 테스트</label>
 		<input type="text" id="city">
 		<input onclick="setTimeout(time1, 1000)" type="button" id="start_timeinterval" value="타임인터벌">
+		
+    	<button type="button" id="modal_opne_btn">모달 창 열기</button>
 	</div>
+   
+       
+</div>
+
+<div id="modal">
+   
+    <div class="modal_content">
+        <h2>Reminder</h2>
+       
+        <p>모달 창 입니다.</p>
+       
+        <button type="button" id="modal_close_btn">모달 창 닫기</button>
+       
+    </div>
+   
+    <div class="modal_layer"></div>
+</div>
+<script>
+    document.getElementById("modal_opne_btn").onclick = function() {
+        document.getElementById("modal").style.display="block";
+    }
+   
+    document.getElementById("modal_close_btn").onclick = function() {
+        document.getElementById("modal").style.display="none";
+    }   
+</script>
 	<!-- end container -->
 
 
@@ -88,7 +151,7 @@
 
 
 
-
+	
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <!-- 
@@ -96,15 +159,29 @@
     -->
     <script type="text/javascript">
 
+    function enterkey() {
+        if (window.event.keyCode == 13) {
+ 
+            	helloWorld();
+        	}
+		}
+
+	function helloWorld(){
+			if($("#text_input").val().trim()=="/remind"){
+					// remind 명령어
+					
+				}
+		}
+	  
     function time1(){
 			console.log("doChkAlarm");
-			setTimeout(time2, 59000);
+			setTimeout(time2, 1000);
 			doChkAlarm();
         }
 
     function time2(){
 	    	console.log("doChkAlarm");
-			setTimeout(time1, 59000);
+			setTimeout(time1, 1000);
 			doChkAlarm();
         }
 
@@ -153,8 +230,8 @@
 		}
 	
 	  $(function() {
-	      var key_word = ["remind @사용자 시간(17:12)"];
-	      $("#city").autocomplete({
+	      var key_word = ["/remind", "/helloworld", "/ㅋㅋㅋ", "/4번째"];
+	      $("#text_input").autocomplete({
 	          source: key_word,
 	          select: function(event, ui) {
 	              console.log(ui.item);
@@ -162,7 +239,11 @@
 	          focus: function(event, ui) {
 	              return false;
 	              //event.preventDefault();
-	          }
+	          },
+	          autoFocus: true,
+	          matchContains: false,
+	          minLength: 1,
+	          position: { my: "left top", at: "left bottom", collision: "none" }
 	      });
 	  });
 

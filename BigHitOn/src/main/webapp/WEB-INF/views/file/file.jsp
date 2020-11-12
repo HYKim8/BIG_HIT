@@ -46,7 +46,12 @@
 			<label>filedownload url</label>
 			<a id="url_value" href="" rel="nofollow" download>Download Receipt</a>
 			<label>test img</label>
+			<!-- img 없을 경우(404) 이미지 다시 불러오기. thumbnail에 이용 -->
 			<img alt="" src="" id="test_view_img">
+			<div id="test_thumb">
+				<img alt="" src="C|BIGHIT_thumbnail\1.jpg">
+			</div>
+			<input type="button" name="thumb_test_btn" id="thumb_test_btn" value="thumb"/>
 		</div>
 		
 		<div>
@@ -77,7 +82,29 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- javascript -->
     <script type="text/javascript">
-		
+
+
+    
+		$("#thumb_test_btn").on("click", function(){
+				console.log("thumb_test_btn Clicked");
+				doTestMakeDir();
+			})
+			
+		function doTestMakeDir(){
+			$.ajax({
+				type:'POST',
+				url:'${hContext}/file/do404Chk.do',
+				dataType:"html",
+	            async: true,
+	            data:{
+		            },
+		        success:function(data){
+			        		console.log("success");							
+			        	}  
+				});
+
+			}
+	
         <!-- 확장자 jpg로 통일할 것 -->
 		$("#uploadProfileImg").on("click", function(){
 				console.log("uploadProfileImg Clicked");
@@ -177,6 +204,24 @@
 		        }
 		    });
 		}
+
+		/* function doThumbTest(){
+			$.ajax({
+				type:"POST",
+				url:"${hContext}/file/file/do404Chk.do",
+				dataType:"html",
+				async:true,
+				data:{
+					
+					},
+				success:function(data){
+
+					}
+
+
+
+				});
+			} */
 		
 		function doSelectList(){
 			$.ajax({
