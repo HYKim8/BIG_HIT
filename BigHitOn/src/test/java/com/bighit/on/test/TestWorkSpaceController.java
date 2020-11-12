@@ -69,7 +69,6 @@ public class TestWorkSpaceController {
 	}
 	
 	@Test
-	@Ignore
 	public void doInsert() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -101,7 +100,6 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doDelete() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		//workSpaceVO.setWsLink(2+"");
@@ -136,7 +134,6 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doSelectOne() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -162,7 +159,6 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doSelectList() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
