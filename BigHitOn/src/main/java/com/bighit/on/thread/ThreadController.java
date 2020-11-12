@@ -2,6 +2,8 @@ package com.bighit.on.thread;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,23 @@ public class ThreadController {
 	
 	@Autowired
 	SaveThrService saveThrService;
+	
+	
+	@RequestMapping(value="thread/ListView.do",method = RequestMethod.GET)
+	public String ListView(ThreadVO threadVO, Model model) throws Exception {
+		LOG.debug("=thread_view=");
+	
+		List<ThreadVO> threadList = this.threadService.doSelectAll(threadVO);
+		model.addAttribute("threadList", threadList);
+		for(ThreadVO vo:threadList) {
+		LOG.debug(vo.toString());
+		}
+		String view = "thread/thread_list";
+		return view;
+	}
+	
+	
+	
 	
 	@RequestMapping(value="thread/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody

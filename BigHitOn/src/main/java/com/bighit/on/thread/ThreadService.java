@@ -8,7 +8,7 @@ public interface ThreadService {
 	
 	int doDelete(ThreadVO threadVO);
 	
-	List<ThreadVO> doSelectAll(ThreadVO threadVO);
+	public List<ThreadVO> doSelectAll(ThreadVO threadVO);
 	
 	int doUpdate(ThreadVO threadVO);
 }
