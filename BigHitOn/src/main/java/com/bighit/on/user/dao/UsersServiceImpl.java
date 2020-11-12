@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.workspace.WorkSpaceVO;
 
 @Service("usersServiceImpl")
@@ -16,10 +17,13 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	UsersDaoImpl usersDaoImpl;
+	@Autowired
+	ChannelUsersDao chUserDao;
+	
 	
 	@Override
 	public int doInsert(UsersVO usersVO) {
-
+		chUserDao.doWorkSpaceInsert(usersVO);
 		return usersDaoImpl.doInsert(usersVO);
 	}
 
