@@ -53,7 +53,7 @@ public class TestWorkSpace {
 	
 	@Before
 	public void setUp() throws Exception {
-		workSpace01 = new WorkSpaceVO("2","정현수","정현수","jhs","");
+		workSpace01 = new WorkSpaceVO("","정현수","정현수","jhs","");
 		workSpace02 = new WorkSpaceVO("3","jhs_ws","bighit","jhs","");
 		
 		email01 = new EmailVO("isc8481@hanmail.net", workSpace01.getWsLink(), workSpace01.getWsName(), "slack");
@@ -85,7 +85,6 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doInsert() {
 		int flag = workSpaceDao.doInsert(workSpace01);
 		assertThat(flag, is(1));
@@ -120,7 +119,6 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
-	@Ignore
 	public void doInserta() {
 		workSpaceServiceImpl.doInsert(workSpace01);
 		
@@ -148,6 +146,7 @@ public class TestWorkSpace {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doSelectList() {
 		UsersVO userVO = new UsersVO();
 		userVO.setEmail("gustn4880@naver.com");
