@@ -55,8 +55,14 @@ public class FileController {
 		return "file/file";
 	}
 	
-	
-	
+	@RequestMapping(value = "main/main.do", method = RequestMethod.GET)
+	public String main_view() {
+		LOG.debug("-------------------------");
+		LOG.debug("-file/file_view.do-");
+		LOG.debug("-------------------------");
+		
+		return "main/main";
+	}
 	@RequestMapping(value = "file/do404Chk.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String do404Chk(HttpServletRequest req, Model model, String userSerial) {
