@@ -24,7 +24,27 @@
 
     <!-- Custom styles for this template-->
     <link href="${hContext }/resources/assets/css/sb-admin-2.min.css" rel="stylesheet">
-
+	<style>
+		.my_img{
+			margin-left: 20px;
+			margin-right: 5px;
+			margin-bottom: 20px;
+		}
+		
+		.my_thread{
+			line-height: 1.1;
+			padding-top: 0px;
+		}
+		
+		.name_p{
+			padding-top: 5px;
+			line-height: 0.8;
+		}
+		
+		.thread_box{
+			padding-left: 20px;
+		}
+	</style>
 </head>
 
 <body id="page-top">
@@ -269,23 +289,87 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- Approach -->
-                    <div class="card shadow mb-4">
-                          <div class="card-header py-3">
-                             <h6 class="m-0 font-weight-bold text-primary">Channel Name</h6>
-                          </div>
-                          <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+
+				<div class="row thread_box">
+					<div class="my_img">
+						<img alt="" src="${hContext }/resources/img/User1.jpg"> 
+					</div>
+					<div class="col-md-10 my_thread">
+						<p class="name_p">김건희 오전 11:53</p>
+						<p>안녕하세요.</p>
+						<p>반가워요.</p>
+						<p>하이요.</p>
+					</div>
+				</div>
+				
+				<div class="row thread_box">
+					<div class="my_img">
+						<img alt="" src="${hContext }/resources/img/User2.jpg"> 
+					</div>
+					<div class="col-md-10 my_thread">
+						<p class="name_p">김재훈 오전 12:00</p>
+						<p>오늘 잘 지내셨나요?</p>
+						<p>안녕하세요.</p>
+						<p>수업 언제 끝나나요?</p>
+						<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
                                         CSS bloat and poor page performance. Custom CSS classes are used to create
                                         custom components and custom utility classes.</p>
-                                        
-                                    <p class="mb-0">쓰레드 표현 방식에 대해 생각해봐야 하고 자잘하게 페이지 퀄리티를 높이는 방향으로</p>
-                          </div>
-                     </div>
-                </div>
-                <!-- /.container-fluid -->
+					</div>
+				</div>
+				<div class="row thread_box">
+					<div class="my_img">
+						<img alt="" src="${hContext }/resources/img/User1.jpg"> 
+					</div>
+					<div class="col-md-10 my_thread">
+						<p class="name_p">김건희 오전 11:53</p>
+						<p>안녕하세요.</p>
+						<p>반가워요.</p>
+						<p>하이요.</p>
+					</div>
+				</div>
+				
+				<div class="row thread_box">
+					<div class="my_img">
+						<img alt="" src="${hContext }/resources/img/User2.jpg"> 
+					</div>
+					<div class="col-md-10 my_thread">
+						<p class="name_p">김재훈 오전 12:00</p>
+						<p>오늘 잘 지내셨나요?</p>
+						<p>안녕하세요.</p>
+						<p>수업 언제 끝나나요?</p>
+						<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                                        CSS bloat and poor page performance. Custom CSS classes are used to create
+                                        custom components and custom utility classes.</p>
+					</div>
+				</div>
+				<div class="row thread_box">
+					<div class="my_img">
+						<img alt="" src="${hContext }/resources/img/User1.jpg"> 
+					</div>
+					<div class="col-md-10 my_thread">
+						<p class="name_p">김건희 오전 11:53</p>
+						<p>안녕하세요.</p>
+						<p>반가워요.</p>
+						<p>하이요.</p>
+					</div>
+				</div>
+				
+				<div class="row thread_box">
+					<div class="my_img">
+						<img alt="" src="${hContext }/resources/img/User2.jpg"> 
+					</div>
+					<div class="col-md-10 my_thread">
+						<p class="name_p">김재훈 오전 12:00</p>
+						<p>오늘 잘 지내셨나요?</p>
+						<p>안녕하세요.</p>
+						<p>수업 언제 끝나나요?</p>
+						<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                                        CSS bloat and poor page performance. Custom CSS classes are used to create
+                                        custom components and custom utility classes.</p>
+					</div>
+				</div>
+
+				
             </div>
             <!-- End of Main Content -->
 
@@ -302,13 +386,18 @@
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; BIG_HIT 2020</span>
-                    </div>
+                <div class="container row">
+                    <textarea class="form-control" style="width:90%;" rows="2"></textarea>
+                    <input class="btn btn-primary" type="button" value="전송">
                 </div>
             </footer>
             <!-- End of Footer -->
+			
+			
+			
+
+
+
 
         </div>
         <!-- End of Content Wrapper -->
@@ -351,12 +440,6 @@
     <!-- Custom scripts for all pages-->
     <script src="${hContext }/resources/assets/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="${hContext }/resources/assets/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="${hContext }/resources/assets/js/demo/chart-area-demo.js"></script>
-    <script src="${hContext }/resources/assets/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
