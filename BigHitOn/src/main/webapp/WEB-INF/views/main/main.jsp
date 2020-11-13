@@ -201,7 +201,7 @@
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
+                                    읽지 않은 메시지
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
@@ -275,7 +275,7 @@
                 <!-- End of Topbar -->
 
 				<!-- 한 셋트 -->
-				<div class="media">
+				<div style="padding-right: 20px;"class="media">
 				  <div style="padding-left:10px; padding-right:10px;"class="media-left">
 				    <a href="#">
 				      <img class="media-object" src="${hContext }/resources/img/User1.jpg" alt="">
@@ -308,10 +308,10 @@
 
 
             <!-- Footer -->
+            <!-- 입력 폼 -->
             <footer class="sticky-footer bg-white">
-                <div class="container row">
-                    <textarea class="form-control" style="width:90%;" rows="2"></textarea>
-                    <input class="btn btn-primary" type="button" value="전송">
+                <div style="padding-left: 20px; padding-right: 20px;"class="row">
+                	<div class="col-md-12"><textarea class="form-control" rows="2"></textarea></div>                    
                 </div>
             </footer>
             <!-- End of Footer -->
