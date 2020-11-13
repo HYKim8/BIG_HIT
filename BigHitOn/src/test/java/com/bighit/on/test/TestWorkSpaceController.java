@@ -32,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersVO;
 import com.bighit.on.workspace.WorkSpaceService;
 import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
@@ -53,6 +54,8 @@ public class TestWorkSpaceController {
 	
 	List<WorkSpaceVO> workSpaces;
 	
+	List<UsersVO> users;
+	
 	EmailVO emailVO;
 	
 	// 브라우저 대신 Mock
@@ -63,12 +66,14 @@ public class TestWorkSpaceController {
 		workSpaces=Arrays.asList(new WorkSpaceVO("2","정현수","정현수","jhs","")
 								,new WorkSpaceVO("3","jhs_ws","bighit","jhs","")					
 		);
+		users = Arrays.asList(new UsersVO("123","1","gustn4880@naver.com","123","정현수","jhs","","","01011111111",12,1,1,"","",""	));
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		LOG.debug("=mockMvc=" + mockMvc);
 		assertThat(mockMvc, is(notNullValue()));
 	}
 	
 	@Test
+	@Ignore
 	public void doInsert() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
@@ -100,6 +105,7 @@ public class TestWorkSpaceController {
 	
 	//성공
 	@Test
+	@Ignore
 	public void doDelete() throws Exception {
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		//workSpaceVO.setWsLink(2+"");
@@ -135,6 +141,7 @@ public class TestWorkSpaceController {
 	//성공
 	@Test
 	public void doSelectOne() throws Exception {
+		
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
 				 MockMvcRequestBuilders.get("/workspace/doSelectOne.do")
@@ -160,10 +167,11 @@ public class TestWorkSpaceController {
 	//성공
 	@Test
 	public void doSelectList() throws Exception {
+		UsersVO usersVO = users.get(0);
 		WorkSpaceVO workSpaceVO = workSpaces.get(0);
 		MockHttpServletRequestBuilder createMessage = 
 				 MockMvcRequestBuilders.get("/workspace/doSelectList.do")
-				 .param("wsLink", workSpaceVO.getWsLink());
+				 .param("email", usersVO.getEmail());
 		ResultActions resultActions = mockMvc.perform(createMessage).andExpect(status().is2xxSuccessful());
 		LOG.debug("=resultActions=" + resultActions);
 		

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -100,26 +101,26 @@ public class WorkSpaceController {
 		
 	}
 	
-//	@RequestMapping(value = "workspace/doSelectList.do", method = RequestMethod.GET
-//			,produces = "application/json;charset=UTF-8"	
-//			)
-//	@ResponseBody
-//	public String doSelectList(WorkSpaceVO workSpaceVO, Model model) {
-//		LOG.debug("-------------------------");
-//		LOG.debug("-doSelectList-");
-//		LOG.debug("-------------------------");
-//		
-//		List<WorkSpaceVO> list = workSpaceService.doSelectList(workSpaceVO);
-//		
-//		Gson gson = new Gson();
-//		String json = gson.toJson(list);
-//		
-//		LOG.debug("-------------------------");
-//		LOG.debug("-json-"+json);
-//		LOG.debug("-------------------------");
-//		
-//		return json;
-//	}
+	@RequestMapping(value = "workspace/doSelectList.do", method = RequestMethod.GET
+			,produces = "application/json;charset=UTF-8"	
+			)
+	@ResponseBody
+	public String doSelectList(UsersVO usersVO, Model model) {
+		LOG.debug("-------------------------");
+		LOG.debug("-doSelectList-");
+		LOG.debug("-------------------------");
+		
+		List<WorkSpaceVO> list = workSpaceService.doSelectList(usersVO);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		
+		LOG.debug("-------------------------");
+		LOG.debug("-json-"+json);
+		LOG.debug("-------------------------");
+		
+		return json;
+	}
 	
 	@RequestMapping(value = "workspace/sendEmail.do", method = RequestMethod.POST)
 	@ResponseBody
