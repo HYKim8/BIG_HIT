@@ -48,7 +48,7 @@
 		    reg_id,             
 		    reg_dt              
 		) VALUES (              
-		    DBMS_RANDOM.STRING('X',10),                  
+		    #{wsLink},                  
 		    #{wsName},                  
 		    #{project},                  
 		    #{regId},                  

@@ -53,7 +53,7 @@ public class TestWorkSpace {
 	
 	@Before
 	public void setUp() throws Exception {
-		workSpace01 = new WorkSpaceVO("","정현수","정현수","jhs","");
+		workSpace01 = new WorkSpaceVO("2","정현수","정현수","jhs","");
 		workSpace02 = new WorkSpaceVO("3","jhs_ws","bighit","jhs","");
 		
 		email01 = new EmailVO("isc8481@hanmail.net", workSpace01.getWsLink(), workSpace01.getWsName(), "slack");
