@@ -50,13 +50,16 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>스레드</span></a>
+                    <span>Thread</span></a>
             </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
 
 			<li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>멘션 및 반응</span></a>
+                    <span>Mentions & reactions</span></a>
             </li>
 
 			<!-- Divider -->
@@ -67,16 +70,16 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMem"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                    aria-expanded="true" aria-controls="collapseMem">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>채널</span>
+                    <span>Channels</span>
                 </a>
                 <div id="collapseMem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">#채널 1</a>
-                        <a class="collapse-item" href="cards.html">#채널 2</a>
-                        <a class="collapse-item" href="cards.html">#채널 3</a>
-                        <a class="collapse-item" href="">+ 채널 추가</a>
+                        <a class="collapse-item" href="buttons.html">#Channel 1</a>
+                        <a class="collapse-item" href="cards.html">#Channel 2</a>
+                        <a class="collapse-item" href="cards.html">#Channel 3</a>
+                        <a class="collapse-item" href="">+ Add Channel</a>
                     </div>
                 </div>
             </li>
@@ -87,17 +90,17 @@
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMessage"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                    aria-expanded="true" aria-controls="collapseMessage">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>다이렉트 메시지</span>
+                    <span>Direct Message</span>
                 </a>
                 <div id="collapseMessage" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">유저1</a>
-                        <a class="collapse-item" href="utilities-border.html">유저2</a>
-                        <a class="collapse-item" href="utilities-animation.html">유저3</a>
-                        <a class="collapse-item" href="utilities-other.html">+ 팀원 추가</a>
+                        <a class="collapse-item" href="utilities-color.html">User 1</a>
+                        <a class="collapse-item" href="utilities-border.html">User 2</a>
+                        <a class="collapse-item" href="utilities-animation.html">User 3</a>
+                        <a class="collapse-item" href="utilities-other.html">+ Add Teammates</a>
                     </div>
                 </div>
             </li>
@@ -118,7 +121,7 @@
                         <a class="collapse-item" href="utilities-color.html">GIT HUB</a>
                         <a class="collapse-item" href="utilities-border.html">CISCO</a>
                         <a class="collapse-item" href="utilities-animation.html">Google Drive</a>
-                        <a class="collapse-item" href="utilities-other.html">+ 앱 추가</a>
+                        <a class="collapse-item" href="utilities-other.html">+ Add Apps</a>
                     </div>
                 </div>
             </li>
@@ -238,7 +241,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">유저 이름</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User Name</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg"> <!-- 썸네일 주소 -->
                             </a>
@@ -271,7 +274,7 @@
                     <!-- Approach -->
                     <div class="card shadow mb-4">
                           <div class="card-header py-3">
-                             <h6 class="m-0 font-weight-bold text-primary">채널 이름</h6>
+                             <h6 class="m-0 font-weight-bold text-primary">Channel Name</h6>
                           </div>
                           <div class="card-body">
                                     <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
