@@ -62,15 +62,20 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
-	public int workSpaceNameCK(WorkSpaceVO workSpaceVO) {
-		if(workSpaceVO.getWsName().length()<=8) {
-			LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
-			LOG.debug("워크스페이스 이름이 짧습니다. 다시 지어주세요.");
+	public int nickNameCK(UsersVO usersVO) {
+		if(usersVO.getNickname().length() == 0 || usersVO.getNickname().equals("") ) {
+			LOG.debug("usersVO.getNickname().length():"+usersVO.getNickname().length());
+			LOG.debug("닉네임을 입력해주세요.");
 			return 1;
-		}
-		LOG.debug("workSpaceVO.getWsName().length():"+workSpaceVO.getWsName().length());
-		LOG.debug("이름 생성 완료");
+		}else if(usersVO.getNickname().length() >= 80) {
+			LOG.debug("usersVO.getNickname().length():"+usersVO.getNickname().length());
+			LOG.debug("닉네임은 80자를 넘을 수 없습니다. 다시 입력해주세요.");
+			return 1;
+		}else {
+		LOG.debug("usersVO.getNickname().length():"+usersVO.getNickname().length());
+		LOG.debug("닉네임 생성 완료");
 		return 0;
+		}
 	}
 	
 }

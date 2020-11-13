@@ -6,11 +6,11 @@ import com.bighit.on.workspace.WorkSpaceVO;
 
 public interface UsersService {
 	/**
-	 * 워크스페이스 이름 생성 길이 제한
+	 * 닉네임 조건 
 	 * @param workSpaceVO
 	 * @return
 	 */
-	int workSpaceNameCK(WorkSpaceVO workSpaceVO);
+	int nickNameCK(UsersVO usersVO);
 	/**
 	 * 추가
 	 * @param usersVO

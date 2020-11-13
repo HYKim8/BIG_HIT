@@ -54,6 +54,7 @@ public class TestUserContoller {
 	UsersVO users03;
 	WorkSpaceVO ws;
 	ChannelVO ch;
+	
 	@Before
 	public void setUp() throws Exception {
 		users01=new UsersVO("0", "1", "bighit@naver.com", "1234", "김영은", "JOY", "", "", "01012345678", 12, 1, 1, "", "","");
