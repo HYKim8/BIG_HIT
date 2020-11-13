@@ -165,7 +165,8 @@ public class TestWorkSpaceController {
 				 MockMvcRequestBuilders.get("/workspace/doSelectList.do")
 				 .param("wsLink", workSpaceVO.getWsLink());
 		ResultActions resultActions = mockMvc.perform(createMessage).andExpect(status().is2xxSuccessful());
-
+		LOG.debug("=resultActions=" + resultActions);
+		
 		String result = resultActions.andDo(print()).andReturn().getResponse().getContentAsString();
 		LOG.debug("===========================");
 		LOG.debug("=result=" + result);

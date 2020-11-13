@@ -4,14 +4,11 @@
 	
 	<!-- 목록조회 -->
 	<!-- com.bighit.on.workspace.doSelectOne -->
-	<select id="doSelectList" parameterType="WorkSpaceVO" resultType="WorkSpaceVO">
-		SELECT           
-		    ws_link AS wsLink,     
-		    ws_name AS wsName,     
-		    project,     
-		    reg_id AS regId,      
-		    reg_dt AS regDt      
-		FROM workspace		
+	<select id="doSelectList" parameterType="String" resultType="WorkSpaceVO">
+		SELECT w.*
+		FROM workspace w, users u
+		where w.ws_link = u.ws_link
+		and u.email = #{email};	
 	</select>
 	
 	

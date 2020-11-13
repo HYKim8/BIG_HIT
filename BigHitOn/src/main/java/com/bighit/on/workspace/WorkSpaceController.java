@@ -127,7 +127,15 @@ public class WorkSpaceController {
 		
 		workSpaceService.sendEmail(emailVO);
 		
-		return "jsp";
+		return 0+"";
 	}
 	
+	@RequestMapping(value = "workspace/teamUserAdd_view.do", method = RequestMethod.GET)
+	public String teamUserAdd_view() {
+		LOG.debug("-------------------------");
+		LOG.debug("-workspace/teamUserAdd_view.do-");
+		LOG.debug("-------------------------");
+		
+		return "workspace/test";
+	}
 }
