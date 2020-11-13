@@ -19,6 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersVO;
 import com.bighit.on.workspace.WorkSpaceDaoImpl;
 import com.bighit.on.workspace.WorkSpaceService;
 import com.bighit.on.workspace.WorkSpaceServiceImpl;
@@ -111,6 +112,7 @@ public class TestWorkSpace {
 	}
 	
 	@Test
+	@Ignore
 	//성공
 	public void doworkCkService() {
 		workSpaceServiceImpl.workSpaceNameCK(workSpace01);
@@ -147,7 +149,10 @@ public class TestWorkSpace {
 	//성공
 	@Test
 	public void doSelectList() {
-		workSpaceDao.doSelectList(workSpace01);
+		UsersVO userVO = new UsersVO();
+		userVO.setEmail("bighit@naver.com");
+		
+		workSpaceDao.doSelectList(userVO);
 			
 	}
 }

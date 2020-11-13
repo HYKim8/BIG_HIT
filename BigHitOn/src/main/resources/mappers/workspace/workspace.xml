@@ -4,11 +4,15 @@
 	
 	<!-- 목록조회 -->
 	<!-- com.bighit.on.workspace.doSelectOne -->
-	<select id="doSelectList" parameterType="String" resultType="WorkSpaceVO">
-		SELECT w.*
+	<select id="doSelectList" parameterType="UsersVO" resultType="WorkSpaceVO">
+		SELECT w.ws_link AS wsLink,     
+		       w.ws_name AS wsName,     
+		       w.project,     
+		       w.reg_id AS regId,   
+		       w.reg_dt AS regDt 
 		FROM workspace w, users u
-		where w.ws_link = u.ws_link
-		and u.email = #{email};	
+		where w.ws_link(+) = u.ws_link
+		and u.email = #{email}
 	</select>
 	
 	
@@ -19,10 +23,10 @@
 		    ws_link AS wsLink,     
 		    ws_name AS wsName,     
 		    project,     
-		    reg_id AS regId,      
+		    reg_id AS regId,   
 		    reg_dt AS regDt      
-		FROM workspace   
-		WHERE ws_link = #{wsLink}		
+		FROM workspace 
+		WHERE ws_link = #{wsLink}
 	</select>
 	
 	<!-- 삭제 -->

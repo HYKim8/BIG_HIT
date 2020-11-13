@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersVO;
 
 @Service("WorkSpaceServiceImpl")
 public class WorkSpaceServiceImpl implements WorkSpaceService {
@@ -92,8 +93,8 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	}
 
 	@Override
-	public List<WorkSpaceVO> doSelectList(WorkSpaceVO workSpaceVO) {
-		return workSpaceDao.doSelectList(workSpaceVO);
+	public List<WorkSpaceVO> doSelectList(UsersVO usersVO) {
+		return workSpaceDao.doSelectList(usersVO);
 	}
 
 	/**

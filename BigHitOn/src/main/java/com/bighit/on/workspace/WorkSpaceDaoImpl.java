@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.bighit.on.user.dao.UsersVO;
+
 
 @Repository("WorkSpaceDaoImpl")
 public class WorkSpaceDaoImpl {
@@ -98,16 +100,16 @@ public class WorkSpaceDaoImpl {
 		return outVO;
 	}
 	
-	public List<WorkSpaceVO> doSelectList (WorkSpaceVO workSpaceVO) {
+	public List<WorkSpaceVO> doSelectList (UsersVO usersVO) {
 		LOG.debug("=====================");
 		LOG.debug("=doSelectList=");
 		LOG.debug("=====================");
 		//등록 : namespace+id = com.sist.ehr.channel.doSelectList
 		String statement = NAMESPACE +".doSelectList";		
 		LOG.debug("=statement="+statement);
-		LOG.debug("-param-\n" + workSpaceVO);
+		LOG.debug("-param-\n" + usersVO);
 		
-		List<WorkSpaceVO> list = sqlSessionTemplate.selectList(statement,workSpaceVO);
+		List<WorkSpaceVO> list = sqlSessionTemplate.selectList(statement,usersVO);
 		
 		for(WorkSpaceVO vo : list) {
 			LOG.debug("===========================");
