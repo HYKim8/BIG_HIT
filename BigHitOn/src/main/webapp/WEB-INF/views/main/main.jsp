@@ -21,29 +21,14 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Custom styles for this template-->
     <link href="${hContext }/resources/assets/css/sb-admin-2.min.css" rel="stylesheet">
 	<style>
-		.my_img{
-			margin-left: 20px;
-			margin-right: 5px;
-			margin-bottom: 20px;
-		}
-		
-		.my_thread{
-			line-height: 1.1;
-			padding-top: 0px;
-		}
-		
-		.name_p{
-			padding-top: 5px;
-			line-height: 0.8;
-		}
-		
-		.thread_box{
-			padding-left: 20px;
-		}
+		.mouse_event:hover {text-decoration: underline;}
 	</style>
 </head>
 
@@ -51,7 +36,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+		
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -289,86 +274,24 @@
                 </nav>
                 <!-- End of Topbar -->
 
-
-				<div class="row thread_box">
-					<div class="my_img">
-						<img alt="" src="${hContext }/resources/img/User1.jpg"> 
-					</div>
-					<div class="col-md-10 my_thread">
-						<p class="name_p">김건희 오전 11:53</p>
-						<p>안녕하세요.</p>
-						<p>반가워요.</p>
-						<p>하이요.</p>
-					</div>
+				<!-- 한 셋트 -->
+				<div class="media">
+				  <div style="padding-left:10px; padding-right:10px;"class="media-left">
+				    <a href="#">
+				      <img class="media-object" src="${hContext }/resources/img/User1.jpg" alt="">
+				    </a>
+				  </div>
+				  <div class="media-body">
+				    <h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal">김건희 오후 2:23</h6>
+				    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS 
+				    bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
+				    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page 
+				    performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
+				    <!-- 같은 아이디면 p태그를 추가하는 식으로. -->
+				    
+				  </div>
 				</div>
-				
-				<div class="row thread_box">
-					<div class="my_img">
-						<img alt="" src="${hContext }/resources/img/User2.jpg"> 
-					</div>
-					<div class="col-md-10 my_thread">
-						<p class="name_p">김재훈 오전 12:00</p>
-						<p>오늘 잘 지내셨나요?</p>
-						<p>안녕하세요.</p>
-						<p>수업 언제 끝나나요?</p>
-						<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-					</div>
-				</div>
-				<div class="row thread_box">
-					<div class="my_img">
-						<img alt="" src="${hContext }/resources/img/User1.jpg"> 
-					</div>
-					<div class="col-md-10 my_thread">
-						<p class="name_p">김건희 오전 11:53</p>
-						<p>안녕하세요.</p>
-						<p>반가워요.</p>
-						<p>하이요.</p>
-					</div>
-				</div>
-				
-				<div class="row thread_box">
-					<div class="my_img">
-						<img alt="" src="${hContext }/resources/img/User2.jpg"> 
-					</div>
-					<div class="col-md-10 my_thread">
-						<p class="name_p">김재훈 오전 12:00</p>
-						<p>오늘 잘 지내셨나요?</p>
-						<p>안녕하세요.</p>
-						<p>수업 언제 끝나나요?</p>
-						<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-					</div>
-				</div>
-				<div class="row thread_box">
-					<div class="my_img">
-						<img alt="" src="${hContext }/resources/img/User1.jpg"> 
-					</div>
-					<div class="col-md-10 my_thread">
-						<p class="name_p">김건희 오전 11:53</p>
-						<p>안녕하세요.</p>
-						<p>반가워요.</p>
-						<p>하이요.</p>
-					</div>
-				</div>
-				
-				<div class="row thread_box">
-					<div class="my_img">
-						<img alt="" src="${hContext }/resources/img/User2.jpg"> 
-					</div>
-					<div class="col-md-10 my_thread">
-						<p class="name_p">김재훈 오전 12:00</p>
-						<p>오늘 잘 지내셨나요?</p>
-						<p>안녕하세요.</p>
-						<p>수업 언제 끝나나요?</p>
-						<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-					</div>
-				</div>
-
+				<!-- 한 셋트 -->
 				
             </div>
             <!-- End of Main Content -->
@@ -410,6 +333,26 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+	<!-- User Click Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <img style="padding-bottom: 10px;" class="text-center" alt="" width="270" height="270" src="${hContext}/resources/img/User1Profile.jpg">
+	        
+	        <h4>김건희</h4>
+	        <p>내용1</p>
+	        <p>내용2</p>
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Message</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -429,6 +372,13 @@
             </div>
         </div>
     </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+	    $('[data-toggle="popover"]').popover()
+	    })
+
+	</script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="${hContext }/resources/assets/vendor/jquery/jquery.min.js"></script>
