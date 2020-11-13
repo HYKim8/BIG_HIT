@@ -96,7 +96,7 @@ public class ThreadController {
 		 LOG.debug("==================");
 	     LOG.debug("=flag="+flag);
 	     LOG.debug("==================");   
-	     
+	   
 	     Message  message=new Message();
 	     message.setRegId(flag+"");
 	     
@@ -188,5 +188,17 @@ public class ThreadController {
 		return view;
 	}
 	
+	@RequestMapping(value="thread/doSelectOne.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ThreadVO doSelectOne(ThreadVO threadVO, Model model) {
+		LOG.debug("=doSelectOne=");	
+		ThreadVO outVO = this.threadService.doSelectOne(threadVO);
+		
+		model.addAttribute("vo", outVO);
+		
+		return outVO;
+				
+		
+	}
 	
 }

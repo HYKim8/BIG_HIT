@@ -7,8 +7,8 @@
 		    ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) ,#{parentKey}, #{chLink}, #{contents},#{regId},#{regDt})
 	</insert>
 	
-	<insert id = "doInsertReplay">
-		INSERT INTO THREAD (thr_key,contents,reg_id,reg_dt) VALUE (#{thrKey}, #{contents}, #{regId}, #{regDt})
+	<insert id = "doInsertRep">
+		INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUE (#{thrKey}, #{parent_key},#{ch_link},#{contents}, #{regId}, #{regDt})
 	</insert>
 	
 	<!-- 계층형 쿼리로 작성할 것 -->

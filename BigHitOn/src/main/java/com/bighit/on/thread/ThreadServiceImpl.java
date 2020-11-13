@@ -27,21 +27,28 @@ public class ThreadServiceImpl implements ThreadService {
 	}
 	@Override
 	public int doInsert(ThreadVO threadVO) {
-		ThreadVO parentVO = new ThreadVO(); // 검색할려구 잠깐만듬
-		parentVO.setThrKey(threadVO.getParentKey()); //2
+		ThreadVO parentVO = new ThreadVO(); // 검색할려구 잠깐만듬		
+		parentVO.setThrKey(threadVO.getParentKey()); //2 n
 		parentVO = thrDao.doSelectOne(parentVO);
 		
 		if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
+			thrDao.doInsert(threadVO);
 			parentVO.setChildCnt(parentVO.getChildCnt()+1);
-			
+					
 			return thrDao.doUpdate(parentVO);
 		}
+		
 		return thrDao.doInsert(threadVO);
 	}
 	
 	@Override
 	public int doDelete(ThreadVO threadVO) {
 		return thrDao.doDelete(threadVO);
+	}
+	
+	@Override
+	public ThreadVO doSelectOne(ThreadVO threadVO) {
+		return thrDao.doSelectOne(threadVO);
 	}
 	
 	@Override
@@ -52,6 +59,11 @@ public class ThreadServiceImpl implements ThreadService {
 	@Override
 	public int doUpdate(ThreadVO threadVO) {
 		return thrDao.doUpdate(threadVO);
+	}
+	@Override
+	public int doInsertRep(ThreadVO threadVO) {
+		
+		return 0;
 	}
 
 }

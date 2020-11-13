@@ -85,6 +85,12 @@
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+		$(document).ready(function(){
+				setInterval(threadRest(){
+					
+					},3000);
+			});
+    
     	document.addEventListener('scroll',function(){
 			if($(window).scrollTop() == 0){
 				$("#pageNum").val( parseInt($("#pageNum").val()) +1);
