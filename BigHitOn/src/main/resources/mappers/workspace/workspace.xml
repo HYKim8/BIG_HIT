@@ -11,7 +11,7 @@
 		       w.reg_id AS regId,   
 		       w.reg_dt AS regDt 
 		FROM workspace w, users u
-		where w.ws_link(+) = u.ws_link
+		where w.ws_link = u.ws_link
 		and u.email = #{email}
 	</select>
 	

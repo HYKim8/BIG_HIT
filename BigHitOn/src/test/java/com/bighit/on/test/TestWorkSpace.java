@@ -150,7 +150,7 @@ public class TestWorkSpace {
 	@Test
 	public void doSelectList() {
 		UsersVO userVO = new UsersVO();
-		userVO.setEmail("bighit@naver.com");
+		userVO.setEmail("gustn4880@naver.com");
 		
 		workSpaceDao.doSelectList(userVO);
 			
