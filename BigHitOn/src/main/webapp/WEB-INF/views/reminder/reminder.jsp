@@ -230,7 +230,9 @@
 		}
 	
 	  $(function() {
+		 
 	      var key_word = ["/remind", "/helloworld", "/ㅋㅋㅋ", "/4번째"];
+	      
 	      $("#text_input").autocomplete({
 	          source: key_word,
 	          select: function(event, ui) {
@@ -240,7 +242,7 @@
 	              return false;
 	              //event.preventDefault();
 	          },
-	          autoFocus: true,
+	          autoFocus: false,
 	          matchContains: false,
 	          minLength: 1,
 	          position: { my: "left top", at: "left bottom", collision: "none" }
