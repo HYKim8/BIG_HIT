@@ -34,11 +34,11 @@
     <ul class="nav nav-tabs">	
       <!-- Tab 아이템이다. 태그는 li과 li > a이다. li태그에 active는 현재 선택되어 있는 탭 메뉴이다. -->	
       <li class="active"><a href="#wsLK" data-toggle="tab">워크스페이스 링크</a></li>
-      <li><a href="#wsNM" data-toggle="tab">워크스페이스 이름</a></li>	
+      <li class="disabled disabledTab"><a href="#wsNM" data-toggle="tab">워크스페이스 이름</a></li>	
       <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->	
-      <li><a href="#pjNM" data-toggle="tab">프로젝트명</a></li>	
-      <li><a href="#addT" data-toggle="tab">친구추가</a></li>	
-      <li><a href="#complete" data-toggle="tab">완료</a></li>	
+      <li class="disabled disabledTab"><a href="#pjNM" data-toggle="tab">프로젝트명</a></li>	
+      <li class="disabled disabledTab"><a href="#addT" data-toggle="tab">친구추가</a></li>	
+      <li class="disabled disabledTab"><a href="#complete" data-toggle="tab">완료</a></li>	
     </ul>	
     
     <!-- Tab이 선택되면 내용이 보여지는 영역이다. -->	
@@ -183,6 +183,11 @@
 	});//--ajax
 		
 
+	});
+
+	//클릭으로 못넘어가게
+	$('.nav-tabs li.disabled > a[data-toggle=tab]').on('click', function(e) {
+    	e.stopImmediatePropagation(); 
 	});
 	
     </script>
