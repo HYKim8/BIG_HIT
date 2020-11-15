@@ -186,7 +186,7 @@ public class ThreadDao {
 	  }
 	  public ThreadVO doSelectOne(ThreadVO threadVO){
 		    LOG.debug("=======================");
-			LOG.debug("====doSelectTitleOne====");
+			LOG.debug("====doSelectOne====");
 			LOG.debug("=======================");
 			
 			String statement = NAMESPACE+".doSelectOne";

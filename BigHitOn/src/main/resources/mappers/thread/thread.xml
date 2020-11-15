@@ -27,7 +27,8 @@
 	
 	<select id = "doSelectOne"
 	resultType = "com.bighit.on.thread.ThreadVO">
-	SELECT parent_key,thr_key,reg_id,reg_dt,contents FROM thread Where thr_key = #{thrKey}	
+	SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,contents AS contents
+	 FROM thread Where thr_key = #{thrKey}	
 	</select>
 	<select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
 	SELECT 

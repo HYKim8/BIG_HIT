@@ -26,10 +26,11 @@
 	    	     name="searchFrm" class="form-inline  col-lg-12 col-md-12 text-right">
 	    	    <input type="text" name="pageNum" id="pageNum" value="${vo.getPageNum()}" />
 	    	    <input type="text" name="pageSize"   id="pageSize"  value="${vo.getPageSize()}" />
-	    	    <input type="text" name="searchWord" id="searchWord" class="form-control  input-sm" value="${vo.getSearchWord()}"/>    		
+	    	    <input type="text" name="searchWord" id="searchWord" class="form-control  input-sm" value="${vo.getSearchWord()}"/>
+	    	    <input type="hidden" name="thrKey" id="thrKey"/>    		
 	    	</form>
 </div>
-	<table>
+	<table id="threadListTable">
 		<!--
 		<colgroup>
 			<col style="width:5%;" />
@@ -83,6 +84,7 @@
 	
 	<form method="post" action="${hContext}/thread/doInsert.do">
 	<div class="form-group">
+	<input type="hidden" name="thrKey" id="thrKey"/>
 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 		<input type="text" class="form-control" name="contents" id="contents" placeholder="내용을 입력하세요"
 				    	 maxlength="400"/>
@@ -113,12 +115,12 @@
 				url:"${hContext}/thread/doInsert.do",
 				dataType:"html",
 				data:{
-						"thrKey" : $("#thrKey").val(),
+						"thrKey" : $("thrKey").val(),
 						"parentKey":$("#parentKey").val(),
-						"chLink" : $("chLink").val(),
-						"contents" : $("contents").val(),
-						"regId" : $("regId").val(),
-						"regDt" : $("regDt").val()
+						"chLink" : $("#chLink").val(),
+						"contents" : $("#contents").val(),
+						"regId" : $("#regId").val(),
+						"regDt" : $("#regDt").val()
 					},
 					success:function(data){
 
@@ -199,6 +201,23 @@
     	$(document).on("hover","#modDt",function(){
 			
         	});
+
+
+        $("#threadListTable>tbody").on("click","tr" ,function() {
+        	//console.log("#boardListTable>tbody");
+        	var trs = $(this);
+        	var tds = trs.children();
+        	var thrKey = tds.eq(0).text();
+        	
+        	console.log("thrkey:"+thrKey);
+        	//get방식 형태 call
+        	//window.location.href="${hContext}/board/doSelectOne.do?seq="+seq;
+
+        	var frm = document.searchFrm;
+        	frm.thrKey.value = thrKey;
+        	frm.action = "${hContext}/thread/doSelectOne.do";
+        	frm.submit();
+        });
     </script>
 </body>
 </html>

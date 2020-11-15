@@ -188,15 +188,16 @@ public class ThreadController {
 		return view;
 	}
 	
-	@RequestMapping(value="thread/doSelectOne.do", method = RequestMethod.POST)
+	@RequestMapping(value="thread/doSelectOne.do", method = RequestMethod.GET)
 	@ResponseBody
-	public ThreadVO doSelectOne(ThreadVO threadVO, Model model) {
+	public String doSelectOne(ThreadVO threadVO, Model model) {
+		String returnURL = "thread/thread_rep";
 		LOG.debug("=doSelectOne=");	
 		ThreadVO outVO = this.threadService.doSelectOne(threadVO);
 		
 		model.addAttribute("vo", outVO);
 		
-		return outVO;
+		return returnURL;
 				
 		
 	}
