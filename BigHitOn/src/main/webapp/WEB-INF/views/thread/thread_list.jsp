@@ -80,15 +80,62 @@
 			</c:choose>
 		</tbody>		
 	</table>
+	
+	<form method="post" action="${hContext}/thread/doInsert.do">
+	<div class="form-group">
+	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+		<input type="text" class="form-control" name="contents" id="contents" placeholder="내용을 입력하세요"
+				    	 maxlength="400"/>
+		<input type="button" class="btn btn=primary btn-sm" value="Send" id="insertBtn"/>
+		</div>
+	</div>
+	</form>
+	
+	
 	 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-		$(document).ready(function(){
-				setInterval(threadRest(){
-					
-					},3000);
+		$("#insertBtn").on("click", function(){
+			console.log("insertBtn");
+
+			var contents = $("#contents").val();
+			console.log("contents:"+contents);
+
+			if(null == contents || contents.trim().length==0){
+				$("#contents").focus();
+				alert("내용을 입력하세요");
+				return;
+				}
+			$.ajax({
+				type:"POST",
+				url:"${hContext}/thread/doInsert.do",
+				dataType:"html",
+				data:{
+						"thrKey" : $("#thrKey").val(),
+						"parentKey":$("#parentKey").val(),
+						"chLink" : $("chLink").val(),
+						"contents" : $("contents").val(),
+						"regId" : $("regId").val(),
+						"regDt" : $("regDt").val()
+					},
+					success:function(data){
+
+					var jsonObj = JSON.parse(data);
+					console.log("regId="+jsonObj.regId);
+				    console.log("contents="+jsonObj.contents);
+
+					 },
+					    error:function(xhr,status,error){
+					     alert("error:"+error);
+					    },
+					    complete:function(data){
+					    
+					 }  
+							
+				});
+			
 			});
     
     	document.addEventListener('scroll',function(){
