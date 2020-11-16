@@ -84,7 +84,26 @@
                         <a class="collapse-item" href="buttons.html">#Channel 1</a>
                         <a class="collapse-item" href="cards.html">#Channel 2</a>
                         <a class="collapse-item" href="cards.html">#Channel 3</a>
-                        <a class="collapse-item" href="">+ Add Channel</a>
+                       <!--  <a class="collapse-item" href="">+ Add Channel</a> --> 
+                        
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">+ Add Channel</span>
+                            <img class="img-profile rounded-circle"
+                                src="img/undraw_profile.svg"> <!-- 썸네일 주소 -->
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                새채널 생성
+                            </a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#channelListModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                모든채널 검색
+                            </a>                        	
                     </div>
                 </div>
             </li>
@@ -352,7 +371,28 @@
 	    </div>
 	  </div>
 	</div>
-
+	
+	<!-- channelcreate Modal-->
+    <div class="modal fade" id="channelcreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">새채널 생성</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+					<input type="text" class="form-control" name="chName" id="chName" value="${vo.chName}" placeholder="채널이름" />
+				</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
