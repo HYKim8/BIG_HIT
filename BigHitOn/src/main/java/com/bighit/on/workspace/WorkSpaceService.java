@@ -2,12 +2,13 @@ package com.bighit.on.workspace;
 
 import java.util.List;
 
+import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
 import com.bighit.on.user.dao.UsersVO;
 
 public interface WorkSpaceService {
 	
-	public int doInsert(WorkSpaceVO workSpaceVO);
+	public Message doInsert(WorkSpaceVO workSpaceVO);
 	
 	public int doDelete(WorkSpaceVO workSpaceVO);
 	

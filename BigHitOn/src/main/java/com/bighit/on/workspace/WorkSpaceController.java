@@ -37,15 +37,10 @@ public class WorkSpaceController {
 		LOG.debug("=doInsert=");
 		LOG.debug("=param=" + workSpaceVO);
 
-		int flag = workSpaceService.doInsert(workSpaceVO);
-		Message message = new Message();
-		message.setRegId(String.valueOf(flag));
-
-		if (flag > 0) {
-			message.setMsgContents("등록");
-		} else {
-			message.setMsgContents("등록실패");
-		}
+		Message message = workSpaceService.doInsert(workSpaceVO);
+		
+//		message.setRegId(String.valueOf(flag));
+		
 		LOG.debug("message" + message);
 		Gson gson = new Gson();
 		String json = gson.toJson(message);

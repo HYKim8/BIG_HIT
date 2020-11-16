@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.channelusers.ChannelUsersDao;
+import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -76,18 +77,23 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	}
 	
 	@Override
-	public int doInsert(WorkSpaceVO workSpaceVO) {
+	public Message doInsert(WorkSpaceVO workSpaceVO) {
+		Message res = new Message();
 		int flag = 1 ;
 		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
 		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		String genChLink = channelDaoImpl.doGetKey();
 		flag &= channelDaoImpl.doInsert(gen);	
 		flag &= channelDaoImpl.doInsert(ran);
 		flag &= workSpaceDao.doInsert(workSpaceVO);
 		UsersVO user = new UsersVO();
 		user.setUser_serial(workSpaceVO.getRegId());
 		user.setWs_link(workSpaceVO.getWsLink());
-		flag &= chUserDao.doWorkSpaceInsert(user);		
-		return flag;
+		flag &= chUserDao.doWorkSpaceInsert(user);
+		
+		res.setRegId(flag+"");
+		res.setMsgContents(genChLink);
+		return res;
 		
 	}
 
