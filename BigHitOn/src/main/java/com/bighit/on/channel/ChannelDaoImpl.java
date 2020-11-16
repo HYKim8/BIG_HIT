@@ -136,7 +136,7 @@ public class ChannelDaoImpl {
 	 * 
 	 * @param channelVO
 	 * @return
-	 */
+	 */	
 	public List<ChannelVO> doSelectList(Search search) {
 		if(search.nonValueDiv() || search.nonValueWord() 
 				|| ( search.getSearchDiv() !="10" && search.getSearchDiv() !="20" ) ) return null;
@@ -149,7 +149,7 @@ public class ChannelDaoImpl {
 		LOG.debug("=====================");
 		LOG.debug("=doSelectList=");
 		LOG.debug("=====================");
-		//div가 10 이면 dm리스트 20이면 채널리스트
+		//div가 10 이면 ch리스트 20이면 dm리스트
 		String statement = search.getSearchDiv() == "10" ? NAMESPACE + ".chlistFromUser" : NAMESPACE + ".dmlistFromUser";		
 		LOG.debug("=statement="+statement);
 		LOG.debug("-param-\n" + user);
