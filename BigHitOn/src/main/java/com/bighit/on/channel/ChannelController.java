@@ -149,7 +149,19 @@ public class ChannelController {
 		model.addAttribute("vo", search);
 		
 		search.setSearchDiv("20");
-		list =  this.channelService.doSelectList(search); 
+		list =  this.channelService.doSelectList(search);
+		
+		//쓰레드를 받을때는 채널 링크만 중요하므로 dm 리스트의 조회 편의성을 위하여 
+		//dm 채널 이름을 임의로 상대방 이름으로 변경한다.
+		for(ChannelVO vo : list) {
+			//채널이름이 상대방이름 / 내이름 으로 되어있음 이걸 split  
+			String names[] = vo.getChName().split("/");
+			// 잘못들어가있을 경우 아예 break, 첫번째가 내이름과 같으면 두번째이름을 채널 네임, 아닐시 반대  
+			if(names.length != 2) break;
+			
+			String chName = names[0].equals(user.getName())? names[1] : names[2];
+			vo.setChName(chName);
+		}
 		model.addAttribute("dmlist", list);
 		
 		
