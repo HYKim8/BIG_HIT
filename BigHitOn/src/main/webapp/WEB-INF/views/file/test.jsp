@@ -35,6 +35,7 @@
 		<!-- user_id가 될 듯 -->
 		<input type="text" id="key_name" value="profileImg/KIM_profile/029cb6f9-e07d-43b9-a738-47305a48544a_profile.jpg">
 		
+		
 		<img id="user1" alt="" src="">
 	</div>
 	
