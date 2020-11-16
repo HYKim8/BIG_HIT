@@ -24,7 +24,7 @@
 			    WHERE user_serial = #{user_serial}
 				 ) u
 		ON c.ch_link = u.ch_link
-		AND c.ch_name != 'DM'	      		
+		AND c.topic != 'DM'	      		
 	</select>
 	<!-- 세션 유저 DM 목록조회 -->
 	<select id="dmlistFromUser" parameterType="UsersVO" resultType="ChannelVO">
@@ -43,7 +43,7 @@
 			    WHERE user_serial = #{user_serial}
 				 ) u
 		ON c.ch_link = u.ch_link
-		AND c.ch_name = 'DM'	      		
+		AND c.topic = 'DM'	      		
 	</select>
 	<!-- 목록조회 -->
 	<!-- com.bighit.on.workspace.doSelectList -->

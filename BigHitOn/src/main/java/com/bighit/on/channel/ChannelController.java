@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
 import com.bighit.on.cmn.Search;
+import com.bighit.on.user.dao.UsersServiceImpl;
 import com.bighit.on.user.dao.UsersVO;
+import com.bighit.on.workspace.WorkSpaceService;
+import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -26,6 +29,10 @@ public class ChannelController {
 	@Autowired
 	ChannelService channelService;
 	
+	@Autowired
+	WorkSpaceService workSpaceService; 
+	@Autowired
+	UsersServiceImpl usersServiceImpl;
 	@Autowired
 	MessageSource messageSource;
 	
@@ -123,17 +130,29 @@ public class ChannelController {
 	@RequestMapping(value = "main/channelList.do", method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8"	)
 	@ResponseBody
-	public String doSelectList(UsersVO user, Model model) {
+	public String doSelectList(Search search, Model model) {
+		//세션으로 변경 
+		UsersVO user = usersServiceImpl.doSelectOne(search.getSearchWord());
+		
+		WorkSpaceVO ws = new WorkSpaceVO();
+		ws.setWsLink(user.getWs_link());
+		List<UsersVO> userList = usersServiceImpl.doSelectList(ws);
+		
+		
 		LOG.debug("-------------------------");
 		LOG.debug("-doSelectList-");
 		LOG.debug("-------------------------");
-		Search search = new Search("10",user.getUser_serial());
+		search.setSearchDiv("10");
 		List<ChannelVO> list = this.channelService.doSelectList(search);
 		//채널 리스트 
 		model.addAttribute("chlist", list);
+		model.addAttribute("vo", search);
 		
 		search.setSearchDiv("20");
 		list =  this.channelService.doSelectList(search); 
+		model.addAttribute("dmlist", list);
+		
+		
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		
