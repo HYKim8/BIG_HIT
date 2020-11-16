@@ -7,9 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.channelusers.ChannelUsersDao;
+import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.workspace.WorkSpaceVO;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonStringFormatVisitor;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -19,8 +22,8 @@ public class UsersServiceImpl implements UsersService {
 	UsersDaoImpl usersDaoImpl;
 	@Autowired
 	ChannelUsersDao chUserDao;
-	
-	
+	@Autowired
+	ChannelDaoImpl chDao;
 	@Override
 	public int doInsert(UsersVO usersVO) {
 		String key = usersDaoImpl.doGetKey();
@@ -76,6 +79,30 @@ public class UsersServiceImpl implements UsersService {
 		LOG.debug("닉네임 생성 완료");
 		return 0;
 		}
+	}
+	/**
+	 * 유저가 워크스페이스에 소속된 순간에 
+	 * 워크스페이스내의 유저들과 DM channel을 생성 
+	 * 새로운 유저가 생길때 넣어주면 됌 
+	 * @param userVO
+	 * @return
+	 */
+	public int makeDMchannel(UsersVO userVO) {
+		List<UsersVO> list = usersDaoImpl.doSelectList(new WorkSpaceVO(userVO.getWsLink(), "", "", "", ""));
+		int flag = 1;
+		for(int i=0;i<list.size();i++) {
+			ChannelVO ch = new ChannelVO("", userVO.getWsLink(), "DM" , "1:1대화", "1:1대화", "0", userVO.getUser_serial(), "");
+			String chkey = chDao.doGetKey();
+			flag &=chDao.doInsert(ch);
+			if(flag == 1) LOG.debug("DM 채널 개설 성공 ");
+			ChannelUsersVO cuVO = new ChannelUsersVO(chkey, list.get(i).getUser_serial(), 1);
+			flag &= chUserDao.doInsert(cuVO);
+			if(flag == 1) LOG.debug(String.format( "%s 채널에 %s 데이터 삽입 성공", cuVO.getChLink() ,cuVO.getUserSerial()));
+			cuVO.setUserSerial(userVO.getUser_serial());
+			flag &= chUserDao.doInsert(cuVO);
+			if(flag == 1) LOG.debug(String.format( "%s 채널에 %s 데이터 삽입 성공", cuVO.getChLink() ,cuVO.getUserSerial()));
+		}
+		return flag;
 	}
 	
 }
