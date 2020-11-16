@@ -46,6 +46,64 @@ public class FileController {
     @Autowired
     MappingJackson2JsonView jsonView;
     
+    @RequestMapping(value = "file/test.do", method = RequestMethod.GET)
+    public String test(String status) {
+    	
+    	LOG.debug("in to TEST");
+    	
+    	
+    	
+    	return "file/test";
+    }
+    
+    @RequestMapping(value = "file/testImg.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String testImg(String keyName) {
+    	
+    	// 첫번째 안
+    	// 처음 로딩( $(document).ready(function(){} )
+    	// 아이디가 넘어와서
+    	// String URL = userService.doSeletOne(usersVO).getThumb(); -> pre-signed url(cache로 처리될 것.)
+    	// Thumb은 pre-signed url이 들어갈 것
+    	
+    	// 두번째 안 (이게 맞는거같음)
+    	// 처음 로딩( $(document).readt(function(){} )
+    	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻기.
+    	// for(UsersVO vo : list){
+    	// 		session.setAttribute(vo.getId+"_thumb", vo.getThumb)
+    	// }
+    	
+    	// 공통
+    	// GSON gson = new Gson();
+    	// String json = gson.toJson(URL);
+    	// return json;
+    	
+    	
+    	// 404error가 뜬 이미지
+    	// 아이디가 넘어와서
+    	// String keyName = String 잘라서 key_name만 딴다. 앞부분 길이는 같으므로 ?로 짜르고 첫번째꺼에 일정 길이 이후로 가져오면 될 듯.
+    	// URL url = fileService.doFileDownload(keyName);
+    	// String userThumb = url.toString();
+    	// userService.doUpdateThumb(userId, userThumb);
+    	// Gson gson = new Gson();
+    	// String json = gson.toJson(userThumb);
+    	// return json;
+    	
+    	
+    	
+    	LOG.debug("in to testImg");
+    	
+//    	String keyName = "thumbImg/KIM_thumb/029cb6f9-e07d-43b9-a738-47305a48544a_thumb.jpg";
+    	
+    	URL url = fileService.doFileDownload(keyName);
+    	
+    	Gson gson = new Gson();
+		String json = gson.toJson(url.toString());
+		
+		
+    	return json;
+    }
+    
 	@RequestMapping(value = "file/file_view.do", method = RequestMethod.GET)
 	public String file_view(Model model) {
 		LOG.debug("-------------------------");
@@ -184,7 +242,7 @@ public class FileController {
 			LOG.debug("Thumbnail image Upload to S3");
 			fileService.doFileUpload(keyNameThumb, thumbImgResized);
 		
-		// UserService를 이용하여 profile keyName, thumb keyName 등록
+		// UserService를 이용하여 profile keyName, thumb keyName 등록 -> pre-signed url 만드는데는 비용이 들지 않으므로 url로 만들어서 넣자.
 //		usersVO.setThumb(keyNameThumb);
 //		usersVO.setProfile_img(keyNameProfile);
 //		userService.doUpdate(usersVO);
