@@ -386,6 +386,9 @@
                 <div class="modal-body">
 					<input type="text" class="form-control" name="chName" id="chName" value="${vo.chName}" placeholder="채널이름" />
 				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" name="chName" id="chName" value="${vo.chDescription}" placeholder="설명" />
+				</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">생성</button>
                 </div>
