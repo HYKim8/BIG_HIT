@@ -129,7 +129,7 @@
 			alert("워크스페이스 이름을 입력해주세요.");
 			return;
 		}
-		if(wsName.trim().length<=8) {
+		if(wsName.trim().length<=2) {
 			$('#wsName').focus();
 			alert("워크스페이스 이름이 짧습니다. 다시 입력해주세요.");
 			return;
@@ -146,7 +146,7 @@
 			alert("프로젝트 이름을 입력해주세요.");
 			return;
 		}
-		if(project.trim().length<=10){
+		if(project.trim().length<=2){
 			$('#project').focus();
 			alert("프로젝트 이름이 짧습니다. 다시 입력해주세요.");
 			return;

@@ -48,7 +48,7 @@
    	  	<value>gustn4880@naver.com</value>
    	  </constructor-arg>
    	  <constructor-arg index="1">
-   	  	<value>비번</value>
+   	  	<value>wjdgustn1!</value>
    	  </constructor-arg>
    </bean>
    
