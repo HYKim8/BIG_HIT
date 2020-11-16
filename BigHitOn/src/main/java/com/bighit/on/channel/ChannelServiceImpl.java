@@ -10,6 +10,8 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.bighit.on.channelusers.ChannelUsersDao;
+import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.email.EmailVO;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -23,6 +25,9 @@ public class ChannelServiceImpl implements ChannelService {
 	
 	@Autowired
 	private ChannelDaoImpl channelDao;
+	
+	@Autowired
+	private ChannelUsersDao chUserDao;
 	
 	@Override
 	public int doInsert(ChannelVO channelVO) {
@@ -43,6 +48,20 @@ public class ChannelServiceImpl implements ChannelService {
 	public List<ChannelVO> doSelectList(ChannelVO channelVO) {
 		return channelDao.doSelectList(channelVO);
 	}
-	
-	
+	/**
+	 * 서버 나가기
+	 */
+	@Override
+	public int getOut(ChannelUsersVO inVO)
+	{
+		return chUserDao.doDelete(inVO);		
+	}
+	/**
+	 * 알람 변경
+	 */
+	@Override
+	public int notifiUpdate(ChannelUsersVO inVO)
+	{
+		return chUserDao.doUpdate(inVO);
+	}
 }

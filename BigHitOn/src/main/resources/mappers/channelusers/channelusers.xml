@@ -59,5 +59,13 @@
 	WHERE
 		user_serial = #{user_serial}
 </delete>
+<update id="doUpdate" parameterType="ChannelUsersVO">
+	UPDATE channel_users
+	SET
+	    notification = {#notification}
+	WHERE
+	    ch_link = {#chLink}
+	    AND user_serial = {userSerial} 
+</update>
 </mapper>
  

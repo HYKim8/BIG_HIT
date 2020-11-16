@@ -36,7 +36,10 @@ public class ChannelUsersDao {
 //			return outVO;
 //		}
 //	};
-	
+	public int doUpdate(ChannelUsersVO inVO)
+	{
+		return sqlSessionTemplate.update(NAMESPACE+".doUpdate",inVO);		
+	}
 	/**
 	 * 유저가 속한 워크스페이스의 일반,랜덤 채널에 유저를 소속시킨다.
 	 * @param inVO
