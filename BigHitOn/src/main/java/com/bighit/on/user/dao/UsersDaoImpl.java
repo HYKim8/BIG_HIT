@@ -175,4 +175,38 @@ public class UsersDaoImpl {
 	public String doGetKey() {
 		return sqlSessionTemplate.selectOne(NAMESPACE+".getNowKey");		
 	}
+
+//	/**
+//	 * name 체크
+//	 * @param usersVO
+//	 * @return 1(성공)/0(실패)
+//	 */
+//	public int nameCheck(UsersVO usersVO) {
+//		String statement = this.NAMESPACE+".nameCheck";
+//		LOG.debug("========================");
+//		LOG.debug("=statement="+statement);
+//		LOG.debug("=param="+usersVO);
+//		LOG.debug("========================");	
+//		int flag =sqlSessionTemplate.selectOne(statement, usersVO);    
+//		LOG.debug("=flag="+flag);
+//        return flag;
+//	}
+//	
+//	/**
+//	 * 비밀번호 확인
+//	 * @param usersVO
+//	 * @return 1(성공)/0(실패)
+//	 */
+//	public int passWdCheck(UsersVO usersVO) {
+//		String statement = this.NAMESPACE+".passWdCheck"; 
+//		LOG.debug("========================");
+//		LOG.debug("=statement="+statement);
+//		LOG.debug("=param="+usersVO);
+//		LOG.debug("========================");	
+//		int flag =sqlSessionTemplate.selectOne(statement, usersVO);    
+//		LOG.debug("=flag="+flag);
+//        return flag;
+//	}
+	
+	
 }

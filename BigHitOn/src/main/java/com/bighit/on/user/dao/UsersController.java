@@ -3,7 +3,9 @@ package com.bighit.on.user.dao;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,6 @@ import com.bighit.on.cmn.Message;
 import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
-
 @Controller
 public class UsersController {
 	
@@ -32,10 +33,29 @@ public class UsersController {
 	@Autowired
 	MessageSource messageSource;
 	
+	
 	@RequestMapping(value="users/loginView.do", method = RequestMethod.GET)
 	public String loginView(Model model) {
 		
 		return "users/users";
+	}
+	
+	@RequestMapping(value="users/doSignUp.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Message doSignUp(UsersVO usersVO, HttpServletRequest req,Locale locale,HttpServletResponse res) {
+		Message message=new Message();
+		
+		int sessionUser = this.usersService.doInsert(usersVO);
+		LOG.debug("=======================");
+		LOG.debug("=sessionUser=="+sessionUser);
+		LOG.debug("=======================");
+		
+		HttpSession session =  req.getSession();
+		session.setAttribute("usersVO", sessionUser);
+		
+		
+		return message;
+		
 	}
 	
 	
@@ -157,6 +177,15 @@ public class UsersController {
 		
 		int flag = usersService.doInsert(usersVO);
 		LOG.debug("=flag="+flag);
+		
+		Message message = new Message();
+		message.setRegId(flag+"");
+		
+		if(flag == 1) {
+			message.setMsgContents(usersVO.getName()+" 님이 등록 되었습니다.");
+		}else {
+			message.setMsgContents(usersVO.getName()+" 님이 등록이 취소되었습니다.");
+		}
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(flag);

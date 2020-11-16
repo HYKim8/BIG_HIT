@@ -60,17 +60,17 @@
               <form role="form">
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
-                    <input class="form-control" placeholder="고객님의 이름" type="email">
+                    <input class="form-control" placeholder="고객님의 이름" type="email" name="name" id="name">
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="input-group input-group-merge input-group-alternative">
                     
-                    <input class="form-control" placeholder="고유한 비밀번호" type="password">
+                    <input class="form-control" placeholder="고유한 비밀번호" type="password" name="password" id="password">
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary my-4">Sign in</button>
+                  <button type="button" class="btn btn-primary my-4" id="doSignUp">Sign up</button>
                 </div>
                 <div class="custom-control custom-control-alternative custom-checkbox">
                   <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
@@ -93,33 +93,43 @@
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
-		$("#create_users").on("click",function(){
-			var name = $("name").val();
-			console.log("1"+name);
-			if(null == name || name.length == 0){
-				$("#name").focus();
-				alert("고객님의 이름을 입력 하세요.");
-				return;
+		$("#doSignUp").on("click", function(){
+
+			if($("#name").val().length < 5 || $("#name").val().length > 80) {
+				alert("이름은 4자 이상 80자 이하로 입력해주세요.");
+				return ;
 			}
-			console.log("2");   
-			var passwd = $("#passwd").val();
-			console.log("2"+passwd);
-			if(null == passwd || passwd.length == 0){
-				$("#passwd").focus();
-				alert("비밀번호를 입력 하세요.");
-				return;
-			}		
+
+			if($("#password").val().length < 5 || $("#password").val().length > 80) {
+				alert("비밀번호는 4자 이상 80자 이하로 입력해주세요.");
+				return ;
+			}
+
+			if(confirm("이대로 입력하시겠습니까?") == false)return;
+
 			$.ajax({
-		          type: "POST",
-		          url: "${hContext}/users/loginView.do",
-		          dataType: "html",
-		          data:{ 
-		        	     "name":name,
-		                 "passwd":passwd
-		         },
-		         success:function(data){
-		         }
+				type:"POST",
+	            url:"${hContext}/users/doSignUp.do",
+	            dataType:"html",
+				data:{
+				"name":$("#name").val().trim(),
+				"password":$("#password").val().trim()
+				},
+			success : function(data){
+				var jsonData = JSON.parse(data);
+				window.location.hre="${hContext}/main/main.do"
+			},
+			complete:function(data){
+	             
+            },
+            error:function(xhr,status,error){
+                alert("error:"+error);
+            }
+
+			});
+
 		});
+
 	
 	</script>	
 

@@ -5,6 +5,8 @@ import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.workspace.WorkSpaceVO;
 
 public interface UsersService {
+	
+	
 	/**
 	 * 닉네임 조건 
 	 * @param workSpaceVO
