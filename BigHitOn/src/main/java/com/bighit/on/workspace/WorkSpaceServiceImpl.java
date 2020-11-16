@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.bighit.on.channel.ChannelDaoImpl;
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.email.EmailVO;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -27,6 +28,8 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	private WorkSpaceDaoImpl workSpaceDao;
 	@Autowired
 	private ChannelDaoImpl channelDaoImpl; 
+	@Autowired
+	private ChannelUsersDao chUserDao;
 	
 	/**
 	 * 워크스페이스링크 중복 체크
@@ -76,8 +79,12 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	public int doInsert(WorkSpaceVO workSpaceVO) {
 		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
 		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
-		channelDaoImpl.doInsert(gen);
+		channelDaoImpl.doInsert(gen);	
 		channelDaoImpl.doInsert(ran);
+		UsersVO user = new UsersVO();
+		user.setUser_serial(workSpaceVO.getRegId());
+		user.getWsLink();
+		chUserDao.doWorkSpaceInsert(user);		
 		return workSpaceDao.doInsert(workSpaceVO);
 		
 	}
