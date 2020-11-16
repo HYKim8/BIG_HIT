@@ -198,7 +198,7 @@
 		          "regId" : "1111"
 		    },
 		    success:function(data){ //성공
-		    	window.location.href="${hContext}/main/main.do";
+		    	window.location.href="${hContext}/main/main.do=wsLink?"+$(wsLink).val();
 		    },		       
 		    error:function(xhr,status,error){
 		     alert("error:"+error);
