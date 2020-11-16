@@ -198,7 +198,15 @@
 		          "regId" : "1111"
 		    },
 		    success:function(data){ //성공
-		    	window.location.href="${hContext}/main/main.do=wsLink?"+$(wsLink).val();
+		    	 //json 분리해서 변수
+			       var jsonObj = JSON.parse(data);
+			       console.log("msgId="+jsonObj.regId);
+			       console.log("msgContents="+jsonObj.msgContents);
+			    
+			       if(null !=jsonObj && jsonObj.regId=="1"){
+			    	   alert(jsonObj.msgContents);
+			    	   window.location.href="${hContext}/main/main.do=wsLink?"+jsonObj.msgContents;
+			       }
 		    },		       
 		    error:function(xhr,status,error){
 		     alert("error:"+error);
