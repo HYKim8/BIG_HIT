@@ -45,6 +45,8 @@ public class FileController {
     @Autowired
     MappingJackson2JsonView jsonView;
     
+    // thread List 뽑았을 때 fileList도 같이 뽑아서 특정 thread에 file을 붙여야 함.
+    
     @RequestMapping(value = "file/test.do", method = RequestMethod.GET)
     public String test(String status) {
     	
@@ -80,6 +82,7 @@ public class FileController {
     			session.setAttribute(vo.getUser_serial()+"thumb", vo.getThumb());
     		} else {
     			session.setAttribute(vo.getUser_serial()+"thumb", "/resources/img/default.jpg");
+    			// jsp 내에서 스크립틀릿 이용해서 만들어야할듯...
     		}
     		
     	}
