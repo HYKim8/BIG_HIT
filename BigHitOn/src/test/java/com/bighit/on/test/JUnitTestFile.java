@@ -94,6 +94,7 @@ public class JUnitTestFile {
 		String target = target2[3] + "/" + target2[4] + "/" + target2[5];
 		LOG.debug("target : " + target);
 		
+		
 	}
 	
 	@Test

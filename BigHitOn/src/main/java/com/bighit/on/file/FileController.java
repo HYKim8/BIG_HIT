@@ -73,6 +73,7 @@ public class FileController {
     	// 		session.setAttribute(vo.getId+"_thumb", vo.getThumb)
     	// }
     	
+    	
     	// 공통
     	// GSON gson = new Gson();
     	// String json = gson.toJson(URL);
