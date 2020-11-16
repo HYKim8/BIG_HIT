@@ -7,6 +7,44 @@
 				WHERE is_used = 0
 				AND ROWNUM = 1
 	</select>
+	<!-- 세션 유저 채널 목록조회 -->
+	<select id="chlistFromUser" parameterType="UsersVO" resultType="ChannelVO">
+		SELECT             
+		    c.ch_link AS chLink,       
+		    c.ws_link AS wsLink,       
+		    c.ch_name AS chName,       
+		    c.topic AS topic,         
+		    c.ch_description AS chDescription,
+		    c.ch_access AS chAccess,     
+		    c.reg_id AS regId,        
+		    c.reg_dt AS regDt        
+		FROM channels c JOIN
+	    	(SELECT ch_link 
+			    FROM CHANNEL_USERS
+			    WHERE user_serial = #{user_serial}
+				 ) u
+		ON c.ch_link = u.ch_link
+		AND c.ch_name != 'DM'	      		
+	</select>
+	<!-- 세션 유저 DM 목록조회 -->
+	<select id="dmlistFromUser" parameterType="UsersVO" resultType="ChannelVO">
+		SELECT             
+		    c.ch_link AS chLink,       
+		    c.ws_link AS wsLink,       
+		    c.ch_name AS chName,       
+		    c.topic AS topic,         
+		    c.ch_description AS chDescription,
+		    c.ch_access AS chAccess,     
+		    c.reg_id AS regId,        
+		    c.reg_dt AS regDt        
+		FROM channels c JOIN
+	    	(SELECT ch_link 
+			    FROM CHANNEL_USERS
+			    WHERE user_serial = #{user_serial}
+				 ) u
+		ON c.ch_link = u.ch_link
+		AND c.ch_name = 'DM'	      		
+	</select>
 	<!-- 목록조회 -->
 	<!-- com.bighit.on.workspace.doSelectList -->
 	<select id="doSelectList" parameterType="ChannelVO" resultType="ChannelVO">

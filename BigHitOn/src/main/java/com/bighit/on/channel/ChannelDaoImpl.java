@@ -13,6 +13,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bighit.on.cmn.DTO;
+import com.bighit.on.cmn.Search;
+import com.bighit.on.user.dao.UsersVO;
 
 @Repository("ChannelDaoImpl")
 public class ChannelDaoImpl {
@@ -129,6 +131,41 @@ public class ChannelDaoImpl {
 		return list;
 		
 	}
+	
+	/**
+	 * 
+	 * @param channelVO
+	 * @return
+	 */
+	public List<ChannelVO> doSelectList(Search search) {
+		if(search.nonValueDiv() || search.nonValueWord() 
+				|| ( search.getSearchDiv() !="10" && search.getSearchDiv() !="20" ) ) return null;
+		
+		UsersVO user = new UsersVO();
+		
+		user.setUser_serial(search.getSearchWord());
+		
+		
+		LOG.debug("=====================");
+		LOG.debug("=doSelectList=");
+		LOG.debug("=====================");
+		//div가 10 이면 dm리스트 20이면 채널리스트
+		String statement = search.getSearchDiv() == "10" ? NAMESPACE + ".chlistFromUser" : NAMESPACE + ".dmlistFromUser";		
+		LOG.debug("=statement="+statement);
+		LOG.debug("-param-\n" + user);
+		
+		List<ChannelVO> list = this.sqlSessionTemplate.selectList(statement, user);
+		
+		for(ChannelVO vo : list) {
+			LOG.debug("===========================");
+			LOG.debug("=doSelectList vo="+vo);
+			LOG.debug("===========================");
+		}
+		
+		return list;
+		
+	}
+	
 	/**
 	 * 아직 사용되지 않은 배정될 키 리턴 
 	 * @return
