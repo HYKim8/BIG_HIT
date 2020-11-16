@@ -31,11 +31,13 @@
 	<div class="container">
 		<input type="button" id="test" value="hello">
 		<input type="text" id="status" value="">
-		
-		<!-- user_id가 될 듯 -->
-		<input type="text" id="key_name" value="profileImg/KIM_profile/029cb6f9-e07d-43b9-a738-47305a48544a_profile.jpg">
-		
-		
+		<form action="testImg.do" method="get">
+			<input type="submit" id="submitbtn" value="submit">
+		</form>
+		<img alt="" src="${hContext.concat(sessionScope['U5835RE6LL2thumb']) }">
+		<p><c:out value="${sessionScope['1111thumb']}"/></p>
+		<p id="output_text"></p>
+		<input type="button" id="thumb_test" value="thumb_test"/>
 		<img id="user1" alt="" src="">
 	</div>
 	
@@ -46,11 +48,24 @@
     <!-- javascript -->
     <script type="text/javascript">
 
+    
 	$(document).ready(function(){
 			console.log("load Complete");
-			loadImg();
+			Notification.requestPermission().then(function(result) {
+				  console.log(result);
+				});
 		})
 		
+		// 알림
+	$("#thumb_test").on("click", function(){
+			console.log("thumb_test clicked");
+			
+			var text = "gg";
+			var notification = new Notification('할 일 목록', { body: text});
+		})
+	
+
+	
     function loadImg(){
 	    	console.log("loadImg");
 			$.ajax({
@@ -78,17 +93,16 @@
     
     function test(){
 			$.ajax({
-		        url: '${hContext}/file/test.do',
-		        processData: false,
-		        contentType: false,
+		        url: '${hContext}/file/testImg.do',
+		        dataType:"html",
+		        data:{"keyName":$("#key_name").val()},
+		        async: true,
 		        type: 'GET',
-		        success: function(data){
-		            console.log("success");
-		        },
-		        error: function(err){
-		            console.log("error");
-		        }
-	    	});
+		        success: function(){
+		            	console.log("success");
+		            	
+					}
+	        });
 	    }
     
     

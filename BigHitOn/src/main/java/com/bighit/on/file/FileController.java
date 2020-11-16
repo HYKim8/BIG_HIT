@@ -1,9 +1,8 @@
 package com.bighit.on.file;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,12 +18,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.bighit.on.user.dao.UsersServiceImpl;
 import com.bighit.on.user.dao.UsersVO;
+import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
 @CrossOrigin
@@ -56,52 +55,66 @@ public class FileController {
     	return "file/test";
     }
     
-    @RequestMapping(value = "file/testImg.do", method = RequestMethod.GET)
+    @RequestMapping(value = "file/testImg.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public String testImg(HttpServletRequest req, String keyName) {
+    	
+    	// 처음 로딩( $(document).ready(function(){} )
+    	// workspace 링크 session이든 뭐든 암튼 데이터 얻기
+    	HttpSession session = req.getSession();
+    	
+    	// for test
+    	session.setAttribute("wsLink", "1");
+    	// for test
+    	
+    	String wsLink = (String) session.getAttribute("wsLink");
+    	
+    	// workSpaceService.doSelectUser~~~~ 해서 그 특정 워크 스페이스의 유저 리스트 뽑기.
+    	WorkSpaceVO workSpaceVO = new WorkSpaceVO();
+    	workSpaceVO.setWsLink(wsLink);
+    	
+    	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻어서 session에 User_serial_thumb으로 등록.
+    	// ${hContext.concat(sessionScope['U5835RE6LL2thumb']) }
+    	List<UsersVO> userList = userService.doSelectList(workSpaceVO);
+    	for(UsersVO vo : userList) {
+    		if(null != vo.getThumb()) {
+    			session.setAttribute(vo.getUser_serial()+"thumb", vo.getThumb());
+    		} else {
+    			session.setAttribute(vo.getUser_serial()+"thumb", "/resources/img/default.jpg");
+    		}
+    		
+    	}
+    	
+    	
+    	
+    	return "file/test";
+    }
+    
+    @RequestMapping(value = "file/thumb_check.do", method = RequestMethod.GET)
     @ResponseBody
-    public String testImg(String keyName) {
+    public String thumb_check(UsersVO usersVO) {
     	
-    	// 첫번째 안
-    	// 처음 로딩( $(document).ready(function(){} )
-    	// 아이디가 넘어와서
-    	// String URL = userService.doSeletOne(usersVO).getThumb(); -> pre-signed url(cache로 처리될 것.)
-    	// Thumb은 pre-signed url이 들어갈 것
-    	
-    	// 두번째 안 (이게 맞는거같음)
-    	// 처음 로딩( $(document).ready(function(){} )
-    	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻기.
-    	// for(UsersVO vo : list){
-    	// 		session.setAttribute(vo.getId+"_thumb", vo.getThumb)
-    	// }
-    	
-    	
-    	// 공통
-    	// GSON gson = new Gson();
-    	// String json = gson.toJson(URL);
-    	// return json;
-    	
-    	
+    	LOG.debug("-------------------------");
+		LOG.debug("-thumb_check-");
+		LOG.debug("-------------------------");
     	// 404error가 뜬 이미지
     	// 아이디가 넘어와서
+    	
     	// String keyName = String 잘라서 key_name만 딴다. 앞부분 길이는 같으므로 ?로 짜르고 첫번째꺼에 일정 길이 이후로 가져오면 될 듯.
+    	String keyName = fileService.generateKeyName(usersVO.getThumb());
+    	
     	// URL url = fileService.doFileDownload(keyName);
-    	// String userThumb = url.toString();
-    	// userService.doUpdateThumb(userId, userThumb);
-    	// Gson gson = new Gson();
-    	// String json = gson.toJson(userThumb);
-    	// return json;
-    	
-    	
-    	
-    	LOG.debug("in to testImg");
-    	
-//    	String keyName = "thumbImg/KIM_thumb/029cb6f9-e07d-43b9-a738-47305a48544a_thumb.jpg";
-    	
     	URL url = fileService.doFileDownload(keyName);
     	
+    	// String userThumb = url.toString();
+    	String userThumb = url.toString();
+    	usersVO.setThumb(userThumb);
+    	
+    	// userService.doUpdateThumb(userId, userThumb);
+    	userService.doUpdate(usersVO);
+    	
     	Gson gson = new Gson();
-		String json = gson.toJson(url.toString());
-		
-		
+    	String json = gson.toJson(userThumb);
+    	
     	return json;
     }
     
@@ -122,29 +135,7 @@ public class FileController {
 		
 		return "main/main";
 	}
-	@RequestMapping(value = "file/do404Chk.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String do404Chk(HttpServletRequest req, Model model, String userSerial) {
-		LOG.debug("-------------------------");
-		LOG.debug("-file/do404Chk.do-");
-		LOG.debug("-------------------------");
-		
-		
-//		404면 넘어온다
-//		특정 유저 id를 갖고 있다.
-//		db에 접근해서 그 유저의 thumbnail 주소 값을 다시 받아온다.
-//		값을 수정한다.
-		
-		// for Test
-		UsersVO usersVO = new UsersVO();
-		usersVO.setThumb("C:\\BIGHIT_thumbnail\\2.jpg");
-		// for Test
-		
-		
-		
-		
-		return "file/file";
-	}
+	
 	
 	@CrossOrigin
 	@RequestMapping(value = "file/doDownload.do", method = RequestMethod.POST)

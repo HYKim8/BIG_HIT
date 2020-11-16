@@ -254,12 +254,13 @@ public class FileService {
 	 */
 	public String generateKeyName(String target) {
 		
-		LOG.debug("targetString : " + target);
-		
 		String[] tmpArr = target.split("\\?")[0].split("/");
 		String outString = tmpArr[3] + "/" + tmpArr[4] + "/" + tmpArr[5];
 		
-		LOG.debug("target : " + outString);
+		LOG.debug("-------------------------");
+		LOG.debug("-generateKeyName-");
+		LOG.debug("-KeyName : " + outString);
+		LOG.debug("-------------------------");
 		
 		return outString;
 	}

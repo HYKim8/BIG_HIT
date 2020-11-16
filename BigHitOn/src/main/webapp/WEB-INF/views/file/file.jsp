@@ -28,6 +28,9 @@
 </head>
 <body>
 <div class="container">
+		<form action="testImg.do" method="get">
+			<input type="submit" value="testGaJa!">
+		</form>
 	<form name="fileUpload" method="post"
 		action="file_test.do" id="form_data"
 		enctype="multipart/form-data">
@@ -53,6 +56,7 @@
 		<div>
 			<input type="text" id="ch_link">
 			<input type="button" id="row_button" value="테이블 표시">
+			
 		</div>
 		
 		<div class="row">
