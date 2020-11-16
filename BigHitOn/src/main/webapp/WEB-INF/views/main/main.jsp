@@ -124,7 +124,9 @@
                         <a class="collapse-item" href="utilities-color.html">User 1</a>
                         <a class="collapse-item" href="utilities-border.html">User 2</a>
                         <a class="collapse-item" href="utilities-animation.html">User 3</a>
-                        <a class="collapse-item" href="utilities-other.html">+ Add Teammates</a>
+                        <a class="collapse-item" href="utilities-other.html" data-toggle="modal" data-target="#addteamModal">
+                        	+ Add Teammates
+                        </a>
                     </div>
                 </div>
             </li>
@@ -371,6 +373,27 @@
 	    </div>
 	  </div>
 	</div>
+	
+	<!-- addteam Modal-->
+    <div class="modal fade" id="addteamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">팀원추가</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+					<input type="text" class="form-control" name="email" id="email" value="${vo.email}" placeholder="이메일주소" />
+				</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">보내기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 	
 	<!-- channelcreate Modal-->
     <div class="modal fade" id="channelcreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
