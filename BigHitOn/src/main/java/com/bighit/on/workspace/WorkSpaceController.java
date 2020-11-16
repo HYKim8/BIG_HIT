@@ -137,6 +137,6 @@ public class WorkSpaceController {
 		LOG.debug("-workspace/teamUserAdd_view.do-");
 		LOG.debug("-------------------------");
 		
-		return "workspace/test";
+		return "workspace/workspace";
 	}
 }
