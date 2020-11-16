@@ -84,6 +84,20 @@ public class JUnitTestFile {
 
 	@Test
 	@Ignore
+	public void makeString() {
+		String targetString = "https://kghbucket.s3.ap-northeast-2.amazonaws.com/profileImg/KIM_profile/029cb6f9-e07d-43b9-a738-47305a48544a_profile.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201116T074840Z&X-Amz-SignedHeaders=host&X-Amz-Expires=259200&X-Amz-Credential=AKIA3I6CC67EHGOLPYFY%2F20201116%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=ccc48804b6800476d7ed083748948983a25181c3b38c96d7ab07ee023762fd25";
+		LOG.debug("targetString : " + targetString);
+		
+		
+		String[] target2 = targetString.split("\\?")[0].split("/");
+		
+		String target = target2[3] + "/" + target2[4] + "/" + target2[5];
+		LOG.debug("target : " + target);
+		
+	}
+	
+	@Test
+	@Ignore
 	public void file() throws IOException {
 		fileDao.doFileDownload("profileimg/testimg.png");
 	}

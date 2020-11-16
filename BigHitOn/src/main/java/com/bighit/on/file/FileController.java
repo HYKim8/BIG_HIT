@@ -67,7 +67,7 @@ public class FileController {
     	// Thumb은 pre-signed url이 들어갈 것
     	
     	// 두번째 안 (이게 맞는거같음)
-    	// 처음 로딩( $(document).readt(function(){} )
+    	// 처음 로딩( $(document).ready(function(){} )
     	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻기.
     	// for(UsersVO vo : list){
     	// 		session.setAttribute(vo.getId+"_thumb", vo.getThumb)
@@ -243,10 +243,12 @@ public class FileController {
 			fileService.doFileUpload(keyNameThumb, thumbImgResized);
 		
 		// UserService를 이용하여 profile keyName, thumb keyName 등록 -> pre-signed url 만드는데는 비용이 들지 않으므로 url로 만들어서 넣자.
-//		usersVO.setThumb(keyNameThumb);
-//		usersVO.setProfile_img(keyNameProfile);
-//		userService.doUpdate(usersVO);
-		
+//			String profileUrl = fileService.doFileDownload(keyNameProfile).toString();
+//			String thumbUrl = fileService.doFileDownload(keyNameThumb).toString();
+//			usersVO.setProfile_img(profileUrl);
+//			usersVO.setThumb(thumbUrl);
+//			userService.doUpdate(usersVO);
+			
 		return "file/file";
 	}
 	

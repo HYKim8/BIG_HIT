@@ -245,5 +245,22 @@ public class FileService {
 
 		return keyName;
 	}
+	
+	/**
+	 * Pre-Signed URL to KeyName
+	 * @param target(String)
+	 * @return String keyName
+	 */
+	public String generateKeyName(String target) {
+		
+		LOG.debug("targetString : " + target);
+		
+		String[] tmpArr = target.split("\\?")[0].split("/");
+		String outString = tmpArr[3] + "/" + tmpArr[4] + "/" + tmpArr[5];
+		
+		LOG.debug("target : " + outString);
+		
+		return outString;
+	}
 
 }
