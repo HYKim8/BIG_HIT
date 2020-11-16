@@ -57,8 +57,6 @@ public class ThreadTest {
 		thread01.setParentKey("");
 		thread01.setPinId("abc");
 		thread01.setRegId("abc");
-		thread01.setRegDt("2020-11-03");
-		thread01.setModDt("2020-11-03");
 		
 		thread02.setThrKey("2");
 		thread02.setChLink("123");
@@ -106,7 +104,7 @@ public class ThreadTest {
 	}
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void all() {
 //		threadDao.doDelete(thread01);
 		for(int i=0;i<1000;i++)
