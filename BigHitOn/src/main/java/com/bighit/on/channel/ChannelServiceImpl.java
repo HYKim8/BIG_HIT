@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.channelusers.ChannelUsersVO;
+import com.bighit.on.cmn.Search;
 import com.bighit.on.email.EmailVO;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -63,5 +64,11 @@ public class ChannelServiceImpl implements ChannelService {
 	public int notifiUpdate(ChannelUsersVO inVO)
 	{
 		return chUserDao.doUpdate(inVO);
+	}
+
+	@Override
+	public List<ChannelVO> doSelectList(Search search) {
+		// TODO Auto-generated method stub
+		return channelDao.doSelectList(search);
 	}
 }

@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.cmn.Search;
+import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -117,4 +120,27 @@ public class ChannelController {
 		return json;
 	}
 	
+	@RequestMapping(value = "main/channelList.do", method = RequestMethod.GET
+			,produces = "application/json;charset=UTF-8"	)
+	@ResponseBody
+	public String doSelectList(UsersVO user, Model model) {
+		LOG.debug("-------------------------");
+		LOG.debug("-doSelectList-");
+		LOG.debug("-------------------------");
+		Search search = new Search("10",user.getUser_serial());
+		List<ChannelVO> list = this.channelService.doSelectList(search);
+		//채널 리스트 
+		model.addAttribute("chlist", list);
+		
+		search.setSearchDiv("20");
+		list =  this.channelService.doSelectList(search); 
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		
+		LOG.debug("-------------------------");
+		LOG.debug("-json-"+json);
+		LOG.debug("-------------------------");
+		
+		return "main/main";
+	}
 }
