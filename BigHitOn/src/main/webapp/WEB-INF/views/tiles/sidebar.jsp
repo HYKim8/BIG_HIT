@@ -106,7 +106,9 @@
                         <a class="collapse-item" href="utilities-color.html">User 1</a>
                         <a class="collapse-item" href="utilities-border.html">User 2</a>
                         <a class="collapse-item" href="utilities-animation.html">User 3</a>
-                        <a class="collapse-item" href="utilities-other.html">+ Add Teammates</a>
+                        <a class="collapse-item" href="utilities-other.html" data-toggle="modal" data-target="#addteamModal">
+                        	+ Add Teammates
+                        </a>
                     </div>
                 </div>
             </li>

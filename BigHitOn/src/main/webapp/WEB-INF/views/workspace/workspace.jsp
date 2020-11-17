@@ -105,19 +105,6 @@
 		
 	});//document ready 
 
-	//엔터키
-/*  	function enterkey() {
-        if (window.event.keyCode == 13) {
- 			var x = document.getElementById("wsLink");
-             // 엔터키가 눌렸을 때 실행할 내용
-             if(x==wsLink){
-            	 console.log("document ready12123"); 
-				$('a[href="#wsName"]').tab('show');
-             }
-        	
-        } */
-	}
-
 	
 	//워크스페이스 링크 이벤트
 	$("#wsLink_btn").on("click",function(){
