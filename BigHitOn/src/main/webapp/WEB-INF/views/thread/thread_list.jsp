@@ -93,6 +93,49 @@
    </div>
    </form>
    
+   <table>
+   	<thead>
+   		<tr>
+         	<th>쓰레드키</th>
+         	<th>내용</th>
+         	<th>고정유무</th>
+         	<th>작성자</th>
+         	<th>작성일</th>
+         	<th>수정일</th>
+         	<th>댓글갯수</th>
+     	 </tr>
+  	</thead>
+  	<tbody id="selectOneList">
+  	<c:choose>           
+  			<c:when test="${!empty selectOneList}">
+               <c:forEach var="list2" items="${selectOneList}">
+                  <tr>
+                     <td><c:out value="${list2.thrKey}"/></td>
+                     <td><c:out value="${list2.contents}"/></td>
+                     <td>
+                        <c:if test="${list2.isPin == 1}">
+                           <c:out value="${list2.pinId}님이 고정함"/>
+                        </c:if>
+                     </td>
+                     <td><c:out value="${list2.regId}"/></td>
+                     <td><c:out value="${list2.regDt}"/></td>
+                     <td data-toggle="tooltip" data-placement="right" title="${list2.modDt}">
+                        <c:if test="${list2.modDt != list2.regDt }">
+                           <c:out value="편집됨"/>                           
+                        </c:if>
+                     </td>
+                     <td>
+                        <c:if test="${list2.childCnt != 0}">
+                           <c:out value="${list2.childCnt}"/>
+                        </c:if>
+                     </td>
+                  </tr>
+               </c:forEach>    
+             </c:when>   
+         </c:choose>
+      </tbody>
+   </table>
+   
    
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -209,13 +252,7 @@
            var thrKey = tds.eq(0).text();
            
            console.log("thrkey:"+thrKey);
-           ////get방식 형태 call
-           ////window.location.href="${hContext}/board/doSelectOne.do?seq="+seq;
-            //
-           //var frm = document.searchFrm;
-           //frm.thrKey.value = thrKey;
-           //frm.action = "${hContext}/thread/doSelectOne.do";
-           //frm.submit();
+          
         
         $.ajax({
             type:"GET",
@@ -224,7 +261,22 @@
                  },
             dataType:"html",
             success:function(data){ //성공
-                   console.log("data="+data);
+            	   console.log("data="+data);
+                   var list2 = JSON.parse(data);
+                   console.log("list2 : " + list2);
+
+                   var html = "";
+                   
+                   html += '<tr>';
+                   html += '<td>'+list2.thrKey+'</td>';
+                   html += '<td>'+list2.contents+'</td>';
+                   html += '<td>'+list2.isPin+'</td>';
+                   html += '<td>'+list2.regId+'</td>';
+                   html += '<td>'+list2.regDt+'</td>';
+                   html += '<td>'+list2.childCnt+'</td>';
+                   html += '</tr>';
+                   
+                   
               },
             error:function(xhr,status,error){
               alert("error:"+error);
