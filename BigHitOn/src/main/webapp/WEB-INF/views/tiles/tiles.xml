@@ -25,17 +25,7 @@
 	</definition>
 	
 	
-	<!-- Main -->
-	<definition name="main/*" extends="basede-finition">
-		<put-attribute name="title" value="Main"/>
-		<put-attribute name="body" value="/WEB-INF/views/main/{1}.jsp"/>
-	</definition>
 	
-	<!-- Workspace -->
-	<definition name="workspace/*" extends="basede-finition">
-		<put-attribute name="title" value="workspace"/>
-		<put-attribute name="body" value="/WEB-INF/views/workspace/{1}.jsp"/>
-	</definition>
 			
 				
 </tiles-definitions>

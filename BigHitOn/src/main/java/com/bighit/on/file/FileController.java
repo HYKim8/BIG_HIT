@@ -136,7 +136,7 @@ public class FileController {
 		LOG.debug("-main/main.do-");
 		LOG.debug("-------------------------");
 		
-		return "main/main";
+		return "main/main2";
 	}
 	
 	
