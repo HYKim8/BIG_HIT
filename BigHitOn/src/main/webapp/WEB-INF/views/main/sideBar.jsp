@@ -43,29 +43,16 @@
                 </a>
                 <div id="collapseMem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">#Channel 1</a>
-                        <a class="collapse-item" href="cards.html">#Channel 2</a>
-                        <a class="collapse-item" href="cards.html">#Channel 3</a>
-                       <!--  <a class="collapse-item" href="">+ Add Channel</a> --> 
+                    
+                    	<c:forEach var="ChannelVO" items="${channelList}">
+   						 	<a class="collapse-item">#<c:out value="${ChannelVO.chName}" /></a>
+						</c:forEach>
                         
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">+ Add Channel</span>
-                            <img class="img-profile rounded-circle"
-                                src="img/undraw_profile.svg"> <!-- 썸네일 주소 -->
+                        <a class="collapse-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
+                                + Add Channel
                         </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                새채널 생성
-                            </a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#channelListModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                모든채널 검색
-                            </a>                        	
+                        
+                                      	
                     </div>
                 </div>
             </li>
@@ -83,9 +70,9 @@
                 <div id="collapseMessage" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">User 1</a>
-                        <a class="collapse-item" href="utilities-border.html">User 2</a>
-                        <a class="collapse-item" href="utilities-animation.html">User 3</a>
+                    	<c:forEach var="UsersVO" items="${usersList}">
+   						 	<a class="collapse-item">#<c:out value="${UsersVO.nickname}" /></a>
+						</c:forEach>
                         <a class="collapse-item" href="utilities-other.html" data-toggle="modal" data-target="#addteamModal">
                         	+ Add Teammates
                         </a>
