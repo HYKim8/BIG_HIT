@@ -142,7 +142,7 @@
 					<input type="text" class="form-control" name="email" id="email" value="${vo.email}" placeholder="이메일주소" />
 				</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">보내기</button>
+                    <button class="btn btn-secondary" name="send_btn" id="send_btn" type="button" data-dismiss="modal">보내기</button>
                 </div>
             </div>
         </div>
@@ -237,6 +237,38 @@
 				});
 			}
 		// ----------Add Channel----------
+	    
+	    //팀원추가시 이메일 보내기 이벤트
+	$("#send_btn").on("click",function(){
+		var email = $('#email').val();
+		if(null == email || email.trim().length==0){
+			$('#email').focus();
+			alert("추가할 팀원의 이메일을 입력해주세요.");
+			return;
+		}
+
+		$.ajax({
+		    type:"POST",
+		    url:"${hContext}/workspace/sendEmail.do",
+		    dataType:"html", 
+		    data:{"email" :$("#email").val(),
+			      "wsLink" : $("#wsLink").val(),
+			      "wsName" : $("#wsName").val()
+		    },
+		    success:function(data){ //성공
+		    	$('a[href="#complete"]').tab('show');		       
+		    },
+		    error:function(xhr,status,error){
+		     alert("error:"+error);
+		    },
+		    complete:function(data){
+		    
+		    }   
+		  
+	});//--ajax
+
+	});
+	    
 	    
 	</script>
 
