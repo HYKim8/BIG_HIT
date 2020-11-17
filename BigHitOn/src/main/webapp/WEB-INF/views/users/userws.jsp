@@ -46,7 +46,7 @@
     <ul class="nav nav-tabs">	
       <!-- Tab 아이템이다. 태그는 li과 li > a이다. li태그에 active는 현재 선택되어 있는 탭 메뉴이다. -->	
       <li class="active" ><a href="#doLogin" data-toggle="tab">로그인</a></li>
-      <li class="active"><a href="#myWs" data-toggle="tab">내 워크스페이스</a></li>	
+      <li class="disabled disabledTab"><a href="#myWs" data-toggle="tab">내 워크스페이스</a></li>	
     </ul>	
     
     <!-- Tab이 선택되면 내용이 보여지는 영역이다. -->	
@@ -55,21 +55,19 @@
       <!-- 각 탭이 선택되면 보여지는 내용이다. 태그는 div이고 클래스는 tab-pane이다. -->	
       <!-- active 클래스는 현재 선택되어 있는 탭 영역이다. -->
       
-      <div class="tab-pane fade in active" id="#doLogin">        
+      <div class="tab-pane fade in active" id="doLogin">        
         <h1>이메일로 로그인</h1>
          <input class="form-control" placeholder="name@work-email.com" type="email" name="email" id="email">
-      	 <button type="button" class="btn btn-primary my-4" id="doLogin">이메일로 로그인</button>
+      	 <button type="button" class="btn btn-primary my-4" id="doLoginBtn">이메일로 로그인</button>
 
       </div>
       
       <div class="tab-pane fade" id="myWs">
         <h1>내 워크스페이스</h1>
-      	
-      	<input type="button" value="실행" id="myWs_btn" class="btn btn-primary btn-lg btn-block" />	
-      	
-      	<input type="button" value="실행" id="myWs_btn" class="btn btn-primary btn-lg btn-block" />	
-      	
-      	<input type="button" value="실행" id="myWs_btn" class="btn btn-primary btn-lg btn-block" />	
+      	<table>
+      		<tbody id="wsTable"></tbody>      		
+      	</table>
+      		
       </div>
 
     </div>		
@@ -89,119 +87,58 @@
 	});//document ready 
 
 	
-	//워크스페이스 링크 이벤트
-	$("#doLogin").on("click",function(){
+	//로그인 이벤트
+	$("#doLoginBtn").on("click",function(){
 		//alert("wsName_btn");
-		var wsLink = $('#wsLink').val();
+		var wsLink = $('#email').val();
 		if(null == wsLink || wsLink.trim().length==0){
-			$('#wsLink').focus();
-			alert("워크스페이스 링크를 입력해주세요.");
+			$('#email').focus();
+			alert("이메일을 입력해주세요.");
 			return;
 		}
-		$('a[href="#wsNM"]').tab('show');
+		$('a[href="#myWs"]').tab('show');
 
+		$.ajax({
+            type:"GET",
+            url:"${hContext}/users/wsList.do",
+            dataType:"html", 
+            data:{
+                 "email" :$("#email").val()                    
+            },  
+            success:function(data){ //성공
+               console.log("data="+data);
+               //alert("data:"+data);
+               
+               //json 분리해서 변수
+               var list = JSON.parse(data);
+               if(list.length > 0){
+                  var html = "";
+                  for(var i=0;i<list.length;i++){
+                    html += '<tr>';
+                    html += '<td>'+ list[i].wsLink+'</td>';
+                    html += '<td>'+ list[i].wsName+'</td>';
+                    //<button class=\'btn btn-primary btn-lg btn-block\' id=\'myWsBtn\' value=\'실행\' />
+                    html += "<td> <button type= \'button\' class =\'btn btn-primary btn-lg btn-block\' id=\'myWsBtn\'> " + "실행" +"</button></td>"
+                    html += '<tr>';
+                  }                     
+              
+                 $("#wsTable").append(html);
+                 
+               }
+            },
+            error:function(xhr,status,error){
+             alert("error:"+error);
+            },
+            complete:function(data){
+            
+            }   
+          
+        });//--ajax
 	});
 	
-	//워크스페이스 이름 이벤트
-	$("#wsName_btn").on("click",function(){
-		//alert("wsName_btn");
-		var wsName = $('#wsName').val();
-		if(null == wsName || wsName.trim().length==0){
-			$('#wsName').focus();
-			alert("워크스페이스 이름을 입력해주세요.");
-			return;
-		}
-		if(wsName.trim().length<=2) {
-			$('#wsName').focus();
-			alert("워크스페이스 이름이 짧습니다. 다시 입력해주세요.");
-			return;
-		}	
-		$('a[href="#pjNM"]').tab('show');
-
+	$(document).on("click", "#myWsBtn", function(){
+	    console.log("hi");
 	});
-
-	//프로젝트 이름 이벤트
-	$("#project_btn").on("click",function(){
-		var project = $('#project').val();
-		if(null == project || project.trim().length==0){
-			$('#project').focus();
-			alert("프로젝트 이름을 입력해주세요.");
-			return;
-		}
-		if(project.trim().length<=2){
-			$('#project').focus();
-			alert("프로젝트 이름이 짧습니다. 다시 입력해주세요.");
-			return;
-		}
-		$('a[href="#addT"]').tab('show');
-
-	});
-
-	//팀원추가시 이메일 보내기 이벤트
-	$("#email_btn").on("click",function(){
-		var email = $('#email').val();
-		if(null == email || email.trim().length==0){
-			$('#email').focus();
-			alert("추가할 팀원의 이메일을 입력해주세요.");
-			return;
-		}
-
-		$.ajax({
-		    type:"POST",
-		    url:"${hContext}/workspace/sendEmail.do",
-		    dataType:"html", 
-		    data:{"email" :$("#email").val(),
-			      "wsLink" : $("#wsLink").val(),
-			      "wsName" : $("#wsName").val()
-		    },
-		    success:function(data){ //성공
-		    	$('a[href="#complete"]').tab('show');		       
-		    },
-		    error:function(xhr,status,error){
-		     alert("error:"+error);
-		    },
-		    complete:function(data){
-		    
-		    }   
-		  
-	});//--ajax
-
-	});
-
-	//완료시 이벤트
-	$("#complete_btn").on("click",function(){
-		$.ajax({
-		    type:"POST",
-		    url:"${hContext}/workspace/doInsert.do",
-		    dataType:"html", 
-		    data:{"wsLink" :$("#wsLink").val(),
-		    	  "wsName" :$("#wsName").val(),
-		          "project":$("#project").val(),
-		          "regId" : "1111"
-		    },
-		    success:function(data){ //성공
-		    	 //json 분리해서 변수
-			       var jsonObj = JSON.parse(data);
-			       console.log("msgId="+jsonObj.regId);
-			       console.log("msgContents="+jsonObj.msgContents);
-			    
-			       if(null !=jsonObj && jsonObj.regId=="1"){
-			    	   alert(jsonObj.msgContents);
-			    	   window.location.href="${hContext}/main/main.do=wsLink?"+jsonObj.msgContents;
-			       }
-		    },		       
-		    error:function(xhr,status,error){
-		     alert("error:"+error);
-		    },
-		    complete:function(data){
-		    
-		    }   
-		  
-	});//--ajax
-		
-
-	});
-
 	//클릭으로 못넘어가게
 	$('.nav-tabs li.disabled > a[data-toggle=tab]').on('click', function(e) {
     	e.stopImmediatePropagation(); 

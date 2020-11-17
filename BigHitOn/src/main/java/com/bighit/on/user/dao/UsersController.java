@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Message;
+import com.bighit.on.cmn.Search;
+import com.bighit.on.thread.ThreadVO;
+import com.bighit.on.workspace.WorkSpaceService;
 import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
@@ -29,6 +32,9 @@ public class UsersController {
 	
 	@Autowired
 	UsersService usersService;
+	
+	@Autowired
+	WorkSpaceService workSpaceService;
 	
 	@Autowired
 	MessageSource messageSource;
@@ -244,6 +250,18 @@ public class UsersController {
 		return json;
 	}
 	
-	
+	@RequestMapping(value="users/wsList.do",method = RequestMethod.GET)
+	   @ResponseBody
+	   public List<WorkSpaceVO> wsList(UsersVO user) throws Exception {
+	      LOG.debug("=thread_view=");
+	      
+	      List<WorkSpaceVO> list = workSpaceService.doSelectList(user);
+	      
+	      for(WorkSpaceVO vo:list) {
+	      LOG.debug(vo.toString());
+	      }
+	      return list;
+	   }
+	   
 	
 }
