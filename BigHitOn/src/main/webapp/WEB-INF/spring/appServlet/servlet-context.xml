@@ -42,17 +42,7 @@
 		</beans:property>
 	</beans:bean>
 
-	<interceptors>
-		<interceptor>
-			<mapping path="/**" />
-			<exclude-mapping path="/users/loginView.do" /> <!--인터셉터 진입 안하게 할 주소 -->
-			<exclude-mapping path="/users/wsList.do"/>
-			<exclude-mapping path="/users/doLogin.do"/>
-			<beans:bean
-				class="com.bighit.on.user.dao.LoginInterceptor">
-			</beans:bean>
-		</interceptor>
-	</interceptors>
+	
 
 
 	<beans:bean id="jsonView"
