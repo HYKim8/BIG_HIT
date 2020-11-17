@@ -117,7 +117,9 @@
 	            dataType:"html",
 				data:{
 				"name":$("#name").val().trim(),
-				"password":$("#password").val().trim()
+				"password":$("#password").val().trim(),
+				"ws_link":$("#ws_link").val(),
+				"email":$("#email").val()
 				},
 			success : function(data){
 				var jsonData = JSON.parse(data);
