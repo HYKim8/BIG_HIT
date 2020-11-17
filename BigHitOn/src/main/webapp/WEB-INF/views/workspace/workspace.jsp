@@ -169,8 +169,7 @@
 		    dataType:"html", 
 		    data:{"email" :$("#email").val(),
 			      "wsLink" : $("#wsLink").val(),
-			      "wsName" : $("#wsName").val(),
-			      "userId" : ${sessionScope.usersVO}
+			      "wsName" : $("#wsName").val()
 		    },
 		    success:function(data){ //성공
 		    	$('a[href="#complete"]').tab('show');		       

@@ -128,7 +128,6 @@
                             </div>
                         </li>
 
-                    </ul>
-
+                    </ul>						
                 </nav>
                 <!-- End of Topbar -->
