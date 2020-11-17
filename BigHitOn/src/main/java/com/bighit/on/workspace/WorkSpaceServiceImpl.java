@@ -121,7 +121,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 		String title = emailVO.getUserId()+"님께서"+emailVO.getWsName()+"에 초대했습니다.";//제목
 		String contents = emailVO.getUserId()+"님께서"+emailVO.getWsName()+"에 초대했습니다.";//내용
 		String recAddr = emailVO.getEmail();//받는사람
-		String link = emailVO.getWsLink();//워크스페이스링크
+		String link = "http://localhost:8080/on/users/signUpView.do?ws_link=1&email=xp13323@naver.com";//워크스페이스링크
 		
 		SimpleMailMessage  mimeMessage=new SimpleMailMessage();
 		
