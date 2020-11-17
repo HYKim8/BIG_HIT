@@ -42,14 +42,19 @@ public class ThreadController {
    
    @RequestMapping(value="thread/doSelectOne.do", method = RequestMethod.GET)
    @ResponseBody
-   public ThreadVO doSelectOne(ThreadVO threadVO, Model model) {
+   public String doSelectOne(ThreadVO threadVO, Model model) {
       //String returnURL = "thread/thread_rep";
       LOG.debug("=doSelectOne=");   
       ThreadVO outVO = this.threadService.doSelectOne(threadVO);
       
+      Gson gson = new Gson();
+      String json = gson.toJson(outVO);
       //model.addAttribute("vo", outVO);
+      LOG.debug("==================");
+      LOG.debug("=json="+json);
+      LOG.debug("==================");
       
-      return outVO;
+      return json;
    }
    
    @RequestMapping(value="thread/moreList.do",method = RequestMethod.GET)
