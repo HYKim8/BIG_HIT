@@ -104,5 +104,10 @@ public class UsersServiceImpl implements UsersService {
 		}
 		return flag;
 	}
+
+	@Override
+	public int emailCheck(UsersVO usersVO) {
+		return usersDaoImpl.emailCheck(usersVO);
+	}
 	
 }

@@ -32,6 +32,7 @@ public class UsersController {
 	
 	@Autowired
 	MessageSource messageSource;
+
 	
 	@RequestMapping(value="users/logout.do", method = RequestMethod.GET)
 	public String logout(HttpServletRequest req) {
@@ -40,8 +41,39 @@ public class UsersController {
 		return "main/main";
 	}
 	
+	@RequestMapping(value="users/doLogin.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Message doLogin(UsersVO usersVO, HttpServletRequest req,Locale locale,HttpServletResponse res) {
+		Message message=new Message();
+		LOG.debug("usersVO"+usersVO);
+		UsersVO sessionUser = this.usersService.doSelectOne(usersVO.getUser_serial());
+		LOG.debug("=======================");
+		LOG.debug("=sessionUser=="+sessionUser);
+		LOG.debug("=======================");
+		
+		HttpSession session =  req.getSession();
+		session.setAttribute("user", sessionUser);
+		
+		int flag = this.usersService.emailCheck(usersVO);
+		if(1==flag) {
+			
+		}else {
+			
+		}
+		
+		return message;
+	}
+		
+	@RequestMapping(value="users/loginView.do", method = RequestMethod.GET)
+	public String loginView(UsersVO user,Model model) {
+		model.addAttribute("usersVO", user);
+		LOG.debug("=user=="+user);
+		
+		return "users/userws";
+	}
+	
 	@RequestMapping(value="users/signUpView.do", method = RequestMethod.GET)
-	public String loginView(UsersVO user,Model model) {	
+	public String signUpView(UsersVO user,Model model) {	
 		model.addAttribute("usersVO", user);
 		LOG.debug("=user=="+user);
 		

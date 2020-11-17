@@ -6,7 +6,12 @@ import com.bighit.on.workspace.WorkSpaceVO;
 
 public interface UsersService {
 	
-	
+	/**
+	 * 이메일 확인
+	 * @param usersVO
+	 * @return 1(성공)/0(실패)
+	 */
+	public int emailCheck(UsersVO usersVO);
 	/**
 	 * 닉네임 조건 
 	 * @param workSpaceVO
