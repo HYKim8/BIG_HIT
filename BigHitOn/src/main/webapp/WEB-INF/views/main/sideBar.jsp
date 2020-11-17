@@ -47,8 +47,8 @@
                     	<c:forEach var="ChannelVO" items="${channelList}">
    						 	<a class="collapse-item">#<c:out value="${ChannelVO.chName}" /></a>
 						</c:forEach>
-                        
-                        <a class="collapse-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
+                       	
+                        <a id="addChannelin" class="collapse-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
                                 + Add Channel
                         </a>
                         

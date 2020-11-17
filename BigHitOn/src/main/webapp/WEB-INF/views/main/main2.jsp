@@ -163,10 +163,14 @@
 					<input type="text" class="form-control" name="chName" id="chName" value="${vo.chName}" placeholder="채널이름" />
 				</div>
 				<div class="modal-body">
-					<input type="text" class="form-control" name="chName" id="chName" value="${vo.chDescription}" placeholder="설명" />
+					<input type="text" class="form-control" name="chTopic" id="chTopic" value="${vo.chDescription}" placeholder="채널 주제" />
 				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" name="chDescription" id="chDescription" value="${vo.chDescription}" placeholder="설명" />
+				</div>
+				
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">생성</button>
+                    <button id="channelCreateBtn" class="btn btn-secondary" type="button" data-dismiss="modal">생성</button>
                 </div>
             </div>
         </div>
@@ -191,12 +195,50 @@
             </div>
         </div>
     </div>
+    
+    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(function () {
 	    $('[data-toggle="popover"]').popover()
 	    })
 
+	    $("#channelCreateBtn").on("click", function(){
+				console.log("channelCreateBtn Clicked");
+				doChannelCreate();
+			})
+			
+		function doChannelCreate(){
+			$.ajax({
+				type:"POST",
+	               url:"${hContext}/main/addchannel.do",
+	               dataType:"html",
+	               async: true,
+	               data:{
+		               "chName":$("#chName").val(),
+		               "topic":$("#chTopic").val(),
+		               "chDescription":$("#chDescription").val()
+	               },
+	               success: function(data){
+	            	   var parseData = JSON.parse(data);
+		               console.log("success");
+		               console.log(parseData.chName);
+		               var html = "";
+					   html += "<a class='collapse-item'>#";
+					   html += parseData.chName;
+					   html += "</a>";
+						  
+						$("#addChannelin").before(html);
+		               },
+		               error: function(){
+								console.log("error");
+			               }
+				});
+
+
+
+			}
+	    
 	</script>
 
     <!-- Bootstrap core JavaScript-->

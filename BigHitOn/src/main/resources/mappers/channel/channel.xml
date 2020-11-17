@@ -58,7 +58,8 @@
 		    reg_id AS regId,        
 		    reg_dt AS regDt        
 		FROM channels      
-		WHERE ws_link = #{wsLink}  		
+		WHERE ws_link = #{wsLink}
+		ORDER BY regDt  		
 	</select>
 	
 	<!-- 단건조회 -->

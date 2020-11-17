@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bighit.on.channel.ChannelServiceImpl;
@@ -19,6 +20,7 @@ import com.bighit.on.user.dao.UsersServiceImpl;
 import com.bighit.on.user.dao.UsersVO;
 import com.bighit.on.workspace.WorkSpaceServiceImpl;
 import com.bighit.on.workspace.WorkSpaceVO;
+import com.google.gson.Gson;
 
 @Controller
 public class MainController {
@@ -60,4 +62,34 @@ public class MainController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "main/addchannel.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+    @ResponseBody
+	public String addChannel(HttpServletRequest req, ChannelVO channelVO) {
+		LOG.debug("-------------------------");
+		LOG.debug("-main/addchannel.do-");
+		LOG.debug("-------------------------"); 
+	    
+		HttpSession session = req.getSession();
+		
+		// for test
+		session.setAttribute("wsLink", "1");
+		session.setAttribute("userId", "HelloKim");
+		// for test
+		
+		String wsLink = (String) session.getAttribute("wsLink");
+		String regId = (String) session.getAttribute("userId");
+		
+	    channelVO.setWsLink(wsLink);
+	    channelVO.setChAccess("1");
+	    channelVO.setRegId(regId);
+	    
+	    channelService.doInsert(channelVO);
+	    
+	    Gson gson = new Gson();
+    	String json = gson.toJson(channelVO);
+		
+		return json;
+	}
+	
 }
