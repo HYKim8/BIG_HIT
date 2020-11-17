@@ -36,9 +36,13 @@
 		<form action="testImg.do" method="get">
 			<input type="submit" id="submitbtn" value="submit">
 		</form>
-		<!-- 얘가 hContext.concat 안 붙을 앤지 붙을 앤지 체크 해야할듯 -->
-		<img alt="" src="${hContext.concat(sessionScope['U5835RE6LL2thumb']) }">
-		<p><c:out value="${sessionScope['1111thumb']}"/></p>
+		<!-- 얘가 hContext.concat 안 붙을 앤지 붙을 앤지 체크 해야할듯 if 때려서-->
+		<!-- 밑이랑 비교해서 if해서 다르면 이미지 찍고 같으면 이미지 안찍는 방식으로. -->
+		<c:set var="user_serial" value="U5835RE6LL2thumb" />
+		<c:if test="${sessionScope['U5835RE6LL2thumb'] eq '/resources/img/default.jpg' }">
+			<img alt="" src="${hContext.concat(sessionScope['U5835RE6LL2thumb']) }">
+		</c:if>
+		
 		<p id="output_text"></p>
 		<input type="button" id="thumb_test" value="thumb_test"/>
 		<img id="user1" alt="" src="">
@@ -62,10 +66,8 @@
 		// 알림
 	$("#thumb_test").on("click", function(){
 			console.log("thumb_test clicked");
-			var hey = document.getElementById('asdfasdf');
-			console.log(hey.value);
 			var text = "gg";
-			var notification = new Notification('할 일 목록', { body: text});
+			var notification = new Notification('asd', { body: text});
 		})
 	
 
