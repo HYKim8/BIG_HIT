@@ -101,6 +101,15 @@ public class UsersController {
 		usersVO.setReg_dt("");
 		usersVO.setThumb("");
 		
+		int flag = this.usersService.emailCheck(usersVO);
+		message.setRegId(String.valueOf(flag));
+		
+		if(1==flag) {
+			message.setMsgContents("이메일을 확인하세요.");
+		}else {
+			message.setMsgContents("회원가입 성공.");
+		}
+		
 		int sessionUser = this.usersService.doInsert(usersVO);
 		LOG.debug("=======================");
 		LOG.debug("=sessionUser=="+sessionUser);
@@ -108,8 +117,7 @@ public class UsersController {
 		
 		HttpSession session =  req.getSession();
 		session.setAttribute("usersVO", sessionUser);
-		
-		
+
 		return message;
 		
 	}

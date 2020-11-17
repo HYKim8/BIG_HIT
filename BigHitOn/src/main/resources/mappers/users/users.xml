@@ -6,6 +6,7 @@
 		SELECT COUNT(*) 
 		FROM  users
 		WHERE email = #{email,jdbcType=VARCHAR}
+		AND ws_link = #{ws_link}
 	</select>
 	
 
