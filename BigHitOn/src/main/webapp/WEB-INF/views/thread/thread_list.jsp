@@ -259,23 +259,24 @@
             url:"${hContext}/thread/doSelectOne.do",
             data:{"thrKey" : thrKey
                  },
-            dataType:"html",
+            dataType:"json",
             success:function(data){ //성공
-            	   console.log("data="+data);
-                   var list2 = JSON.parse(data);
-                   console.log("list2 : " + list2);
+            	   //console.log("data="+data);
+         	   	   console.log(data);
 
+        		  
+                 
                    var html = "";
                    
                    html += '<tr>';
-                   html += '<td>'+list2.thrKey+'</td>';
-                   html += '<td>'+list2.contents+'</td>';
-                   html += '<td>'+list2.isPin+'</td>';
-                   html += '<td>'+list2.regId+'</td>';
-                   html += '<td>'+list2.regDt+'</td>';
-                   html += '<td>'+list2.childCnt+'</td>';
+                   html += '<td>'+data.thrKey+'</td>';
+                   html += '<td>'+data.contents+'</td>';
+                   html += '<td>'+data.isPin+'</td>';
+                   html += '<td>'+data.regId+'</td>';
+                   html += '<td>'+data.regDt+'</td>';
+                   html += '<td>'+data.childCnt+'</td>';
                    html += '</tr>';
-                   
+                   console.log(html);
                    
               },
             error:function(xhr,status,error){
