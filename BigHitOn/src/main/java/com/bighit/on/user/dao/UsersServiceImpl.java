@@ -109,5 +109,11 @@ public class UsersServiceImpl implements UsersService {
 	public int emailCheck(UsersVO usersVO) {
 		return usersDaoImpl.emailCheck(usersVO);
 	}
+
+	@Override
+	public UsersVO doSelectOne(String ws_link, String email) {
+		
+		return usersDaoImpl.doSelectOne(ws_link, email);
+	}
 	
 }

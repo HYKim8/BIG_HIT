@@ -56,6 +56,23 @@ public class UsersDaoImpl {
 	
 	public UsersDaoImpl() {}
 	
+	public UsersVO doSelectOne(String ws_link, String email) {
+		LOG.debug("===========================");
+		LOG.debug("=doSelectOne=");
+		LOG.debug("===========================");
+		
+		String statement = NAMESPACE + ".doSelectOne2";
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=ws_link="+ws_link);
+		LOG.debug("=email="+email);
+		
+		
+		Object[] args = {ws_link, email};
+		UsersVO outVO = (UsersVO) this.sqlSessionTemplate.selectOne(statement, args);
+		LOG.debug("outVO = "+outVO);
+		
+		return outVO;
+	}
 	/**
      * email 확인
      * @param usersVO

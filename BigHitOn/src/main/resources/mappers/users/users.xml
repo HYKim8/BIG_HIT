@@ -56,6 +56,29 @@
 		WHERE user_serial = #{user_serial} 
 	</select>
 	
+	<select id="doSelectOne2"  parameterType="UsersVO" resultType="UsersVO">
+		SELECT                
+		    user_serial,      
+		    ws_link,          
+		    email,            
+		    password,         
+		    name,             
+		    nickname,         
+		    profile_img,      
+		    position,         
+		    phone_num,        
+		    country,          
+		    state,            
+		    online_state,     
+		    reg_id,           
+		    reg_dt,
+		    thumb            
+		FROM users            
+		WHERE ws_link = #{ws_link} 
+		AND email = #{email}
+	
+	</select>
+	
 	<!-- 수정 -->
 	<!-- com.bighit.on.users.doUpdate -->
 	<update id="doUpdate" parameterType="UsersVO">

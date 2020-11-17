@@ -6,6 +6,8 @@ import com.bighit.on.workspace.WorkSpaceVO;
 
 public interface UsersService {
 	
+	UsersVO doSelectOne(String ws_link, String email);
+	
 	/**
 	 * 이메일 확인
 	 * @param usersVO
