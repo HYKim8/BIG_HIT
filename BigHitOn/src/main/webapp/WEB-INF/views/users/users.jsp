@@ -123,7 +123,12 @@
 				},
 			success : function(data){
 				var jsonData = JSON.parse(data);
-				
+				 if(null != jsonData && jsonData.regId=="1"){
+		            alert(jsonData.msgContents);
+				 }else{
+					 alert(jsonData.msgContents);
+				 }
+		            //다시조회
 				window.location.href="${hContext}/main/main.do"
 			},
 			complete:function(data){
