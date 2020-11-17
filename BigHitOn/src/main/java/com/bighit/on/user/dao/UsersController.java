@@ -53,6 +53,17 @@ public class UsersController {
 	public Message doSignUp(UsersVO usersVO, HttpServletRequest req,Locale locale,HttpServletResponse res) {
 		Message message=new Message();
 		
+		usersVO.setNickname("nickname");
+		usersVO.setProfile_img("");
+		usersVO.setPosition("general");
+		usersVO.setPhone_num("010-1234-5678");
+		usersVO.setCountry(0000);
+		usersVO.setState(0);
+		usersVO.setOnline_state(0);
+		usersVO.setReg_id("");
+		usersVO.setReg_dt("");
+		usersVO.setThumb("");
+		
 		int sessionUser = this.usersService.doInsert(usersVO);
 		LOG.debug("=======================");
 		LOG.debug("=sessionUser=="+sessionUser);
