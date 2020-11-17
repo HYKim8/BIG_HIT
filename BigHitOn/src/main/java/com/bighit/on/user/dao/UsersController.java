@@ -58,8 +58,7 @@ public class UsersController {
 		LOG.debug("=======================");
 		
 		HttpSession session =  req.getSession();
-		session.setAttribute("user", sessionUser);
-		
+		session.setAttribute("usersVO", sessionUser);
 //		int flag = this.usersService.emailCheck(usersVO);
 //		if(1==flag) {
 //			

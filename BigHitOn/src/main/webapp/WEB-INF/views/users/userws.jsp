@@ -148,7 +148,7 @@
 			},
 		success : function(data){
 			var jsonData = JSON.parse(data);			
-			window.location.href="${hContext}/main/main.do"
+			window.location.href="${hContext}/main/index.do"
 		},
 		complete:function(data){
              
