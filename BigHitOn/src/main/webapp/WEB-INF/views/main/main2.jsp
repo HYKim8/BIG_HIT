@@ -202,7 +202,8 @@
 		$(function () {
 	    $('[data-toggle="popover"]').popover()
 	    })
-
+		
+		// ----------Add Channel----------
 	    $("#channelCreateBtn").on("click", function(){
 				console.log("channelCreateBtn Clicked");
 				doChannelCreate();
@@ -234,10 +235,8 @@
 								console.log("error");
 			               }
 				});
-
-
-
 			}
+		// ----------Add Channel----------
 	    
 	</script>
 
