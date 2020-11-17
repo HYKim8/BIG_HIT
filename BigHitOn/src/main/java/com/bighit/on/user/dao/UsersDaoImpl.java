@@ -66,9 +66,11 @@ public class UsersDaoImpl {
 		LOG.debug("=ws_link="+ws_link);
 		LOG.debug("=email="+email);
 		
-		
+		UsersVO user = new UsersVO();
+		user.setEmail(email);
+		user.setWs_link(ws_link);
 		Object[] args = {ws_link, email};
-		UsersVO outVO = (UsersVO) this.sqlSessionTemplate.selectOne(statement, args);
+		UsersVO outVO = (UsersVO) this.sqlSessionTemplate.selectOne(statement, user);
 		LOG.debug("outVO = "+outVO);
 		
 		return outVO;

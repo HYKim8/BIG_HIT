@@ -52,7 +52,7 @@ public class UsersController {
 	public Message doLogin(UsersVO usersVO, HttpServletRequest req,Locale locale,HttpServletResponse res) {
 		Message message=new Message();
 		LOG.debug("usersVO"+usersVO);
-		UsersVO sessionUser = this.usersService.doSelectOne(usersVO.getUser_serial());
+		UsersVO sessionUser = this.usersService.doSelectOne(usersVO.getWs_link(),usersVO.getEmail());
 		LOG.debug("=======================");
 		LOG.debug("=sessionUser=="+sessionUser);
 		LOG.debug("=======================");
@@ -60,12 +60,12 @@ public class UsersController {
 		HttpSession session =  req.getSession();
 		session.setAttribute("user", sessionUser);
 		
-		int flag = this.usersService.emailCheck(usersVO);
-		if(1==flag) {
-			
-		}else {
-			
-		}
+//		int flag = this.usersService.emailCheck(usersVO);
+//		if(1==flag) {
+//			
+//		}else {
+//			
+//		}
 		
 		return message;
 	}

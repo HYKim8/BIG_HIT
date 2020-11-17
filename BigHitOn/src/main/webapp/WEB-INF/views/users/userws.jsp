@@ -115,10 +115,10 @@
                   var html = "";
                   for(var i=0;i<list.length;i++){
                     html += '<tr>';
-                    html += '<td>'+ list[i].wsLink+'</td>';
-                    html += '<td>'+ list[i].wsName+'</td>';
+                    html += '<td id=\'wslink\'>'+ list[i].wsLink+'</td>';
+                    html += '<td >'+ list[i].wsName+'</td>';
                     //<button class=\'btn btn-primary btn-lg btn-block\' id=\'myWsBtn\' value=\'실행\' />
-                    html += "<td> <button type= \'button\' class =\'btn btn-primary btn-lg btn-block\' id=\'myWsBtn\'> " + "실행" +"</button></td>"
+                    html += "<td> <button type= \'button\' class =\'btn btn-primary btn-md btn-block\' id=\'myWsBtn\'> " + "실행" +"</button></td>"
                     html += '<tr>';
                   }                     
               
@@ -137,7 +137,27 @@
 	});
 	
 	$(document).on("click", "#myWsBtn", function(){
-	    console.log("hi");
+	    var wslink = $(this).parent().parent().children("#wslink").text();
+	    $.ajax({
+			type:"POST",
+            url:"${hContext}/users/doLogin.do",
+            dataType:"html",
+			data:{
+			"ws_link": wslink,
+			"email":$("#email").val()
+			},
+		success : function(data){
+			var jsonData = JSON.parse(data);			
+			window.location.href="${hContext}/main/main.do"
+		},
+		complete:function(data){
+             
+        },
+        error:function(xhr,status,error){
+            alert("error:"+error);
+        }
+
+		});
 	});
 	//클릭으로 못넘어가게
 	$('.nav-tabs li.disabled > a[data-toggle=tab]').on('click', function(e) {
