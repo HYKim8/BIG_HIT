@@ -12,7 +12,16 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
+			
+			<li class="nav-item active">
+                <a class="nav-link" href="${hContext}/workspace/teamUserAdd_view.do">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>WorkSpace Create</span></a>
+            </li>
+			
+			<!-- Divider -->
+            <hr class="sidebar-divider">
+			
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
