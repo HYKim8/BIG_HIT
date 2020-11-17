@@ -26,17 +26,21 @@ public class ThreadServiceImpl implements ThreadService {
       return thrDao.doSelectList(search);
    }
    
-   //@Override
+   @Override
    public int doInsertRep(ThreadVO threadVO) {
    //   
-   //   
-   //   if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
-   //      thrDao.doInsert(threadVO);
-   //      parentVO.setChildCnt(parentVO.getChildCnt()+1);
-   //            
-   //      return thrDao.doUpdate(parentVO);
-   //   }
-      return 0;
+       
+         ThreadVO parentVO = new ThreadVO();
+         parentVO.setThrKey(threadVO.getParentKey());
+         parentVO = thrDao.doSelectOne(parentVO);
+        if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
+        
+        parentVO.setChildCnt(parentVO.getChildCnt()+1);              
+        thrDao.doUpdate(parentVO);
+        
+        return thrDao.doInsertRep(threadVO);
+        }
+        return thrDao.doInsertRep(threadVO);
    }
    
    @Override
