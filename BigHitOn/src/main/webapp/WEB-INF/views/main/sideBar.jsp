@@ -79,8 +79,8 @@
                 <div id="collapseMessage" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    	<c:forEach var="UsersVO" items="${usersList}">
-   						 	<a class="collapse-item">#<c:out value="${UsersVO.nickname}" /></a>
+                    	<c:forEach var="ChannelVO" items="${channelListDM}">
+   						 	<a class="collapse-item">#<c:out value="${ChannelVO.chName}" /></a>
 						</c:forEach>
                         <a class="collapse-item" href="utilities-other.html" data-toggle="modal" data-target="#addteamModal">
                         	+ Add Teammates

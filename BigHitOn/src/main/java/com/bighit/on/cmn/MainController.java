@@ -1,5 +1,7 @@
 package com.bighit.on.cmn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,22 +43,23 @@ public class MainController {
 		
 		UsersVO usersVO = new UsersVO();
 		usersVO = (UsersVO) session.getAttribute("usersVO");
-		String wsLink = usersVO.getWs_link();
 		
 		ModelAndView mav = new ModelAndView();
 		
-		ChannelVO channelVO = new ChannelVO();
-		channelVO.setWsLink(wsLink);
+		Search search = new Search();
+		search.setSearchWord(usersVO.getUser_serial());
 		
-		WorkSpaceVO workSpaceVO = new WorkSpaceVO();
-		workSpaceVO.setWsLink(wsLink);
+		LOG.debug("chList");
+		search.setSearchDiv("10");
+		List<ChannelVO> channelList = channelService.doSelectList(search);
 		
-		List<UsersVO> usersList = usersService.doSelectList(workSpaceVO);
-		List<ChannelVO> channelList = channelService.doSelectList(channelVO);
+		LOG.debug("DMList");
+		search.setSearchDiv("20");
+		List<ChannelVO> channelListDM = channelService.doSelectList(search);
 		
 		mav.setViewName("main/main2");
 		mav.addObject("channelList", channelList);
-		mav.addObject("usersList", usersList);
+		mav.addObject("channelListDM", channelListDM);
 		
 		return mav;
 	}

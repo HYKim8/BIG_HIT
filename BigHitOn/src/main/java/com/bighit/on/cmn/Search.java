@@ -21,6 +21,10 @@ public class Search extends DTO {
 	
 	public Search() {}
 	
+	public Search(String searchDiv) {
+		this.searchDiv = searchDiv;
+	}
+	
 	public Search(String searchDiv, String searchWord) {
 		super();
 		this.pageSize = 10;
