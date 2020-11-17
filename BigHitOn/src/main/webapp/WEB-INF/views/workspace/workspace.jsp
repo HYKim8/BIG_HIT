@@ -195,7 +195,7 @@
 		    data:{"wsLink" :$("#wsLink").val(),
 		    	  "wsName" :$("#wsName").val(),
 		          "project":$("#project").val(),
-		          "regId" : "1111"
+		          "regId" : "${sessionScope.usersVO.user_serial}"
 		    },
 		    success:function(data){ //성공
 		    	 //json 분리해서 변수
