@@ -55,14 +55,18 @@
                 <small>또는</small>
               </div>
               <div>
-              	<p class="text-lead text-black"> 성명 </p>
+              	<p class="text-lead text-gray "><small> 성명</small> </p>
 			  </div>
-              <form role="form">
+			  
+              <form role="form" action="${hContext}/users/signUpView.do">
+              	<input type="hidden" id="ws_link" name="ws_link" value="${usersVO.getWs_link()}">
+              	<input type="hidden" id="email" name="email" value="${usersVO.getEmail()}">
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
-                    <input class="form-control" placeholder="고객님의 이름" type="email" name="name" id="name">
+                    <input class="form-control" placeholder="고객님의 이름" type="text" name="name" id="name">
                   </div>
                 </div>
+                <p class="text-lead text-gray"><small> 비번</small> </p>
                 <div class="form-group">
                   <div class="input-group input-group-merge input-group-alternative">
                     
@@ -117,7 +121,8 @@
 				},
 			success : function(data){
 				var jsonData = JSON.parse(data);
-				window.location.hre="${hContext}/main/main.do"
+				
+				window.location.href="${hContext}/main/main.do"
 			},
 			complete:function(data){
 	             
@@ -129,6 +134,8 @@
 			});
 
 		});
+
+		
 
 	
 	</script>	

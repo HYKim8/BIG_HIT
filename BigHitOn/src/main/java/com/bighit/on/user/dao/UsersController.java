@@ -33,9 +33,17 @@ public class UsersController {
 	@Autowired
 	MessageSource messageSource;
 	
+	@RequestMapping(value="users/logout.do", method = RequestMethod.GET)
+	public String logout(HttpServletRequest req) {
+		HttpSession session =  req.getSession();
+		session.invalidate();
+		return "main/main";
+	}
 	
-	@RequestMapping(value="users/loginView.do", method = RequestMethod.GET)
-	public String loginView(Model model) {
+	@RequestMapping(value="users/signUpView.do", method = RequestMethod.GET)
+	public String loginView(UsersVO user,Model model) {	
+		model.addAttribute("usersVO", user);
+		LOG.debug("=user=="+user);
 		
 		return "users/users";
 	}
