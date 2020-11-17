@@ -34,12 +34,11 @@ public class ThreadServiceImpl implements ThreadService {
          parentVO.setThrKey(threadVO.getParentKey());
          parentVO = thrDao.doSelectOne(parentVO);
         if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
-        
-        parentVO.setChildCnt(parentVO.getChildCnt()+1);              
-        thrDao.doUpdate(parentVO);
-        
-        return thrDao.doInsertRep(threadVO);
+        	thrDao.doUpdate(parentVO);
+        //parentVO.setChildCnt(parentVO.getChildCnt()+1);  
         }
+      
+        
         return thrDao.doInsertRep(threadVO);
    }
    

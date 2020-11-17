@@ -36,7 +36,7 @@
    </delete>
    
    <update id="doUpdate">
-      UPDATE THREAD SET contents=#{contents},mod_dt=#{modDt} WHERE thr_key = #{thrKey}
+      UPDATE THREAD SET child_cnt = child_cnt+1 WHERE thr_key = #{thrKey}
    </update>
    
    <select id = "doSelectOne"
