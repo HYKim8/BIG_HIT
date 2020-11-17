@@ -133,7 +133,7 @@ public class FileController {
 	@RequestMapping(value = "main/main.do", method = RequestMethod.GET)
 	public String main_view() {
 		LOG.debug("-------------------------");
-		LOG.debug("-file/file_view.do-");
+		LOG.debug("-main/main.do-");
 		LOG.debug("-------------------------");
 		
 		return "main/main";

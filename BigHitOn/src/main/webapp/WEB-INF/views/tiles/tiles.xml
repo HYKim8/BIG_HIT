@@ -37,12 +37,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/workspace/{1}.jsp"/>
 	</definition>
 			
-	<!-- Thread -->
-	<definition name="thread/*" extends="basede-finition">
-		<put-attribute name="title" value="thread"/>
-		<put-attribute name="body" value="/WEB-INF/views/thread/{1}.jsp"/>
-	</definition>
-					
+				
 </tiles-definitions>
 
 
