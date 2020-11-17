@@ -89,14 +89,14 @@ public class ThreadController {
       {
          search.setPageSize(100);
       }
-      model.addAttribute("vo", search);
+      model.addAttribute("searchVO", search);
       
       List<ThreadVO> threadList = this.threadService.doSelectList(search);
       model.addAttribute("threadList", threadList);
       for(ThreadVO vo:threadList) {
       LOG.debug(vo.toString());
       }
-      String view = "thread/thread_list";
+      String view = "thread/thread_list2";
       return view;
    }
    
