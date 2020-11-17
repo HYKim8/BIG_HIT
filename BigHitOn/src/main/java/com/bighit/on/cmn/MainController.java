@@ -39,11 +39,9 @@ public class MainController {
 		
 		HttpSession session = req.getSession();
 		
-		// for the Test
-		session.setAttribute("wsLink", "1");
-		// for the Test
-		
-		String wsLink = (String) session.getAttribute("wsLink");
+		UsersVO usersVO = new UsersVO();
+		usersVO = (UsersVO) session.getAttribute("usersVO");
+		String wsLink = usersVO.getWs_link();
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -72,13 +70,11 @@ public class MainController {
 	    
 		HttpSession session = req.getSession();
 		
-		// for test
-		session.setAttribute("wsLink", "1");
-		session.setAttribute("userId", "HelloKim");
-		// for test
+		UsersVO usersVO = new UsersVO();
+		usersVO = (UsersVO) session.getAttribute("usersVO");
 		
-		String wsLink = (String) session.getAttribute("wsLink");
-		String regId = (String) session.getAttribute("userId");
+		String wsLink = usersVO.getWs_link();
+		String regId = usersVO.getUser_serial();
 		
 	    channelVO.setWsLink(wsLink);
 	    channelVO.setChAccess("1");
