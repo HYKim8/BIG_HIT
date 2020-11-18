@@ -56,8 +56,9 @@
                <%@ include file="/WEB-INF/views/main/topBar.jsp" %>
 
                     
-
-		<div id="divScroll" style="padding-right: 20px;width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;"class="media">
+        <c:set var="lefthalf" value = "padding-right: 20px;width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
+        <c:set var="leftfull" value = "padding-right: 20px;width:100%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
+		<div id="divScroll" style="${lefthalf}"class="media">
 			<c:if test="${!empty threadList}">
 				<c:set var = "vs" value="any"/>
 				
@@ -80,12 +81,19 @@
 			</c:if>
 		</div>
 				<!-- 한 셋트 -->
+			 <c:set var="righthalf" value = "width:35%;float:left;display:inline;white-space:nowrap" />
+			 <c:set var="rightfull" value = "width:0%;float:left;display:inline;white-space:nowrap" />
+			<div id="rightSide" style="${righthalf}">
+				<h5>hihihihi</h5>
+
+			</div>
+			
 				
             </div>
             <!-- End of Main Content -->
 
 
-
+			
 
 
 
@@ -99,22 +107,18 @@
             <!-- 입력 폼 -->
             <form method="post" action="${hContext}/thread/doInsert.do">
 			   	<input type="hidden" name="thrKey" id="thrKey"/>
-			    <footer class="sticky-footer bg-white">                
+			    <div class="sticky-footer bg-white">                
 			                <div style="padding-left: 20px; padding-right: 20px;"class="row">
 			                	<div class="col-md-12"><textarea class="form-control" name="contents" id="contents" placeholder="내용을 입력하세요"
 			                    maxlength="400"></textarea>
 			                    </div>  
 			                    <input type="button" class="btn btn=primary btn-sm" value="Send" id="insertBtn"/>                  
 			                </div>
-			    </footer>   
+			    </div>   
 			  </form>
             <!-- End of Footer -->
 			
 			
-			
-
-
-
 
         </div>
         <!-- End of Content Wrapper -->
@@ -312,7 +316,7 @@
                   "parentKey" : "",
                   "chLink" : $("#searchWord").val(),
                   "contents" : $("#contents").val(),
-                  "regId" : "hi",
+                  "regId" : "${sessionScope.usersVO.user_serial}"
                },
                success:function(data){
 
@@ -336,9 +340,9 @@
 	    })
 		
 		// 클릭된 타겟 찾기
-		/* $("body").click(function(event) {
+		$("body").click(function(event) {
 			console.log(event.target);
-		}) */
+		})
 
 		
 		
