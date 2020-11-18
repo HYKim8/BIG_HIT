@@ -44,7 +44,7 @@ public class UsersController {
 	public String logout(HttpServletRequest req) {
 		HttpSession session =  req.getSession();
 		session.invalidate();
-		return "main/index";
+		return "users/userws";
 	}
 	
 	@RequestMapping(value="users/doLogin.do", method = RequestMethod.POST)

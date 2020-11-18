@@ -16,9 +16,29 @@
 			<li class="nav-item active">
                 <a class="nav-link" href="${hContext}/workspace/teamUserAdd_view.do">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>WorkSpace Create</span></a>
+                    <span>WorkSpace Create</span>
+                </a>
             </li>
 			
+			<!-- workspace transform -->
+			 <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+			
+			<li class="nav-item active">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMes"
+                    aria-expanded="true" aria-controls="collapseMes">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>WorkSpace transform</span>
+                </a>
+                <div id="collapseMes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">                    
+                    	<c:forEach var="WorkSpaceVO" items="${workspaceList}">
+   						 	<a class="collapse-item">#<c:out value="${WorkSpaceVO.getWsName}" /></a>
+						</c:forEach>      	
+                    </div>
+                </div>
+            </li>
+            
 			<!-- Divider -->
             <hr class="sidebar-divider">
 			
