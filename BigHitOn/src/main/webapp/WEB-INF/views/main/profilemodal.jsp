@@ -15,7 +15,7 @@
 				</button>
 			</div>
 
-
+			
 			<div class="media">
 				<div class="media-body">
 					<div style="padding-top: 20px;" class="container">
@@ -47,13 +47,15 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<button id="profileSaveBtn" type="button" class="btn btn-primary">변경사항 저장</button>
+				<button type="reset" class="btn btn-default" data-dismiss="modal" id="cancelProfile">취소</button>
+				<button id="profileSaveBtn" type="button" data-dismiss="modal" class="btn btn-primary">변경사항 저장</button>
 			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
+
+
 
 	//---------이미지 미리보기----------
 	$(document).ready(function(){
@@ -81,7 +83,7 @@
 	$("#profileSaveBtn").on("click", function(){
 			doUpdateProfileImg();
 			doUpdateAll();
-		})
+		});
 		
 	function doUpdateAll(){
 	

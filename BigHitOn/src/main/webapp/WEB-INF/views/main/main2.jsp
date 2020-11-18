@@ -243,8 +243,8 @@
             </div>
         </div>
     </div>
-    
-    
+    <%@ include file="/WEB-INF/views/main/remindermain.jsp" %>
+     
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
 	//스크롤시 쓰레드추가 
