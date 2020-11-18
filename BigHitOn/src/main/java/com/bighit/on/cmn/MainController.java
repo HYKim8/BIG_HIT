@@ -69,6 +69,7 @@ public class MainController {
 		LOG.debug("ReminderList");
 		List<ReminderVO> reminderList = reminderService.doSelectList(reminderVO);
 		
+		LOG.debug("workspaceList");
 		List<WorkSpaceVO> workspaceList = workSpaceService.doSelectList(usersVO);
 		
 		mav.setViewName("main/main2");
@@ -143,9 +144,28 @@ public class MainController {
 		return json;
 	}
 	
+	@RequestMapping(value = "reminder/doSelectList.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doSelectListReminder(HttpServletRequest req) {
+		LOG.debug("-------------------------");
+		LOG.debug("-reminder/doSelectList.do-");
+		LOG.debug("-------------------------");
+		
+		HttpSession session = req.getSession();
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+		
+		ReminderVO reminderVO = new ReminderVO();
+		reminderVO.setWsLink(usersVO.getWs_link());
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(reminderVO);
+		
+		return json;
+	}
+	
 	@RequestMapping(value = "reminder/doInsert.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public void doInsertReminder(HttpServletRequest req, ReminderVO reminderVO) {
+	public String doInsertReminder(HttpServletRequest req, ReminderVO reminderVO) {
 		LOG.debug("-------------------------");
 		LOG.debug("-reminder/doInsert.do-");
 		LOG.debug("-------------------------");
@@ -153,11 +173,18 @@ public class MainController {
 		HttpSession session = req.getSession();
 		UsersVO usersVO = new UsersVO();
 		usersVO = (UsersVO) session.getAttribute("usersVO");
+		LOG.debug("usersVO : " + usersVO);
 		
-		reminderVO.setRemindId(usersVO.getUser_serial());
+		reminderVO.setRegId(usersVO.getUser_serial());
 		reminderVO.setWsLink(usersVO.getWs_link());
+		
+		LOG.debug("reminderVO : " + reminderVO);
 		
 		reminderService.doInsert(reminderVO);
 		
+		Gson gson = new Gson();
+		String json = gson.toJson(reminderVO);
+		
+		return json;
 	}
 }

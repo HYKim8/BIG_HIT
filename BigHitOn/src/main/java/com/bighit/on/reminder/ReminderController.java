@@ -78,30 +78,6 @@ public class ReminderController {
 	}
 	
 	
-	@RequestMapping(value = "reminder/doInsert.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String doInsert(ReminderVO reminderVO) {
-		
-		LOG.debug("-------------------------");
-		LOG.debug("-doInsert-");
-		LOG.debug("-reminderVO-" + reminderVO);
-		LOG.debug("-------------------------");
-		
-		// session으로 받을 것.
-		reminderVO.setThrKey("1");
-		reminderVO.setRegId("KIM");
-		
-		int flag = reminderService.doInsert(reminderVO);
-		
-		LOG.debug("-------------------------");
-		LOG.debug("-doInsert-Controller-");
-		LOG.debug("-flag-" + flag);
-		LOG.debug("-------------------------");
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(flag);
-		
-		return json;
-	}
+	
 	
 }

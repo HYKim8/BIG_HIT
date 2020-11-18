@@ -46,6 +46,9 @@
 		<p id="output_text"></p>
 		<input type="button" id="thumb_test" value="thumb_test"/>
 		<img id="user1" alt="" src="">
+		<input type="text" id="key_name"/>
+		<input type="text" id="remind_time"/>
+		<input type="button" id="doInsertReminder" value="doInsertRemind.do"/>
 	</div>
 	
 	
@@ -55,6 +58,32 @@
     <!-- javascript -->
     <script type="text/javascript">
 
+	$("#doInsertReminder").on("click", function(){
+			console.log("doInsertReminder.do");
+			doInsertReminder();
+
+
+		})
+		
+	function doInsertReminder(){
+		$.ajax({
+	        url: '${hContext}/reminder/doInsert.do',
+	        dataType:"html",
+	        data:{
+		          "thrKey":$("#key_name").val(),
+		          "remindTime":$("#remind_time").val()
+		          },
+	        async: true,
+	        type: 'POST',
+	        success: function(data){
+	            	console.log("success");
+	            	var parseData = JSON.parse(data);
+	            	console.log(parseData);
+				}
+	        });
+
+
+		}
     
 	$(document).ready(function(){
 			console.log("load Complete");
