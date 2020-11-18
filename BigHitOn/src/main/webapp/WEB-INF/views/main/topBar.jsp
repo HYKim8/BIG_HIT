@@ -133,6 +133,9 @@
 
 $("#invite_table tbody").on("click", "tr", function(){
 	var tmp = $(this).find("td:eq(2)").text();
+	var tmp2 = $(this).find("td");
+	
+	console.log("tmp2 : "+tmp2);
 	var alertman = $(this).find("td:eq(0)").text();
 	console.log(tmp);
 	if(confirm(alertman+"님을 초대하시겠습니까?")) {
@@ -152,6 +155,7 @@ $("#invite_table tbody").on("click", "tr", function(){
 		},
 		success : function(data) {
 			console.log("초대 성공!");
+			tmp2.remove();
 		}
 	});
 	
