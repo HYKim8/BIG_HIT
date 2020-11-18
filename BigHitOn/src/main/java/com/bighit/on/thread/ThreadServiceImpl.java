@@ -33,8 +33,9 @@ public class ThreadServiceImpl implements ThreadService {
          ThreadVO parentVO = new ThreadVO();
          parentVO.setThrKey(threadVO.getParentKey());
          parentVO = thrDao.doSelectOne(parentVO);
-        if(threadVO.getParentKey() != null && parentVO.getThrKey() == threadVO.getParentKey()) {
-        	thrDao.doUpdate(parentVO);
+         //threadVO.setRegId("aas");
+        if(threadVO.getParentKey() != null && parentVO.getThrKey().equals(threadVO.getParentKey())) {
+           thrDao.doUpdate(parentVO);
         //parentVO.setChildCnt(parentVO.getChildCnt()+1);  
         }
       
@@ -70,5 +71,10 @@ public class ThreadServiceImpl implements ThreadService {
    public int doUpdate(ThreadVO threadVO) {
       return thrDao.doUpdate(threadVO);
    }
+
+@Override
+public List<ThreadVO> doSelectChildList(ThreadVO threadVO) {
+   return thrDao.doSelectChildList(threadVO);
+}
 
 }

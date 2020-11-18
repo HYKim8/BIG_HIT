@@ -11,18 +11,17 @@
       INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) , #{parentKey},#{chLink},#{contents}, #{regId}, SYSDATE)
    </insert>
    
-   <select id ="doSelectChildList">
-      SELECT thr_key,                                   
-                ch_link,                                          
-                contents,                                         
-                is_pin,                                           
-                pin_id,                                           
-                reg_id,                                           
+   
+   <select id ="doSelectChildList" parameterType="ThreadVO"
+   resultType = "com.bighit.on.thread.ThreadVO">
+      SELECT    thr_key AS thrKey,                                   
+                ch_link AS chLink,                                          
+                contents AS contents,                                                                                   
+                reg_id AS regId,                                           
                 TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,  
-                TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS mod_dt,  
-                   parent_key                                        
+                parent_key AS parentKey                                        
              FROM THREAD                                       
-             WHERE parent_key = ?   
+             WHERE parent_key = #{thrKey}   
    </select>
    
    <!-- 계층형 쿼리로 작성할 것 -->
@@ -41,7 +40,7 @@
    
    <select id = "doSelectOne"
    resultType = "com.bighit.on.thread.ThreadVO">
-   SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,contents AS contents
+   SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,contents AS contents,child_cnt AS childCnt
     FROM thread Where thr_key = #{thrKey}   
    </select>
    <select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
