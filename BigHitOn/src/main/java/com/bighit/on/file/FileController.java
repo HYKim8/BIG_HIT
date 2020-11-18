@@ -74,7 +74,7 @@ public class FileController {
     	WorkSpaceVO workSpaceVO = new WorkSpaceVO();
     	workSpaceVO.setWsLink(wsLink);
     	
-    	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻어서 session에 User_serial_thumb으로 등록.
+    	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻어서 session에 User_serialthumb으로 등록.
     	// ${hContext.concat(sessionScope['U5835RE6LL2thumb']) }
     	List<UsersVO> userList = userService.doSelectList(workSpaceVO);
     	for(UsersVO vo : userList) {
@@ -84,7 +84,6 @@ public class FileController {
     			session.setAttribute(vo.getUser_serial()+"thumb", "/resources/img/default.jpg");
     			// jsp 내에서 스크립틀릿 이용해서 만들어야할듯...
     		}
-    		
     	}
     	
     	
