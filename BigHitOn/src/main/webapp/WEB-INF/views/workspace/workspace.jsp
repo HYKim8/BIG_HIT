@@ -200,6 +200,7 @@
 		          "regId" : "${sessionScope.usersVO.user_serial}"
 		    },
 		    success:function(data){ //성공
+		    	alert("=====");
 		    	 //json 분리해서 변수
 			       var jsonObj = JSON.parse(data);
 			       console.log("msgId="+jsonObj.regId);

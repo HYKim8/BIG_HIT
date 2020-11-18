@@ -49,6 +49,7 @@ public class WorkSpaceController {
 		HttpSession session = req.getSession();
 		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
 		usersVO.setWs_link(workSpaceVO.getWsLink());
+		usersVO.setProfile_img("");
 		usersService.doInsert(usersVO);
 		workSpaceVO.setRegId(usdao.doGetKey());
 		
