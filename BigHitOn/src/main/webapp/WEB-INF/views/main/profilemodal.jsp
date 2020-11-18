@@ -39,7 +39,7 @@
 					<div>
 						<br>
 						<form name="fileUpload" method="post" action="" id="form_data_img" enctype="multipart/form-data">
-							<input style="width:285px" name="profileImgChange" id="profileImgChange" class="btn btn-primary btn-sm" type="file" value="사진 변경"/>
+							<input style="width:285px" name="profileImgChange" id="profileImgChange" class="btn btn-primary btn-sm" type="file" value="사진 변경" accept=".jpg"/>
 						</form>
 					</div>
 

@@ -64,7 +64,12 @@
       
       <div class="tab-pane fade" id="myWs">
         <h1>내 워크스페이스</h1>
-      	<table>
+      	<table class="table table-striped table-bordered table-hover table-condensed">
+      				<thead class="bg-primary">
+						<th class="">워크스페이스 링크</th>
+						<th class="">워크스페이스 이름</th>
+						<th class="">실행</th>
+					</thead>
       		<tbody id="wsTable"></tbody>      		
       	</table>
       		
@@ -121,7 +126,7 @@
                     html += "<td> <button type= \'button\' class =\'btn btn-primary btn-md btn-block\' id=\'myWsBtn\'> " + "실행" +"</button></td>"
                     html += '<tr>';
                   }                     
-              
+              	 $("#wsTable").empty();
                  $("#wsTable").append(html);
                  
                }
