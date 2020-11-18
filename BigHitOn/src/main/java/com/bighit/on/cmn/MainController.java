@@ -2,6 +2,7 @@ package com.bighit.on.cmn;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -244,4 +245,80 @@ public class MainController {
 		
 		return json;
 	}
+	
+	@RequestMapping(value = "main/doUpdateUser.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String doUpdateUser(HttpServletRequest req, UsersVO usersVO) {
+		LOG.debug("-------------------------");
+		LOG.debug("-main/doUpdateUser.do-");
+		LOG.debug("-------------------------");
+		
+		HttpSession session = req.getSession();
+		
+		UsersVO sessionUser = (UsersVO) session.getAttribute("usersVO");
+		
+		sessionUser.setNickname(usersVO.getNickname());
+		sessionUser.setPosition(usersVO.getPosition());
+		sessionUser.setPhone_num(usersVO.getPhone_num());
+		
+		usersService.doUpdate(sessionUser);
+		
+		session.setAttribute("usersVO", sessionUser);
+		
+		return "main/index.do";
+		
+	}
+	
+	@RequestMapping(value = "file/doUpdateProfileImg.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String doUpdateProfileImg(HttpServletRequest req, MultipartFile file)
+			throws IllegalStateException, IOException {
+		LOG.debug("-------------------------");
+		LOG.debug("-file/doUpdateProfileImg.do-");
+		LOG.debug("-------------------------");
+
+		MultipartFile profileImgResized;
+		MultipartFile thumbImgResized;
+
+		// fileType 제한 걸 것 jpg만 되게.
+		LOG.debug("file type : " + ".jpg");
+
+		HttpSession session = req.getSession();
+		
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+
+		String uuid = UUID.randomUUID().toString();
+
+		String userId = usersVO.getUser_serial();
+		String profileImg = userId + "_profile";
+		String thumbImg = userId + "_thumb";
+		String keyNameProfile = "profileImg/" + profileImg + "/" + uuid + "_profile." + "jpg";
+		String keyNameThumb = "thumbImg/" + thumbImg + "/" + uuid + "_thumb." + "jpg";
+
+		try {
+			profileImgResized = fileService.doResizeProfile(file);
+			thumbImgResized = fileService.doResizeThumb(file);
+		} catch (NullPointerException e) {
+			LOG.debug("file이 null입니다.");
+			return null;
+		}
+		
+
+		LOG.debug("Profile image Upload to S3");
+		fileService.doFileUpload(keyNameProfile, profileImgResized);
+		LOG.debug("Thumbnail image Upload to S3");
+		fileService.doFileUpload(keyNameThumb, thumbImgResized);
+
+		String profileUrl = fileService.doFileDownload(keyNameProfile).toString();
+		String thumbUrl = fileService.doFileDownload(keyNameThumb).toString();
+
+		usersVO.setProfile_img(profileUrl);
+		usersVO.setThumb(thumbUrl);
+		usersService.doUpdate(usersVO);
+
+		session.setAttribute("usersVO", usersVO);
+		
+		return "file/file";
+	}
+	
 }

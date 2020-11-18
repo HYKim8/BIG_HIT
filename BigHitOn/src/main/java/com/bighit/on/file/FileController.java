@@ -31,114 +31,110 @@ import com.google.gson.Gson;
 public class FileController {
 
 	final Logger LOG = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	FileService fileService;
-	
+
 	@Autowired
 	UsersServiceImpl userService;
-	
+
 	@Autowired
 	FileDaoImpl fileDao;
-	
-	// json 데이터로 응답을 보내기 위한 
-    @Autowired
-    MappingJackson2JsonView jsonView;
-    
-    // thread List 뽑았을 때 fileList도 같이 뽑아서 특정 thread에 file을 붙여야 함.
-    
-    @RequestMapping(value = "file/test.do", method = RequestMethod.GET)
-    public String test(String status) {
-    	
-    	LOG.debug("in to TEST");
-    	
-    	
-    	
-    	return "file/test";
-    }
-    
-    @RequestMapping(value = "file/testImg.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public String testImg(HttpServletRequest req, String keyName) {
-    	
-    	// 처음 로딩( $(document).ready(function(){} )
-    	// workspace 링크 session이든 뭐든 암튼 데이터 얻기
-    	HttpSession session = req.getSession();
-    	
-    	// for test
-    	session.setAttribute("wsLink", "1");
-    	// for test
-    	
-    	String wsLink = (String) session.getAttribute("wsLink");
-    	
-    	// workSpaceService.doSelectUser~~~~ 해서 그 특정 워크 스페이스의 유저 리스트 뽑기.
-    	WorkSpaceVO workSpaceVO = new WorkSpaceVO();
-    	workSpaceVO.setWsLink(wsLink);
-    	
-    	// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻어서 session에 User_serialthumb으로 등록.
-    	// ${hContext.concat(sessionScope['U5835RE6LL2thumb']) }
-    	List<UsersVO> userList = userService.doSelectList(workSpaceVO);
-    	for(UsersVO vo : userList) {
-    		if(null != vo.getThumb()) {
-    			session.setAttribute(vo.getUser_serial()+"thumb", vo.getThumb());
-    		} else {
-    			session.setAttribute(vo.getUser_serial()+"thumb", "/resources/img/default.jpg");
-    			// jsp 내에서 스크립틀릿 이용해서 만들어야할듯...
-    		}
-    	}
-    	
-    	
-    	
-    	return "file/test";
-    }
-    
-    @RequestMapping(value = "file/thumb_check.do", method = RequestMethod.GET)
-    @ResponseBody
-    public String thumb_check(UsersVO usersVO) {
-    	
-    	LOG.debug("-------------------------");
+
+	// json 데이터로 응답을 보내기 위한
+	@Autowired
+	MappingJackson2JsonView jsonView;
+
+	// thread List 뽑았을 때 fileList도 같이 뽑아서 특정 thread에 file을 붙여야 함.
+
+	@RequestMapping(value = "file/test.do", method = RequestMethod.GET)
+	public String test(String status) {
+
+		LOG.debug("in to TEST");
+
+		return "file/test";
+	}
+
+	@RequestMapping(value = "file/testImg.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String testImg(HttpServletRequest req, String keyName) {
+
+		// 처음 로딩( $(document).ready(function(){} )
+		// workspace 링크 session이든 뭐든 암튼 데이터 얻기
+		HttpSession session = req.getSession();
+
+		// for test
+		session.setAttribute("wsLink", "1");
+		// for test
+
+		String wsLink = (String) session.getAttribute("wsLink");
+
+		// workSpaceService.doSelectUser~~~~ 해서 그 특정 워크 스페이스의 유저 리스트 뽑기.
+		WorkSpaceVO workSpaceVO = new WorkSpaceVO();
+		workSpaceVO.setWsLink(wsLink);
+
+		// WorkSpace 내부의 모든 유저의 Thumb 데이터 얻어서 session에 User_serialthumb으로 등록.
+		// ${hContext.concat(sessionScope['U5835RE6LL2thumb']) }
+		List<UsersVO> userList = userService.doSelectList(workSpaceVO);
+		for (UsersVO vo : userList) {
+			if (null != vo.getThumb()) {
+				session.setAttribute(vo.getUser_serial() + "thumb", vo.getThumb());
+			} else {
+				session.setAttribute(vo.getUser_serial() + "thumb", "/resources/img/default.jpg");
+				// jsp 내에서 스크립틀릿 이용해서 만들어야할듯...
+			}
+		}
+
+		return "file/test";
+	}
+
+	@RequestMapping(value = "file/thumb_check.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String thumb_check(UsersVO usersVO) {
+
+		LOG.debug("-------------------------");
 		LOG.debug("-thumb_check-");
 		LOG.debug("-------------------------");
-    	// 404error가 뜬 이미지
-    	// 아이디가 넘어와서
-    	
-    	// String keyName = String 잘라서 key_name만 딴다. 앞부분 길이는 같으므로 ?로 짜르고 첫번째꺼에 일정 길이 이후로 가져오면 될 듯.
-    	String keyName = fileService.generateKeyName(usersVO.getThumb());
-    	
-    	// URL url = fileService.doFileDownload(keyName);
-    	URL url = fileService.doFileDownload(keyName);
-    	
-    	// String userThumb = url.toString();
-    	String userThumb = url.toString();
-    	usersVO.setThumb(userThumb);
-    	
-    	// userService.doUpdateThumb(userId, userThumb);
-    	userService.doUpdate(usersVO);
-    	
-    	Gson gson = new Gson();
-    	String json = gson.toJson(userThumb);
-    	
-    	return json;
-    }
-    
+		// 404error가 뜬 이미지
+		// 아이디가 넘어와서
+
+		// String keyName = String 잘라서 key_name만 딴다. 앞부분 길이는 같으므로 ?로 짜르고 첫번째꺼에 일정 길이 이후로
+		// 가져오면 될 듯.
+		String keyName = fileService.generateKeyName(usersVO.getThumb());
+
+		// URL url = fileService.doFileDownload(keyName);
+		URL url = fileService.doFileDownload(keyName);
+
+		// String userThumb = url.toString();
+		String userThumb = url.toString();
+		usersVO.setThumb(userThumb);
+
+		// userService.doUpdateThumb(userId, userThumb);
+		userService.doUpdate(usersVO);
+
+		Gson gson = new Gson();
+		String json = gson.toJson(userThumb);
+
+		return json;
+	}
+
 	@RequestMapping(value = "file/file_view.do", method = RequestMethod.GET)
 	public String file_view(Model model) {
 		LOG.debug("-------------------------");
 		LOG.debug("-file/file_view.do-");
 		LOG.debug("-------------------------");
-		
+
 		return "file/file";
 	}
-	
+
 	@RequestMapping(value = "main/main.do", method = RequestMethod.GET)
 	public String main_view() {
 		LOG.debug("-------------------------");
 		LOG.debug("-main/main.do-");
 		LOG.debug("-------------------------");
-		
+
 		return "main/main2";
 	}
-	
-	
+
 	@CrossOrigin
 	@RequestMapping(value = "file/doDownload.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -147,29 +143,27 @@ public class FileController {
 		LOG.debug("-file/doDownload.do-");
 		LOG.debug("-------------------------");
 
-		
 		FileVO tmpVO = fileService.doSelectOne(fileVO);
-		
+
 		String keyName = tmpVO.getFileUrl();
-		
+
 		URL url = fileService.doFileDownload(keyName);
 		LOG.debug("-------------------------");
 		LOG.debug("-url-" + url.toString());
 		LOG.debug("-------------------------");
-		// 임의로 설정. 원래는 file_id를 받아 doSelectOne(fileVO) 한 후 url(key_name)을 받아 다운받기로 해야할 듯. 
+		// 임의로 설정. 원래는 file_id를 받아 doSelectOne(fileVO) 한 후 url(key_name)을 받아 다운받기로 해야할
+		// 듯.
 
 		Gson gson = new Gson();
 		String json = gson.toJson(url.toString());
-		
+
 		LOG.debug("-------------------------");
 		LOG.debug("-json-" + json);
 		LOG.debug("-------------------------");
-		
+
 		return json;
 	}
-	
 
-	
 	@RequestMapping(value = "file/doSelectList.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doSelectList(FileVO fileVO, Model model) {
@@ -188,66 +182,7 @@ public class FileController {
 
 		return json;
 	}
+
 	
-	@RequestMapping(value = "file/doUpdateProfileImg.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String doUpdateProfileImg(HttpServletRequest req, MultipartFile file, String fileType, UsersVO usersVO) throws IllegalStateException, IOException {
-		LOG.debug("-------------------------");
-		LOG.debug("-file/doUpdateProfileImg.do-");
-		LOG.debug("-------------------------");
-		
-		MultipartFile profileImgResized;
-		MultipartFile thumbImgResized;
-		
-		// fileType 제한 걸 것 jpg만 되게.
-		LOG.debug("file type : " + fileType);
-		
-		HttpSession session = req.getSession();
-		
-		// for test
-		session.setAttribute("id", "KIM");
-		session.setAttribute("thrKey", "1");
-		session.setAttribute("chLink", "1");
-		session.setAttribute("user_serial", "1");
-		// for test
-		
-		String uuid = UUID.randomUUID().toString();
-		
-		String userId = (String) session.getAttribute("id");
-		String profileImg = userId + "_profile";
-		String thumbImg = userId + "_thumb";
-		String keyNameProfile = "profileImg/" + profileImg + "/" + uuid + "_profile." + fileType;
-		String keyNameThumb = "thumbImg/" + thumbImg + "/" + uuid + "_thumb." + fileType;
-		
-		try {
-			profileImgResized = fileService.doResizeProfile(file);
-			thumbImgResized = fileService.doResizeThumb(file);
-		} catch (Exception e) {
-			LOG.debug("-------------------------");
-			LOG.debug("not select img file");
-			LOG.debug("-------------------------");
-			
-			return "file/file";
-		}
-		
-		
-			LOG.debug("Profile image Upload to S3");
-			fileService.doFileUpload(keyNameProfile, profileImgResized);
-			LOG.debug("Thumbnail image Upload to S3");
-			fileService.doFileUpload(keyNameThumb, thumbImgResized);
-		
-		// UserService를 이용하여 profile keyName, thumb keyName 등록 -> pre-signed url 만드는데는 비용이 들지 않으므로 url로 만들어서 넣자.
-//			String profileUrl = fileService.doFileDownload(keyNameProfile).toString();
-//			String thumbUrl = fileService.doFileDownload(keyNameThumb).toString();
-//			usersVO.setProfile_img(profileUrl);
-//			usersVO.setThumb(thumbUrl);
-//			userService.doUpdate(usersVO);
-			
-		return "file/file";
-	}
-	
-	
-	
-	
-	
+
 }
