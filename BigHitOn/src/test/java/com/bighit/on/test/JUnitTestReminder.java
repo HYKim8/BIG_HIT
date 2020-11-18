@@ -3,6 +3,9 @@ package com.bighit.on.test;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -21,6 +24,8 @@ import org.springframework.web.context.WebApplicationContext;
 import com.bighit.on.reminder.ReminderDaoImpl;
 import com.bighit.on.reminder.ReminderService;
 import com.bighit.on.reminder.ReminderVO;
+import com.bighit.on.user.dao.UsersVO;
+import com.google.gson.Gson;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -79,11 +84,13 @@ public class JUnitTestReminder {
 	}
 
 	@Test
+	@Ignore
 	public void inputZone() {
 		reminderService.doInsert(reminder01);
 	}
 	
 	@Test
+	@Ignore
 	public void serviceTest() {
 		reminderService.doInsert(reminder01);
 		reminderService.doInsert(reminder01);
@@ -127,6 +134,7 @@ public class JUnitTestReminder {
 	}
 	
 	@Test
+	@Ignore
 	public void daoTest() {
 		reminderDao.doInsert(reminder01);
 		reminderDao.doInsert(reminder02);
@@ -163,7 +171,29 @@ public class JUnitTestReminder {
 		reminderDao.doDelete(reminder03);
 	}
 	
-	
+	@Test
+	public void doChkAlarm() {
+		LOG.debug("-------------------------");
+		LOG.debug("-reminder/doChkAlarm.do-");
+		LOG.debug("-------------------------");
+		
+//		HttpSession session = req.getSession();
+//		UsersVO usersVO = new UsersVO();
+//		usersVO = (UsersVO) session.getAttribute("usersVO");
+		
+		String wsLink = "new12";
+		//ajax
+		ReminderVO reminderVO = new ReminderVO();
+		reminderVO.setWsLink(wsLink);
+		
+		List<ReminderVO> outList = reminderService.doSelectList(reminderVO);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(outList);
+		
+		LOG.debug(json);
+		
+	}
 	
 	@Test
 	@Ignore

@@ -47,6 +47,63 @@ public class FileController {
 
 	// thread List 뽑았을 때 fileList도 같이 뽑아서 특정 thread에 file을 붙여야 함.
 
+	@RequestMapping(value = "main/doUpload.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String doUpload(HttpServletRequest req, MultipartFile file, String fileType, String thrKey, String chLink) throws IllegalStateException, IOException {
+		LOG.debug("-------------------------");
+		LOG.debug("-file/doUpload.do-");
+		LOG.debug("-------------------------");
+		
+		LOG.debug("file Type : " + fileType);
+		HttpSession session = req.getSession();
+		
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+		String userId = usersVO.getUser_serial();
+		
+		// ajax로 받아야함...
+		thrKey = "1";
+		chLink = "1";
+		// thrKey(ajax)
+		// chLink(ajax)
+		
+		String keyName = fileService.doMakeKeyName(fileType, file.getOriginalFilename());
+		fileService.doFileUpload(keyName, file);
+		
+		FileVO fileVO = new FileVO();
+		fileVO.setChLink(chLink);
+		fileVO.setFileName(file.getOriginalFilename());
+		fileVO.setFileUrl(keyName);
+		fileVO.setThrKey(thrKey);
+		fileVO.setRegId(userId);
+		
+		fileService.doInsert(fileVO);
+		
+		try {
+			LOG.debug("file is :" + file.toString());
+		} catch(Exception e) {
+			return "error occured" + e.getMessage();
+		}
+		
+		return "file/file";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "file/test.do", method = RequestMethod.GET)
 	public String test(String status) {
 
@@ -55,6 +112,17 @@ public class FileController {
 		return "file/test";
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "file/testImg.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String testImg(HttpServletRequest req, String keyName) {
 
@@ -87,6 +155,8 @@ public class FileController {
 		return "file/test";
 	}
 
+	
+	
 	@RequestMapping(value = "file/thumb_check.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String thumb_check(UsersVO usersVO) {
