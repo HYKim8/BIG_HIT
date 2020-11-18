@@ -7,7 +7,8 @@
 	    thr_key as thrKey,             
 	    remind_time as remindTime,         
 	    reg_id as regId,              
-	    reg_dt as regDt 
+	    reg_dt as regDt,
+	    ws_link as wsLink 
 	</sql>
 	
 	<select id="doSelectList" parameterType="ReminderVO" resultType="ReminderVO">
@@ -16,7 +17,7 @@
 		FROM                     
 		    reminder             
 		WHERE
-			thr_key = #{thrKey}
+			ws_link = #{wsLink}
 		ORDER BY remindTime      
 	</select>
 
@@ -34,8 +35,9 @@
 						thr_key,                   
 						remind_time,               
 						reg_id,                    
-						reg_dt) VALUES             
-					(remind_seq.nextVal,#{thrKey},TO_DATE(#{remindTime},'yyyy/MM/dd hh24:mi'),#{regId},sysdate)
+						reg_dt,
+						ws_link) VALUES             
+					(remind_seq.nextVal,#{thrKey},TO_DATE(#{remindTime},'yyyy/MM/dd hh24:mi'),#{regId},sysdate,#{wsLink})
 	</insert>
 
 	<delete id="doDelete" parameterType="ReminderVO">

@@ -109,6 +109,11 @@
                     </div>
                 </div>
             </li>
-
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
+            <li><input type="button" id="reminderTest" value="reminder"/></li>
+            
         </ul>
         <!-- End of Sidebar -->

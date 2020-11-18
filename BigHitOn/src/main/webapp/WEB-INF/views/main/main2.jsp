@@ -208,6 +208,8 @@
 			console.log(event.target);
 		})
 
+		
+		
 		// ----------Add Channel----------
 		$("#channelCreateBtn").on("click", function() {
 			console.log("channelCreateBtn Clicked");
