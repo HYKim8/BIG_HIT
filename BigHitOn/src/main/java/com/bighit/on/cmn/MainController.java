@@ -138,4 +138,22 @@ public class MainController {
 		
 		return json;
 	}
+	
+	@RequestMapping(value = "reminder/doInsert.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public void doInsertReminder(HttpServletRequest req, ReminderVO reminderVO) {
+		LOG.debug("-------------------------");
+		LOG.debug("-reminder/doInsert.do-");
+		LOG.debug("-------------------------");
+		
+		HttpSession session = req.getSession();
+		UsersVO usersVO = new UsersVO();
+		usersVO = (UsersVO) session.getAttribute("usersVO");
+		
+		reminderVO.setRemindId(usersVO.getUser_serial());
+		reminderVO.setWsLink(usersVO.getWs_link());
+		
+		reminderService.doInsert(reminderVO);
+		
+	}
 }

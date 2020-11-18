@@ -117,7 +117,6 @@
 	</div>
    
        
-</div>
 
 <div id="modal">
    
@@ -159,6 +158,14 @@
     -->
     <script type="text/javascript">
 
+    $(document).ready(function(){
+		console.log("load Complete");
+		Notification.requestPermission().then(function(result) {
+			  console.log(result);
+			});
+	})
+    //var text = "gg";
+	//var notification = new Notification('asd', { body: text});
     function enterkey() {
         if (window.event.keyCode == 13) {
  
@@ -269,7 +276,8 @@
 	                dataType:"html",
 	                async: true,
 					data:{
-						"remindTime":$("#time_input").val()
+						"remindTime":$("#time_input").val(),
+						"thrKey":$("#the_key").val()
 						},
 					success: function(data){
 						var parseData = JSON.parse(data);
