@@ -1,5 +1,6 @@
 package com.bighit.on.cmn;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bighit.on.channel.ChannelDaoImpl;
@@ -19,6 +21,8 @@ import com.bighit.on.channel.ChannelServiceImpl;
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.channelusers.ChannelUsersVO;
+import com.bighit.on.file.FileService;
+import com.bighit.on.file.FileVO;
 import com.bighit.on.reminder.ReminderService;
 import com.bighit.on.reminder.ReminderVO;
 import com.bighit.on.user.dao.UsersServiceImpl;
@@ -38,6 +42,7 @@ public class MainController {
 	@Autowired ChannelUsersDao channelUsersService;
 	@Autowired ChannelDaoImpl channelDao;
 	@Autowired ReminderService reminderService;
+	@Autowired FileService fileService;
 	
 	@RequestMapping(value = "main/index.do", method = RequestMethod.GET)
 	public ModelAndView main_view(HttpServletRequest req) {
@@ -142,6 +147,42 @@ public class MainController {
 		
 		
 		return json;
+	}
+	
+	@RequestMapping(value = "file/doUpload.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String doUpload(HttpServletRequest req, MultipartFile file, String fileType, String thrKey, String chLink) throws IllegalStateException, IOException {
+		LOG.debug("-------------------------");
+		LOG.debug("-file/doUpload.do-");
+		LOG.debug("-------------------------");
+		
+		LOG.debug("file Type : " + fileType);
+		HttpSession session = req.getSession();
+		
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+		String userId = usersVO.getUser_serial();
+		// thrKey(ajax)
+		// chLink(ajax)
+		
+		String keyName = fileService.doMakeKeyName(fileType, file.getOriginalFilename());
+		fileService.doFileUpload(keyName, file);
+		
+		FileVO fileVO = new FileVO();
+		fileVO.setChLink(chLink);
+		fileVO.setFileName(file.getOriginalFilename());
+		fileVO.setFileUrl(keyName);
+		fileVO.setThrKey(thrKey);
+		fileVO.setRegId(userId);
+		
+		fileService.doInsert(fileVO);
+		
+		try {
+			LOG.debug("file is :" + file.toString());
+		} catch(Exception e) {
+			return "error occured" + e.getMessage();
+		}
+		
+		return "file/file";
 	}
 	
 	@RequestMapping(value = "reminder/doSelectList.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
