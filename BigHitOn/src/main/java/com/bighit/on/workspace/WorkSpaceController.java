@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersService;
 import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
 
@@ -26,7 +27,10 @@ public class WorkSpaceController {
 
 	@Autowired
 	WorkSpaceService workSpaceService;
-
+	
+	@Autowired
+	UsersService usersService;
+	
 	@Autowired
 	MessageSource messageSource;
 
@@ -119,11 +123,29 @@ public class WorkSpaceController {
 	
 	@RequestMapping(value = "workspace/sendEmail.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String sendEmail(EmailVO emailVO) {
+	public String sendEmail(EmailVO emailVO, UsersVO usersVO) {
 		
-		workSpaceService.sendEmail(emailVO);
 		
-		return 0+"";
+		
+		int flag = this.usersService.emailCheck(usersVO);
+		if(flag==0) workSpaceService.sendEmail(emailVO);
+		LOG.debug("=flag=" + flag);
+		Message message = new Message();
+		message.setRegId(flag + "");
+
+		if (flag > 0) {
+			message.setMsgContents("이미 이 워크스페이스에 참여된 사용자입니다.");			
+
+		} else {
+			message.setMsgContents("전송 성공.");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(message);
+		LOG.debug("==================");
+		LOG.debug("=json=" + json);
+		LOG.debug("==================");
+
+		return json;
 	}
 	
 	@RequestMapping(value = "workspace/teamUserAdd_view.do", method = RequestMethod.GET)

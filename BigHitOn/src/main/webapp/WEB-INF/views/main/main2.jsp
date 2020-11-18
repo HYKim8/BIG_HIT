@@ -270,12 +270,26 @@
 				url : "${hContext}/workspace/sendEmail.do",
 				dataType : "html",
 				data : {
-					"email" : $("#email").val(),
-					"wsLink" : $("#wsLink").val(),
-					"wsName" : $("#wsName").val()
+					  "email" :$("#email").val(),
+				      "wsLink" : "${sessionScope.usersVO.ws_link }",
+				      "wsName" : "11",
+				      "userId": "${sessionScope.usersVO.name }",
+				      "ws_link": "${sessionScope.usersVO.ws_link }",
+				      "email": $("#email").val()
 				},
 				success : function(data) { //성공
-					$('a[href="#complete"]').tab('show');
+					console.log("data="+data);
+					var jsonObj = JSON.parse(data);
+				    console.log("regId="+jsonObj.regId);
+				    console.log("msgContents="+jsonObj.msgContents);
+				    	
+				    if(null !=jsonObj && jsonObj.regId=="1"){
+				    	console.log("data="+data);
+				    	alert(jsonObj.msgContents);			    	
+					}
+				    else if(null !=jsonObj && jsonObj.regId=="0"){
+				    	alert(jsonObj.msgContents);				    	
+					}
 				},
 				error : function(xhr, status, error) {
 					alert("error:" + error);

@@ -170,7 +170,9 @@
 		    data:{"email" :$("#email").val(),
 			      "wsLink" : $("#wsLink").val(),
 			      "wsName" : $("#wsName").val(),
-			      "userId": "${sessionScope.usersVO.name }"
+			      "userId": "${sessionScope.usersVO.name }",
+			      "ws_link": $("#wsLink").val(),
+			      "email": $("#email").val()
 		    },
 		    success:function(data){ //성공
 		    	$('a[href="#complete"]').tab('show');		       
