@@ -33,7 +33,7 @@
                 <div id="collapseMes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">                    
                     	<c:forEach var="WorkSpaceVO" items="${workspaceList}">
-   						 	<a class="collapse-item">#<c:out value="${WorkSpaceVO.getWsName}" /></a>
+   						 	<a class="collapse-item">#<c:out value="${WorkSpaceVO.wsName}" /></a>
 						</c:forEach>      	
                     </div>
                 </div>

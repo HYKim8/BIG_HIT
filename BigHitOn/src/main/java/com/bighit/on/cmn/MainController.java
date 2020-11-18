@@ -24,6 +24,7 @@ import com.bighit.on.reminder.ReminderVO;
 import com.bighit.on.user.dao.UsersServiceImpl;
 import com.bighit.on.user.dao.UsersVO;
 import com.bighit.on.workspace.WorkSpaceServiceImpl;
+import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -68,7 +69,10 @@ public class MainController {
 		LOG.debug("ReminderList");
 		List<ReminderVO> reminderList = reminderService.doSelectList(reminderVO);
 		
+		List<WorkSpaceVO> workspaceList = workSpaceService.doSelectList(usersVO);
+		
 		mav.setViewName("main/main2");
+		mav.addObject("workspaceList", workspaceList);
 		mav.addObject("channelList", channelList);
 		mav.addObject("channelListDM", channelListDM);
 		mav.addObject("reminderList", reminderList);
