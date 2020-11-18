@@ -75,12 +75,12 @@ FROM
             WHERE
                 ch_link = #{searchWord}
                 AND parent_key IS NULL
-            ORDER BY reg_dt
+            ORDER BY reg_dt DESC
         ) A
         WHERE rownum <![CDATA[ <= ]]>  ( #{pageSize} * ( #{pageNum} - 1 ) + #{pageSize})
     )B
     WHERE rnum <![CDATA[ >= ]]> ( #{pageSize} * ( #{pageNum} - 1 ) + 1 )
-   ORDER BY rnum DESC 
+   ORDER BY rnum 
    </select>
 </mapper>
    

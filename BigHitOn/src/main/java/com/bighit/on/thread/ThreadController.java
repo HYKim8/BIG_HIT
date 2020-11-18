@@ -87,7 +87,7 @@ public class ThreadController {
       }
       if(search.getPageSize()==0)
       {
-         search.setPageSize(10);
+         search.setPageSize(20);
       }
       model.addAttribute("searchVO", search);
       
@@ -96,7 +96,7 @@ public class ThreadController {
       for(ThreadVO vo:threadList) {
       LOG.debug(vo.toString());
       }
-      String view = "thread/main3";
+      String view = "main/main2";
       return view;
    }
    

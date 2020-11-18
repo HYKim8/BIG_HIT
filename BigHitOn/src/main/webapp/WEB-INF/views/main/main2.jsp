@@ -70,7 +70,7 @@
 				<div class="media-body" id="threadList">
 					<c:forEach var="list" items="${threadList}" varStatus="status">	
 					<c:if test="${status.first ||( !status.first && vs != list.regId)}">
-				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/></h6>
+				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
 				 	</c:if>
 				 	
@@ -266,7 +266,7 @@
                           var vs = "";
                           for(var i=0;i<list.length;i++){
 							if(i==0 || (i!=0 && vs != list[i].regId)){
-								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "</h6>";
+								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "("+ list[i].regDt +")" + "</h6>";
 								 vs = list[i].regId
 							}                             
                             html += "<p>" + list[i].contents + "</p>" 
