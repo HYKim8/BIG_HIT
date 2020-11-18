@@ -109,14 +109,14 @@ public class UsersController {
 		}else {
 			message.setMsgContents("회원가입 성공.");
 		}
-		
+		String key = this.usersService.doGetKey();
 		int sessionUser = this.usersService.doInsert(usersVO);
 		LOG.debug("=======================");
 		LOG.debug("=sessionUser=="+sessionUser);
 		LOG.debug("=======================");
 		
 		HttpSession session =  req.getSession();
-		session.setAttribute("usersVO", sessionUser);
+		session.setAttribute("usersVO", this.usersService.doSelectOne(key));
 
 		return message;
 		

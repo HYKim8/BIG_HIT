@@ -61,4 +61,10 @@ public interface UsersService {
 	 * @return List<UsersVO>
 	 */
 	List<UsersVO> doSelectList(WorkSpaceVO workSpaceVO);
+	
+	/**
+	 * 아직 사용되지 않은 배정될 키 리턴 
+	 * @return
+	 */
+	public String doGetKey() ;
 }

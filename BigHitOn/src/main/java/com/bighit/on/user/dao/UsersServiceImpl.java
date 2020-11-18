@@ -124,5 +124,10 @@ public class UsersServiceImpl implements UsersService {
 		
 		return usersDaoImpl.doSelectOne(ws_link, email);
 	}
+
+	@Override
+	public String doGetKey() {
+		return usersDaoImpl.doGetKey();
+	}
 	
 }
