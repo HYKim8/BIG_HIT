@@ -138,8 +138,6 @@ function doChkAlarm(){
 		data:{},
 		success: function(data){
 			var parseData = JSON.parse(data);
-
-				console.log("parseData" + parseData);
 				$.each(parseData, function(i, value){
 					let today = new Date();
 					let remindTime = new Date(value.remindTime);

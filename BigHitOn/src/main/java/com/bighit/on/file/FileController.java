@@ -2,6 +2,7 @@ package com.bighit.on.file;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.channelusers.ChannelUsersDao;
+import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.user.dao.UsersServiceImpl;
 import com.bighit.on.user.dao.UsersVO;
 import com.bighit.on.workspace.WorkSpaceVO;
@@ -40,6 +44,9 @@ public class FileController {
 
 	@Autowired
 	FileDaoImpl fileDao;
+	
+	@Autowired UsersServiceImpl usersService;
+	@Autowired ChannelUsersDao channelUsersDao;
 
 	// json 데이터로 응답을 보내기 위한
 	@Autowired
@@ -47,6 +54,76 @@ public class FileController {
 
 	// thread List 뽑았을 때 fileList도 같이 뽑아서 특정 thread에 file을 붙여야 함.
 
+	@RequestMapping(value = "main/doInviteP.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doInviteP(HttpServletRequest req, String chLink) {
+		LOG.debug("-------------------------");
+		LOG.debug("-main/doInviteP.do-");
+		LOG.debug("-------------------------");
+		
+		UsersVO usersVO = (UsersVO) req.getSession().getAttribute("usersVO");
+		String wsLink = usersVO.getWs_link();
+		
+		WorkSpaceVO workSpaceVO = new WorkSpaceVO();
+		workSpaceVO.setWsLink(wsLink);
+		ChannelVO channelVO = new ChannelVO();
+		channelVO.setChLink(chLink);
+		
+		List<UsersVO> wsList = usersService.doSelectList(workSpaceVO);
+		List<UsersVO> chList = usersService.doSelectList(channelVO);
+		
+		for(UsersVO vo : wsList) {
+			LOG.debug("wsList VO : " + vo);
+		}
+		
+		for(UsersVO vo : chList) {
+			LOG.debug("chList VO : " + vo);
+		}
+		
+		List<UsersVO> tmpList = new ArrayList<UsersVO>();
+		
+		for(int i = 0; i < wsList.size(); i++) {
+			for(int j = 0; j < chList.size(); j++) {
+				if(wsList.get(i).getUser_serial().equals(chList.get(j).getUser_serial())) {
+					tmpList.add(wsList.get(i));
+					break;
+				}
+			}
+		}
+		
+		for(UsersVO vo : tmpList) {
+			LOG.debug("tmpList VO : " + vo);
+			wsList.remove(vo);
+		}
+		
+		Gson gson = new Gson();
+    	String json = gson.toJson(wsList);
+		
+		return json;
+	}
+	
+	@RequestMapping(value = "main/doInvitePeople.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doInviteP(String chLink, String userSerial) {
+		LOG.debug("-------------------------");
+		LOG.debug("-main/doInvitePeople.do-");
+		LOG.debug("-------------------------");
+		
+//		#{chLink},
+//	    #{userSerial},
+//	    #{notification}
+		
+		ChannelUsersVO cuVO = new ChannelUsersVO();
+		cuVO.setChLink(chLink);
+		cuVO.setUserSerial(userSerial);
+		cuVO.setNotification(1);
+		
+		channelUsersDao.doInsert(cuVO);
+		
+		return null;
+	}
+	
+	
 	@RequestMapping(value = "main/doUpload.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String doUpload(HttpServletRequest req, MultipartFile file, String fileType, String thrKey, String chLink) throws IllegalStateException, IOException {
