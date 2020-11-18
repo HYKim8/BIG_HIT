@@ -190,17 +190,24 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <c:url value="/users/logout.do" var="logOutUrl">
+                    <c:url value="/users/loginView.do" var="logOutUrl">
 				    </c:url>
 				    
 			        <c:choose>
-			        	<c:when test='${null != sessionScope.user}'>
+			        	<c:when test='${null != sessionScope.usersVO}'>
 					  	<li class="nav-item">
 					      	<a href="<c:out value='${logOutUrl}' />"   class="nav-link">
-					      		<span class="glyphicon glyphicon-log-out">&nbsp;Logout</span>
+					      		<span class="btn btn-secondary">&nbsp;Logout</span>
 					      	</a>
 					      </li>
-				      </c:when>				      
+				      </c:when>
+				      <c:otherwise>
+		        		<script>
+		        		$(document).ready(function(){
+		        			window.location.href="<c:url value='/users/loginView.do' />"
+		        	    });
+		        		</script>
+	        		 </c:otherwise>				      
 				     </c:choose> 
                 </div>
             </div>
