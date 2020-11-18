@@ -3,8 +3,8 @@
 <mapper namespace="com.bighit.on.thread">
 
    <insert id ="doInsert">
-      INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES 
-          ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) ,#{parentKey}, #{chLink}, #{contents},#{regId},SYSDATE)
+      INSERT INTO THREAD (thr_key,ch_link,contents,reg_id,reg_dt) VALUES 
+          ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) , #{chLink}, #{contents},#{regId},SYSDATE)
    </insert>
    
    <insert id = "doInsertRep" parameterType="ThreadVO">

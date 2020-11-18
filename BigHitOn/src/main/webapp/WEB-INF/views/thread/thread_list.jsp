@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set>     
+ 
+
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,6 +20,12 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+   <style type="text/css">
+         table tr button { opacity:0; float:right }
+         table tr:hover button { opacity:1 }
+       </style>
+   
 <title>thread_list</title>
 
 </head>
@@ -52,6 +60,7 @@
          <th>작성일</th>
          <th>수정일</th>
          <th>댓글갯수</th>
+         <th></th>
       </tr>
       </thead>
       <tbody id="threadList">
@@ -78,6 +87,14 @@
                            <c:out value="${list.childCnt}"/>
                         </c:if>
                      </td>
+                     <td>
+                     <button id="selectOneBtn">aa</button>
+                        <a data-toggle="modal" data-target="#fileUploadModal1"
+						id="fileUploadModal"><button> fileUpload </button></a> 
+                     </td>
+                     
+                     
+                     
                   </tr>
                </c:forEach>
             </c:when>
@@ -137,6 +154,7 @@
                   </tr>              
       </tbody>                 
    </table>
+   <div>
    
    <table>
       <thead>
@@ -168,6 +186,7 @@
                        </div>      
                    </div>           
                </form>
+   </div>
    </div>
    
    
@@ -217,8 +236,8 @@
                               html +="</td>"
                               html += '<td>';
                               if(list[i].childCnt != 0 )html += list[i].childCnt+'</td>';
-                                                
-                              html += '<tr>';
+
+                              html += '</tr>';
                             }                     
                         
                            $("#threadList").prepend(html);
@@ -234,7 +253,7 @@
                       complete:function(data){
                       
                       }   
-                    
+                  
                   });//--ajax
                   }
           });
