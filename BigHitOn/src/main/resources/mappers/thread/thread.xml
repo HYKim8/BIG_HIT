@@ -18,8 +18,9 @@
                 ch_link AS chLink,                                          
                 contents AS contents,                                                                                   
                 reg_id AS regId,                                           
-                TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,  
-                parent_key AS parentKey                                        
+                TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS regDt,  
+                parent_key AS parentKey,
+                TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS modDt                                          
              FROM THREAD                                       
              WHERE parent_key = #{thrKey}   
    </select>
@@ -40,7 +41,7 @@
    
    <select id = "doSelectOne"
    resultType = "com.bighit.on.thread.ThreadVO">
-   SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,contents AS contents,child_cnt AS childCnt
+   SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,mod_dt AS modDt,contents AS contents,child_cnt AS childCnt
     FROM thread Where thr_key = #{thrKey}   
    </select>
    <select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">

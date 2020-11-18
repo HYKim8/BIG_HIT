@@ -58,7 +58,7 @@
                     
         <c:set var="lefthalf" value = "padding-right: 20px;width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
         <c:set var="leftfull" value = "padding-right: 20px;width:100%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
-		<div id="divScroll" style="${lefthalf}"class="media">
+		<div id="divScroll" style="${leftfull}"class="media">
 			<c:if test="${!empty threadList}">
 				<c:set var = "vs" value="any"/>
 				
@@ -70,22 +70,37 @@
 				
 				<div class="media-body" id="threadList">
 					<c:forEach var="list" items="${threadList}" varStatus="status">	
+					<div>
 					<c:if test="${status.first ||( !status.first && vs != list.regId)}">
 				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
-				 	</c:if>
+				 	</c:if>				 	
+					<div id="thrKey" style='display:none'>${list.thrKey}</div>
+				 	<p><c:out value="${list.contents}"/> </p>
+				 					 		
+				 			<c:if test="${list.modDt != list.regDt }">
+				 				<div data-toggle="tooltip" data-placement="right" title="${list.modDt}">(편집됨)</div>
+				 			</c:if>
+				 		 
 				 	
-				 	<p><c:out value="${list.contents}"/></p>	
+				 	<c:if test="${list.childCnt != 0 }">
+				 		<button id="childList" class="btn btn-defualt" type="button" ><c:out value="${list.childCnt}개의 댓글"/></button></c:if>
+				 	</div>					 	
 				 	</c:forEach>				    
 				</div>				
 			</c:if>
 		</div>
 				<!-- 한 셋트 -->
-			 <c:set var="righthalf" value = "width:35%;float:left;display:inline;white-space:nowrap" />
-			 <c:set var="rightfull" value = "width:0%;float:left;display:inline;white-space:nowrap" />
-			<div id="rightSide" style="${righthalf}">
-				<h5>hihihihi</h5>
-
+			 <c:set var="righthalf" value = "width:35%;float:left;display:inline;white-space:nowrap;display:block" />
+			 <c:set var="rightfull" value = "width:0%;float:left;display:inline;white-space:nowrap;display:none" />
+			<div id="rightSide" style="${rightfull}">
+				<button id="sideclosebtn" style =" float:right"class="btn btn-primary" type="button" >X</button>
+				<div id="childListFull">
+					<div class="media-body" id="selectOneList" style="width:100%;">					
+					</div>
+					<div class="media-body" id="selectChildList" style="width:100%;">					
+					</div>					
+				</div>
 			</div>
 			
 				
@@ -275,12 +290,20 @@
                           var html = "";
                           var vs = "";
                           for(var i=0;i<list.length;i++){
+                            html += "<div>";
+                        
 							if(i==0 || (i!=0 && vs != list[i].regId)){
 								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "("+ list[i].regDt +")" + "</h6>";
 								 vs = list[i].regId
-							}                             
+							}                 
+							html += "<div id=\"thrKey\" style=\'display:none\'>" + list[i].thrKey + "</div>";            
                             html += "<p>" + list[i].contents + "</p>" 
-                            console.log(html);
+                            if(list[i].regDt != list[i].modDt )
+                                html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list[i].modDt+ "\">(편집됨)</div>";
+                            if(list[i].childCnt != 0) 
+                                html += "<button id=\'childList\' class=\'btn btn-defualt\' type=\'button\' >" +list[i].childCnt +"개의 댓글</button>";
+                            html += "</div>";
+                            //console.log(html);
                           }               
                       
                          $("#threadList").prepend(html);
@@ -345,10 +368,10 @@
 	    $('[data-toggle="popover"]').popover()
 	    })
 		
-		// 클릭된 타겟 찾기
+		 // 클릭된 타겟 찾기
 		$("body").click(function(event) {
 			console.log(event.target);
-		})
+		}) 
 
 		
 		
@@ -432,7 +455,7 @@
 			});//--ajax
 
 		});
-		 document.getElementById("profileOpenModal").onclick = function() {
+		 /* document.getElementById("profileOpenModal").onclick = function() {
 	           document.getElementById("modal").style.display="block";
 	       }
 	      
@@ -442,7 +465,100 @@
 
 	       document.getElementById("modal_save_close_btn").onclick = function() {
 	           document.getElementById("modal").style.display="none";
-	       }  
+	       }   */
+	       $("#sideclosebtn").click(function(){
+	    	   console.log("hi");
+	    		$("#divScroll").attr('style',"${leftfull}");
+	    		$("#rightSide").attr('style','${rightfull}');
+		   });
+		   $(document).on("click","#childList",function(){
+			   if( $("#divScroll").attr('style') == "${leftfull}" ){
+	    			$("#divScroll").attr('style',"${lefthalf}");
+		    		$("#rightSide").attr('style','${righthalf}');
+		    	}
+		    	var tmp = $(this).parent().children("#thrKey").text();
+	    		console.log(tmp);
+	    		makeChildList(tmp);
+			});
+		  function makeChildList(thrKey){
+			  $.ajax({
+  	            type:"GET",
+  	            url:"${hContext}/thread/doSelectOne.do",
+  	            data:{"thrKey" : thrKey
+  	                 },
+  	            dataType:"html",
+  	            success:function(data){ //성공
+  	                  //console.log("data="+data);
+  	                     console.log(data);
+
+  	                 var list2 = JSON.parse(data);
+  	                 $("#selectChildList").empty();
+  	                 console.log(list2.childCnt);
+  	                 //console.log(thrkey);
+  	                 if(list2.childCnt != 0){
+  	                     $.ajax({
+  	                        type:"GET",
+  	                        url:"${hContext}/thread/doSelectChildList.do",
+  	                        data:{"thrKey" : thrKey},
+  	                        dataType:"html",
+  	                        
+  	                        success:function(data2){
+  	                           console.log(data2);
+  	                        
+  	                        var childList = JSON.parse(data2);
+  								console.log(childList);
+  	                        var html ="";
+  	                        for(var i=0;i<childList.length;i++){
+  	                        	 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + childList[i].regId + "("+ childList[i].regDt +")" + "</h6>";
+  	                        	 html += "<div id=\"thrKey\" style=\'display:none\'>" + childList[i].thrKey + "</div>";            
+  	                             html += "<p>" + childList[i].contents + "</p>" 
+  	                             if(childList[i].regDt != childList[i].modDt )
+  	                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ childList[i].modDt+ "\">(편집됨)</div>";  
+  	                            
+  	                            console.log(html);  
+  	                            
+  	                        }      
+  	                        $("#selectChildList").html(html);         
+  	                        },
+  	                        error:function(xhr,status,error){
+  	                            alert("error:"+error);
+  	                             },
+  	                          complete:function(data){
+  	                          }
+  	                         }); 
+  	                         }
+  	                   var html = "";
+  	                   
+  	                   html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list2.regId + "("+ list2.regDt +")" + "</h6>";
+                      	 html += "<div id=\"thrKey\" style=\'display:none\'>" + list2.thrKey + "</div>";            
+                           html += "<p>" + list2.contents + "</p>" 
+                           if(list2.regDt != list2.modDt )
+                               html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list2.modDt+ "\">(편집됨)</div>";
+  	                   console.log(html);
+
+  	                   $("#selectOneList").html(html);     
+  	              },
+  	            error:function(xhr,status,error){
+  	              alert("error:"+error);
+  	             },
+  	             complete:function(data){
+  	             
+  	             } 
+  	            });
+		  }
+	      /*  $("#childList").click(function(){
+	    		
+		   }); */
+	       /* $(document).on('click',"#sideclosebtn",function(){
+	    		console.log("hi");
+	    		$("#divScroll").attr('style',"${leftfull}");
+	    		$("#rightSide").attr('style','${rightfull}');
+	    		$("")
+	    		
+		   }); */       
+	    	   
+	            
+	
 	</script>
 
     <!-- Bootstrap core JavaScript-->
