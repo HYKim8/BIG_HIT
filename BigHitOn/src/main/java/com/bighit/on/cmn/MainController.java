@@ -64,6 +64,18 @@ public class MainController {
 		String wsLink = usersVO.getWs_link();
 		reminderVO.setWsLink(wsLink);
 		
+		LOG.debug("users' Thumbnail into Session(User_serialthumb)");
+		WorkSpaceVO workSpaceVO = new WorkSpaceVO();
+		workSpaceVO.setWsLink(wsLink);
+		List<UsersVO> userList = usersService.doSelectList(workSpaceVO);
+		for (UsersVO vo : userList) {
+			if (null != vo.getThumb()) {
+				session.setAttribute(vo.getUser_serial() + "thumb", vo.getThumb());
+			} else {
+				session.setAttribute(vo.getUser_serial() + "thumb", "/resources/img/default.jpg");
+			}
+		}
+		
 		LOG.debug("chList");
 		search.setSearchDiv("10");
 		List<ChannelVO> channelList = channelService.doSelectList(search);
