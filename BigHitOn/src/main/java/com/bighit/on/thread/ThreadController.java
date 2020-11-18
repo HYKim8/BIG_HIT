@@ -115,7 +115,7 @@ public class ThreadController {
       for(ThreadVO vo:threadList) {
       LOG.debug(vo.toString());
       }
-      String view = "thread/thread_list";
+      String view = "main/main2";
       return view;
    }
    

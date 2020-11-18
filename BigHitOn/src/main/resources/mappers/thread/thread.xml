@@ -18,8 +18,9 @@
                 ch_link AS chLink,                                          
                 contents AS contents,                                                                                   
                 reg_id AS regId,                                           
-                TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,  
-                parent_key AS parentKey                                        
+                TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS regDt,  
+                parent_key AS parentKey,
+                TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS modDt                                          
              FROM THREAD                                       
              WHERE parent_key = #{thrKey}   
    </select>
