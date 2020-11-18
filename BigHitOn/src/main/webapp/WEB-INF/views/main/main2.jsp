@@ -336,9 +336,9 @@
 	    })
 		
 		// 클릭된 타겟 찾기
-		$("body").click(function(event) {
+		/* $("body").click(function(event) {
 			console.log(event.target);
-		})
+		}) */
 
 		
 		

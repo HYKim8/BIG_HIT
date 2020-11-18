@@ -86,6 +86,22 @@ public class MainController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "main/wsChanger.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String wsChanger(HttpServletRequest req, String toWsLink) {
+		
+		LOG.debug("wsChanger");
+		LOG.debug("toWsLink" + toWsLink);
+		HttpSession session = req.getSession();
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+		String workLink= toWsLink;
+		String email = usersVO.getEmail();
+		usersVO=usersService.doSelectOne(workLink, email);
+		session.setAttribute("usersVO", usersVO);
+		LOG.debug("==userVO=="+usersVO);
+		return "main/main2";
+	}
+	
 	@RequestMapping(value = "main/addchannel.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
     @ResponseBody
 	public String addChannel(HttpServletRequest req, ChannelVO channelVO) {
