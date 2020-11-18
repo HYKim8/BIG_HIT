@@ -26,12 +26,14 @@ public class UsersServiceImpl implements UsersService {
 	ChannelDaoImpl chDao;
 	@Override
 	public int doInsert(UsersVO usersVO) {
+		int flag = 1;
 		String key = usersDaoImpl.doGetKey();
 		LOG.debug("keyvalue:"+key);
 		usersVO.setUser_serial(key);
-		return usersDaoImpl.doInsert(usersVO) ==1 && 
-				chUserDao.doWorkSpaceInsert(usersVO)==1 ? 1:0;
-		
+		flag &= usersDaoImpl.doInsert(usersVO);
+		flag &= chUserDao.doWorkSpaceInsert(usersVO);
+		flag &= makeDMchannel(usersVO);
+		return flag;
 	}
 
 	@Override
