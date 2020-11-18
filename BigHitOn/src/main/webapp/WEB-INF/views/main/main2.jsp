@@ -478,71 +478,74 @@
 		    	}
 		    	var tmp = $(this).parent().children("#thrKey").text();
 	    		console.log(tmp);
-	    		 $.ajax({
-	    	            type:"GET",
-	    	            url:"${hContext}/thread/doSelectOne.do",
-	    	            data:{"thrKey" : tmp
-	    	                 },
-	    	            dataType:"html",
-	    	            success:function(data){ //성공
-	    	                  //console.log("data="+data);
-	    	                     console.log(data);
-
-	    	                 var list2 = JSON.parse(data);
-	    	                 $("#selectChildList").empty();
-	    	                 console.log(list2.childCnt);
-	    	                 //console.log(thrkey);
-	    	                 if(list2.childCnt != 0){
-	    	                     $.ajax({
-	    	                        type:"GET",
-	    	                        url:"${hContext}/thread/doSelectChildList.do",
-	    	                        data:{"thrKey" : tmp},
-	    	                        dataType:"html",
-	    	                        
-	    	                        success:function(data2){
-	    	                           console.log(data2);
-	    	                        
-	    	                        var childList = JSON.parse(data2);
-	    								console.log(childList);
-	    	                        var html ="";
-	    	                        for(var i=0;i<childList.length;i++){
-	    	                        	 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + childList[i].regId + "("+ childList[i].regDt +")" + "</h6>";
-	    	                        	 html += "<div id=\"thrKey\" style=\'display:none\'>" + childList[i].thrKey + "</div>";            
-	    	                             html += "<p>" + childList[i].contents + "</p>" 
-	    	                             if(childList[i].regDt != childList[i].modDt )
-	    	                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ childList[i].modDt+ "\">(편집됨)</div>";  
-	    	                            
-	    	                            console.log(html);  
-	    	                            
-	    	                        }      
-	    	                        $("#selectChildList").html(html);         
-	    	                        },
-	    	                        error:function(xhr,status,error){
-	    	                            alert("error:"+error);
-	    	                             },
-	    	                          complete:function(data){
-	    	                          }
-	    	                         }); 
-	    	                         }
-	    	                   var html = "";
-	    	                   
-	    	                   html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list2.regId + "("+ list2.regDt +")" + "</h6>";
-	                        	 html += "<div id=\"thrKey\" style=\'display:none\'>" + list2.thrKey + "</div>";            
-	                             html += "<p>" + list2.contents + "</p>" 
-	                             if(list2.regDt != list2.modDt )
-	                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list2.modDt+ "\">(편집됨)</div>";
-	    	                   console.log(html);
-
-	    	                   $("#selectOneList").html(html);     
-	    	              },
-	    	            error:function(xhr,status,error){
-	    	              alert("error:"+error);
-	    	             },
-	    	             complete:function(data){
-	    	             
-	    	             } 
-	    	            });
+	    		makeChildList(tmp);
 			});
+		  function makeChildList(thrKey){
+			  $.ajax({
+  	            type:"GET",
+  	            url:"${hContext}/thread/doSelectOne.do",
+  	            data:{"thrKey" : thrKey
+  	                 },
+  	            dataType:"html",
+  	            success:function(data){ //성공
+  	                  //console.log("data="+data);
+  	                     console.log(data);
+
+  	                 var list2 = JSON.parse(data);
+  	                 $("#selectChildList").empty();
+  	                 console.log(list2.childCnt);
+  	                 //console.log(thrkey);
+  	                 if(list2.childCnt != 0){
+  	                     $.ajax({
+  	                        type:"GET",
+  	                        url:"${hContext}/thread/doSelectChildList.do",
+  	                        data:{"thrKey" : thrKey},
+  	                        dataType:"html",
+  	                        
+  	                        success:function(data2){
+  	                           console.log(data2);
+  	                        
+  	                        var childList = JSON.parse(data2);
+  								console.log(childList);
+  	                        var html ="";
+  	                        for(var i=0;i<childList.length;i++){
+  	                        	 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + childList[i].regId + "("+ childList[i].regDt +")" + "</h6>";
+  	                        	 html += "<div id=\"thrKey\" style=\'display:none\'>" + childList[i].thrKey + "</div>";            
+  	                             html += "<p>" + childList[i].contents + "</p>" 
+  	                             if(childList[i].regDt != childList[i].modDt )
+  	                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ childList[i].modDt+ "\">(편집됨)</div>";  
+  	                            
+  	                            console.log(html);  
+  	                            
+  	                        }      
+  	                        $("#selectChildList").html(html);         
+  	                        },
+  	                        error:function(xhr,status,error){
+  	                            alert("error:"+error);
+  	                             },
+  	                          complete:function(data){
+  	                          }
+  	                         }); 
+  	                         }
+  	                   var html = "";
+  	                   
+  	                   html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list2.regId + "("+ list2.regDt +")" + "</h6>";
+                      	 html += "<div id=\"thrKey\" style=\'display:none\'>" + list2.thrKey + "</div>";            
+                           html += "<p>" + list2.contents + "</p>" 
+                           if(list2.regDt != list2.modDt )
+                               html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list2.modDt+ "\">(편집됨)</div>";
+  	                   console.log(html);
+
+  	                   $("#selectOneList").html(html);     
+  	              },
+  	            error:function(xhr,status,error){
+  	              alert("error:"+error);
+  	             },
+  	             complete:function(data){
+  	             
+  	             } 
+  	            });
+		  }
 	      /*  $("#childList").click(function(){
 	    		
 		   }); */
