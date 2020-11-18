@@ -214,73 +214,79 @@
 	    $('[data-toggle="popover"]').popover()
 	    })
 		
+		// 클릭된 타겟 찾기
+		$("body").click(function(event) {
+			console.log(event.target);
+		})
+
+		
+		
 		// ----------Add Channel----------
-	    $("#channelCreateBtn").on("click", function(){
-				console.log("channelCreateBtn Clicked");
-				doChannelCreate();
-			})
-			
-		function doChannelCreate(){
+		$("#channelCreateBtn").on("click", function() {
+			console.log("channelCreateBtn Clicked");
+			doChannelCreate();
+		})
+
+		function doChannelCreate() {
 			$.ajax({
-				type:"POST",
-	               url:"${hContext}/main/addchannel.do",
-	               dataType:"html",
-	               async: true,
-	               data:{
-		               "chName":$("#chName").val(),
-		               "topic":$("#chTopic").val(),
-		               "chDescription":$("#chDescription").val()
-	               },
-	               success: function(data){
-	            	   var parseData = JSON.parse(data);
-		               console.log("success");
-		               console.log(parseData.chName);
-		               var html = "";
-					   html += "<a class='collapse-item'>#";
-					   html += parseData.chName;
-					   html += "</a>";
-						  
-						$("#addChannelin").before(html);
-		               },
-		               error: function(){
-								console.log("error");
-			               }
-				});
-			}
-		// ----------Add Channel----------
-	    
-	    //팀원추가시 이메일 보내기 이벤트
-	$("#send_btn").on("click",function(){
-		var email = $('#email').val();
-		if(null == email || email.trim().length==0){
-			$('#email').focus();
-			alert("추가할 팀원의 이메일을 입력해주세요.");
-			return;
+				type : "POST",
+				url : "${hContext}/main/addchannel.do",
+				dataType : "html",
+				async : true,
+				data : {
+					"chName" : $("#chName").val(),
+					"topic" : $("#chTopic").val(),
+					"chDescription" : $("#chDescription").val()
+				},
+				success : function(data) {
+					var parseData = JSON.parse(data);
+					console.log("success");
+					console.log(parseData.chName);
+					var html = "";
+					html += "<a class='collapse-item'>#";
+					html += parseData.chName;
+					html += "</a>";
+
+					$("#addChannelin").before(html);
+				},
+				error : function() {
+					console.log("error");
+				}
+			});
 		}
+		// ----------Add Channel----------
 
-		$.ajax({
-		    type:"POST",
-		    url:"${hContext}/workspace/sendEmail.do",
-		    dataType:"html", 
-		    data:{"email" :$("#email").val(),
-			      "wsLink" : $("#wsLink").val(),
-			      "wsName" : $("#wsName").val()
-		    },
-		    success:function(data){ //성공
-		    	$('a[href="#complete"]').tab('show');		       
-		    },
-		    error:function(xhr,status,error){
-		     alert("error:"+error);
-		    },
-		    complete:function(data){
-		    
-		    }   
-		  
-	});//--ajax
+		//팀원추가시 이메일 보내기 이벤트
+		$("#send_btn").on("click", function() {
+			var email = $('#email').val();
+			if (null == email || email.trim().length == 0) {
+				$('#email').focus();
+				alert("추가할 팀원의 이메일을 입력해주세요.");
+				return;
+			}
 
-	});
-	    
-	    
+			$.ajax({
+				type : "POST",
+				url : "${hContext}/workspace/sendEmail.do",
+				dataType : "html",
+				data : {
+					"email" : $("#email").val(),
+					"wsLink" : $("#wsLink").val(),
+					"wsName" : $("#wsName").val()
+				},
+				success : function(data) { //성공
+					$('a[href="#complete"]').tab('show');
+				},
+				error : function(xhr, status, error) {
+					alert("error:" + error);
+				},
+				complete : function(data) {
+
+				}
+
+			});//--ajax
+
+		});
 	</script>
 
     <!-- Bootstrap core JavaScript-->

@@ -2,50 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bighit.on.thread">
 
-	<insert id ="doInsert">
-		INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES 
-		    ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) ,#{parentKey}, #{chLink}, #{contents},#{regId},SYSDATE)
-	</insert>
-	
-	<insert id = "doInsertRep">
-		INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUE (#{thrKey}, #{parent_key},#{ch_link},#{contents}, #{regId}, #{regDt})
-	</insert>
-	
-	<select id ="doSelectChildList">
-		SELECT thr_key,                                   
-			       ch_link,                                          
-			       contents,                                         
-			       is_pin,                                           
-			       pin_id,                                           
-			       reg_id,                                           
-			       TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,  
-			       TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS mod_dt,  
-		       	   parent_key                                        
-		       FROM THREAD                                       
-		       WHERE parent_key = ?   
-	</select>
-	
-	<!-- 계층형 쿼리로 작성할 것 -->
-	<select id = "doSelectAll" 
-	resultType = "com.bighit.on.thread.ThreadVO">
-	SELECT thr_key as ThrKey,reg_id as RegId,reg_dt as RegDt,contents FROM thread 
-	</select>
-	
-	<delete id = "doDelete">
-		DELETE FROM thread WHERE thr_key = #{thrKey}
-	</delete>
-	
-	<update id="doUpdate">
-		UPDATE THREAD SET contents=#{contents},mod_dt=#{modDt} WHERE thr_key = #{thrKey}
-	</update>
-	
-	<select id = "doSelectOne"
-	resultType = "com.bighit.on.thread.ThreadVO">
-	SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,contents AS contents
-	 FROM thread Where thr_key = #{thrKey}	
-	</select>
-	<select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
-	SELECT 
+   <insert id ="doInsert">
+      INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES 
+          ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) ,#{parentKey}, #{chLink}, #{contents},#{regId},SYSDATE)
+   </insert>
+   
+   <insert id = "doInsertRep" parameterType="ThreadVO">
+      INSERT INTO THREAD (thr_key,parent_key,ch_link,contents,reg_id,reg_dt) VALUES ('p'||LPAD(THREAD_SERIAL.NEXTVAL, 19, 0) , #{parentKey},#{chLink},#{contents}, #{regId}, SYSDATE)
+   </insert>
+   
+   <select id ="doSelectChildList">
+      SELECT thr_key,                                   
+                ch_link,                                          
+                contents,                                         
+                is_pin,                                           
+                pin_id,                                           
+                reg_id,                                           
+                TO_CHAR(reg_dt,'YYYY-MM-DD HH24MISS') AS reg_dt,  
+                TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS mod_dt,  
+                   parent_key                                        
+             FROM THREAD                                       
+             WHERE parent_key = ?   
+   </select>
+   
+   <!-- 계층형 쿼리로 작성할 것 -->
+   <select id = "doSelectAll" 
+   resultType = "com.bighit.on.thread.ThreadVO">
+   SELECT thr_key as ThrKey,reg_id as RegId,reg_dt as RegDt,contents FROM thread 
+   </select>
+   
+   <delete id = "doDelete">
+      DELETE FROM thread WHERE thr_key = #{thrKey}
+   </delete>
+   
+   <update id="doUpdate">
+      UPDATE THREAD SET child_cnt = child_cnt+1 WHERE thr_key = #{thrKey}
+   </update>
+   
+   <select id = "doSelectOne"
+   resultType = "com.bighit.on.thread.ThreadVO">
+   SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,contents AS contents
+    FROM thread Where thr_key = #{thrKey}   
+   </select>
+   <select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
+   SELECT 
     b.thr_key AS thrKey,
     b.ch_link AS chLink ,
     b.contents ,
@@ -80,7 +80,7 @@ FROM
         WHERE rownum <![CDATA[ <= ]]>  ( #{pageSize} * ( #{pageNum} - 1 ) + #{pageSize})
     )B
     WHERE rnum <![CDATA[ >= ]]> ( #{pageSize} * ( #{pageNum} - 1 ) + 1 )
-	ORDER BY rnum DESC 
-	</select>
+   ORDER BY rnum DESC 
+   </select>
 </mapper>
-	
+   

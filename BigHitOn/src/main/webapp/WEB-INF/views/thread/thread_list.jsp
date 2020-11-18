@@ -19,6 +19,7 @@
    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <title>thread_list</title>
+
 </head>
 <body>
  <div class="row ">
@@ -30,7 +31,9 @@
               <input type="hidden" name="thrKey" id="thrKey"/>          
           </form>
 </div>
-   <table id="threadListTable">
+
+   <div id="divScroll" style="width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;">
+   <table id="threadListTable"style="width:100%";display:inline;>
       <!--
       <colgroup>
          <col style="width:5%;" />
@@ -92,25 +95,27 @@
       </div>
    </div>
    </form>
+   </div>
+   
    
    <table>
-   	<thead>
-   		<tr>
-         	<th>쓰레드키</th>
-         	<th>내용</th>
-         	<th>고정유무</th>
-         	<th>작성자</th>
-         	<th>작성일</th>
-         	<th>수정일</th>
-         	<th>댓글갯수</th>
-     	 </tr>
-  	</thead>
-  	<tbody id="selectOneList">
-  	<c:choose>           
-  			<c:when test="${!empty selectOneList}">
-               <c:forEach var="list2" items="${selectOneList}">
+      <thead>
+         <tr>
+            <th>쓰레드키</th>
+            <th>내용</th>
+            <th>고정유무</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>수정일</th>
+            <th>댓글갯수</th>
+         </tr>
+     </thead>
+     
+     
+     <div style="width:35%;float:left;display:inline;white-space:nowrap">
+     <tbody id="selectOneList" style="width:100%;display:inline;">
                   <tr>
-                     <td><c:out value="${list2.thrKey}"/></td>
+                     <td ><c:out value="${list2.thrKey}"/></td>
                      <td><c:out value="${list2.contents}"/></td>
                      <td>
                         <c:if test="${list2.isPin == 1}">
@@ -128,13 +133,22 @@
                         <c:if test="${list2.childCnt != 0}">
                            <c:out value="${list2.childCnt}"/>
                         </c:if>
-                     </td>
-                  </tr>
-               </c:forEach>    
-             </c:when>   
-         </c:choose>
-      </tbody>
+                     </td>                     
+                  </tr>              
+      </tbody>                 
    </table>
+                  <form method="post" action="${hContext}/thread/doInsertRep.do"> 
+                  <div class="form-group">               
+                   <input type="text" name="parentKey" id="parentKey"/>
+                   <input type="hidden" name="thrKey" id="thrKey"/>
+                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                           <input type="text" class="form-control" name="contentsRep" id="contentsRep" placeholder="내용을 입력하세요"
+                                maxlength="400"/>
+                           <input type="button" class="btn btn=primary btn-sm" value="Send" id="insertRepBtn"/>
+                       </div>      
+                   </div>           
+               </form>
+   </div>
    
    
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
@@ -142,6 +156,114 @@
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+      $(document).ready(function(){
+          $("#divScroll").scroll(function(){
+              console.log($("#divScroll").scrollTop());
+              if($("#divScroll").scrollTop() == 0){
+                 $("#pageNum").val( parseInt($("#pageNum").val()) +1);
+                  console.log($("#pageNum").val());
+                  console.log($("#pageSize").val());
+                  console.log($("#searchWord").val());
+                  $.ajax({
+                      type:"GET",
+                      url:"${hContext}/thread/moreList.do",
+                      dataType:"html", 
+                      data:{
+                           "pageNum" :$("#pageNum").val(),
+                           "pageSize":$("#pageSize").val(),
+                           "searchWord":$("#searchWord").val()                     
+                      },  
+                      success:function(data){ //성공
+                         console.log("data="+data);
+                         //alert("data:"+data);
+                         
+                         //json 분리해서 변수
+                         var list = JSON.parse(data);
+                         if(list.length > 0){
+                            var html = "";
+                            for(var i=0;i<list.length;i++){
+                              html += '<tr>';
+                              html += '<td>'+ list[i].thrKey+'</td>';
+                              html += '<td>'+ list[i].contents+'</td>';
+                              html += '<td>';
+                              if(list[i].isPin==1) html += list[i].pinId + "님이 고정함";
+                              html += '</td>';
+                              html += '<td>'+ list[i].regId+'</td>';
+                              html += '<td>'+ list[i].regDt+'</td>';
+                              html += '<td data-toggle=\"tooltip\" data-placement="\right\" title=\"' +list[i].modDt +'\">';
+                              if(list[i].regDt != list[i].modDt ) {
+                                 html += '편집됨';                           
+                              }
+                              html +="</td>"
+                              html += '<td>';
+                              if(list[i].childCnt != 0 )html += list[i].childCnt+'</td>';
+                                                
+                              html += '<tr>';
+                            }                     
+                        
+                           $("#threadList").prepend(html);
+                           //페이즈 사이즈 만큼 내려오게끔 
+                           //window.scrollTo(0,200);
+                           $("#divScroll").scrollTop($("#divScroll").scrollTop()+100);
+                           
+                         }
+                      },
+                      error:function(xhr,status,error){
+                       alert("error:"+error);
+                      },
+                      complete:function(data){
+                      
+                      }   
+                    
+                  });//--ajax
+                  }
+          });
+          
+      });
+      $("#insertRepBtn").on("click", function(){
+          console.log("insertRepBtn");
+
+          var contentsRep = $("#contentsRep").val();
+          console.log("contentsRep:"+contentsRep);
+
+          if(null == contentsRep || contentsRep.trim().length==0){
+             $("#contents").focus();
+             alert("내용을 입력하세요");
+             return;
+             }
+
+
+          
+          $.ajax({
+             type:"POST",
+             url:"${hContext}/thread/doInsertRep.do",
+             dataType:"html",
+             data:{
+                   //"thrKey" : $("thrKey").val(),
+                   "parentKey": $("#parentKey").val(),
+                   "chLink" : $("#searchWord").val(),
+                   "contents" : $("#contentsRep").val(),
+                   "regId" : $("#regId").val(),
+                   "regDt" : $("#regDt").val()
+                },
+                success:function(data){
+
+                var jsonObj = JSON.parse(data);
+                console.log("regId="+jsonObj.regId);
+                 console.log("contents="+jsonObj.contents);
+
+                 },
+                    error:function(xhr,status,error){
+                     alert("error:"+error);
+                    },
+                    complete:function(data){
+                    
+                 }  
+                      
+             });
+          
+          });
+    
       $("#insertBtn").on("click", function(){
          console.log("insertBtn");
 
@@ -182,64 +304,7 @@
          
          });
     
-       document.addEventListener('scroll',function(){
-         if($(window).scrollTop() == 0){
-            $("#pageNum").val( parseInt($("#pageNum").val()) +1);
-            console.log($("#pageNum").val());
-            console.log($("#pageSize").val());
-            console.log($("#searchWord").val());
-            $.ajax({
-                type:"GET",
-                url:"${hContext}/thread/moreList.do",
-                dataType:"html", 
-                data:{
-                     "pageNum" :$("#pageNum").val(),
-                     "pageSize":$("#pageSize").val(),
-                     "searchWord":$("#searchWord").val()                     
-                },  
-                success:function(data){ //성공
-                   console.log("data="+data);
-                   //alert("data:"+data);
-                   
-                   //json 분리해서 변수
-                   var list = JSON.parse(data);
-                   if(list.length > 0){
-                      var html = "";
-                      for(var i=0;i<list.length;i++){
-                        html += '<tr>';
-                        html += '<td>'+ list[i].thrKey+'</td>';
-                        html += '<td>'+ list[i].contents+'</td>';
-                        html += '<td>';
-                        if(list[i].isPin==1) html += list[i].pinId + "님이 고정함";
-                        html += '</td>';
-                        html += '<td>'+ list[i].regId+'</td>';
-                        html += '<td>'+ list[i].regDt+'</td>';
-                        html += '<td data-toggle=\"tooltip\" data-placement="\right\" title=\"' +list[i].modDt +'\">';
-                        if(list[i].regDt != list[i].modDt ) {
-                           html += '편집됨';                           
-                        }
-                        html +="</td>"
-                        html += '<td>';
-                        if(list[i].childCnt != 0 )html += list[i].childCnt+'</td>';
-                                          
-                        html += '<tr>';
-                      }                     
-                  
-                     $("#threadList").prepend(html);
-                     //페이즈 사이즈 만큼 내려오게끔 
-                     window.scrollTo(0,200);
-                   }
-                },
-                error:function(xhr,status,error){
-                 alert("error:"+error);
-                },
-                complete:function(data){
-                
-                }   
-              
-            });//--ajax
-            }
-           });
+       
        $(document).on("hover","#modDt",function(){
          
            });
@@ -252,32 +317,33 @@
            var thrKey = tds.eq(0).text();
            
            console.log("thrkey:"+thrKey);
-          
+           $("#parentKey").val(thrKey);
         
         $.ajax({
             type:"GET",
             url:"${hContext}/thread/doSelectOne.do",
             data:{"thrKey" : thrKey
                  },
-            dataType:"json",
+            dataType:"html",
             success:function(data){ //성공
-            	   //console.log("data="+data);
-         	   	   console.log(data);
+                  //console.log("data="+data);
+                     console.log(data);
 
-        		  
+                 var list2 = JSON.parse(data)
                  
                    var html = "";
                    
                    html += '<tr>';
-                   html += '<td>'+data.thrKey+'</td>';
-                   html += '<td>'+data.contents+'</td>';
-                   html += '<td>'+data.isPin+'</td>';
-                   html += '<td>'+data.regId+'</td>';
-                   html += '<td>'+data.regDt+'</td>';
-                   html += '<td>'+data.childCnt+'</td>';
+                   html += '<td>'+list2.thrKey+'</td>';
+                   html += '<td>'+list2.contents+'</td>';
+                   html += '<td>'+list2.isPin+'</td>';
+                   html += '<td>'+list2.regId+'</td>';
+                   html += '<td>'+list2.regDt+'</td>';
+                   html += '<td>'+list2.childCnt+'</td>';
                    html += '</tr>';
                    console.log(html);
-                   
+
+                   $("#selectOneList").html(html);     
               },
             error:function(xhr,status,error){
               alert("error:"+error);

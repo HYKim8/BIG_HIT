@@ -55,37 +55,7 @@ public class ReminderController {
 		return "reminder/reminder";
 	}
 	
-	@RequestMapping(value = "reminder/doChkAlarm.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String doChkAlarm(HttpServletRequest req) {
-		LOG.debug("-------------------------");
-		LOG.debug("-reminder/doChkAlarm.do-");
-		LOG.debug("-------------------------");
-		
-		
-		
-		HttpSession session = req.getSession();
-		
-		// for Test
-		session.setAttribute("thrKey", "1");
-		// for Test
-		
-		String thrKey = (String) session.getAttribute("thrKey");
-		
-		ReminderVO reminderVO = new ReminderVO();
-		reminderVO.setThrKey(thrKey);
-		
-		List<ReminderVO> outList = reminderService.doSelectList(reminderVO);
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(outList);
-		
-		LOG.debug(json);
-		
-		
-		
-		return json;
-	}
+	
 	
 	@RequestMapping(value = "reminder/doSelectList.do",method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8" )
