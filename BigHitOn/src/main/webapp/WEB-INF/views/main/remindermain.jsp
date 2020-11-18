@@ -144,14 +144,10 @@ function doChkAlarm(){
 					let today = new Date();
 					let remindTime = new Date(value.remindTime);
 					let calTime = Math.floor((today-remindTime)/1000);
-					console.log("calTime : " + calTime);
 					
 					if(calTime < 60 && calTime > 0){
-						console.log("작동해요.");
 						var text = value.remindTime + " 입니다.";
 						var notification = new Notification(value.regId+"님의 리마인더", { body: text});
-						} else {
-						console.log("작동 안해요.");
 						}
 					});
 			}

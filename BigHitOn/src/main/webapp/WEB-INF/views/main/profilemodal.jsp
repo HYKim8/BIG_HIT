@@ -35,7 +35,7 @@
 				</div>
 				<div class="media-right">
 					<img height="308px" width="300px"  style="padding-top: 50px; padding-right: 15px" class="media-object"
-						src="${sessionScope.usersVO.profile_img }" alt="" id="profileImgModalView">
+						src="${sessionScope.usersVO.profile_img }" alt="" id="profileImgModalView" onError="this.src='${hContext }/resources/img/default.jpg'">
 					<div>
 						<br>
 						<form name="fileUpload" method="post" action="" id="form_data_img" enctype="multipart/form-data">
@@ -107,7 +107,14 @@
 	function doUpdateProfileImg() {
 		var formData = new FormData($("#form_data_img")[0]);
 		formData.append("file", $("input[name=profileImgChange]")[0].files[0]);
-
+		
+		var fileType = document.getElementById("profileImgChange").value.split(".");
+		var last_element = fileType[fileType.length - 1];
+		
+		if(last_element!="jpg"){
+			return;
+			}
+		
 		console.log("formData : " + formData);
 		console.log("doUpdateProfileImg")
 		$.ajax({

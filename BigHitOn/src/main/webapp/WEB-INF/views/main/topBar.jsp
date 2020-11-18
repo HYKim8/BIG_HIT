@@ -52,7 +52,7 @@
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i class="fas fa-users fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
@@ -106,8 +106,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.usersVO.name}</span>
-                                <img class="img-profile rounded-circle"
-                                    src="${sessionScope.usersVO.thumb}"> <!-- 썸네일 주소 -->
+                                <img id="topBarThumb" class="img-profile rounded-circle"
+                                    src="${sessionScope.usersVO.thumb}" onError="this.src='${hContext }/resources/img/default.jpg'"> <!-- 썸네일 주소 -->
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
