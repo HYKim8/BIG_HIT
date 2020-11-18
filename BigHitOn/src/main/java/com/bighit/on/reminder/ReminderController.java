@@ -57,27 +57,6 @@ public class ReminderController {
 	
 	
 	
-	@RequestMapping(value = "reminder/doSelectList.do",method = RequestMethod.GET
-			,produces = "application/json;charset=UTF-8" )
-	@ResponseBody
-	public String doSelectList(ReminderVO reminderVO, Model model) {
-		LOG.debug("-------------------------");
-		LOG.debug("-reminder/doSelectList.do-");
-		LOG.debug("-------------------------");
-		
-		List<ReminderVO> list = this.reminderService.doSelectList(reminderVO);
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(list);
-		
-		LOG.debug("-------------------------");
-		LOG.debug("-json-"+json);
-		LOG.debug("-------------------------");
-		
-		return json;
-	}
-	
-	
 	
 	
 }

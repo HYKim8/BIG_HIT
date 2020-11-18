@@ -248,45 +248,7 @@ public class FileController {
 	}
 	
 	
-	@RequestMapping(value = "file/doUpload.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String doUpload(HttpServletRequest req, MultipartFile file, String fileType) throws IllegalStateException, IOException {
-		LOG.debug("-------------------------");
-		LOG.debug("-file/doUpload.do-");
-		LOG.debug("-------------------------");
-		
-		LOG.debug("file Type : " + fileType);
-		HttpSession session = req.getSession();
-		// for test
-		session.setAttribute("id", "KIM");
-		session.setAttribute("thrKey", "1");
-		session.setAttribute("chLink", "1");
-		// for test
-		
-		String userId = (String) session.getAttribute("id");
-		String thrKey = (String) session.getAttribute("thrKey");
-		String chLink = (String) session.getAttribute("chLink");
-		
-		String keyName = fileService.doMakeKeyName(fileType, file.getOriginalFilename());
-		fileService.doFileUpload(keyName, file);
-		
-		FileVO fileVO = new FileVO();
-		fileVO.setChLink(chLink);
-		fileVO.setFileName(file.getOriginalFilename());
-		fileVO.setFileUrl(keyName);
-		fileVO.setThrKey(thrKey);
-		fileVO.setRegId(userId);
-		
-		fileService.doInsert(fileVO);
-		
-		try {
-			LOG.debug("file is :" + file.toString());
-		} catch(Exception e) {
-			return "error occured" + e.getMessage();
-		}
-		
-		return "file/file";
-	}
+	
 	
 	
 }
