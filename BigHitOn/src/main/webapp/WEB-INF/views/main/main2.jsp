@@ -32,7 +32,16 @@
 </head>
 
 <body id="page-top">
-
+	<div class="row ">
+          <form action="${hContext}/thread/ListView.do" 
+               name="searchFrm" class="form-inline  col-lg-12 col-md-12 text-right">
+              <input type="hidden" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
+              <input type="hidden" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
+              <input type="hidden" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
+              <input type="hidden" name="thrKey" id="thrKey"/>          
+          </form>
+	</div>
+	
     <!-- Page Wrapper -->
     <div id="wrapper">
 		
@@ -48,23 +57,28 @@
 
                     
 
-				<!-- 한 셋트 -->
-				<div style="padding-right: 20px;"class="media">
-				  <div style="padding-left:10px; padding-right:10px;"class="media-left">
+		<div id="divScroll" style="padding-right: 20px;width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;"class="media">
+			<c:if test="${!empty threadList}">
+				<c:set var = "vs" value="any"/>
+				
+				<div style="padding-left:10px; padding-right:10px;"class="media-left">
 				    <a href="#">
-				      <img class="media-object" src="${hContext }/resources/img/User1.jpg" alt="">
-				    </a>
-				  </div>
-				  <div class="media-body">
-				    <h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal">김건희 오후 2:23</h6>
-				    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS 
-				    bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-				    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page 
-				    performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-				    <!-- 같은 아이디면 p태그를 추가하는 식으로. -->
-				    
-				  </div>
-				</div>
+				    <img class="media-object" src="${hContext}/resources/img/User1.jpg" alt="">
+					</a>
+				</div>		
+				
+				<div class="media-body" id="threadList">
+					<c:forEach var="list" items="${threadList}" varStatus="status">	
+					<c:if test="${status.first ||( !status.first && vs != list.regId)}">
+				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/></h6>
+				 		<c:set var = "vs" value="${list.regId}"/>
+				 	</c:if>
+				 	
+				 	<p><c:out value="${list.contents}"/></p>	
+				 	</c:forEach>				    
+				</div>				
+			</c:if>
+		</div>
 				<!-- 한 셋트 -->
 				
             </div>
@@ -83,11 +97,17 @@
 
             <!-- Footer -->
             <!-- 입력 폼 -->
-            <footer class="sticky-footer bg-white">
-                <div style="padding-left: 20px; padding-right: 20px;"class="row">
-                	<div class="col-md-12"><textarea class="form-control" rows="2"></textarea></div>                    
-                </div>
-            </footer>
+            <form method="post" action="${hContext}/thread/doInsert.do">
+			   	<input type="hidden" name="thrKey" id="thrKey"/>
+			    <footer class="sticky-footer bg-white">                
+			                <div style="padding-left: 20px; padding-right: 20px;"class="row">
+			                	<div class="col-md-12"><textarea class="form-control" name="contents" id="contents" placeholder="내용을 입력하세요"
+			                    maxlength="400"></textarea>
+			                    </div>  
+			                    <input type="button" class="btn btn=primary btn-sm" value="Send" id="insertBtn"/>                  
+			                </div>
+			    </footer>   
+			  </form>
             <!-- End of Footer -->
 			
 			
@@ -217,6 +237,100 @@
     
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
+	//스크롤시 쓰레드추가 
+	$(document).ready(function(){
+        $("#divScroll").scroll(function(){
+            console.log($("#divScroll").scrollTop());
+            if($("#divScroll").scrollTop() == 0){
+               $("#pageNum").val( parseInt($("#pageNum").val()) +1);
+                console.log($("#pageNum").val());
+                console.log($("#pageSize").val());
+                console.log($("#searchWord").val());
+                $.ajax({
+                    type:"GET",
+                    url:"${hContext}/thread/moreList.do",
+                    dataType:"html", 
+                    data:{
+                         "pageNum" :$("#pageNum").val(),
+                         "pageSize":$("#pageSize").val(),
+                         "searchWord":$("#searchWord").val()                     
+                    },  
+                    success:function(data){ //성공
+                       //console.log("data="+data);
+                       //alert("data:"+data);
+                       
+                       //json 분리해서 변수
+                       var list = JSON.parse(data);
+                       if(list.length > 0){
+                          var html = "";
+                          var vs = "";
+                          for(var i=0;i<list.length;i++){
+							if(i==0 || (i!=0 && vs != list[i].regId)){
+								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "</h6>";
+								 vs = list[i].regId
+							}                             
+                            html += "<p>" + list[i].contents + "</p>" 
+                            console.log(html);
+                          }               
+                      
+                         $("#threadList").prepend(html);
+                         //페이즈 사이즈 만큼 내려오게끔 
+                         //window.scrollTo(0,200);
+                         $("#divScroll").scrollTop($("#divScroll").scrollTop()+100);
+                         
+                       }
+                    },
+                    error:function(xhr,status,error){
+                     alert("error:"+error);
+                    },
+                    complete:function(data){
+                    
+                    }   
+                  
+                });//--ajax
+                }
+        	});
+		});
+
+	 $("#insertBtn").on("click", function(){
+         console.log("insertBtn");
+
+         var contents = $("#contents").val();
+         console.log("contents:"+contents);
+
+         if(null == contents || contents.trim().length==0){
+            $("#contents").focus();
+            alert("내용을 입력하세요");
+            return;
+            }
+         $.ajax({
+            type:"POST",
+            url:"${hContext}/thread/doInsert.do",
+            dataType:"html",
+            data:{
+                  "thrKey" : "",
+                  "parentKey" : "",
+                  "chLink" : $("#searchWord").val(),
+                  "contents" : $("#contents").val(),
+                  "regId" : "hi",
+               },
+               success:function(data){
+
+               var jsonObj = JSON.parse(data);
+               console.log("regId="+jsonObj.regId);
+                console.log("contents="+jsonObj.contents);
+
+                },
+                   error:function(xhr,status,error){
+                    alert("error:"+error);
+                   },
+                   complete:function(data){
+                   
+                }  
+                     
+            });
+         
+         });
 		$(function () {
 	    $('[data-toggle="popover"]').popover()
 	    })

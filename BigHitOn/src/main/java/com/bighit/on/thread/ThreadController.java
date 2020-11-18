@@ -67,7 +67,7 @@ public class ThreadController {
       }
       if(search.getPageSize()==0)
       {
-         search.setPageSize(100);
+         search.setPageSize(10);
       }
       
       List<ThreadVO> threadList = this.threadService.doSelectList(search);
@@ -87,7 +87,7 @@ public class ThreadController {
       }
       if(search.getPageSize()==0)
       {
-         search.setPageSize(100);
+         search.setPageSize(10);
       }
       model.addAttribute("searchVO", search);
       
@@ -96,7 +96,7 @@ public class ThreadController {
       for(ThreadVO vo:threadList) {
       LOG.debug(vo.toString());
       }
-      String view = "thread/thread_list2";
+      String view = "thread/main3";
       return view;
    }
    
