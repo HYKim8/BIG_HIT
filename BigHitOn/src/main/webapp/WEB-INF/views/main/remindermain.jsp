@@ -94,7 +94,7 @@ function doInsertReminder(){
 			"time" : $("#currentTime").val()
 		},
 		success : function(data) {
-			console.log("성공!");
+			console.log("알람 등록 성공!");
 		}
 	});
 
@@ -147,11 +147,11 @@ function doChkAlarm(){
 					console.log("calTime : " + calTime);
 					
 					if(calTime < 60 && calTime > 0){
-						console.log("작동해요~");
+						console.log("작동해요.");
 						var text = value.remindTime + " 입니다.";
 						var notification = new Notification(value.regId+"님의 리마인더", { body: text});
 						} else {
-						console.log("작동 안해요~");
+						console.log("작동 안해요.");
 						}
 					});
 			}
