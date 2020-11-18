@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bighit.on.channel.ChannelServiceImpl;
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
 import com.bighit.on.user.dao.UsersDaoImpl;
@@ -35,6 +37,9 @@ public class WorkSpaceController {
 	UsersService usersService;
 	
 	@Autowired
+	ChannelServiceImpl channelServiceImpl; 
+	
+	@Autowired
 	MessageSource messageSource;
 
 	@Autowired
@@ -47,11 +52,28 @@ public class WorkSpaceController {
 		LOG.debug("=param=" + workSpaceVO);
 
 		HttpSession session = req.getSession();
+		workSpaceVO.setRegId(usdao.doGetKey());
+		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		
+		channelServiceImpl.doInsert(gen);
+		channelServiceImpl.doInsert(ran);
+		
 		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
 		usersVO.setWs_link(workSpaceVO.getWsLink());
+		usersVO.setNickname("nickname");
 		usersVO.setProfile_img("");
+		usersVO.setPosition("general");
+		usersVO.setPhone_num("010-1234-5678");
+		usersVO.setCountry(0000);
+		usersVO.setState(0);
+		usersVO.setOnline_state(0);
+		usersVO.setReg_id("");
+		usersVO.setReg_dt("");
+		usersVO.setThumb("");
+		
 		usersService.doInsert(usersVO);
-		workSpaceVO.setRegId(usdao.doGetKey());
+		
 		
 		Message message = workSpaceService.doInsert(workSpaceVO);
 		

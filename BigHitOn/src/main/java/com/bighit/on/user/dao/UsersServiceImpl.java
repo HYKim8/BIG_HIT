@@ -92,6 +92,13 @@ public class UsersServiceImpl implements UsersService {
 	public int makeDMchannel(UsersVO userVO) {
 		List<UsersVO> list = usersDaoImpl.doSelectList(new WorkSpaceVO(userVO.getWsLink(), "", "", "", ""));
 		int flag = 1;
+		int removeIdx = 0;
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i).getUser_serial().equals(userVO.getUser_serial() )) {
+				list.remove(i);
+			}
+			
+		}
 		for(int i=0;i<list.size();i++) {
 			ChannelVO ch = new ChannelVO("", userVO.getWsLink(), list.get(i).getName() +"/"+ userVO.getName() ,"DM" , "1:1대화", "0", userVO.getUser_serial(), "");
 			String chkey = chDao.doGetKey();
