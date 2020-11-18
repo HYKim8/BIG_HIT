@@ -31,6 +31,8 @@ public class ReminderVO extends DTO {
 	 */
 	private String regDt;
 
+	private String wsLink;
+
 	public ReminderVO() {
 	}
 
@@ -42,7 +44,15 @@ public class ReminderVO extends DTO {
 		this.regId = regId;
 		this.regDt = regDt;
 	}
-	
+
+	public String getWsLink() {
+		return wsLink;
+	}
+
+	public void setWsLink(String wsLink) {
+		this.wsLink = wsLink;
+	}
+
 	public String getRemindId() {
 		return remindId;
 	}

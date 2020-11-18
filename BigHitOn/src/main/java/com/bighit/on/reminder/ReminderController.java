@@ -55,83 +55,8 @@ public class ReminderController {
 		return "reminder/reminder";
 	}
 	
-	@RequestMapping(value = "reminder/doChkAlarm.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String doChkAlarm(HttpServletRequest req) {
-		LOG.debug("-------------------------");
-		LOG.debug("-reminder/doChkAlarm.do-");
-		LOG.debug("-------------------------");
-		
-		
-		
-		HttpSession session = req.getSession();
-		
-		// for Test
-		session.setAttribute("thrKey", "1");
-		// for Test
-		
-		String thrKey = (String) session.getAttribute("thrKey");
-		
-		ReminderVO reminderVO = new ReminderVO();
-		reminderVO.setThrKey(thrKey);
-		
-		List<ReminderVO> outList = reminderService.doSelectList(reminderVO);
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(outList);
-		
-		LOG.debug(json);
-		
-		
-		
-		return json;
-	}
-	
-	@RequestMapping(value = "reminder/doSelectList.do",method = RequestMethod.GET
-			,produces = "application/json;charset=UTF-8" )
-	@ResponseBody
-	public String doSelectList(ReminderVO reminderVO, Model model) {
-		LOG.debug("-------------------------");
-		LOG.debug("-reminder/doSelectList.do-");
-		LOG.debug("-------------------------");
-		
-		List<ReminderVO> list = this.reminderService.doSelectList(reminderVO);
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(list);
-		
-		LOG.debug("-------------------------");
-		LOG.debug("-json-"+json);
-		LOG.debug("-------------------------");
-		
-		return json;
-	}
 	
 	
-	@RequestMapping(value = "reminder/doInsert.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String doInsert(ReminderVO reminderVO) {
-		
-		LOG.debug("-------------------------");
-		LOG.debug("-doInsert-");
-		LOG.debug("-reminderVO-" + reminderVO);
-		LOG.debug("-------------------------");
-		
-		// session으로 받을 것.
-		reminderVO.setThrKey("1");
-		reminderVO.setRegId("KIM");
-		
-		int flag = reminderService.doInsert(reminderVO);
-		
-		LOG.debug("-------------------------");
-		LOG.debug("-doInsert-Controller-");
-		LOG.debug("-flag-" + flag);
-		LOG.debug("-------------------------");
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(flag);
-		
-		return json;
-	}
+	
 	
 }

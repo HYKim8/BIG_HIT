@@ -1,7 +1,9 @@
 package com.bighit.on.workspace;
 
 import java.util.List;
-import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersDaoImpl;
+import com.bighit.on.user.dao.UsersService;
 import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
 
@@ -26,18 +30,33 @@ public class WorkSpaceController {
 
 	@Autowired
 	WorkSpaceService workSpaceService;
-
+	
+	@Autowired
+	UsersService usersService;
+	
 	@Autowired
 	MessageSource messageSource;
 
+	@Autowired
+	UsersDaoImpl usdao;
 	@RequestMapping(value = "workspace/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String doInsert(WorkSpaceVO workSpaceVO) {
+	public String doInsert(WorkSpaceVO workSpaceVO, HttpServletRequest req) {
 		LOG.debug("===================================");
 		LOG.debug("=doInsert=");
 		LOG.debug("=param=" + workSpaceVO);
 
+		HttpSession session = req.getSession();
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+		usersVO.setWs_link(workSpaceVO.getWsLink());
+		usersVO.setProfile_img("");
+		usersService.doInsert(usersVO);
+		workSpaceVO.setRegId(usdao.doGetKey());
+		
 		Message message = workSpaceService.doInsert(workSpaceVO);
+		
+		
+		
 		
 //		message.setRegId(String.valueOf(flag));
 		
@@ -119,11 +138,29 @@ public class WorkSpaceController {
 	
 	@RequestMapping(value = "workspace/sendEmail.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String sendEmail(EmailVO emailVO) {
+	public String sendEmail(EmailVO emailVO, UsersVO usersVO) {
 		
-		workSpaceService.sendEmail(emailVO);
 		
-		return 0+"";
+		
+		int flag = this.usersService.emailCheck(usersVO);
+		if(flag==0) workSpaceService.sendEmail(emailVO);
+		LOG.debug("=flag=" + flag);
+		Message message = new Message();
+		message.setRegId(flag + "");
+
+		if (flag > 0) {
+			message.setMsgContents("이미 이 워크스페이스에 참여된 사용자입니다.");			
+
+		} else {
+			message.setMsgContents("전송 성공.");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(message);
+		LOG.debug("==================");
+		LOG.debug("=json=" + json);
+		LOG.debug("==================");
+
+		return json;
 	}
 	
 	@RequestMapping(value = "workspace/teamUserAdd_view.do", method = RequestMethod.GET)

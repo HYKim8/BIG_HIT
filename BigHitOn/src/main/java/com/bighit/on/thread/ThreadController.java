@@ -39,6 +39,25 @@ public class ThreadController {
    @Autowired
    SaveThrService saveThrService;
    
+   @RequestMapping(value="thread/doSelectChildList.do", method = RequestMethod.GET)
+   @ResponseBody
+   public List<ThreadVO> doSelectChildList(ThreadVO threadVO, Model model) {
+      LOG.debug("==doSelectChildList==");
+      List<ThreadVO> outVO = this.threadService.doSelectChildList(threadVO);
+      
+      for(ThreadVO vo: outVO) {
+            LOG.debug(vo.toString());
+        }
+      Gson gson = new Gson();
+      String json = gson.toJson(outVO);
+      
+      LOG.debug("==================");
+      LOG.debug("=json="+json);
+      LOG.debug("==================");
+         
+      return outVO;
+   
+   }
    
    @RequestMapping(value="thread/doSelectOne.do", method = RequestMethod.GET)
    @ResponseBody
@@ -96,12 +115,39 @@ public class ThreadController {
       for(ThreadVO vo:threadList) {
       LOG.debug(vo.toString());
       }
-      String view = "thread/thread_list2";
+      String view = "thread/thread_list";
       return view;
    }
    
    
-   
+   @RequestMapping(value="thread/doInsertRep.do", method = RequestMethod.POST)
+   @ResponseBody
+   public String doInsertRep(ThreadVO threadVO) {
+      LOG.debug("===================================");
+      LOG.debug("=doInsertRep=");
+      LOG.debug("=param="+threadVO);
+      threadVO.setRegId("11112");   
+      int flag = threadService.doInsertRep(threadVO);
+      LOG.debug("==================");
+      LOG.debug("=flag="+flag);
+      LOG.debug("==================");
+      
+      Message  message=new Message();
+       message.setRegId(flag+"");
+       
+       if(flag ==1 ) {
+             message.setMsgContents(threadVO.getRegId()+" 댓글 등록 되었습니다.");
+          }else {
+             message.setMsgContents(threadVO.getRegId()+" 댓글 등록 실패.");
+          }
+       Gson gson=new Gson();
+       String json = gson.toJson(message); 
+       LOG.debug("==================");
+       LOG.debug("=json="+json);
+       LOG.debug("==================");         
+          
+       return json; 
+   }
    
    @RequestMapping(value="thread/doInsert.do", method = RequestMethod.POST)
    @ResponseBody

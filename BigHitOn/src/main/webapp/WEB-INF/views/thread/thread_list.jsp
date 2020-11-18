@@ -25,9 +25,9 @@
  <div class="row ">
           <form action="${hContext}/thread/ListView.do" 
                name="searchFrm" class="form-inline  col-lg-12 col-md-12 text-right">
-              <input type="text" name="pageNum" id="pageNum" value="${vo.getPageNum()}" />
-              <input type="text" name="pageSize"   id="pageSize"  value="${vo.getPageSize()}" />
-              <input type="text" name="searchWord" id="searchWord" class="form-control  input-sm" value="${vo.getSearchWord()}"/>
+              <input type="text" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
+              <input type="text" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
+              <input type="text" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
               <input type="hidden" name="thrKey" id="thrKey"/>          
           </form>
 </div>
@@ -97,7 +97,7 @@
    </form>
    </div>
    
-   
+    <div style="width:35%;float:left;display:inline;white-space:nowrap">
    <table>
       <thead>
          <tr>
@@ -112,8 +112,8 @@
      </thead>
      
      
-     <div style="width:35%;float:left;display:inline;white-space:nowrap">
-     <tbody id="selectOneList" style="width:100%;display:inline;">
+    
+     <tbody id="selectOneList" style="width:100%;">
                   <tr>
                      <td ><c:out value="${list2.thrKey}"/></td>
                      <td><c:out value="${list2.contents}"/></td>
@@ -137,9 +137,29 @@
                   </tr>              
       </tbody>                 
    </table>
+   
+   <table>
+      <thead>
+         <tr>
+            <th>스레드 키</th>
+            <th>채널링크</th>
+            <th>내용</th>
+            <th>등록자</th>
+            <th>등록일</th>
+            <th>부모키</th>
+            <th>
+         </tr>
+      </thead>
+      <tbody id="selectChildList" style="width:100%;">
+      
+                  <tr>             
+                  </tr>
+           
+      </tbody>
+   </table>
                   <form method="post" action="${hContext}/thread/doInsertRep.do"> 
                   <div class="form-group">               
-                   <input type="text" name="parentKey" id="parentKey"/>
+                   <input type="hidden" name="parentKey" id="parentKey"/>
                    <input type="hidden" name="thrKey" id="thrKey"/>
                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                            <input type="text" class="form-control" name="contentsRep" id="contentsRep" placeholder="내용을 입력하세요"
@@ -225,7 +245,9 @@
 
           var contentsRep = $("#contentsRep").val();
           console.log("contentsRep:"+contentsRep);
-
+         
+         
+          
           if(null == contentsRep || contentsRep.trim().length==0){
              $("#contents").focus();
              alert("내용을 입력하세요");
@@ -250,7 +272,7 @@
 
                 var jsonObj = JSON.parse(data);
                 console.log("regId="+jsonObj.regId);
-                 console.log("contents="+jsonObj.contents);
+                 console.log("contents="+jsonObj.contentsRep);
 
                  },
                     error:function(xhr,status,error){
@@ -316,8 +338,8 @@
            var tds = trs.children();
            var thrKey = tds.eq(0).text();
            
-           console.log("thrkey:"+thrKey);
-           $("#parentKey").val(thrKey);
+           //console.log("thrkey:"+thrKey);
+            var parentKey = $("#parentKey").val(thrKey);
         
         $.ajax({
             type:"GET",
@@ -329,8 +351,45 @@
                   //console.log("data="+data);
                      console.log(data);
 
-                 var list2 = JSON.parse(data)
-                 
+                 var list2 = JSON.parse(data);
+                 $("#selectChildList").empty();
+                 console.log(list2.childCnt);
+                 //console.log(thrkey);
+                 if(list2.childCnt != 0){
+                     console.log("왔니?");
+                     $.ajax({
+                        type:"GET",
+                        url:"${hContext}/thread/doSelectChildList.do",
+                        data:{"thrKey" : thrKey},
+                        dataType:"html",
+                        
+                        success:function(data2){
+                           console.log(data2);
+                        
+                        var childList = JSON.parse(data2);
+							console.log(childList);
+                        var html ="";
+                        for(var i=0;i<childList.length;i++){
+                        	html += '<tr name="chilereplist">';
+                       		html += '<td>'+childList[i].thrKey+'</td>';
+                       	 	html += '<td>'+childList[i].chLink+'</td>';
+                            html += '<td>'+childList[i].contents+'</td>';
+                            html += '<td>'+childList[i].regId+'</td>';
+                            html += '<td>'+childList[i].regDt+'</td>';
+                            html += '<td>'+childList[i].parentKey+'</td>';   
+                            html += '</tr>';
+                            console.log(html);  
+                            
+                        }      
+                        $("#selectChildList").html(html);         
+                        },
+                        error:function(xhr,status,error){
+                            alert("error:"+error);
+                             },
+                          complete:function(data){
+                          }
+                         }); 
+                         }
                    var html = "";
                    
                    html += '<tr>';

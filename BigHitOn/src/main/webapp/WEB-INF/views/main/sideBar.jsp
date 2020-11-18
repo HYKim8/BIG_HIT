@@ -16,9 +16,33 @@
 			<li class="nav-item active">
                 <a class="nav-link" href="${hContext}/workspace/teamUserAdd_view.do">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>WorkSpace Create</span></a>
+                    <span>WorkSpace Create</span>
+                </a>
             </li>
 			
+			<!-- workspace transform -->
+			 <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+			
+			<li class="nav-item active" >
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMes"
+                    aria-expanded="true" aria-controls="collapseMes">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>WorkSpace transform</span>
+                </a>
+                <div id="collapseMes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded" id="workspacetfBtn">                    
+                    	<c:forEach var="WorkSpaceVO" items="${workspaceList}">
+   						 	<a class="collapse-item" type="button" id="wstranfrom_btn">
+   						 		<c:out value="${WorkSpaceVO.wsName}"/>
+   						 		<div id="workspaceLk" style="display: none"><c:out value="${WorkSpaceVO.wsLink}" /></div>   						 		
+   						 	</a>
+   						 	
+						</c:forEach>      	
+                    </div>
+                </div>
+            </li>
+            
 			<!-- Divider -->
             <hr class="sidebar-divider">
 			
@@ -109,6 +133,44 @@
                     </div>
                 </div>
             </li>
-
+            
+                   
         </ul>
         <!-- End of Sidebar -->
+        
+        <script type="text/javascript">
+
+       	// 아몰랑!
+     	// 클릭된 타겟 찾기
+     	
+     	
+		$("#workspacetfBtn").click(function(event) {
+			
+			var tmp = $(event.target).children("#workspaceLk").text(); //.parent().children("#workspaceLk").text();
+			console.log("====="+tmp);
+			$.ajax({
+			    type:"GET",
+			    url:"${hContext}/main/wsChanger.do",
+			    dataType:"html", 
+			    data:{
+				    "toWsLink" : tmp
+			    },
+			    success:function(data){ //성공
+				    console.log("success");
+				    location.reload();	       
+			    },
+			    error:function(xhr,status,error){
+			     alert("error:"+error);
+			    },
+			    complete:function(data){
+			    
+			    }   
+			  
+			});//--ajax 
+			
+			
+		}); 
+
+
+
+        </script>

@@ -170,7 +170,9 @@
 		    data:{"email" :$("#email").val(),
 			      "wsLink" : $("#wsLink").val(),
 			      "wsName" : $("#wsName").val(),
-			      "userId": "${sessionScope.usersVO.name }"
+			      "userId": "${sessionScope.usersVO.name }",
+			      "ws_link": $("#wsLink").val(),
+			      "email": $("#email").val()
 		    },
 		    success:function(data){ //성공
 		    	$('a[href="#complete"]').tab('show');		       
@@ -195,9 +197,10 @@
 		    data:{"wsLink" :$("#wsLink").val(),
 		    	  "wsName" :$("#wsName").val(),
 		          "project":$("#project").val(),
-		          "regId" : "1111"
+		          "regId" : "${sessionScope.usersVO.user_serial}"
 		    },
 		    success:function(data){ //성공
+		    	alert("=====");
 		    	 //json 분리해서 변수
 			       var jsonObj = JSON.parse(data);
 			       console.log("msgId="+jsonObj.regId);
@@ -205,7 +208,7 @@
 			    
 			       if(null !=jsonObj && jsonObj.regId=="1"){
 			    	   alert(jsonObj.msgContents);
-			    	   window.location.href="${hContext}/main/main.do=wsLink?"+jsonObj.msgContents;
+			    	   window.location.href="${hContext}/main/index.do";
 			       }
 		    },		       
 		    error:function(xhr,status,error){

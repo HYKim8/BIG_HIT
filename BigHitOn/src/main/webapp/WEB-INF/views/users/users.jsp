@@ -129,7 +129,7 @@
 					 alert(jsonData.msgContents);
 				 }
 		            //다시조회
-				window.location.href="${hContext}/main/main.do"
+				window.location.href="${hContext}/main/index.do"
 			},
 			complete:function(data){
 	             
