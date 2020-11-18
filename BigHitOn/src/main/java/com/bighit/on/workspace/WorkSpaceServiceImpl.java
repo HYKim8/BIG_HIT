@@ -80,23 +80,18 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 	public Message doInsert(WorkSpaceVO workSpaceVO) {
 		Message res = new Message();
 		int flag = 1 ;
-		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
-		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
-		String genChLink = channelDaoImpl.doGetKey();
-		flag &= channelDaoImpl.doInsert(gen);	
-		flag &= channelDaoImpl.doInsert(ran);
-		flag &= workSpaceDao.doInsert(workSpaceVO);
-		UsersVO user = new UsersVO();
-		user.setUser_serial(workSpaceVO.getRegId());
-		user.setWs_link(workSpaceVO.getWsLink());
-		flag &= chUserDao.doWorkSpaceInsert(user);
 		
-		res.setRegId(flag+"");
+		String genChLink = channelDaoImpl.doGetKey();
+		flag &= workSpaceDao.doInsert(workSpaceVO);
+		
 		res.setMsgContents(genChLink);
+		flag &= makeDefaultCh(workSpaceVO);
+		res.setRegId(flag+"");
+		
 		return res;
 		
 	}
-
+	
 	@Override
 	public int doDelete(WorkSpaceVO workSpaceVO) {
 		return workSpaceDao.doDelete(workSpaceVO);
@@ -140,5 +135,20 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 		LOG.debug("mimeMessage:"+mimeMessage);
 		//전송
 		this.mailSender.send(mimeMessage);
+	}
+	public int makeDefaultCh(WorkSpaceVO workSpaceVO) {
+		int flag = 1;
+		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		UsersVO user = new UsersVO();
+		user.setUser_serial(workSpaceVO.getRegId());
+		user.setWs_link(workSpaceVO.getWsLink());
+		LOG.debug("user:::"+user);
+		flag &= chUserDao.doWorkSpaceInsert(user);
+
+		flag &= channelDaoImpl.doInsert(gen);	
+		flag &= channelDaoImpl.doInsert(ran);
+		
+		return flag;
 	}
 }

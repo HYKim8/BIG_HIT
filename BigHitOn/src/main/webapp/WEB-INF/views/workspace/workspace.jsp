@@ -207,7 +207,7 @@
 			    
 			       if(null !=jsonObj && jsonObj.regId=="1"){
 			    	   alert(jsonObj.msgContents);
-			    	   window.location.href="${hContext}/main/main.do=wsLink?"+jsonObj.msgContents;
+			    	   window.location.href="${hContext}/main/index.do";
 			       }
 		    },		       
 		    error:function(xhr,status,error){

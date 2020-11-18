@@ -1,7 +1,9 @@
 package com.bighit.on.workspace;
 
 import java.util.List;
-import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
 import com.bighit.on.email.EmailVO;
+import com.bighit.on.user.dao.UsersDaoImpl;
 import com.bighit.on.user.dao.UsersService;
 import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
@@ -34,14 +37,25 @@ public class WorkSpaceController {
 	@Autowired
 	MessageSource messageSource;
 
+	@Autowired
+	UsersDaoImpl usdao;
 	@RequestMapping(value = "workspace/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String doInsert(WorkSpaceVO workSpaceVO) {
+	public String doInsert(WorkSpaceVO workSpaceVO, HttpServletRequest req) {
 		LOG.debug("===================================");
 		LOG.debug("=doInsert=");
 		LOG.debug("=param=" + workSpaceVO);
 
+		HttpSession session = req.getSession();
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+		usersVO.setWs_link(workSpaceVO.getWsLink());
+		usersService.doInsert(usersVO);
+		workSpaceVO.setRegId(usdao.doGetKey());
+		
 		Message message = workSpaceService.doInsert(workSpaceVO);
+		
+		
+		
 		
 //		message.setRegId(String.valueOf(flag));
 		
