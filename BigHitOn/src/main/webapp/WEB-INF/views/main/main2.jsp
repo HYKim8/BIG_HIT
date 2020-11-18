@@ -28,6 +28,98 @@
     <link href="${hContext }/resources/assets/css/sb-admin-2.min.css" rel="stylesheet">
 	<style>
 		.mouse_event:hover {text-decoration: underline;}
+		      #modal{
+          position:relative;
+          width:100%;
+          height:100%;
+          z-index:1;
+        }
+        
+        #modal h2 {
+          margin:0;   
+        }
+        
+        #modal button {
+          display:inline-block;
+          justify-content: right;
+          width:100px;
+      
+        }
+        
+        #modal .modal_content {
+          width:700px;
+          height:500px;
+          margin:100px auto;
+          padding:12px 8px;
+          background:#fff;
+          border:2px solid #666;
+        }
+        
+        #modal .modal_layer {
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.5);
+          z-index:-1;
+        }   
+        
+        .name {
+          list-style: none;
+          border-radius:10px;
+          padding-left: 0px;
+          font-weight: bold;
+        }
+
+        #name {
+          border:1px solid black;
+          width:350px;
+          height:30px;
+          border-radius: 5px;
+          margin-bottom: 10px;
+        }
+
+        .markname {
+          list-style: none;
+          padding-left: 0px;
+          font-weight: bold;
+        }
+
+        #markname{
+          border:1px solid black;
+          width:350px;
+          height:30px;
+          border-radius: 5px;
+          margin-bottom: 10px;
+        }
+
+        .keep_work {
+          list-style: none;
+          padding-left: 0px;
+          font-weight: bold;
+        }
+        
+        #keep_work{
+          border:1px solid black;
+          width:350px;
+          height:30px;
+          border-radius: 5px;
+          margin-bottom: 10px;
+        }
+
+        .phone_number {
+          list-style: none;
+          padding-left: 0px;
+          font-weight: bold;
+        }
+
+        #phone_number{
+          border:1px solid black;
+          width:350px;
+          height:30px;
+          border-radius: 5px;
+        }
 	</style>
 </head>
 
@@ -199,7 +291,59 @@
             </div>
         </div>
     </div>
-	
+	<!-- profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal_content" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">내 프로필 편집</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <form>
+                <div style="float: left;"> 
+                <ul>
+              <li class="name">
+                <label for="name">성명</label><br>
+                <input type="text" id="name" placeholder="성명">
+              </li>
+              <li class="markname">
+                <label for="markname">표시이름</label><br>
+                <input type="text" id="markname" placeholder="표시 이름">
+              </li>
+              <li class="keep_work">
+                <label for="keep_work">맡고 있는 일</label><br>
+                <input type="text" id="keep_work" placeholder="맡고 있는 일">
+              </li>
+              <li class="phone_number">
+                <label for="phone_number">전화번호</label><br>
+                <input type="text" id="phone_number" placeholder="(123) 555-5555">
+              </li>
+            </ul>
+            </div>
+            </form>
+           </div>
+            <div style="float: right; margin-right: 46px; margin-top: 15px;">
+            <form>
+              <label for="profile_picture" style="font-weight: bold">프로필 사진</label><br>
+              <input type="image" img src="D:\eHR20200529\HEADER\picture.JPG"><br>
+              <input type="submit" value="이미지 업로드">
+            </form>
+           <div class="modal-footer">
+                    <button type="button" id="modal_close_btn">취소</button>
+              <button type="button" id="modal_save_close_btn">변경사항 저장</button><div style="float: right;"></div> 
+                </div>
+
+        
+      </div>
+  </div>
+  </div>
+  </div>
+  
+  <!-- profile Modal -->
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -426,6 +570,17 @@
 			});//--ajax
 
 		});
+		 document.getElementById("profileOpenModal").onclick = function() {
+	           document.getElementById("modal").style.display="block";
+	       }
+	      
+	       document.getElementById("modal_close_btn").onclick = function() {
+	           document.getElementById("modal").style.display="none";
+	       }   
+
+	       document.getElementById("modal_save_close_btn").onclick = function() {
+	           document.getElementById("modal").style.display="none";
+	       }  
 	</script>
 
     <!-- Bootstrap core JavaScript-->
