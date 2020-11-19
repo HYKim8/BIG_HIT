@@ -26,6 +26,8 @@ import com.bighit.on.file.FileService;
 import com.bighit.on.file.FileVO;
 import com.bighit.on.reminder.ReminderService;
 import com.bighit.on.reminder.ReminderVO;
+import com.bighit.on.thread.ThreadService;
+import com.bighit.on.thread.ThreadVO;
 import com.bighit.on.user.dao.UsersServiceImpl;
 import com.bighit.on.user.dao.UsersVO;
 import com.bighit.on.workspace.WorkSpaceServiceImpl;
@@ -44,6 +46,7 @@ public class MainController {
 	@Autowired ChannelDaoImpl channelDao;
 	@Autowired ReminderService reminderService;
 	@Autowired FileService fileService;
+	@Autowired ThreadService threadService; 
 	
 	@RequestMapping(value = "main/index.do", method = RequestMethod.GET)
 	public ModelAndView main_view(HttpServletRequest req) {
@@ -60,6 +63,32 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		
 		Search search = new Search();
+		Search chSearch = null;
+		List<ThreadVO> threadList = null;
+		ChannelVO nowCh = null;
+		List<UsersVO> uslist = null;
+		//채널 검색이 들어갔을 경우
+		if(req.getParameter("searchWord")!=null) {
+			chSearch = new Search();
+			chSearch.setSearchWord((String)req.getParameter("searchWord"));
+			 if(req.getParameter("pageNum")==null) {
+				 chSearch.setPageNum(1);
+		     }
+		      if(req.getParameter("pageSize")==null)
+		      {
+		    	  chSearch.setPageSize(20);
+		      }
+		    nowCh = new ChannelVO();
+		    nowCh.setChLink(chSearch.getSearchWord());
+		      
+		    threadList = this.threadService.doSelectList(chSearch);
+		      nowCh = this.channelService.doSelectOne(nowCh);
+		      LOG.debug(chSearch.toString());
+		      LOG.debug(threadList.toString());
+		    uslist = this.usersService.doSelectList(nowCh);  
+		}
+		
+		
 		search.setSearchWord(usersVO.getUser_serial());
 		String wsLink = usersVO.getWs_link();
 		reminderVO.setWsLink(wsLink);
@@ -95,7 +124,15 @@ public class MainController {
 		mav.addObject("channelList", channelList);
 		mav.addObject("channelListDM", channelListDM);
 		mav.addObject("reminderList", reminderList);
-		
+		if(chSearch!=null )
+		{
+			mav.addObject("searchVO",chSearch);
+			mav.addObject("threadList", threadList);
+			mav.addObject("nowCh",nowCh);
+			mav.addObject("uslist",uslist);
+//			ChannelVO nowCh = null;
+//			List<UsersVO> uslist = null;
+		}
 		return mav;
 	}
 	

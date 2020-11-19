@@ -35,9 +35,9 @@
 	<div class="row ">
           <form action="${hContext}/thread/ListView.do" 
                name="searchFrm" class="form-inline  col-lg-12 col-md-12 text-right">
-              <input type="hidden" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
-              <input type="hidden" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
-              <input type="hidden" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
+              <input type="text" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
+              <input type="text" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
+              <input type="text" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
               <input type="hidden" name="thrKey" id="thrKey"/>          
           </form>
 	</div>
@@ -115,7 +115,40 @@
                </form>					
 				</div>
 				<div id="chInfo"  style ="${off}">
-					<h6>testdata</h6>
+					<ul class="navbar-nav bg-gradient-default sidebar sidebar-dark accordion" id="accordionSidebar">
+						<li>
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chInfos"
+		                    aria-expanded="true" aria-controls="collapseMem">
+		                    <i class="fas fa-fw fa-cog"></i>
+		                    <span>채널 정보</span>
+		                </a>
+		                <div id="chInfos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		                    <div class="bg-white py-2 collapse-inner rounded">
+		                    	<a class="collapse-item">채널명:<c:out value="${nowCh.chName}" /></a>
+		                    	<a class="collapse-item">주제:<c:out value="${nowCh.topic}" /></a>
+		   						<a class="collapse-item">채널설명:<c:out value="${nowCh.chDescription}" /></a>
+								
+		                       	         	
+		                    </div>
+	                	</div>
+	                	</li>
+	                	<li>
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chuss"
+		                    aria-expanded="true" aria-controls="collapseMem">
+		                    <i class="fas fa-fw fa-cog"></i>
+		                    <span>채널의 유저들</span>
+		                </a>
+		                <div id="chuss" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		                    <div class="bg-white py-2 collapse-inner rounded">
+		                    
+		                    	<c:forEach var="us" items="${uslist}">
+		   						 	<a class="collapse-item">@<c:out value="${us.name}" /></a>
+								</c:forEach>
+		                       	         	
+		                    </div>
+	                	</div>
+	                	</li>
+                	</ul>
 				</div>
 			</div>
 			
