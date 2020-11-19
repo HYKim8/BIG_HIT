@@ -54,7 +54,7 @@
             <div id="content">
 
                <%@ include file="/WEB-INF/views/main/topBar.jsp" %>
-
+			   <c:if test="${!empty searchVO}"> <div><button id="chInfoBtn" style =" float:right" class="btn btn-primary">!</button> </div></c:if>
                     
         <c:set var="lefthalf" value = "padding-right: 20px;width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
         <c:set var="leftfull" value = "padding-right: 20px;width:100%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
@@ -93,9 +93,11 @@
 				<!-- 한 셋트 -->
 			 <c:set var="righthalf" value = "width:35%;float:left;display:inline;white-space:nowrap;display:block" />
 			 <c:set var="rightfull" value = "width:0%;float:left;display:inline;white-space:nowrap;display:none" />
+			 <c:set var="off" value ="display:none"/>
+			 <c:set var="on" value ="display:block"/>
 			<div id="rightSide" style="${rightfull}">
 				<button id="sideclosebtn" style =" float:right"class="btn btn-primary" type="button" >X</button>
-				<div id="childListFull">
+				<div id="childListFull" style ="${on}">
 					<div class="media-body" id="selectOneList" style="width:100%;">					
 					</div>
 					<div class="media-body" id="selectChildList" style="width:100%;">					
@@ -111,6 +113,9 @@
                        </div>      
                    </div>           
                </form>					
+				</div>
+				<div id="chInfo"  style ="${off}">
+					<h6>testdata</h6>
 				</div>
 			</div>
 			
@@ -523,16 +528,36 @@
 	       document.getElementById("modal_save_close_btn").onclick = function() {
 	           document.getElementById("modal").style.display="none";
 	       }   */
+	       function halfOnOff(bool){
+				if(bool){
+					console.log("open");
+					$("#divScroll").attr('style',"${lefthalf}");
+		    		$("#rightSide").attr('style','${righthalf}');
+				}
+				else {
+					console.log("close");
+		    		$("#divScroll").attr('style',"${leftfull}");
+		    		$("#rightSide").attr('style','${rightfull}');
+				}	
+		   }
 	       $("#sideclosebtn").click(function(){
-	    	   console.log("hi");
-	    		$("#divScroll").attr('style',"${leftfull}");
-	    		$("#rightSide").attr('style','${rightfull}');
+	    	   halfOnOff(false);
 		   });
+		   
+		   $(document).on("click","#chInfoBtn",function(){
+			   if( $("#divScroll").attr('style') == "${leftfull}" ){
+	    			halfOnOff(true);
+		       }
+			   else if($("#divScroll").attr('style') == "${lefthalf}" && $("#chInfo").attr('style') == '${on}')halfOnOff(false);
+			   $("#chInfo").attr('style','${on}');
+			   $("#childListFull").attr('style','${off}');
+		   })
 		   $(document).on("click","#childList",function(){
 			   if( $("#divScroll").attr('style') == "${leftfull}" ){
-	    			$("#divScroll").attr('style',"${lefthalf}");
-		    		$("#rightSide").attr('style','${righthalf}');
+				   halfOnOff(true);
 		    	}
+			   $("#chInfo").attr('style','${off}');
+			   $("#childListFull").attr('style','${on}');
 		    	var tmp = $(this).parent().children("#thrKey").text();
 	    		console.log(tmp);
 	    		$("#parentKey").val(tmp);
