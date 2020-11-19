@@ -125,8 +125,7 @@ public class ThreadController {
    public String doInsertRep(ThreadVO threadVO) {
       LOG.debug("===================================");
       LOG.debug("=doInsertRep=");
-      LOG.debug("=param="+threadVO);
-      threadVO.setRegId("11112");   
+      LOG.debug("=param="+threadVO);  
       int flag = threadService.doInsertRep(threadVO);
       LOG.debug("==================");
       LOG.debug("=flag="+flag);

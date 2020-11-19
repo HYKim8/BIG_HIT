@@ -99,7 +99,18 @@
 					<div class="media-body" id="selectOneList" style="width:100%;">					
 					</div>
 					<div class="media-body" id="selectChildList" style="width:100%;">					
-					</div>					
+					</div>
+					<form method="post" action="${hContext}/thread/doInsertRep.do"> 
+                  	<div class="form-group">               
+                   	<input type="hidden" name="parentKey" id="parentKey"/>
+                   	<input type="hidden" name="thrKey" id="thrKey"/>
+                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                           <textarea name="contentsRep" id="contentsRep" placeholder="내용을 입력하세요"
+                                maxlength="400"></textarea>
+                           <input type="button" class="btn btn=primary btn-sm" value="Send" id="insertRepBtn"/>
+                       </div>      
+                   </div>           
+               </form>					
 				</div>
 			</div>
 			
@@ -324,7 +335,53 @@
                 }
         	});
 		});
+	$("#insertRepBtn").on("click", function(){
+        console.log("insertRepBtn");
 
+        var contentsRep = $("#contentsRep").val();
+        console.log("contentsRep:"+contentsRep);
+       
+       
+        
+        if(null == contentsRep || contentsRep.trim().length==0){
+           $("#contents").focus();
+           alert("내용을 입력하세요");
+           return;
+           }
+
+
+        
+        $.ajax({
+           type:"POST",
+           url:"${hContext}/thread/doInsertRep.do",
+           dataType:"html",
+           data:{
+                 //"thrKey" : $("thrKey").val(),
+                 "parentKey": $("#parentKey").val(),
+                 "chLink" : $("#searchWord").val(),
+                 "contents" : $("#contentsRep").val(),
+                 "regId" : "${sessionScope.usersVO.user_serial}",
+                 "regDt" : ""
+              },
+              success:function(data){
+
+             	 var jsonObj = JSON.parse(data);
+              	console.log("regId="+jsonObj.regId);
+               console.log("contents="+jsonObj.contentsRep);
+               makeChildList($("#parentKey").val());
+               $("#contentsRep").val('');
+               },
+                  error:function(xhr,status,error){
+                   alert("error:"+error);
+                  },
+                  complete:function(data){
+                  
+               }  
+                    
+           });
+
+		
+        });
 	 $("#insertBtn").on("click", function(){
          console.log("insertBtn");
 
@@ -478,6 +535,7 @@
 		    	}
 		    	var tmp = $(this).parent().children("#thrKey").text();
 	    		console.log(tmp);
+	    		$("#parentKey").val(tmp);
 	    		makeChildList(tmp);
 			});
 		  function makeChildList(thrKey){

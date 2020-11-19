@@ -22,7 +22,8 @@
                 parent_key AS parentKey,
                 TO_CHAR(mod_dt,'YYYY-MM-DD HH24MISS') AS modDt                                          
              FROM THREAD                                       
-             WHERE parent_key = #{thrKey}   
+             WHERE parent_key = #{thrKey}
+             ORDER BY reg_dt Desc   
    </select>
    
    <!-- 계층형 쿼리로 작성할 것 -->
