@@ -576,7 +576,12 @@
 	       $("#sideclosebtn").click(function(){
 	    	   halfOnOff(false);
 		   });
-		   
+
+		    $(document).on('click',"#channel_btn",function(){
+		    	var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
+				console.log("====="+tmp);
+				window.location.href="${hContext}/main/index.do?searchWord="+tmp;
+			    });
 		   $(document).on("click","#chInfoBtn",function(){
 			   if( $("#divScroll").attr('style') == "${leftfull}" ){
 	    			halfOnOff(true);

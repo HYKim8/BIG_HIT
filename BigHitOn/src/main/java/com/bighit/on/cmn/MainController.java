@@ -112,6 +112,16 @@ public class MainController {
 		LOG.debug("DMList");
 		search.setSearchDiv("20");
 		List<ChannelVO> channelListDM = channelService.doSelectList(search);
+		for(ChannelVO vo : channelListDM) {
+			//채널이름이 상대방이름 / 내이름 으로 되어있음 이걸 split  
+			String names[] = vo.getChName().split("/");
+			// 잘못들어가있을 경우 아예 break, 첫번째가 내이름과 같으면 두번째이름을 채널 네임, 아닐시 반대  
+			if(names.length != 2) break;
+			
+			String chName = names[0].equals(usersVO.getName())? names[1] : names[0];
+			vo.setChName(chName);
+		}
+		
 		
 		LOG.debug("ReminderList");
 		List<ReminderVO> reminderList = reminderService.doSelectList(reminderVO);
