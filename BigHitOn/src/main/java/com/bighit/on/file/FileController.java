@@ -52,8 +52,46 @@ public class FileController {
 	@Autowired
 	MappingJackson2JsonView jsonView;
 
-	// thread List 뽑았을 때 fileList도 같이 뽑아서 특정 thread에 file을 붙여야 함.
-
+	// chLink로 파일 리스트 뽑기
+	@RequestMapping(value = "main/fileDownloadListChLink.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String fileDownloadListChLink(String chLink) {
+		LOG.debug("-------------------------");
+		LOG.debug("-main/fileDownloadListChLink.do-");
+		LOG.debug("-chLink-" + chLink);
+		LOG.debug("-------------------------");
+		
+		FileVO fileVO = new FileVO();
+		fileVO.setChLink(chLink);
+		
+		List<FileVO> outList = fileService.doSelectListChLink(fileVO);
+		
+		Gson gson = new Gson();
+    	String json = gson.toJson(outList);
+		
+		return json;
+	}
+	
+	// thrKey로 파일 리스트 뽑기
+	@RequestMapping(value = "main/fileDownloadListThrKey.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String fileDownloadListThrKey(String thrKey) {
+		LOG.debug("-------------------------");
+		LOG.debug("-main/fileDownloadListThrKey.do-");
+		LOG.debug("-thrKey-" + thrKey);
+		LOG.debug("-------------------------");
+		
+		FileVO fileVO = new FileVO();
+		fileVO.setThrKey(thrKey);
+		
+		List<FileVO> outList = fileService.doSelectListThrKey(fileVO);
+		
+		Gson gson = new Gson();
+    	String json = gson.toJson(outList);
+		
+		return json;
+	}
+	
 	@RequestMapping(value = "main/doInviteP.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doInviteP(HttpServletRequest req, String chLink) {
@@ -109,10 +147,6 @@ public class FileController {
 		LOG.debug("-main/doInvitePeople.do-");
 		LOG.debug("-------------------------");
 		
-//		#{chLink},
-//	    #{userSerial},
-//	    #{notification}
-		
 		ChannelUsersVO cuVO = new ChannelUsersVO();
 		cuVO.setChLink(chLink);
 		cuVO.setUserSerial(userSerial);
@@ -138,8 +172,8 @@ public class FileController {
 		String userId = usersVO.getUser_serial();
 		
 		// ajax로 받아야함...
-		thrKey = "1";
-		chLink = "1";
+//		thrKey = "1";
+//		chLink = "1";
 		// thrKey(ajax)
 		// chLink(ajax)
 		
