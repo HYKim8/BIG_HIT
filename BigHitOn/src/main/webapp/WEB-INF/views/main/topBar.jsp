@@ -126,7 +126,27 @@
 						</div>
 					</div>
 				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<!-- 넣어줘야할 값 : 현재 채널 링크-->
                 <input type="hidden" value="C8E31O1N2WY" id="testChLink">
+                <!-- 넣어줘야할 값 : 현재 채널 링크-->
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
 <script type="text/javascript">
 

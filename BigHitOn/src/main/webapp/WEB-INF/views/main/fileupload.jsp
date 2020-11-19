@@ -27,16 +27,20 @@
 			</div>
 			<div class="modal-footer">
 				<button type="reset" class="btn btn-default" data-dismiss="modal">취소</button>
-				<input data-dismiss="modal" class="btn btn-primary" type="button" value="업로드" id="uploadFileMain" />
+				<input data-dismiss="modal" class="btn btn-primary" type="button" value="업로드" id="uploadFileMain2" />
 			</div>
 		</div>
 	</div>
 </div>
 
+<input type="text" id="tmpThrKey2" placeholder="tmpThrKey2" value="">
+<input type="text" id="tmpChLink2" placeholder="tmpChLink2" value="">
+
 <script type="text/javascript">
 
 //-----------파일 업로드--------------
-	$("#uploadFileMain").on("click", function(){
+	$("#uploadFileMain2").on("click", function(){
+			console.log("uploadFileMain clicked");
 			uploadFileMain();
 		});
 	
@@ -45,7 +49,15 @@
 		formData.append("file", $("input[name=form_data_file_upload_input]")[0].files[0]);
 		var fileType = document.getElementById("form_data_file_upload_input").value.split(".");
 		var last_element = fileType[fileType.length - 1];
+
+		//----------추가해야할 값--------------
+		var thrKey = $("#tmpThrKey2").val();
+		var chLink = $("#tmpChLink2").val();
+		//----------추가해야할 값--------------
+		
 		formData.append("fileType", last_element);
+		formData.append("thrKey", thrKey);
+		formData.append("chLink", chLink);
 		console.log("formData : " + formData);
 		console.log("doUploadFile")
 		$.ajax({

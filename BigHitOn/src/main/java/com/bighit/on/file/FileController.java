@@ -172,8 +172,8 @@ public class FileController {
 		String userId = usersVO.getUser_serial();
 		
 		// ajax로 받아야함...
-		thrKey = "1";
-		chLink = "1";
+//		thrKey = "1";
+//		chLink = "1";
 		// thrKey(ajax)
 		// chLink(ajax)
 		
