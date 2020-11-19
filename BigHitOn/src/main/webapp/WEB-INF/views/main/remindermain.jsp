@@ -3,7 +3,7 @@
 
 
 <%@ include file="/WEB-INF/views/main/fileupload.jsp" %>
-
+<%@ include file="/WEB-INF/views/main/filedownload.jsp" %>
 <input type="hidden" value="1" id="tmpThrKey">
 
 <a data-toggle="modal" data-target="#reminderInsertBtn1"

@@ -24,8 +24,7 @@
 	</select>
 	
 	<select id="doSelectListThrKey" parameterType="FileVO" resultType="FileVO">
-		<include refid="fileColumns"/>                  
-		    file_thr           
+		<include refid="fileColumns"/>      
 		WHERE                  
 		    thr_key = #{thrKey}        
 		order by file_id       
