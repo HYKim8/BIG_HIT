@@ -81,7 +81,7 @@ FROM
         WHERE rownum <![CDATA[ <= ]]>  ( #{pageSize} * ( #{pageNum} - 1 ) + #{pageSize})
     )B
     WHERE rnum <![CDATA[ >= ]]> ( #{pageSize} * ( #{pageNum} - 1 ) + 1 )
-   ORDER BY rnum 
+   ORDER BY rnum DESC
    </select>
 </mapper>
    

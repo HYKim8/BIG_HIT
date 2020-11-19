@@ -1,6 +1,7 @@
 package com.bighit.on.cmn;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,6 +83,7 @@ public class MainController {
 		    nowCh.setChLink(chSearch.getSearchWord());
 		      
 		    threadList = this.threadService.doSelectList(chSearch);
+//		    Collections.reverse(threadList);
 		      nowCh = this.channelService.doSelectOne(nowCh);
 		      LOG.debug(chSearch.toString());
 		      LOG.debug(threadList.toString());

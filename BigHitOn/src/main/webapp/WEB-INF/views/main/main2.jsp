@@ -38,7 +38,7 @@
               <input type="hidden" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
               <input type="hidden" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
               <input type="hidden" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
-              <input type="hidden" name="thrKey" id="thrKey"/>          
+              <!--  <input type="hidden" name="thrKey" id="thrKey"/> -->         
           </form>
 	</div>
 	
@@ -70,7 +70,7 @@
 				
 				<div class="media-body" id="threadList">
 					<c:forEach var="list" items="${threadList}" varStatus="status">	
-					<div>
+					<div id="thrbtns">
 					<c:if test="${status.first ||( !status.first && vs != list.regId)}">
 				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
@@ -339,8 +339,8 @@
                           var html = "";
                           var vs = "";
                           for(var i=0;i<list.length;i++){
-                            html += "<div>";
-                        
+                            html += "<div id=\"thrbtns\">";
+                            
 							if(i==0 || (i!=0 && vs != list[i].regId)){
 								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "("+ list[i].regDt +")" + "</h6>";
 								 vs = list[i].regId
@@ -447,7 +447,8 @@
                var jsonObj = JSON.parse(data);
                console.log("regId="+jsonObj.regId);
                 console.log("contents="+jsonObj.contents);
-
+                $("#contents").val('');
+                location.reload();
                 },
                    error:function(xhr,status,error){
                     alert("error:"+error);
@@ -576,7 +577,13 @@
 	       $("#sideclosebtn").click(function(){
 	    	   halfOnOff(false);
 		   });
+	       $(document).on('click',"#thrbtns",function(){
+				var tmp = $(this).children("#thrKey").text();
+		       console.log(tmp)
+	    	   $("#tmpThrKey2").val(tmp);
+	   		   $("#tmpChLink2").val($("#searchWord").val());
 
+		       });
 		    $(document).on('click',"#channel_btn",function(){
 		    	var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
 				console.log("====="+tmp);
