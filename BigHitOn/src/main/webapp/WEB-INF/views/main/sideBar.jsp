@@ -75,10 +75,13 @@
                     <span>Channels</span>
                 </a>
                 <div id="collapseMem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="bg-white py-2 collapse-inner rounded" id="channelBtn">
                     
                     	<c:forEach var="ChannelVO" items="${channelList}">
-   						 	<a class="collapse-item">#<c:out value="${ChannelVO.chName}" /></a>
+   						 	<a class="collapse-item" type="button" id="channel_btn">
+   						 		<c:out value="${ChannelVO.chName}" />
+   						 		<div id="channelLk" style="display: none"><c:out value="${ChannelVO.chLink}" /></div>
+   						 	</a>
 						</c:forEach>
                        	
                         <a id="addChannelin" class="collapse-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
@@ -171,6 +174,13 @@
 			
 		}); 
 
-
+		$("#channelBtn").click(function(event) {
+			
+			var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
+			console.log("====="+tmp);
+			window.location.href="${hContext}/main/index.do?searchWord="+${ChannelVO.chLink};
+			
+			
+		});
 
         </script>
