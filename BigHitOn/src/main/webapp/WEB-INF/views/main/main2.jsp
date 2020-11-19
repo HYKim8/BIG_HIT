@@ -35,9 +35,9 @@
 	<div class="row ">
           <form action="${hContext}/thread/ListView.do" 
                name="searchFrm" class="form-inline  col-lg-12 col-md-12 text-right">
-              <input type="text" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
-              <input type="text" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
-              <input type="text" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
+              <input type="hidden" name="pageNum" id="pageNum" value="${searchVO.getPageNum()}" />
+              <input type="hidden" name="pageSize"   id="pageSize"  value="${searchVO.getPageSize()}" />
+              <input type="hidden" name="searchWord" id="searchWord" class="form-control  input-sm" value="${searchVO.getSearchWord()}"/>
               <input type="hidden" name="thrKey" id="thrKey"/>          
           </form>
 	</div>

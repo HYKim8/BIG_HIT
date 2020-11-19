@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bighit.on.cmn.DTO;
 import com.bighit.on.cmn.Search;
+import com.bighit.on.user.dao.UsersDaoImpl;
 import com.bighit.on.user.dao.UsersVO;
 
 @Repository("ChannelDaoImpl")
@@ -22,6 +23,9 @@ public class ChannelDaoImpl {
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
+	
+	@Autowired
+	UsersDaoImpl userdao; 
 	
 	private final String NAMESPACE = "com.bighit.on.channel";
 	
@@ -145,7 +149,7 @@ public class ChannelDaoImpl {
 		
 		user.setUser_serial(search.getSearchWord());
 		
-		
+		user = userdao.doSelectOne(user.getUser_serial());
 		LOG.debug("=====================");
 		LOG.debug("=doSelectList=");
 		LOG.debug("=====================");

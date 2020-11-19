@@ -154,8 +154,6 @@ public class ThreadController {
       LOG.debug("===================================");
       LOG.debug("=doInsert=");
       LOG.debug("=param="+threadVO);
-      threadVO.setRegId("11112");
-      threadVO.setChLink("12");
        int flag = threadService.doInsert(threadVO);
        LOG.debug("==================");
         LOG.debug("=flag="+flag);

@@ -53,8 +53,8 @@ public class WorkSpaceController {
 
 		HttpSession session = req.getSession();
 		workSpaceVO.setRegId(usdao.doGetKey());
-		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
-		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		ChannelVO gen = new ChannelVO("", workSpaceVO.getWsLink(), "일반", "일반", "이것은 언제나 모두를 포함하게 될 단 하나의 채널로 공지를 올리고 팀 전체의 대화를 나누기에 적합한 공간입니다.", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
+		ChannelVO ran = new ChannelVO("", workSpaceVO.getWsLink(), "랜덤", "랜덤", "이것은 나머지 모든 것을 위한 채널입니다. 팀원들이 농담하거나 순간적인 아이디어나 재미있는 GIF를 공유하는 곳이죠! 마음껏 즐기세요!", "1", workSpaceVO.getRegId(), workSpaceVO.getRegDt());
 		
 		channelServiceImpl.doInsert(gen);
 		channelServiceImpl.doInsert(ran);
