@@ -143,7 +143,7 @@
         
         <script type="text/javascript">
 
-       	// 아몰랑!
+       	
      	// 클릭된 타겟 찾기
      	
      	
@@ -174,7 +174,7 @@
 			
 		}); 
 
-		$("#channelBtn").click(function(event) {
+		$("#channel_btn").click(function(event) {
 			
 			var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
 			console.log("====="+tmp);
