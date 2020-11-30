@@ -42,7 +42,7 @@
 							<input style="width:285px" name="profileImgChange" id="profileImgChange" class="btn btn-primary btn-sm" type="file" value="사진 변경" accept=".jpg"/>
 						</form>
 					</div>
-
+ 
 				</div>
 
 			</div>
