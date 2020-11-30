@@ -81,9 +81,9 @@
                                     Settings
                                 </a>
                                 
-                                <a class="dropdown-item" href="modal" data-target="#workspaceDeleteModal1" id="workspaceDeleteModal">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#workspaceDeleteModal1">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    WorkeSpace Delete
+									 workspace delete
                                 </a>
                                 
                                 <div class="dropdown-divider"></div>

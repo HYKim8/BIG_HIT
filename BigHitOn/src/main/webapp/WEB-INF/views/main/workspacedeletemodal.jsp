@@ -28,28 +28,27 @@
 
 <script type="text/javascript">
 
-//----------Delete Workspace----------
-$("#workspaceDeleteBtn").on("click", function() {
-	console.log("workspaceDeleteBtn Clicked");
-	doWorkSpaceDelete();
-})
+	//----------Delete Workspace----------
+	$("#workspaceDeleteBtn").on("click", function(){
+			alert("aaa.");
+			console.log("workspaceDeleteBtn Clicked");
+			console.log("workspaceDelete"+${sessionScope.usersVO.reg_id});
+			console.log("workspaceDelete12"+${sessionScope.WorkSpaceVO.regId});
+			doWorkSpaceDelete();
+		}); 
 
-function doWorkSpaceDelete() {
+	function doWorkSpaceDelete() {
 			$.ajax({
-				type : "GET",
+				type : "POST",
 				url : "${hContext}/workspace/doDelete.do",
 				dataType : "html",
 				async : true,
 				data : {
-					"wsLink" : $("#wsLink").val()
+					"wsLink" : "${sessionScope.usersVO.ws_link}"
 				},
 				success : function(data) {
-					var jData = JSON.parse(data);
-		              if(null != jData && jData.msgId=="1"){
-		                alert(jData.msgContents);		                
-		              }else{
-		                alert(jData.msgId+"|"+jData.msgContents);
-		              }
+					console.log("workspaceDeleteBtn Clicked!!!!");
+					alert("삭제되었습니다.");
 
 					window.location.href="<c:url value='/users/loginView.do' />"
 				},
@@ -59,5 +58,4 @@ function doWorkSpaceDelete() {
 			});
 		}
 		// ----------Delete Workspace----------
-
 </script>
