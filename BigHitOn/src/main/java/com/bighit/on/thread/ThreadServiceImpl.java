@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Search;
 
-
 public class ThreadServiceImpl implements ThreadService {
    final Logger LOG = LoggerFactory.getLogger(this.getClass());
    @Autowired
