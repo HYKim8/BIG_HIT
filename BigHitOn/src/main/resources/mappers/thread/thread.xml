@@ -40,6 +40,25 @@
       UPDATE THREAD SET child_cnt = child_cnt+1 WHERE thr_key = #{thrKey}
    </update>
    
+   <select id="doSelectListIsPinned" parameterType="ChannelVO" resultType="ThreadVO">
+   		SELECT
+		    thr_key,
+		    ch_link,
+		    contents,
+		    is_pin,
+		    pin_id,
+		    reg_id,
+		    reg_dt,
+		    mod_dt,
+		    parent_key,
+		    child_cnt
+		FROM
+		    thread
+		Where
+		    is_pin = 1,
+		    ch_link = #{chLink}
+   </select>
+   
    <select id = "doSelectOne"
    resultType = "com.bighit.on.thread.ThreadVO">
    SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,mod_dt AS modDt,contents AS contents,child_cnt AS childCnt

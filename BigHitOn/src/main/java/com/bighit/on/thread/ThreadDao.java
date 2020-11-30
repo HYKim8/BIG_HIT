@@ -1,19 +1,14 @@
 package com.bighit.on.thread;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Search;
 
 
@@ -60,6 +55,26 @@ public class ThreadDao {
       
       return flag;
    }
+   
+   public List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO){
+	   LOG.debug("=======================");
+	   LOG.debug("====doSelectListIsPinned====");
+	   LOG.debug("=======================");
+	   
+	   String statement = NAMESPACE + ".doSelectListIsPinned";
+	   LOG.debug("====statement===="+statement);
+	   LOG.debug("====threadVO===="+channelVO);
+	   
+	   List<ThreadVO> outList = sqlSessionTemplate.selectList(NAMESPACE, channelVO);
+	   
+	   for(ThreadVO tvo : outList) {
+		   LOG.debug("tVO : " + tvo);
+	   }
+	   
+	   return outList;
+   }
+   
+   
    public int doInsert(ThreadVO threadVO) {
    LOG.debug("=======================");
    LOG.debug("====doInsert====");

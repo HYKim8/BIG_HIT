@@ -53,4 +53,7 @@ public class MentAndReactController {
 		String view = "MenAndRea/list";
 		return view;
 	}
+	
+	
+	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.thread.ThreadService;
 import com.bighit.on.thread.ThreadVO;
 import com.bighit.on.user.dao.UsersVO;
@@ -29,6 +30,20 @@ public class SaveThrController {
 	
 	@Autowired
 	ThreadService threadService;
+	
+	// pin 된 것 리스트
+	@RequestMapping(value = "main/doSelectListIsPinned.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doSelectListIsPinned(ChannelVO channelVO) {
+		
+		
+		
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		
+		return json;
+	}
 	
 	// 스레드 리스트
 	@RequestMapping(value = "saveThread/doSelectList.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
