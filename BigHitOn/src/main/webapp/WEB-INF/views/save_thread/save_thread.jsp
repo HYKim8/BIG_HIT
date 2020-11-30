@@ -71,7 +71,7 @@
 			</div>
 			
 			<button class="btn btn-lg btn-light btn-block text-left">
-				<h2><small>0&nbsp;&nbsp;</small>PINNED </h2>
+				<h2><small id="thread_count">0&nbsp;&nbsp;</small>PINNED </h2>
 			</button>
 			
 			<div id="pin_list_detail">
@@ -136,12 +136,14 @@
 	               dataType:"html",
 	               async: true,
 	               data:{
+	            	   "chLink" : $("#ch_link_for_detail").val()
 	               },
 	               success: function(data){
 						var parseData = JSON.parse(data);
-						$("#sth").empty();
+						$("#pin_list_detail").empty();
 						var html = "";
-						
+						console.log("size " + parseData.length);
+						document.getElementById('thread_count').innerHTML = parseData.length + "&nbsp;&nbsp;";
 						$.each(parseData, function(i, value) {
 							html += "<div class='card shadow h-100 py-2'>";
 							html += "<div class='card-body'>";
@@ -150,13 +152,12 @@
 							html += "<h6><strong>"+value.regId+"</strong>";
 							html += "<span> " + value.regDt + "</span></h6>";
 							html += "<h6>" + value.contents + "</h6>";
-							html += "<input type="
+							html += "<input type='hidden' value='"+ value.thrKey +"' name='thread_id_in_detail_list'>"
 							html += "</div>";
 							html += "</div>";
 							html += "</div>";
-							html += "<br>";
 						  });
-						$("#sth").append(html);
+						$("#pin_list_detail").append(html);
 		               }
 				});
 		}

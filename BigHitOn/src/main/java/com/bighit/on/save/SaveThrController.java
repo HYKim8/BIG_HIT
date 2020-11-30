@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.channel.ChannelVO;
-import com.bighit.on.thread.ThreadService;
+import com.bighit.on.thread.ThreadServiceImpl;
 import com.bighit.on.thread.ThreadVO;
 import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
@@ -29,16 +29,15 @@ public class SaveThrController {
 	SaveThrService saveThrService;
 	
 	@Autowired
-	ThreadService threadService;
+	ThreadServiceImpl threadService;
 	
 	// pin 된 것 리스트
 	@RequestMapping(value = "main/doSelectListIsPinned.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doSelectListIsPinned(ChannelVO channelVO) {
-		
-		
-		
-		
+		LOG.debug("main/doSelectListIsPinned.do");
+		List<ThreadVO> list = threadService.doSelectListIsPinned(channelVO);
+				
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		

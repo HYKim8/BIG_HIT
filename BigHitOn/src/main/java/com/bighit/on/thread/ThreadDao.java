@@ -63,9 +63,9 @@ public class ThreadDao {
 	   
 	   String statement = NAMESPACE + ".doSelectListIsPinned";
 	   LOG.debug("====statement===="+statement);
-	   LOG.debug("====threadVO===="+channelVO);
+	   LOG.debug("====channelVO===="+channelVO);
 	   
-	   List<ThreadVO> outList = sqlSessionTemplate.selectList(NAMESPACE, channelVO);
+	   List<ThreadVO> outList = sqlSessionTemplate.selectList(statement, channelVO);
 	   
 	   for(ThreadVO tvo : outList) {
 		   LOG.debug("tVO : " + tvo);

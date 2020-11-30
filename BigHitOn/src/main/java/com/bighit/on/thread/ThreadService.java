@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Search;
 
 @Service
@@ -24,4 +25,6 @@ public interface ThreadService {
    ThreadVO doSelectOne(ThreadVO threadVO);
    
    public List<ThreadVO> doSelectChildList(ThreadVO threadVO);
+
+List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO);
 }

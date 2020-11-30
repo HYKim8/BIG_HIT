@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Search;
 
+@Service
 public class ThreadServiceImpl implements ThreadService {
    final Logger LOG = LoggerFactory.getLogger(this.getClass());
    @Autowired
@@ -25,6 +26,7 @@ public class ThreadServiceImpl implements ThreadService {
       return thrDao.doSelectList(search);
    }
    
+   @Override
    public List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO){
 	   return thrDao.doSelectListIsPinned(channelVO);
    }
