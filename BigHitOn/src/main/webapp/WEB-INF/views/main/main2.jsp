@@ -27,7 +27,8 @@
     <!-- Custom styles for this template-->
     <link href="${hContext }/resources/assets/css/sb-admin-2.min.css" rel="stylesheet">
 	<style>
-		
+		#threadList #thrbtns #subBtns { opacity:0; float:right}
+		#threadList #thrbtns:hover #subBtns { opacity:1}
 	</style>
 </head>
 
@@ -54,7 +55,7 @@
             <div id="content">
 
                <%@ include file="/WEB-INF/views/main/topBar.jsp" %>
-			   <c:if test="${!empty searchVO}"> <div><button id="chInfoBtn" style =" float:right" class="btn btn-primary">!</button> </div></c:if>
+			   <c:if test="${!empty searchVO}"> <div><button id="chInfoBtn" style =" float:right" class="btn btn-primary"><i class="fa fa-info"></i></button> </div></c:if>
                     
         <c:set var="lefthalf" value = "padding-right: 20px;width:65%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
         <c:set var="leftfull" value = "padding-right: 20px;width:100%;float:left;display:inline;height:900px;overflow-y:auto;white-space:nowrap;" />
@@ -76,15 +77,24 @@
 				 		<c:set var = "vs" value="${list.regId}"/>
 				 	</c:if>				 	
 					<div id="thrKey" style='display:none'>${list.thrKey}</div>
-				 	<p><c:out value="${list.contents}"/> </p>
-				 					 		
-				 			<c:if test="${list.modDt != list.regDt }">
-				 				<div data-toggle="tooltip" data-placement="right" title="${list.modDt}">(편집됨)</div>
-				 			</c:if>
+					<div id ="subBtns">
+					 		<button id="" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="저장하기"><i class="fa fa-check-square"></i></div></button>
+					 		<button id="" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
+					 		<button id="" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
+					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
+					</div>	
+				 	<p>
+				 		<c:out value="${list.contents}"/>
+				 	</p>	 
+					 				 		
+				 					 					 		
+				 		<c:if test="${list.modDt != list.regDt }">
+				 			<div data-toggle="tooltip" data-placement="right" title="${list.modDt}">(편집됨)</div>
+				 		</c:if>
 				 		 
 				 	
 				 	<c:if test="${list.childCnt != 0 }">
-				 		<button id="childList" class="btn btn-defualt" type="button" ><c:out value="${list.childCnt}개의 댓글"/></button></c:if>
+				 		<button id="childList" class="btn btn-default" type="button" ><c:out value="${list.childCnt}개의 댓글"/></button></c:if>
 				 	</div>					 	
 				 	</c:forEach>				    
 				</div>				
@@ -96,7 +106,7 @@
 			 <c:set var="off" value ="display:none"/>
 			 <c:set var="on" value ="display:block"/>
 			<div id="rightSide" style="${rightfull}">
-				<button id="sideclosebtn" style =" float:right"class="btn btn-primary" type="button" >X</button>
+				<button id="sideclosebtn" style =" float:right"class="btn btn-default" type="button" ><i class="fa fa-times"></i></button>
 				<div id="childListFull" style ="${on}">
 					<div class="media-body" id="selectOneList" style="width:100%;">					
 					</div>
@@ -345,7 +355,13 @@
 								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "("+ list[i].regDt +")" + "</h6>";
 								 vs = list[i].regId
 							}                 
-							html += "<div id=\"thrKey\" style=\'display:none\'>" + list[i].thrKey + "</div>";            
+							html += "<div id=\"thrKey\" style=\'display:none\'>" + list[i].thrKey + "</div>";
+							html += "<div id =\"subBtns\">";
+							html += '<button id=\"\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"저장하기\"><i class=\"fa fa-check-square\"></i></div></button>';
+							html += '<button id=\"\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"좋아요\"><i class=\"fa fa-thumbs-up\"></i></div></button>';
+							html += '<button id=\"\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"고정하기\"><i class=\"fa fa-paperclip\"></i></div></button>';
+							html += '<button id=\"childList\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"댓글보기\"><i class=\"fa fa-list-alt\"></i></div></button>';	
+							html += "</div>"            
                             html += "<p>" + list[i].contents + "</p>" 
                             if(list[i].regDt != list[i].modDt )
                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list[i].modDt+ "\">(편집됨)</div>";
