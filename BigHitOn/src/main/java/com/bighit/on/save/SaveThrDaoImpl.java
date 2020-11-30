@@ -1,22 +1,14 @@
 package com.bighit.on.save;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bighit.on.cmn.DTO;
-import com.bighit.on.cmn.DaoInterface;
-import com.bighit.on.mention.MentionDaoImpl;
-import com.bighit.on.mention.MentionVO;
-import com.bighit.on.reminder.ReminderVO;
 import com.bighit.on.thread.ThreadVO;
 import com.bighit.on.user.dao.UsersVO;
 
@@ -42,6 +34,7 @@ public class SaveThrDaoImpl {
 	 */
 	
 	public int doInsert(SaveThrVO saveThrVO) {
+		LOG.debug("saveThrVO : " + saveThrVO);
 		String statement = NAMESPACE +".doInsert";
 		int flag = sqlSessionTemplate.insert(statement, saveThrVO);
 		LOG.debug("-doInsert flag=" + flag);
@@ -78,7 +71,6 @@ public class SaveThrDaoImpl {
 			LOG.debug("=doSelectList vo="+vo);
 			LOG.debug("===========================");
 		}
-		
 		return list;
 	}
 	public List<ThreadVO> doSelectList(UsersVO inVO) {

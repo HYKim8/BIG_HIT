@@ -2,8 +2,11 @@ package com.bighit.on.thread;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.bighit.on.cmn.Search;
 
+@Service
 public interface ThreadService {
    
    int doInsert(ThreadVO threadVO);

@@ -27,9 +27,9 @@
 </delete>
 <select id="doSelectList" parameterType="SaveThrVO" resultType="SaveThrVO">
 	SELECT                   
-	    thr_key,             
-	    reg_id,              
-	    reg_dt               
+	    thr_key as thrKey,             
+	    reg_id as regId,              
+	    reg_dt as regDt               
 	FROM                     
 	    save_thr             
 	WHERE                    
