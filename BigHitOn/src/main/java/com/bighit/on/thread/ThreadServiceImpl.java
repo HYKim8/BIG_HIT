@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Search;
 
 
-@Service
 public class ThreadServiceImpl implements ThreadService {
    final Logger LOG = LoggerFactory.getLogger(this.getClass());
    @Autowired
@@ -24,6 +24,10 @@ public class ThreadServiceImpl implements ThreadService {
       }
       
       return thrDao.doSelectList(search);
+   }
+   
+   public List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO){
+	   return thrDao.doSelectListIsPinned(channelVO);
    }
    
    @Override
