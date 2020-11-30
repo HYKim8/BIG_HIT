@@ -6,7 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+	<style>		
+		.listBtnOff{
+			display: none;
+		}
+	</style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -63,18 +67,20 @@
 		<input type="button" value="목록 보기" id="channel_detail_btn" name="channel_detail_btn"/>
       	<div id="detail_list">
       	
-			<button class="btn btn-lg btn-light btn-block text-left">
+			<button id="file_list_btn" class="btn btn-lg btn-light btn-block text-left">
 				<h2><small id="file_count">0&nbsp;&nbsp;</small>FILE </h2>
 			</button>
 			
-			<div id="file_list_detail">
+			<div id="file_list_detail" class="listBtnOff">
 			</div>
 			
-			<button class="btn btn-lg btn-light btn-block text-left">
+			<hr>
+			
+			<button id="pin_list_btn" class="btn btn-lg btn-light btn-block text-left">
 				<h2><small id="thread_count">0&nbsp;&nbsp;</small>PINNED </h2>
 			</button>
 			
-			<div id="pin_list_detail">
+			<div id="pin_list_detail" class="listBtnOff">
 			</div>
 			
       	</div> <!-- end datail_list -->
@@ -87,6 +93,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
 
+	// 클래스 토글
+	$("#file_list_btn").on("click", function(){
+			$("#file_list_detail").toggleClass('listBtnOff');
+		})
+	$("#pin_list_btn").on("click", function(){
+			$("#pin_list_detail").toggleClass('listBtnOff');
+		})
+	// 클래스 토글
+	
 	// 채널 세부 정보
 	$("#channel_detail_btn").on("click", function(){
 			doChannelDetailFile();
@@ -109,7 +124,7 @@
 					console.log("size " + parseData.length);
 					document.getElementById('file_count').innerHTML = parseData.length + "&nbsp;&nbsp;";
 					$.each(parseData, function(i, value) {
-						html += "<div class='card shadow h-100 py-2'>";
+						html += "<div name='file_list_div' class='card shadow h-100 py-2'>";
 						html += "<div style='padding:5px; padding-top:10px;' class='card-body'>";
 						html += "<div>";
 						html += "<img style='float:left; margin-right: 5px;' width='50px' height='50px' src='${hContext}/resources/img/files.jpg' alt=''>";
@@ -145,7 +160,7 @@
 						console.log("size " + parseData.length);
 						document.getElementById('thread_count').innerHTML = parseData.length + "&nbsp;&nbsp;";
 						$.each(parseData, function(i, value) {
-							html += "<div class='card shadow h-100 py-2'>";
+							html += "<div class='card shadow h-100 py-2 listBtnOff'>";
 							html += "<div class='card-body'>";
 							html += "<div>";
 							html += "<img style='float:left; margin-right: 5px;' width='50px' height='50px' src='' alt=''>";
