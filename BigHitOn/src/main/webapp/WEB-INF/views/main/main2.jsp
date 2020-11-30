@@ -270,6 +270,10 @@
     <%@ include file="/WEB-INF/views/main/profilemodal.jsp" %>
   <!-- profile Modal -->
   
+  <!-- workspacedelete modal -->
+  <%@ include file="/WEB-INF/views/main/workspacedeletemodal.jsp" %>
+  <!-- workspacedelete modal -->
+  
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
