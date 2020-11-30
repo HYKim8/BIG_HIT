@@ -176,8 +176,8 @@
 
 		$("#channel_btn").click(function(event) {
 			
-			var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
-			console.log("====="+tmp);
+			/* var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
+			console.log("====="+tmp); */
 			window.location.href="${hContext}/main/index.do?searchWord="+${ChannelVO.chLink};
 			
 			
