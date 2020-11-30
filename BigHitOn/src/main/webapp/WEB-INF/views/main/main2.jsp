@@ -620,6 +620,7 @@
 			   $("#chInfo").attr('style','${off}');
 			   $("#childListFull").attr('style','${on}');
 		    	var tmp = $(this).parent().children("#thrKey").text();
+		    	if(tmp == "" ||tmp == null) tmp = $(this).parent().parent().children("#thrKey").text();
 	    		console.log(tmp);
 	    		$("#parentKey").val(tmp);
 	    		makeChildList(tmp);
