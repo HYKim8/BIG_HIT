@@ -240,6 +240,12 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectjrt.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>1.5.3</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/aopalliance/aopalliance -->
 		<dependency>

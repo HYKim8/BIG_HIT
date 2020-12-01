@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.channel.ChannelVO;
+import com.bighit.on.cmn.Message;
 import com.bighit.on.thread.ThreadServiceImpl;
 import com.bighit.on.thread.ThreadVO;
 import com.bighit.on.user.dao.UsersVO;
@@ -30,6 +31,13 @@ public class SaveThrController {
 	
 	@Autowired
 	ThreadServiceImpl threadService;
+	
+	@RequestMapping(value = "main/storedThread.do", method = RequestMethod.GET)
+	public String storedThread() {
+		LOG.debug("==main/storedThread.do==");
+		
+		return "save_thread/stored_thread";
+	}
 	
 	// pin 된 것 리스트
 	@RequestMapping(value = "main/doSelectListIsPinned.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -55,15 +63,16 @@ public class SaveThrController {
 		HttpSession session = req.getSession();
 		
 		// for test 나중에 세션으로 멤버VO 받을 것
-		session.setAttribute("memberId", "UAUO88RAHER");
+//		session.setAttribute("memberId", "UAUO88RAHER");
+		UsersVO sessionUser = (UsersVO)session.getAttribute("usersVO");
 		// for test
+//		
+//		String userSerial = (String) session.getAttribute("memberId");
+//		
+//		UsersVO usersVO = new UsersVO();
+//		usersVO.setUser_serial(userSerial);
 		
-		String userSerial = (String) session.getAttribute("memberId");
-		
-		UsersVO usersVO = new UsersVO();
-		usersVO.setUser_serial(userSerial);
-		
-		List<ThreadVO> list = saveThrService.doSelectList(usersVO);
+		List<ThreadVO> list = saveThrService.doSelectList(sessionUser);
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
@@ -74,31 +83,37 @@ public class SaveThrController {
 	// 스레드 저장
 	@RequestMapping(value="save/doSaveThread.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String doSaveThread(SaveThrVO saveThrVO, HttpServletRequest req, HttpServletResponse res) {
+	public Message doSaveThread(SaveThrVO saveThrVO, HttpServletRequest req, HttpServletResponse res) {
 		LOG.debug("========================");
 		LOG.debug("==save/doSaveThread.do==");
 		LOG.debug("========================");
 		
-		HttpSession session = req.getSession();
-		
-		// for test 나중에 세션으로 멤버VO 받을 것
-		session.setAttribute("memberId", "UAUO88RAHER");
-		// for test
-		
-		String regId = (String) session.getAttribute("memberId");
-		
-		saveThrVO.setRegId(regId);
-		
+//		HttpSession session = req.getSession();
+//		
+//		// for test 나중에 세션으로 멤버VO 받을 것
+//		session.setAttribute("memberId", "UAUO88RAHER");
+//		// for test
+//		
+//		String regId = (String) session.getAttribute("memberId");
+//		
+//		saveThrVO.setRegId(regId);
+		int flag = 0;
+		String msgContents = "";
 		try {
-			saveThrService.doInsert(saveThrVO);
-			LOG.debug("쓰레드 저장");
+			flag = saveThrService.doInsert(saveThrVO);
+			msgContents = "쓰레드 저장";
+			LOG.debug(msgContents);
 		} catch (DuplicateKeyException e) {
 			res.setStatus(404);
 			saveThrService.doDelete(saveThrVO);
-			LOG.debug("저장된 쓰레드 삭제");
+			msgContents = "저장된 쓰레드 삭제"; 
+			LOG.debug(msgContents);
 		}
 		
-		return null;
+		Message msg = new Message();
+		msg.setRegId(flag+"");
+		msg.setMsgContents(flag == 1 ? msgContents : "쓰레드 저장 실패" );
+		return msg;
 		
 	}
 	

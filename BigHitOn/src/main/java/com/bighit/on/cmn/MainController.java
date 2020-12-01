@@ -68,6 +68,8 @@ public class MainController {
 		List<ThreadVO> threadList = null;
 		ChannelVO nowCh = null;
 		List<UsersVO> uslist = null;
+		List<ThreadVO> pinThrList = null;
+		
 		//채널 검색이 들어갔을 경우
 		if(req.getParameter("searchWord")!=null) {
 			chSearch = new Search();
@@ -87,7 +89,8 @@ public class MainController {
 		      nowCh = this.channelService.doSelectOne(nowCh);
 		      LOG.debug(chSearch.toString());
 		      LOG.debug(threadList.toString());
-		    uslist = this.usersService.doSelectList(nowCh);  
+		    uslist = this.usersService.doSelectList(nowCh);
+		    pinThrList = this.threadService.doSelectListIsPinned(nowCh);
 		}
 		
 		
@@ -131,6 +134,8 @@ public class MainController {
 		LOG.debug("workspaceList");
 		List<WorkSpaceVO> workspaceList = workSpaceService.doSelectList(usersVO);
 		
+		
+		
 		mav.setViewName("main/main2");
 		mav.addObject("workspaceList", workspaceList);
 		mav.addObject("channelList", channelList);
@@ -142,6 +147,7 @@ public class MainController {
 			mav.addObject("threadList", threadList);
 			mav.addObject("nowCh",nowCh);
 			mav.addObject("uslist",uslist);
+			mav.addObject("pinList",pinThrList);
 //			ChannelVO nowCh = null;
 //			List<UsersVO> uslist = null;
 		}

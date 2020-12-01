@@ -48,9 +48,9 @@
 			
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="${hContext }/main/storedThread.do">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Thread</span></a>
+                    <span>Stored Thread</span></a>
             </li>
             
             <!-- Divider -->

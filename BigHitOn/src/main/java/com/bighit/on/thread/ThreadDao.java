@@ -120,6 +120,20 @@ public class ThreadDao {
         return flag;            
      }
      
+     public int doPin(ThreadVO threadVO)
+     {
+        LOG.debug("=======================");
+        LOG.debug("====doPin====");
+        LOG.debug("=======================");
+        String statement = NAMESPACE+".doPin";
+        
+        LOG.debug("====statement===="+statement);
+         LOG.debug("====threadVO===="+threadVO);
+        int flag = sqlSessionTemplate.update(statement, threadVO);   
+         
+        return flag;            
+     }
+     
      public List<ThreadVO> doSelectChildList(ThreadVO threadVO) {
         LOG.debug("=======================");
         LOG.debug("====doSelectChildList====");
