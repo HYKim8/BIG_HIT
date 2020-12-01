@@ -35,7 +35,18 @@ public class ReactionDaoImpl {
 	 * @return
 	 * 	
 	 */
-	
+	public ReactionVO doSelectCnt(ReactionVO reactionVO) {
+		LOG.debug("=====================");
+		LOG.debug("=doSelectCnt=");
+		LOG.debug("=====================");
+		
+		String statement = NAMESPACE +".doSelectCnt";
+		LOG.debug("=statement="+statement);
+		LOG.debug("=param ==="+reactionVO);
+		
+		ReactionVO outVO = this.sqlSessionTemplate.selectOne(statement, reactionVO);
+		return outVO;
+	}
 	
 	public boolean doCheck(ReactionVO reactionVO) {
 		return (int)(sqlSessionTemplate.selectOne( NAMESPACE +".doCheck", reactionVO)) == 1;		

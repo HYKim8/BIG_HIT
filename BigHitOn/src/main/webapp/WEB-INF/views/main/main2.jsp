@@ -72,16 +72,19 @@
 				<div class="media-body" id="threadList">
 					<c:forEach var="list" items="${threadList}" varStatus="status">	
 					<div id="thrbtns">
+					<c:if test="${list.isPin == 1 }"> <p><c:out value="${list.pinId}에 의해 고정 됌"></c:out> </p> </c:if>
 					<c:if test="${status.first ||( !status.first && vs != list.regId)}">
 				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
 				 	</c:if>				 	
 					<div id="thrKey" style='display:none'>${list.thrKey}</div>
+					<div id="isPinState" style='display:none'>${list.isPin}</div>
 					<div id ="subBtns">
-					 		<button id="" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="저장하기"><i class="fa fa-check-square"></i></div></button>
-					 		<button id="" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
-					 		<button id="" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
+					 		<button id="saveThread" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="저장하기"><i class="fa fa-check-square"></i></div></button>
+					 		<button id="likeBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
+					 		<button id="pinBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
 					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
+					 		<button id="reactionBtn" class="btn btn-default" type="button"><div data-toggle="tooltip" data-placement="top" title="반응"></div></button>
 					</div>	
 				 	<p>
 				 		<c:out value="${list.contents}"/>
@@ -153,6 +156,22 @@
 		                    
 		                    	<c:forEach var="us" items="${uslist}">
 		   						 	<a class="collapse-item">@<c:out value="${us.name}" /></a>
+								</c:forEach>
+		                       	         	
+		                    </div>
+	                	</div>
+	                	</li>	                	
+	                	<li>
+	                	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chpins"
+		                    aria-expanded="true" aria-controls="collapseMem">
+		                    <i class="fas fa-fw fa-cog"></i>
+		                    <span>고정</span>
+		                </a>
+		                 <div id="chpins" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		                    <div class="bg-white py-2 collapse-inner rounded">
+		                    
+		                    	<c:forEach var="pl" items="${pinList}">
+		   						 	<a class="collapse-item"><c:out value="${pl.thrKey}" /></a>
 								</c:forEach>
 		                       	         	
 		                    </div>
@@ -350,16 +369,17 @@
                           var vs = "";
                           for(var i=0;i<list.length;i++){
                             html += "<div id=\"thrbtns\">";
-                            
+                            if(list[i].isPin == 1) html += '<p>' + list[i].pinId + '에 의해 고정 됌' + '</p>'
 							if(i==0 || (i!=0 && vs != list[i].regId)){
 								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "("+ list[i].regDt +")" + "</h6>";
-								 vs = list[i].regId
+								 vs = list[i].regId;
 							}                 
 							html += "<div id=\"thrKey\" style=\'display:none\'>" + list[i].thrKey + "</div>";
+							html += "<div id=\"isPinState\" style=\'display:none\'>" + list[i].isPin + "</div>";
 							html += "<div id =\"subBtns\">";
-							html += '<button id=\"\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"저장하기\"><i class=\"fa fa-check-square\"></i></div></button>';
-							html += '<button id=\"\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"좋아요\"><i class=\"fa fa-thumbs-up\"></i></div></button>';
-							html += '<button id=\"\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"고정하기\"><i class=\"fa fa-paperclip\"></i></div></button>';
+							html += '<button id=\"saveThread\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"저장하기\"><i class=\"fa fa-check-square\"></i></div></button>';
+							html += '<button id=\"likeBtns\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"좋아요\"><i class=\"fa fa-thumbs-up\"></i></div></button>';
+							html += '<button id=\"pinBtns\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"고정하기\"><i class=\"fa fa-paperclip\"></i></div></button>';
 							html += '<button id=\"childList\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"댓글보기\"><i class=\"fa fa-list-alt\"></i></div></button>';	
 							html += "</div>"            
                             html += "<p>" + list[i].contents + "</p>" 
@@ -578,6 +598,7 @@
 	       document.getElementById("modal_save_close_btn").onclick = function() {
 	           document.getElementById("modal").style.display="none";
 	       }   */
+	       //왼쪽/오른쪽 나누기 on off
 	       function halfOnOff(bool){
 				if(bool){
 					console.log("open");
@@ -593,6 +614,31 @@
 	       $("#sideclosebtn").click(function(){
 	    	   halfOnOff(false);
 		   });
+
+		   $(document).on('click',"#reactionBtn",function(){
+			   var trs = $("#threadList").closest('tr');		  
+			   var tds = trs.children();
+			   var thrkey = tds.eq(0).text();
+			   console.log(thrkey);  
+			   $.ajax({
+				   		type : "POST",
+				   		url : "${hContext}/reaction/doSelectCnt.do",
+					    dataType : "html",
+					    data :{
+								"thrKey" : thrkey
+					    	  },
+					    success : function(data){
+						    console.log("hi");
+						    },error : function(xhr, status, error) {
+								alert("error:" + error);
+							},
+							complete : function(data) {
+
+							}
+					    
+				   });
+			   });
+		   
 	       $(document).on('click',"#thrbtns",function(){
 				var tmp = $(this).children("#thrKey").text();
 		       console.log(tmp)
@@ -624,6 +670,81 @@
 	    		console.log(tmp);
 	    		$("#parentKey").val(tmp);
 	    		makeChildList(tmp);
+			});
+			//쓰레드 저장 
+		   $(document).on("click","#saveThread",function(){
+			   var tmpThrKey = $(this).parent().parent().children("#thrKey").text();
+			   $.ajax({
+					type : "POST",
+					url : "${hContext}/save/doSaveThread.do",
+					dataType : "html",
+					data : {
+						  "thrKey" : tmpThrKey,
+					      "regId" : "${sessionScope.usersVO.user_serial}",
+					      "regDt" : ""				      
+					},
+					success : function(data) { //성공
+						console.log("data="+data);
+						var jsonObj = JSON.parse(data);
+					    console.log("regId="+jsonObj.regId);
+					    console.log("msgContents="+jsonObj.msgContents);
+					    	
+					    if(null !=jsonObj && jsonObj.regId=="1"){
+					    	console.log("data="+data);
+					    	alert(jsonObj.msgContents);			    	
+						}
+					    else if(null !=jsonObj && jsonObj.regId=="0"){
+					    	alert(jsonObj.msgContents);				    	
+						}
+					},
+					error : function(xhr, status, error) {
+						alert("error:" + error);
+					},
+					complete : function(data) {
+
+					}
+
+				});//--ajax
+
+			});
+			//쓰레드 핀 고정 
+		   $(document).on("click","#pinBtns",function(){
+			   var thrKey = $(this).parent().parent().children("#thrKey").text();
+			   var isPin = $(this).parent().parent().children("#isPinState").text();
+			   console.log("pin ajax start");
+			    $.ajax({
+					type : "POST",
+					url : "${hContext}/thread/doPin.do",
+					dataType : "html",
+					data : {
+						  "thrKey" : thrKey,
+					      "pinId" : "${sessionScope.usersVO.user_serial}",
+					      "isPin" : isPin				      
+					},
+					success : function(data) { //성공
+						console.log("data="+data);
+						var jsonObj = JSON.parse(data);
+					    console.log("regId="+jsonObj.regId);
+					    console.log("msgContents="+jsonObj.msgContents);
+					    	
+					    if(null !=jsonObj && jsonObj.regId=="1"){
+					    	console.log("data="+data);
+					    	alert(jsonObj.msgContents);			    	
+						}
+					    else if(null !=jsonObj && jsonObj.regId=="0"){
+					    	alert(jsonObj.msgContents);				    	
+						}
+					    location.reload();
+					},
+					error : function(xhr, status, error) {
+						alert("error:" + error);
+					},
+					complete : function(data) {
+
+					}
+
+				});//--ajax 
+
 			});
 		  function makeChildList(thrKey){
 			  $.ajax({

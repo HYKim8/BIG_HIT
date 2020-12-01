@@ -30,4 +30,7 @@ public class ReactionService {
 	{
 		return reactionDaoImpl.doSelectList(inVO);
 	}
+	public ReactionVO doSelectCnt(ReactionVO reactionVO) {
+		return reactionDaoImpl.doSelectCnt(reactionVO);
+	}
 }

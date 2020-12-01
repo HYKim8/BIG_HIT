@@ -27,6 +27,13 @@
 	ON a.thr_key = b.thr_key								
 
 </select>
+
+<select id="doSelectCnt" parameterType="ReactionVO" resultType="ReactionVO">
+		select count(a.emoji)
+		from reaction a, thread b
+		where a.thr_key = #{thrKey}
+</select>
+
 <select id="doSelectList" parameterType="ReactionVO" resultType="ReactionVO">
 	SELECT          
 	    emoji,      
