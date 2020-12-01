@@ -64,6 +64,15 @@
    SELECT parent_key AS parentKey,thr_key AS thrKey,reg_id AS regId,reg_dt AS regDt,mod_dt AS modDt,contents AS contents,child_cnt AS childCnt
     FROM thread Where thr_key = #{thrKey}   
    </select>
+   <update id ="doPin" parameterType="ThreadVO">
+   	UPDATE thread
+	SET
+	    is_pin = #{isPin}
+	    
+	    ,pin_id = #{pinId}
+	WHERE
+	    thr_key = #{thrKey}
+   </update>
    <select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
    SELECT 
     b.thr_key AS thrKey,

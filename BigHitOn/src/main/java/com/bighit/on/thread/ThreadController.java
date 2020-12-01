@@ -250,6 +250,32 @@ public class ThreadController {
       return view;
    }
    
+   @RequestMapping(value="thread/doPin.do", method = RequestMethod.POST)
+   @ResponseBody
+   public Message doPin(ThreadVO threadVO) {
+      LOG.debug("===================================");
+      LOG.debug("=dopin=");
+      
+      int pin = threadVO.getIsPin() ;
+      threadVO.setIsPin(pin == 1 ? 0 : 1 );
+      //pin이 0이되어야하면 비워야함.
+      if(pin == 1) threadVO.setPinId("");
+      LOG.debug("=param="+threadVO);
+      int flag = threadService.doPin(threadVO);
+      String msgContents =  flag == 1 ?  ( pin == 0 ? "고정 됐습니다" : "고정 해체 됐습니다") : "기능 오류" ;
+      
+      
+      
+      LOG.debug("==================");
+      LOG.debug("=flag="+flag);
+      LOG.debug("==================");
+       
+       Message  message=new Message();
+       message.setThrKey(flag+"");
+       message.setMsgContents(msgContents);
+           
+       return message;
+   }
    
    
 }

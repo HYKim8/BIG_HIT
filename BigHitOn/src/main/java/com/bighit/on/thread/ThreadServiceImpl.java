@@ -77,9 +77,14 @@ public class ThreadServiceImpl implements ThreadService {
       return thrDao.doUpdate(threadVO);
    }
 
-@Override
-public List<ThreadVO> doSelectChildList(ThreadVO threadVO) {
-   return thrDao.doSelectChildList(threadVO);
-}
+	@Override
+	public List<ThreadVO> doSelectChildList(ThreadVO threadVO) {
+	   return thrDao.doSelectChildList(threadVO);
+	}
+	
+	@Override
+	public int doPin(ThreadVO threadVO) {
+		return thrDao.doPin(threadVO);
+	}
 
 }

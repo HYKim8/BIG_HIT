@@ -26,5 +26,7 @@ public interface ThreadService {
    
    public List<ThreadVO> doSelectChildList(ThreadVO threadVO);
 
-List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO);
+   List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO);
+   
+   public int doPin(ThreadVO threadVO);
 }
