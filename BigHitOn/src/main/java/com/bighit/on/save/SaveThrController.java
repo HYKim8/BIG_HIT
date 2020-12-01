@@ -31,6 +31,13 @@ public class SaveThrController {
 	@Autowired
 	ThreadServiceImpl threadService;
 	
+	@RequestMapping(value = "main/storedThread.do", method = RequestMethod.GET)
+	public String storedThread() {
+		LOG.debug("==main/storedThread.do==");
+		
+		return "save_thread/stored_thread";
+	}
+	
 	// pin 된 것 리스트
 	@RequestMapping(value = "main/doSelectListIsPinned.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
