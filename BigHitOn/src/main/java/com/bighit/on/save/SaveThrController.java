@@ -61,14 +61,7 @@ public class SaveThrController {
 		
 		HttpSession session = req.getSession();
 		
-		// for test 나중에 세션으로 멤버VO 받을 것
-		session.setAttribute("memberId", "UAUO88RAHER");
-		// for test
-		
-		String userSerial = (String) session.getAttribute("memberId");
-		
-		UsersVO usersVO = new UsersVO();
-		usersVO.setUser_serial(userSerial);
+		UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
 		
 		List<ThreadVO> list = saveThrService.doSelectList(usersVO);
 		
