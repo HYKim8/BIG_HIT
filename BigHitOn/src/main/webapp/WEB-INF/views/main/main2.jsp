@@ -159,6 +159,22 @@
 		                       	         	
 		                    </div>
 	                	</div>
+	                	</li>	                	
+	                	<li>
+	                	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chpins"
+		                    aria-expanded="true" aria-controls="collapseMem">
+		                    <i class="fas fa-fw fa-cog"></i>
+		                    <span>고정</span>
+		                </a>
+		                 <div id="chpins" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		                    <div class="bg-white py-2 collapse-inner rounded">
+		                    
+		                    	<c:forEach var="pl" items="${pinList}">
+		   						 	<a class="collapse-item"><c:out value="${pl.thrKey}" /></a>
+								</c:forEach>
+		                       	         	
+		                    </div>
+	                	</div>
 	                	</li>
                 	</ul>
 				</div>
