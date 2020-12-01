@@ -77,6 +77,7 @@
 				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
 				 	</c:if>				 	
+				 	<%-- <div id="regId" style='display:none'>${list.regId}</div> --%>
 					<div id="thrKey" style='display:none'>${list.thrKey}</div>
 					<div id="isPinState" style='display:none'>${list.isPin}</div>
 					<div id ="subBtns">
@@ -84,7 +85,7 @@
 					 		<button id="likeBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
 					 		<button id="pinBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
 					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
-					 		<button id="reactionBtn" class="btn btn-default" type="button"><div data-toggle="tooltip" data-placement="top" title="반응"></div></button>
+					 		
 					</div>	
 				 	<p>
 				 		<c:out value="${list.contents}"/>
@@ -183,40 +184,6 @@
 			
 				
             </div>
-            <!-- End of Main Content -->
-
-
-			
-
-
-
-
-
-
-
-
-
-            <!-- Footer -->
-            <!-- 입력 폼 -->
-            <form method="post" action="${hContext}/thread/doInsert.do">
-			   	<input type="hidden" name="thrKey" id="thrKey"/>
-			    <div class="sticky-footer bg-white">                
-			                <div style="padding-left: 20px; padding-right: 20px;"class="row">
-			                	<div class="col-md-12"><textarea class="form-control" name="contents" id="contents" placeholder="내용을 입력하세요"
-			                    maxlength="400"></textarea>
-			                    </div>  
-			                    <input type="button" class="btn btn=primary btn-sm" value="Send" id="insertBtn"/>                  
-			                </div>
-			    </div>   
-			  </form>
-            <!-- End of Footer -->
-			
-			
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -615,20 +582,21 @@
 	    	   halfOnOff(false);
 		   });
 
-		   $(document).on('click',"#reactionBtn",function(){
-			   var trs = $("#threadList").closest('tr');		  
-			   var tds = trs.children();
-			   var thrkey = tds.eq(0).text();
-			   console.log(thrkey);  
+		   /* $(document).on('click',"#likeBtns",function(){
+			   var likeThrKey = $(this).parent().parent().children("#thrKey").text();
+			   var resId = $(this).parent().parent().children("#regId").text();
+			   console.log(likeThrKey);  
 			   $.ajax({
 				   		type : "POST",
-				   		url : "${hContext}/reaction/doSelectCnt.do",
+				   		url : "${hContext}/reaction/doInsert.do",
 					    dataType : "html",
 					    data :{
-								"thrKey" : thrkey
+								"thrKey" : tmpThrkey
+								"resId" : regId
 					    	  },
 					    success : function(data){
-						    console.log("hi");
+						    console.log("succes");
+						    console.log(data);
 						    },error : function(xhr, status, error) {
 								alert("error:" + error);
 							},
@@ -637,7 +605,7 @@
 							}
 					    
 				   });
-			   });
+			   }); */
 		   
 	       $(document).on('click',"#thrbtns",function(){
 				var tmp = $(this).children("#thrKey").text();
