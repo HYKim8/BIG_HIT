@@ -46,13 +46,14 @@
             
             <!-- topbar -->
 			<%@ include file="/WEB-INF/views/main/topBar.jsp" %>	
-            
+             
             
             
             <div style="margin-left: 40px; margin-right: 40px;">
             <div class='card shadow h-100 py-2'>
 				<div class='card-body'>
 					<div>
+						<img style='float:left; margin-right: 5px;' width='15px' height='15px' alt="" src="${hContext }/resources/img/stored_thread.jpg">
 						<h6><strong>나중에 사용하기 위해 메시지를 저장하세요.</strong></h6>
 						<h6>해야 할 일을 표시하거나 다른 시간에 할 수 있도록 저장하세요. 저장된 항목은 고객님만 볼 수 있으므로 원하는 방식으로 사용하세요.</h6>
 					</div>
