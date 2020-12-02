@@ -28,19 +28,9 @@
 
 <script type="text/javascript">
 
-$("#workspaceDeleteBtn2").on("click", function(){
-	console.log("workspaceDeleteBtn Clicked!!!");
-	console.log('${sessionScope.usersVO.reg_id}');
-	console.log('${sessionScope.workspaceVO}');
-});
-
-
 	//----------Delete Workspace----------
 	$("#workspaceDeleteBtn").on("click", function(){
-			alert("aaa.");
 			console.log("workspaceDeleteBtn Clicked!!");
-			console.log('${sessionScope.usersVO.reg_id}');
-			console.log('${sessionScope.workspaceVO.regId}');
 			doWorkSpaceDelete();
 		}); 
 

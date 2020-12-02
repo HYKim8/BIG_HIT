@@ -148,7 +148,7 @@
      	
      	
 		$("#workspacetfBtn").click(function(event) {
-			
+			console.log("=============");
 			var tmp = $(event.target).children("#workspaceLk").text(); //.parent().children("#workspaceLk").text();
 			console.log("====="+tmp);
 			$.ajax({
@@ -176,9 +176,9 @@
 
 		$("#channel_btn").click(function(event) {
 			
-			/* var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
+			/*var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
 			console.log("====="+tmp); */
-			window.location.href="${hContext}/main/index.do?searchWord="+${ChannelVO.chLink};						
+			window.location.href="${hContext}/main/index.do?searchWord="+'${ChannelVO.chLink}';						
 		});
 
         </script>

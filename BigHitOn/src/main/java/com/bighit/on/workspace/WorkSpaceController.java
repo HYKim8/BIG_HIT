@@ -74,10 +74,7 @@ public class WorkSpaceController {
 		
 		usersService.doInsert(usersVO);
 		Message message = workSpaceService.doInsert(workSpaceVO);
-		WorkSpaceVO sessionWorkSpace = this.workSpaceService.doSelectOne(workSpaceVO);
-		//session.setAttribute("WorkSpaceVO", sessionWorkSpace);
-		
-		
+			
 		
 //		message.setRegId(String.valueOf(flag));
 		
