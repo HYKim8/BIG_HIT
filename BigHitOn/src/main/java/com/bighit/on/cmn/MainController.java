@@ -60,7 +60,12 @@ public class MainController {
 		UsersVO usersVO = new UsersVO();
 		usersVO = (UsersVO) session.getAttribute("usersVO");
 		ReminderVO reminderVO = new ReminderVO();
+		WorkSpaceVO ws = new WorkSpaceVO();
+		ws.setWsLink(usersVO.getWs_link());
 		
+		ws = workSpaceService.doSelectOne(ws);
+		
+		boolean isReg = usersVO.getUser_serial().equals(ws.getRegId());
 		ModelAndView mav = new ModelAndView();
 		
 		Search search = new Search();
@@ -136,6 +141,7 @@ public class MainController {
 		mav.addObject("channelList", channelList);
 		mav.addObject("channelListDM", channelListDM);
 		mav.addObject("reminderList", reminderList);
+		mav.addObject("isReg",isReg);
 		if(chSearch!=null )
 		{
 			mav.addObject("searchVO",chSearch);
