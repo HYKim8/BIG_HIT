@@ -49,24 +49,14 @@ public class UsersController {
 	
 	@RequestMapping(value="users/doLogin.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Message doLogin(UsersVO usersVO, HttpServletRequest req,Locale locale,HttpServletResponse res) {
-		Message message=new Message();
-		LOG.debug("usersVO"+usersVO);
-		UsersVO sessionUser = this.usersService.doSelectOne(usersVO.getWs_link(),usersVO.getEmail());
-		LOG.debug("=======================");
-		LOG.debug("=sessionUser=="+sessionUser);
-		LOG.debug("=======================");
+	public int doLogin(UsersVO usersVO,HttpServletRequest req,Locale locale,HttpServletResponse res) {
+		int flag = this.usersService.pwCheck(usersVO);
+		LOG.debug("===========doLogin==========");
+		LOG.debug("usersVO:"+usersVO);
 		
-		HttpSession session =  req.getSession();
-		session.setAttribute("usersVO", sessionUser);
-//		int flag = this.usersService.emailCheck(usersVO);
-//		if(1==flag) {
-//			
-//		}else {
-//			
-//		}
 		
-		return message;
+		return flag;
+	      
 	}
 		
 	@RequestMapping(value="users/loginView.do", method = RequestMethod.GET)
@@ -77,6 +67,7 @@ public class UsersController {
 		return "users/userws";
 	}
 	
+
 	@RequestMapping(value="users/signUpView.do", method = RequestMethod.GET)
 	public String signUpView(UsersVO user,Model model) {	
 		model.addAttribute("usersVO", user);
@@ -101,14 +92,14 @@ public class UsersController {
 		usersVO.setReg_dt("");
 		usersVO.setThumb("");
 		
-		int flag = this.usersService.emailCheck(usersVO);
-		message.setRegId(String.valueOf(flag));
-		
-		if(1==flag) {
-			message.setMsgContents("이메일을 확인하세요.");
-		}else {
-			message.setMsgContents("회원가입 성공.");
-		}
+//		int flag = this.usersService.emailCheck(usersVO);
+//		message.setRegId(String.valueOf(flag));
+//		
+//		if(1==flag) {
+//			message.setMsgContents("이메일을 확인하세요.");
+//		}else {
+//			message.setMsgContents("회원가입 성공.");
+//		}
 		String key = this.usersService.doGetKey();
 		int sessionUser = this.usersService.doInsert(usersVO);
 		LOG.debug("=======================");

@@ -58,6 +58,7 @@
       <div class="tab-pane fade in active" id="doLogin">        
         <h1>이메일로 로그인</h1>
          <input class="form-control" placeholder="name@work-email.com" type="email" name="email" id="email">
+          <input class="form-control" placeholder="password" type="password" name="password" id="password">
       	 <button type="button" class="btn btn-primary my-4" id="doLoginBtn">이메일로 로그인</button>
 
       </div>
@@ -96,19 +97,58 @@
 	$("#doLoginBtn").on("click",function(){
 		//alert("wsName_btn");
 		var wsLink = $('#email').val();
+		var pw = $('#password').val();
 		if(null == wsLink || wsLink.trim().length==0){
 			$('#email').focus();
 			alert("이메일을 입력해주세요.");
 			return;
 		}
+		if(null == pw || pw.trim().length==0){
+			$('#password').focus();
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}
+		
 		$('a[href="#myWs"]').tab('show');
+
+		$.ajax({
+			type:"POST",
+            url:"${hContext}/users/doLogin.do",
+            dataType:"html", 
+            data:{
+                 "email" :$("#email").val(),
+                 "password" :$("#password").val()  
+            },
+            success:function(data){//통신성공, data
+	        	//alert(data);
+	            var jsonData = JSON.parse(data);
+
+				if(data ==0){
+					alert("패스워드가 틀렸습니다");
+					window.location.href="${hContext}/users/loginView.do"
+				}else{
+					alert("로그인 성공");
+					}
+
+	        },
+	        error:function(xhr,status,error){
+	        	
+	        },
+	        complete:function(data){
+	        	
+	        }
+		});
+
+		
 
 		$.ajax({
             type:"GET",
             url:"${hContext}/users/wsList.do",
             dataType:"html", 
             data:{
-                 "email" :$("#email").val()                    
+            	 "ws_link": $("#wslink").val(),   
+                 "email" :$("#email").val()
+                 
             },  
             success:function(data){ //성공
                console.log("data="+data);
@@ -150,6 +190,8 @@
 			data:{
 			"ws_link": wslink,
 			"email":$("#email").val()
+	
+			
 			},
 		success : function(data){
 			var jsonData = JSON.parse(data);			

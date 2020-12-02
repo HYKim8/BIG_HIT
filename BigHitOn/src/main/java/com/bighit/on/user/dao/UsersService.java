@@ -9,6 +9,12 @@ public interface UsersService {
 	UsersVO doSelectOne(String ws_link, String email);
 	
 	/**
+	 * 비밀번호 확인
+	 * @param usersVO
+	 * @return 1(성공)/0(실패)
+	 */
+	public int pwCheck(UsersVO usersVO);
+	/**
 	 * 이메일 확인
 	 * @param usersVO
 	 * @return 1(성공)/0(실패)

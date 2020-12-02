@@ -118,6 +118,12 @@ public class UsersServiceImpl implements UsersService {
 	public int emailCheck(UsersVO usersVO) {
 		return usersDaoImpl.emailCheck(usersVO);
 	}
+	
+	@Override
+	public int pwCheck(UsersVO usersVO) {
+		return usersDaoImpl.pwCheck(usersVO);
+		
+	}
 
 	@Override
 	public UsersVO doSelectOne(String ws_link, String email) {
@@ -129,5 +135,7 @@ public class UsersServiceImpl implements UsersService {
 	public String doGetKey() {
 		return usersDaoImpl.doGetKey();
 	}
+
+	
 	
 }

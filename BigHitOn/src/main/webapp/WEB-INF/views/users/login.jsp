@@ -60,9 +60,10 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
                     <input class="form-control" placeholder="name@work-email.com" type="email" name="email" id="email">
-                  </div>
-                </div>
-               
+                  </div>                   
+                </div>                
+
+           
                 <div class="text-center">
                   <button type="button" class="btn btn-primary my-4" id="doLogin">이메일로 로그인</button>
                 </div>

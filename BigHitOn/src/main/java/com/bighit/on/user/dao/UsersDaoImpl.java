@@ -75,6 +75,7 @@ public class UsersDaoImpl {
 		
 		return outVO;
 	}
+	
 	/**
      * email 확인
      * @param usersVO
@@ -82,6 +83,21 @@ public class UsersDaoImpl {
      */
 	public int emailCheck(UsersVO usersVO) {
 		String statement = NAMESPACE + ".emailCheck";
+		LOG.debug("=statement : "+statement);
+		LOG.debug("=param="+usersVO);    
+		LOG.debug("========================");
+		int flag =sqlSessionTemplate.selectOne(statement, usersVO);    
+		LOG.debug("=flag="+flag);
+        return flag;
+	}
+	
+	/**
+	 * password 확인
+	 * @param usersVO
+	 * @return 1(성공)/0(실패)
+	 */
+	public int pwCheck(UsersVO usersVO) {
+		String statement = NAMESPACE + ".pwCheck";
 		LOG.debug("=statement : "+statement);
 		LOG.debug("=param="+usersVO);    
 		LOG.debug("========================");
