@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bighit.on.cmn.Message;
+import com.bighit.on.user.dao.UsersVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -25,18 +26,22 @@ public class ReactionController {
 	
 	@RequestMapping(value="reaction/doInsert.do",method=RequestMethod.POST)
 	@ResponseBody
-	public int doInsert(@RequestParam("resId") String resId, 
-							   HttpServletRequest request) throws Exception{
+	public int doInsert(String resId, String thrKey, String regId, HttpServletRequest request) throws Exception{
 		ReactionVO reactionVO = new ReactionVO();
 		Message message=new Message();
 		
-		HttpSession session = request.getSession();
-		String regId = (String) session.getAttribute("regId");		
+		//HttpSession session = request.getSession();
+		//String regId = (String) session.getAttribute("regId");	
+		//UsersVO regId = (UsersVO) session.getAttribute("usersVO");
+		
 		LOG.debug("====regId==="+regId);
 		
+		
+		reactionVO.setThrKey(thrKey);
 		reactionVO.setRegId(regId);
 		reactionVO.setResId(resId);
 		reactionVO.setEmoji(1);
+		
 		
 		int flag = this.reactionService.doInsert(reactionVO);
 		

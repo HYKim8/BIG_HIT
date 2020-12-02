@@ -78,7 +78,7 @@
 				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${uslist[list.regId].name}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
 				 	</c:if>				 	
-				 	<%-- <div id="regId" style='display:none'>${list.regId}</div> --%>
+				 	 <div id="regId" style='display:none'>${list.regId}</div>
 					<div id="thrKey" style='display:none'>${list.thrKey}</div>
 					<div id="isPinState" style='display:none'>${list.isPin}</div>
 					<div id ="subBtns">
@@ -589,17 +589,29 @@
 	    	   halfOnOff(false);
 		   });
 
-		   /* $(document).on('click',"#likeBtns",function(){
+
+	       $(document).on('click',"#thrbtns",function(){
+				var tmp = $(this).children("#thrKey").text();
+		       console.log(tmp)
+	    	   $("#tmpThrKey2").val(tmp);
+	   		   $("#tmpChLink2").val($("#searchWord").val());
+
+		       });
+
+	       $(document).on('click',"#likeBtns",function(){
 			   var likeThrKey = $(this).parent().parent().children("#thrKey").text();
 			   var resId = $(this).parent().parent().children("#regId").text();
 			   console.log(likeThrKey);  
-			   $.ajax({
+			   console.log(resId);
+			   
+			  $.ajax({
 				   		type : "POST",
 				   		url : "${hContext}/reaction/doInsert.do",
 					    dataType : "html",
 					    data :{
-								"thrKey" : tmpThrkey
-								"resId" : regId
+								"thrKey" : likeThrKey,
+								"resId" : resId,
+								"regId" : "${sessionScope.usersVO.reg_id}"
 					    	  },
 					    success : function(data){
 						    console.log("succes");
@@ -611,16 +623,9 @@
 
 							}
 					    
-				   });
-			   }); */
-		   
-	       $(document).on('click',"#thrbtns",function(){
-				var tmp = $(this).children("#thrKey").text();
-		       console.log(tmp)
-	    	   $("#tmpThrKey2").val(tmp);
-	   		   $("#tmpChLink2").val($("#searchWord").val());
-
-		       });
+				   }); 
+			   });
+	       
 		    $(document).on('click',"#channel_btn",function(){
 		    	var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
 				console.log("====="+tmp);
