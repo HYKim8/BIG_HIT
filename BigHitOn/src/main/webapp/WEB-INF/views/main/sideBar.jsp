@@ -178,7 +178,7 @@
 			
 			/*var tmp = $(event.target).children("#channelLk").text(); //.parent().children("#workspaceLk").text();
 			console.log("====="+tmp); */
-			window.location.href="${hContext}/main/index.do?searchWord="+'${ChannelVO.chLink}';						
+			window.location.href="${hContext}/main/index.do?searchWord="+"${ChannelVO.chLink}";						
 		});
 
         </script>
