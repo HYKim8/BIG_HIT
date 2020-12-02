@@ -18,7 +18,7 @@
 			
 			<div class="modal-body">워크스페이스를 삭제하시겠습니까?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>                  
+                    <button id="workspaceDeleteBtn2" class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>                  
 				    
 				    <button id="workspaceDeleteBtn" class="btn btn-secondary" type="button" data-dismiss="modal">삭제</button>
                 </div>
@@ -28,12 +28,19 @@
 
 <script type="text/javascript">
 
+$("#workspaceDeleteBtn2").on("click", function(){
+	console.log("workspaceDeleteBtn Clicked!!!");
+	console.log('${sessionScope.usersVO.reg_id}');
+	console.log('${sessionScope.workspaceVO}');
+});
+
+
 	//----------Delete Workspace----------
 	$("#workspaceDeleteBtn").on("click", function(){
 			alert("aaa.");
-			console.log("workspaceDeleteBtn Clicked");
-			console.log("workspaceDelete"+${sessionScope.usersVO.reg_id});
-			console.log("workspaceDelete12"+${sessionScope.WorkSpaceVO.regId});
+			console.log("workspaceDeleteBtn Clicked!!");
+			console.log('${sessionScope.usersVO.reg_id}');
+			console.log('${sessionScope.workspaceVO.regId}');
 			doWorkSpaceDelete();
 		}); 
 

@@ -73,10 +73,9 @@ public class WorkSpaceController {
 		usersVO.setThumb("");
 		
 		usersService.doInsert(usersVO);
-		
-		
 		Message message = workSpaceService.doInsert(workSpaceVO);
-		
+		WorkSpaceVO sessionWorkSpace = this.workSpaceService.doSelectOne(workSpaceVO);
+		//session.setAttribute("WorkSpaceVO", sessionWorkSpace);
 		
 		
 		
@@ -88,6 +87,8 @@ public class WorkSpaceController {
 		LOG.debug("==================");
 		LOG.debug("=json=" + json);
 		LOG.debug("==================");
+		LOG.debug("===usersVO.getReg_id()="+usersVO.getReg_id());
+		
 		return json;
 	}
 
@@ -132,7 +133,7 @@ public class WorkSpaceController {
 		LOG.debug("==================");
 		LOG.debug("=json=" + json);
 		LOG.debug("==================");
-
+		
 		return json;
 		
 	}
@@ -141,7 +142,7 @@ public class WorkSpaceController {
 			,produces = "application/json;charset=UTF-8"	
 			)
 	@ResponseBody
-	public String doSelectList(UsersVO usersVO, Model model) {
+	public String doSelectList(UsersVO usersVO, Model model, HttpServletRequest req) {
 		LOG.debug("-------------------------");
 		LOG.debug("-doSelectList-");
 		LOG.debug("-------------------------");
