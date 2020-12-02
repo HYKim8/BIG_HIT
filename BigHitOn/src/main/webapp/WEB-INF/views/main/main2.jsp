@@ -63,18 +63,19 @@
 			<c:if test="${!empty threadList}">
 				<c:set var = "vs" value="any"/>
 				
-				<div style="padding-left:10px; padding-right:10px;"class="media-left">
-				    <a href="#">
-				    <img class="media-object" src="${hContext}/resources/img/User1.jpg" alt="">
-					</a>
-				</div>		
+					
 				
 				<div class="media-body" id="threadList">
 					<c:forEach var="list" items="${threadList}" varStatus="status">	
 					<div id="thrbtns">
-					<c:if test="${list.isPin == 1 }"> <p><c:out value="${list.pinId}에 의해 고정 됌"></c:out> </p> </c:if>
+					<c:if test="${list.isPin == 1 }"> <p><c:out value="${uslist[list.pinId].name}에 의해 고정 됌"></c:out> </p> </c:if>
 					<c:if test="${status.first ||( !status.first && vs != list.regId)}">
-				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${list.regId}"/> <c:out value="(${list.regDt})"/></h6>
+						<div style="padding-left:10px; padding-right:10px;"class="media-left">
+						    <a href="#">
+						    <img class="media-object" src = "${uslist[list.regId].thumb}">
+							</a>
+						</div>	
+				 		<h6 class="media-heading mouse_event" data-toggle="modal" data-target="#myModal"><c:out value="${uslist[list.regId].name}"/> <c:out value="(${list.regDt})"/></h6>
 				 		<c:set var = "vs" value="${list.regId}"/>
 				 	</c:if>				 	
 				 	<%-- <div id="regId" style='display:none'>${list.regId}</div> --%>
@@ -156,7 +157,7 @@
 		                    <div class="bg-white py-2 collapse-inner rounded">
 		                    
 		                    	<c:forEach var="us" items="${uslist}">
-		   						 	<a class="collapse-item">@<c:out value="${us.name}" /></a>
+		   						 	<a class="collapse-item">@<c:out value="${us.value.name}" /></a>
 								</c:forEach>
 		                       	         	
 		                    </div>
@@ -335,10 +336,16 @@
                           var html = "";
                           var vs = "";
                           for(var i=0;i<list.length;i++){
+                              
                             html += "<div id=\"thrbtns\">";
-                            if(list[i].isPin == 1) html += '<p>' + list[i].pinId + '에 의해 고정 됌' + '</p>'
+                            if(list[i].isPin == 1) html += '<p>' + "${uslist[list[i].pinId].name}"  + '에 의해 고정 됌' + '</p>'
 							if(i==0 || (i!=0 && vs != list[i].regId)){
-								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + list[i].regId + "("+ list[i].regDt +")" + "</h6>";
+								 html += "<div style=\"padding-left:10px; padding-right:10px;\"class=\"media-left\">";
+								 html += "<a href=\"#\">";	
+								 html += "<img class=\"media-object\" src = +\"" + "${uslist[list.regId].thumb}" +"\">";
+								 html += "</a>"
+								 html += "</div>"	 							
+								 html += '<h6 class=\"media-heading mouse_event\" data-toggle=\"modal\" data-target=\"#myModal\">' + "${uslist[list[i].regId].name}" + "("+ list[i].regDt +")" + "</h6>";
 								 vs = list[i].regId;
 							}                 
 							html += "<div id=\"thrKey\" style=\'display:none\'>" + list[i].thrKey + "</div>";

@@ -2,6 +2,7 @@ package com.bighit.on.cmn;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -102,12 +103,11 @@ public class MainController {
 		WorkSpaceVO workSpaceVO = new WorkSpaceVO();
 		workSpaceVO.setWsLink(wsLink);
 		List<UsersVO> userList = usersService.doSelectList(workSpaceVO);
+		HashMap<String,UsersVO> userHash = new HashMap<String,UsersVO>();
 		for (UsersVO vo : userList) {
-			if (null != vo.getThumb()) {
-				session.setAttribute(vo.getUser_serial() + "thumb", vo.getThumb());
-			} else {
-				session.setAttribute(vo.getUser_serial() + "thumb", "/resources/img/default.jpg");
-			}
+			if (null == vo.getThumb()) 
+				vo.setThumb("/resources/img/default.jpg");			
+			userHash.put(vo.getUser_serial(), vo);
 		}
 		
 		LOG.debug("chList");
@@ -146,7 +146,7 @@ public class MainController {
 			mav.addObject("searchVO",chSearch);
 			mav.addObject("threadList", threadList);
 			mav.addObject("nowCh",nowCh);
-			mav.addObject("uslist",uslist);
+			mav.addObject("uslist",userHash);
 			mav.addObject("pinList",pinThrList);
 //			ChannelVO nowCh = null;
 //			List<UsersVO> uslist = null;
