@@ -35,7 +35,7 @@ public class ReactionDaoImpl {
 	 * @return
 	 * 	
 	 */
-	public ReactionVO doSelectCnt(ReactionVO reactionVO) {
+	public int doSelectCnt(ReactionVO reactionVO) {
 		LOG.debug("=====================");
 		LOG.debug("=doSelectCnt=");
 		LOG.debug("=====================");
@@ -44,8 +44,8 @@ public class ReactionDaoImpl {
 		LOG.debug("=statement="+statement);
 		LOG.debug("=param ==="+reactionVO);
 		
-		ReactionVO outVO = this.sqlSessionTemplate.selectOne(statement, reactionVO);
-		return outVO;
+		int selectCnt = this.sqlSessionTemplate.selectOne(statement, reactionVO);
+		return selectCnt;
 	}
 	
 	public boolean doCheck(ReactionVO reactionVO) {
@@ -79,14 +79,14 @@ public class ReactionDaoImpl {
 	public int doDelete(ReactionVO reactionVO)
 	{
 		LOG.debug("=====================");
-		LOG.debug("=doInsert=");
+		LOG.debug("=doDelete=");
 		LOG.debug("=====================");
 		String statement = NAMESPACE +".doDelete";
 		LOG.debug("=statement="+statement);
 		LOG.debug("=param ==="+reactionVO);
 		
 		int flag = sqlSessionTemplate.delete(statement, reactionVO);
-		LOG.debug("-doInsert flag=" + flag);
+		LOG.debug("-doDelete flag=" + flag);
 		return flag;			
 	}
 	/**

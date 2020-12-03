@@ -597,7 +597,27 @@
 	   		   $("#tmpChLink2").val($("#searchWord").val());
 
 		       });
+	
+	       function selectCnt(){
+		   $.ajax({
+			   		type : "POST",
+			   		url : "${hContext}/reaction/doSelectCnt.do",
+			   		dataType : "html",
+			   		data : {
+						"thrKey" : likeThrKey
+				   		},
+				   		success : function(data){
+					   		console.log("cnt성공");
+							console.log(data);
+					   		},error : function(xhr, status, error) {
+								alert("error:" + error);
+							},
+							complete : function(data) {
 
+							}
+			   });	
+		   }
+			
 	       $(document).on('click',"#likeBtns",function(){
 			   var likeThrKey = $(this).parent().parent().children("#thrKey").text();
 			   var resId = $(this).parent().parent().children("#regId").text();
@@ -614,11 +634,42 @@
 								"regId" : "${sessionScope.usersVO.reg_id}"
 					    	  },
 					    success : function(data){
-						    console.log("succes");
+						    
 						    console.log(data);
+						    var jsonData = JSON.parse(data);
+				   			console.log(jsonData);
+				   			var msgContents = jsonData.msgContents;
+				   			
+							if(msgContents=="좋아요 성공"){
+								console.log("좋아요 성공");
+							}else if(msgContents=="좋아요 취소"){
+								console.log("좋아요 취소");
+							}
+						    $.ajax({
+						   		type : "POST",
+						   		url : "${hContext}/reaction/doSelectCnt.do",
+						   		dataType : "html",
+						   		data : {
+									"thrKey" : likeThrKey
+							   		},
+							   		success : function(data){
+
+								   			console.log("cnt성공");
+											console.log(data);		
+									   	
+								   		},error : function(xhr, status, error) {
+											alert("error:" + error);
+										},
+										complete : function(data) {
+
+										}
+						   });	//안쪽 ajax				
+		 
 						    },error : function(xhr, status, error) {
 								alert("error:" + error);
 							},
+
+							
 							complete : function(data) {
 
 							}
