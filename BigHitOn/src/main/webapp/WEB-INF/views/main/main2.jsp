@@ -96,8 +96,19 @@
 				 		<c:if test="${list.modDt != list.regDt }">
 				 			<div data-toggle="tooltip" data-placement="right" title="${list.modDt}">(편집됨)</div>
 				 		</c:if>
-				 		 
-				 	
+				 	<c:if test ="${!empty reactHash[list.thrKey]}">
+				 		<div id="reactBtns">
+					 		<c:forEach var="msg" items ="${reactHash[list.thrKey]}">
+					 			<button id="reactToggle" class="btn btn-primary btn-sm" type="button">
+					 				<div id="emojiKey" style='display:none'>${msg.key}</div>
+					 				<div data-toggle="tooltip" data-placement="top" title="${msg.value.msgContents}">
+					 					<i class="fa fa-thumbs-up"></i>
+					 					<c:out value="${msg.value.regId}"></c:out>
+					 				</div>	
+					 			</button>	
+					 		</c:forEach>
+				 		</div>	 
+				 	</c:if>
 				 	<c:if test="${list.childCnt != 0 }">
 				 		<button id="childList" class="btn btn-default" type="button" ><c:out value="${list.childCnt}개의 댓글"/></button></c:if>
 				 	</div>					 	
@@ -631,7 +642,7 @@
 					    data :{
 								"thrKey" : likeThrKey,
 								"resId" : resId,
-								"regId" : "${sessionScope.usersVO.reg_id}"
+								"regId" : "${sessionScope.usersVO.user_serial}"
 					    	  },
 					    success : function(data){
 						    
@@ -765,6 +776,45 @@
 					    else if(null !=jsonObj && jsonObj.regId=="0"){
 					    	alert(jsonObj.msgContents);				    	
 						}
+					    location.reload();
+					},
+					error : function(xhr, status, error) {
+						alert("error:" + error);
+					},
+					complete : function(data) {
+
+					}
+
+				});//--ajax 
+
+			});
+		 // 반응 버튼 (토글링) 
+		   $(document).on("click","#reactToggle",function(){
+			   var thrKey = $(this).parent().parent().children("#thrKey").text();
+			   var resId = $(this).parent().parent().children("#regId").text();
+			   var emoji = $(this).children("#emojiKey").text();
+			   console.log("pin ajax start");
+			    $.ajax({
+					type : "POST",
+					url : "${hContext}/reaction/doToggle.do",
+					dataType : "html",
+					data : {
+						  "thrKey" : thrKey,
+						  "resId" : resId, 
+					      "regId" : "${sessionScope.usersVO.user_serial}",
+					      "emoji" : emoji				      
+					},
+					success : function(data) { //성공
+						console.log("data="+data);
+						var jsonObj = JSON.parse(data);
+					    console.log("regId="+jsonObj.regId);
+					    console.log("msgContents="+jsonObj.msgContents);
+					    	
+					    if(null !=jsonObj){
+					    	console.log("data="+data);
+					    	alert(jsonObj.msgContents);			    	
+						}
+					   
 					    location.reload();
 					},
 					error : function(xhr, status, error) {

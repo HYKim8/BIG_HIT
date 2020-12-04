@@ -37,10 +37,10 @@
 <select id="doSelectList" parameterType="ReactionVO" resultType="ReactionVO">
 	SELECT          
 	    emoji,      
-	    res_id,     
-	    thr_key,    
-	    reg_id,     
-	    reg_dt      
+	    res_id as resId,     
+	    thr_key as thrKey,    
+	    reg_id as regId,     
+	    reg_dt as regDt     
 	FROM            
 	    reaction    
 	WHERE           

@@ -26,6 +26,8 @@ import com.bighit.on.channelusers.ChannelUsersDao;
 import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.file.FileService;
 import com.bighit.on.file.FileVO;
+import com.bighit.on.reaction.ReactionService;
+import com.bighit.on.reaction.ReactionVO;
 import com.bighit.on.reminder.ReminderService;
 import com.bighit.on.reminder.ReminderVO;
 import com.bighit.on.thread.ThreadService;
@@ -49,7 +51,7 @@ public class MainController {
 	@Autowired ReminderService reminderService;
 	@Autowired FileService fileService;
 	@Autowired ThreadService threadService; 
-	
+	@Autowired ReactionService reactionService;
 	@RequestMapping(value = "main/index.do", method = RequestMethod.GET)
 	public ModelAndView main_view(HttpServletRequest req) {
 		LOG.debug("-------------------------");
@@ -70,7 +72,12 @@ public class MainController {
 		ChannelVO nowCh = null;
 		List<UsersVO> uslist = null;
 		List<ThreadVO> pinThrList = null;
-		
+		String wsLink = usersVO.getWs_link();
+		HashMap<String,UsersVO> userHash = null;
+		//첫번째 키 - 쓰레드키 
+		//두번째 키 - emoji
+		//값 -> 메시지(반응 갯수,간단 메시지 (a님,b님 외 n명 )) 
+		HashMap<String, HashMap<Integer,Message>> reactionHash = new HashMap<String, HashMap<Integer,Message>>();
 		//채널 검색이 들어갔을 경우
 		if(req.getParameter("searchWord")!=null) {
 			chSearch = new Search();
@@ -92,23 +99,57 @@ public class MainController {
 		      LOG.debug(threadList.toString());
 		    uslist = this.usersService.doSelectList(nowCh);
 		    pinThrList = this.threadService.doSelectListIsPinned(nowCh);
+		    ReactionVO react = new ReactionVO();
+		    
+		    //채널 유저정보들 처리 파트
+		    
+		    WorkSpaceVO workSpaceVO = new WorkSpaceVO();
+			workSpaceVO.setWsLink(wsLink);
+			List<UsersVO> userList = usersService.doSelectList(workSpaceVO);
+			userHash = new HashMap<String,UsersVO>();
+			for (UsersVO vo : userList) {
+				if (null == vo.getThumb()) 
+					vo.setThumb("/resources/img/default.jpg");			
+				userHash.put(vo.getUser_serial(), vo);
+				LOG.debug(vo.toString());
+			}
+		    
+		  //반응 처리 파트, 
+		    List<String> thrKeyList = threadService.doSelectList(nowCh);
+		    for(String key: thrKeyList) {
+		    	react.setThrKey(key);
+		    	List<ReactionVO> reactList = reactionService.doSelectList(react);
+		    	if(reactList.size()!=0) reactionHash.put(key, new HashMap<Integer, Message>());
+		    	for(ReactionVO reactEl : reactList) {
+		    		int emoji =  reactEl.getEmoji();
+		    		Message msg;
+		    		//반응 최초 입력
+		    		if(! reactionHash.get(key).containsKey(emoji))
+		    		{
+		    			msg = new Message();
+		    			//regId에 갯수를 넣을것임.
+		    			msg.setRegId("1");
+		    			msg.setMsgContents(userHash.get(reactEl.getRegId()).getName()+"님");		    			
+		    		}
+		    		else 
+		    		{
+		    			msg = reactionHash.get(key).get(emoji);
+		    			msg.setRegId((Integer.parseInt(msg.getRegId())+1)+"");
+		    			msg.setMsgContents(msg.getMsgContents()+","+userHash.get(reactEl.getRegId()).getName()+"님");
+		    		}
+		    		reactionHash.get(key).put(emoji,msg);
+		    	}
+		    }
+		    
 		}
 		
 		
 		search.setSearchWord(usersVO.getUser_serial());
-		String wsLink = usersVO.getWs_link();
+		wsLink = usersVO.getWs_link();
 		reminderVO.setWsLink(wsLink);
 		
 		LOG.debug("users' Thumbnail into Session(User_serialthumb)");
-		WorkSpaceVO workSpaceVO = new WorkSpaceVO();
-		workSpaceVO.setWsLink(wsLink);
-		List<UsersVO> userList = usersService.doSelectList(workSpaceVO);
-		HashMap<String,UsersVO> userHash = new HashMap<String,UsersVO>();
-		for (UsersVO vo : userList) {
-			if (null == vo.getThumb()) 
-				vo.setThumb("/resources/img/default.jpg");			
-			userHash.put(vo.getUser_serial(), vo);
-		}
+		
 		
 		LOG.debug("chList");
 		search.setSearchDiv("10");
@@ -126,6 +167,7 @@ public class MainController {
 			String chName = names[0].equals(usersVO.getName())? names[1] : names[0];
 			vo.setChName(chName);
 		}
+		
 		
 		
 		LOG.debug("ReminderList");
@@ -148,6 +190,7 @@ public class MainController {
 			mav.addObject("nowCh",nowCh);
 			mav.addObject("uslist",userHash);
 			mav.addObject("pinList",pinThrList);
+			mav.addObject("reactHash",reactionHash);
 //			ChannelVO nowCh = null;
 //			List<UsersVO> uslist = null;
 		}

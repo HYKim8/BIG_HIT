@@ -29,4 +29,6 @@ public interface ThreadService {
    List<ThreadVO> doSelectListIsPinned(ChannelVO channelVO);
    
    public int doPin(ThreadVO threadVO);
+   
+   public List<String> doSelectList(ChannelVO channelVO);
 }

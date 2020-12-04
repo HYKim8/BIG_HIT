@@ -16,12 +16,13 @@ public class ReactionService {
 	ReactionDaoImpl reactionDaoImpl;
 	/**
 	 * 중복 있을시 삭제, 없으면 삽입 
+	 * flag -> 0: 함수 자체 오류 1:입력 성공 2:삭제 성공
 	 * @param reactionVO
 	 * @return
 	 */
 	public int toggling(ReactionVO reactionVO) {
 		return reactionDaoImpl.doCheck(reactionVO) ?
-				reactionDaoImpl.doDelete(reactionVO) : reactionDaoImpl.doInsert(reactionVO);
+				reactionDaoImpl.doDelete(reactionVO) + 1 : reactionDaoImpl.doInsert(reactionVO);
 	}
 	public List<ReactionVO> doSelectList(ReactionVO inVO){
 		return reactionDaoImpl.doSelectList(inVO);		

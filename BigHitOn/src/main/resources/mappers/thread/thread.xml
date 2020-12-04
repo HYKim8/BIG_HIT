@@ -73,6 +73,13 @@
 	WHERE
 	    thr_key = #{thrKey}
    </update>
+   <select id ="doSelectListInCh" parameterType="ChannelVO" resultType="string">
+    SELECT
+	    thr_key
+	FROM
+	    thread
+	WHERE ch_link = #{chLink}	
+   </select>
    <select id ="doSelectList" parameterType="Search" resultType ="com.bighit.on.thread.ThreadVO">
    SELECT 
     b.thr_key AS thrKey,

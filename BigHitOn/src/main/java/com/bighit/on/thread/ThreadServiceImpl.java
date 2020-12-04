@@ -87,4 +87,9 @@ public class ThreadServiceImpl implements ThreadService {
 		return thrDao.doPin(threadVO);
 	}
 
+	@Override
+	public List<String> doSelectList(ChannelVO channelVO) {
+		return thrDao.doSelectList(channelVO);
+	}
+
 }

@@ -24,7 +24,15 @@ public class ReactionController {
 	@Autowired
 	ReactionService reactionService;
 	
-	
+	@RequestMapping(value="reaction/doToggle.do",method=RequestMethod.POST)
+	@ResponseBody
+	public Message doToggle(ReactionVO reaction,HttpServletRequest request) {
+		Message res = new Message();
+		int flag = reactionService.toggling(reaction);
+		res.setRegId(flag+"");
+		res.setMsgContents(flag == 0 ? "에러" : ( flag == 1 ? "좋아요!" : "좋아요 삭제!" ) );
+		return res;
+	}
 	@RequestMapping(value="reaction/doInsert.do",method=RequestMethod.POST)
 	@ResponseBody
 	public Message doInsert(String resId, String thrKey, String regId, HttpServletRequest request) throws Exception{

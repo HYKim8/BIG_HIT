@@ -27,6 +27,15 @@ public class ThreadDao {
     
    public ThreadDao() {      
    }
+   //채널에 있는 모든 쓰레드키만 가져옴 
+   public List<String> doSelectList(ChannelVO channelVO){
+	   String statement = NAMESPACE + ".doSelectListInCh";
+	   
+	   List<String> strList = sqlSessionTemplate.selectList(statement,channelVO);
+	   for(String str: strList) LOG.debug("=========="+str+"==========");
+	   
+	   return strList;
+   }
    public List<ThreadVO> doSelectList(Search search){
       LOG.debug("=======================");
       LOG.debug("====doSelectList====");
@@ -224,7 +233,7 @@ public class ThreadDao {
          
         
      }
-      
+     
 }
       
     
