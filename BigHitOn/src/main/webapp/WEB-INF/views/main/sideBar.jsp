@@ -160,8 +160,8 @@
 			    },
 			    success:function(data){ //성공
 				    //console.log("success");
-				    location.reload();	 
-				    //window.location.href="${hContext}/main/index.do?searchWord="+"${sessionScope.channelVO.chLink}";      
+				    //location.reload();	 
+				    window.location.href="${hContext}/main/index.do?searchWord="+"${sessionScope.channelVO.chLink}";      
 			    },
 			    error:function(xhr,status,error){
 			     alert("error:"+error);
