@@ -160,7 +160,8 @@
 			    },
 			    success:function(data){ //성공
 				    console.log("success");
-				    location.reload();	       
+				    //location.reload();	 
+				    window.location.href="${hContext}/main/index.do";      
 			    },
 			    error:function(xhr,status,error){
 			     alert("error:"+error);
