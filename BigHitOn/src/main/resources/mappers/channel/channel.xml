@@ -78,6 +78,23 @@
 		WHERE ch_link = #{chLink}  
 	</select>
 	
+	<!-- 워크스페이스 전환시 일반채널로 조회 -->
+	<!-- com.bighit.on.workspace.doDelete -->
+	<select id="doSelectOne2" parameterType="String" resultType="ChannelVO">
+		SELECT             
+		    ch_link AS chLink,       
+		    ws_link AS wsLink,       
+		    ch_name AS chName,       
+		    topic,         
+		    ch_description AS chDescription,
+		    ch_access AS chAccess,     
+		    reg_id AS regId,        
+		    reg_dt AS regDt        
+		FROM channels      
+		WHERE ws_link = #{wsLink}
+		AND   ch_name = '일반'
+	</select>
+	
 	<!-- 삭제 -->
 	<!-- com.bighit.on.workspace.doDelete -->
 	<delete id="doDelete" parameterType="ChannelVO">

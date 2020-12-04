@@ -111,6 +111,30 @@ public class ChannelDaoImpl {
 	}
 	
 	/**
+	 * 채널'일반' 단건조회
+	 * @param chLink
+	 * @return
+	 */
+	public ChannelVO doSelectOne2(String wsLink) {
+//		LOG.debug("=====================");
+//		LOG.debug("=doSelectOne=");
+//		LOG.debug("=====================");	
+//		
+//		//단건조회 : namespace+id = com.bighit.on.channel.doSelectOne		
+//		String statement = NAMESPACE +".doSelectOne2";
+//		LOG.debug("=statement="+statement);
+//		LOG.debug("=param=="+wsLink);
+//		
+//		Object args[] = {wsLink};
+//		ChannelVO outVO = sqlSessionTemplate.selectOne( NAMESPACE +".doSelectOne2",wsLink);
+//		LOG.debug("=doSelectOne outVO="+outVO);
+//		
+		return sqlSessionTemplate.selectOne( NAMESPACE +".doSelectOne2",wsLink);
+		
+	}
+	
+	
+	/**
 	 * 채널 리스트
 	 * @param channelVO
 	 * @return

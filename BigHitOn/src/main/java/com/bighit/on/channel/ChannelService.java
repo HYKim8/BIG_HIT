@@ -22,5 +22,6 @@ public interface ChannelService {
 	
 	public int notifiUpdate(ChannelUsersVO inVO);
 	
+	public ChannelVO doSelectOne2(String wsLink);
 	
 }

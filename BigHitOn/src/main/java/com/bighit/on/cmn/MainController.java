@@ -165,8 +165,11 @@ public class MainController {
 		String workLink= toWsLink;
 		String email = usersVO.getEmail();
 		usersVO=usersService.doSelectOne(workLink, email);
+		ChannelVO channelVO = channelService.doSelectOne2(workLink);
 		session.setAttribute("usersVO", usersVO);
+		session.setAttribute("channelVO", channelVO);
 		LOG.debug("==userVO=="+usersVO);
+		LOG.debug("==channelVO123123=="+channelVO);
 		return "main/main2";
 	}
 	
