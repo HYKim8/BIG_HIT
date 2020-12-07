@@ -169,7 +169,7 @@ public class MainController {
 		session.setAttribute("usersVO", usersVO);
 		session.setAttribute("channelVO", channelVO);
 		LOG.debug("==userVO=="+usersVO);
-		LOG.debug("==channelVO123123=="+channelVO);
+		LOG.debug("==channelVO123123=="+session.getAttribute("channelVO"));
 		return "main/main2";
 	}
 	
