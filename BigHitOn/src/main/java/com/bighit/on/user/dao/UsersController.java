@@ -54,10 +54,20 @@ public class UsersController {
 		LOG.debug("===========doLogin==========");
 		LOG.debug("usersVO:"+usersVO);
 		
-		
 		return flag;
 	      
 	}
+	
+	@RequestMapping(value="users/pwAvailCheck.do", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean pwAvailCheck(String password) {
+		boolean pw = this.usersService.pwAvailCheck(password);
+		LOG.debug("=======pwAvailCheck===========");
+		LOG.debug("password: "+password);
+		
+		return pw;
+	}
+
 		
 	@RequestMapping(value="users/loginView.do", method = RequestMethod.GET)
 	public String loginView(UsersVO user,Model model) {
@@ -254,6 +264,7 @@ public class UsersController {
 	      LOG.debug("=thread_view=");
 	      
 	      List<WorkSpaceVO> list = workSpaceService.doSelectList(user);
+	      LOG.debug("workspace list:"+list);
 	      
 	      for(WorkSpaceVO vo:list) {
 	      LOG.debug(vo.toString());

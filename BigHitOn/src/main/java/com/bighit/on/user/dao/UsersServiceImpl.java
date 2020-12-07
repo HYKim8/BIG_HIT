@@ -124,6 +124,32 @@ public class UsersServiceImpl implements UsersService {
 		return usersDaoImpl.pwCheck(usersVO);
 		
 	}
+	
+	@Override
+	public boolean pwAvailCheck(String password) {
+		boolean alphaCh = false;
+		boolean numCh = false;
+		boolean specialCh = false;
+		
+		for(int i=0; i<password.length();i++) {
+			char pw = password.charAt(i);
+			if( (pw>=65 && pw<=90) || (pw>=97 && pw<=122) ) {
+				alphaCh = true;
+			}else if( pw>=48 && pw<=57) {
+				numCh = true;
+			}else if( (pw>=33 && pw<=37) || (pw>=58 && pw<=64)) {
+				specialCh = true;
+			}else {
+				return false;
+			}
+		}
+		LOG.debug("alphaCh: "+alphaCh);
+		LOG.debug("numCh: "+numCh);
+		LOG.debug("specialCh: "+specialCh);
+		return alphaCh && numCh &&  specialCh;
+		
+		
+	}
 
 	@Override
 	public UsersVO doSelectOne(String ws_link, String email) {
