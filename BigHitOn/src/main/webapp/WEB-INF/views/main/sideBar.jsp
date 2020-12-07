@@ -159,6 +159,7 @@
 				    "toWsLink" : tmp
 			    },
 			    success:function(data){ //성공
+			    	alert(" yeah:");
 				    //console.log("success");
 				    //location.reload();	 
 				    window.location.href="${hContext}/main/index.do?searchWord="+"${sessionScope.channelVO.chLink}";      
@@ -167,7 +168,7 @@
 			     alert("error:"+error);
 			    },
 			    complete:function(data){
-			    
+			    	//window.location.href="${hContext}/main/index.do?searchWord="+"${sessionScope.channelVO.chLink}"; 
 			    }   
 			  
 			});//--ajax 
