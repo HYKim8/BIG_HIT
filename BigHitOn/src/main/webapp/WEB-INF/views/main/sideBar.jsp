@@ -159,10 +159,9 @@
 				    "toWsLink" : tmp
 			    },
 			    success:function(data){ //성공
-			    	alert(" yeah:");
 				    //console.log("success");
 				    //location.reload();	 
-				    window.location.href="${hContext}/main/index.do?searchWord="+"${sessionScope.channelVO.chLink}";      
+				    window.location.href="${hContext}/main/index.do?searchWord="+data;      
 			    },
 			    error:function(xhr,status,error){
 			     alert("error:"+error);

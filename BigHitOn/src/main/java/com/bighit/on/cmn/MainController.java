@@ -170,7 +170,7 @@ public class MainController {
 		session.setAttribute("channelVO", channelVO);
 		LOG.debug("==userVO=="+usersVO);
 		LOG.debug("==channelVO123123=="+session.getAttribute("channelVO"));
-		return "main/main2";
+		return channelVO.getChLink();
 	}
 	
 	@RequestMapping(value = "main/addchannel.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
