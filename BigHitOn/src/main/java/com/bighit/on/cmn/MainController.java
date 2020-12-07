@@ -165,13 +165,12 @@ public class MainController {
 		String workLink= toWsLink;
 		String email = usersVO.getEmail();
 		usersVO=usersService.doSelectOne(workLink, email);
-		//일반 채널 불러옴 
 		ChannelVO channelVO = channelService.doSelectOne2(workLink);
 		session.setAttribute("usersVO", usersVO);
 		session.setAttribute("channelVO", channelVO);
 		LOG.debug("==userVO=="+usersVO);
 		LOG.debug("==channelVO123123=="+channelVO);
-		return channelVO.getChLink();
+		return "main/main2";
 	}
 	
 	@RequestMapping(value = "main/addchannel.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
