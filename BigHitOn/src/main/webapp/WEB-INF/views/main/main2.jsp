@@ -184,7 +184,22 @@
 		                    <div class="bg-white py-2 collapse-inner rounded">
 		                    
 		                    	<c:forEach var="pl" items="${pinList}">
-		   						 	<a class="collapse-item"><c:out value="${pl.thrKey}" /></a>
+		   						 	<a class="collapse-item">
+		   						 		<div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-s font-weight-bold text-gray">			                                            
+			                                                <c:out value="${uslist[pl.regId].name}"/></div>
+			                                            <div class="h5 mb-0 text-gray-800"><c:out value="${pl.contents}"/></div>
+			                                            <div class="text-xs">			                                            
+			                                                <c:out value="${pl.regDt}"/></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+		   						 		
+		   						 	</a>
 								</c:forEach>
 		                       	         	
 		                    </div>
