@@ -49,7 +49,21 @@ public class ThreadDao {
       for(ThreadVO vo: result) LOG.debug(vo.toString());
       return result;
    }
-      
+   
+   public int updateContents(ThreadVO threadVO) {
+	   LOG.debug("=======================");
+	   LOG.debug("====updateContents====");
+	   LOG.debug("=======================");
+	   
+	   String statement = NAMESPACE+".updateContents";
+	   LOG.debug("====statement===="+statement);
+	   LOG.debug("====threadVO===="+threadVO);
+	   int flag = sqlSessionTemplate.update(statement, threadVO);
+	   LOG.debug("-updateContents=" + flag);
+	   
+	   return flag;
+   }
+   
    public int doInsertRep(ThreadVO threadVO) {
       LOG.debug("=======================");
       LOG.debug("====doInsertRep====");

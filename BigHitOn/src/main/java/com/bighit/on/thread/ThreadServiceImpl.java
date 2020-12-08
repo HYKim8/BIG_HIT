@@ -92,4 +92,10 @@ public class ThreadServiceImpl implements ThreadService {
 		return thrDao.doSelectList(channelVO);
 	}
 
+	@Override
+	public int updateContents(ThreadVO threadVO) {
+		
+		return thrDao.updateContents(threadVO);
+	}
+
 }

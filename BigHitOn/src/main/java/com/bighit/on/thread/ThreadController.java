@@ -205,6 +205,37 @@ public class ThreadController {
         return json; 
    }
    
+   @RequestMapping(value="thread/updateContents.do", method = RequestMethod.POST)
+   @ResponseBody
+   public String updateContents(ThreadVO threadVO) {
+	   LOG.debug("===================================");
+	   LOG.debug("=updateContents=");
+	   LOG.debug("=param="+threadVO);
+	   
+	   int flag = threadService.updateContents(threadVO);
+	   LOG.debug("==================");
+       LOG.debug("=flag="+flag);
+       LOG.debug("==================");
+       
+       Message  message=new Message();
+       message.setThrKey(flag+"");
+       
+       if(flag == 1) {
+           message.setMsgContents(threadVO.getThrKey()+"수정 성공");
+        }else {
+           message.setMsgContents(threadVO.getThrKey()+"수정 실패");
+        }
+        Gson gson=new Gson();
+        String json = gson.toJson(message);
+        LOG.debug("==================");
+        LOG.debug("=json="+json);
+        LOG.debug("==================");         
+           
+        return json;
+       
+       
+   }
+   
    @RequestMapping(value="thread/doUpdate.do", method = RequestMethod.POST)
    @ResponseBody
    public String doUpdate(ThreadVO threadVO) {

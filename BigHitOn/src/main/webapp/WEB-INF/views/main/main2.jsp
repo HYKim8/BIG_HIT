@@ -86,7 +86,11 @@
 					 		<button id="likeBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
 					 		<button id="pinBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
 					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
-					 		
+					 		<c:if test="${sessionScope.usersVO.user_serial == list.regId}">
+					 		<div id="editBtn">
+					 		<button id="updateBtn" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="수정하기"><i class="fa fa-list-alt"></i></div></button>
+					 		</div>
+					 		</c:if>
 					</div>	
 				 	<p>
 				 		<c:out value="${list.contents}"/>
@@ -382,7 +386,8 @@
 							html += '<button id=\"pinBtns\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"고정하기\"><i class=\"fa fa-paperclip\"></i></div></button>';
 							html += '<button id=\"childList\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"댓글보기\"><i class=\"fa fa-list-alt\"></i></div></button>';	
 							html += "</div>"            
-                            html += "<p>" + list[i].contents + "</p>" 
+                            html += "<p id =\"updateForm\">" + list[i].contents + "</p>" 
+                            
                             if(list[i].regDt != list[i].modDt )
                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list[i].modDt+ "\">(편집됨)</div>";
                             if(list[i].childCnt != 0) 
@@ -803,6 +808,21 @@
 				});//--ajax 
 
 			});
+
+			//스레드 글 수정 부분
+		   $(function(){
+			$(document).on("click","#updateBtn",function(){ 
+					//var thrKey = $(this).parent().parent().children("#thrKey").text();
+					var updateContents = $("#updateForm").text();
+					$("#updateForm").html("<input type='text' value='"+updateContents+"' id='editDo'>");
+					$("#editBtn").html("<button type='button' id='endUpdate'>수정</button>");
+				});
+			$(document).on("click","#endUpdate",function(){
+					$("#updateForm").text($("#editDo").val());
+					$("#editBtn").html("<button type='button' class='btn btn-default id='updateBtn'><div data-toggle='tooltip' data-placement='top' title='수정하기'><i class='fa fa-list-alt'></i></div></button>");
+				});				
+		   });
+		   
 		 // 반응 버튼 (토글링) 
 		   $(document).on("click","#reactToggle",function(){
 			   var thrKey = $(this).parent().parent().children("#thrKey").text();

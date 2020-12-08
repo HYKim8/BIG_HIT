@@ -40,6 +40,10 @@
       UPDATE THREAD SET child_cnt = child_cnt+1 WHERE thr_key = #{thrKey}
    </update>
    
+   <update id="updateContents">
+   	  UPDATE THREAD SET contents = #{contents} WHERE thr_key = #{thrKey}
+   </update>
+   
    <select id="doSelectListIsPinned" parameterType="ChannelVO" resultType="com.bighit.on.thread.ThreadVO">
    		SELECT
 		    thr_key as thrKey,

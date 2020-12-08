@@ -31,4 +31,6 @@ public interface ThreadService {
    public int doPin(ThreadVO threadVO);
    
    public List<String> doSelectList(ChannelVO channelVO);
+   
+   int updateContents(ThreadVO threadVO);
 }
