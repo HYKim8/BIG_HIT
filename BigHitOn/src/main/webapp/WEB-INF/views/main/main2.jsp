@@ -81,6 +81,7 @@
 				 	 <div id="regId" style='display:none'>${list.regId}</div>
 					<div id="thrKey" style='display:none'>${list.thrKey}</div>
 					<div id="isPinState" style='display:none'>${list.isPin}</div>
+					<div id="updateContents" style='display:none'>${list.contents}</div>
 					<div id ="subBtns">
 					 		<button id="saveThread" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="저장하기"><i class="fa fa-check-square"></i></div></button>
 					 		<button id="likeBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
@@ -93,7 +94,8 @@
 					 		</div>
 					 		</c:if>
 					</div>	
-				 	<p>
+				 	<p  id ="updateForm">
+				 		<%-- <c:set var = "updateContents" value="${list.contents}"/> --%>
 				 		<c:out value="${list.contents}"/>
 				 	</p>	 
 					 				 		
@@ -429,7 +431,7 @@
 							html += '<button id=\"pinBtns\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"고정하기\"><i class=\"fa fa-paperclip\"></i></div></button>';
 							html += '<button id=\"childList\" class=\"btn btn-default\" type=\"button\" ><div data-toggle=\"tooltip\" data-placement=\"top\" title=\"댓글보기\"><i class=\"fa fa-list-alt\"></i></div></button>';	
 							html += "</div>"            
-                            html += "<p id =\"updateForm\">" + list[i].contents + "</p>" 
+                            html += "<p>" + list[i].contents + "</p>" 
                             
                             if(list[i].regDt != list[i].modDt )
                                 html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list[i].modDt+ "\">(편집됨)</div>";
@@ -877,10 +879,11 @@
 		   $(function(){
 			$(document).on("click","#updateBtn",function(){ 
 					//var thrKey = $(this).parent().parent().children("#thrKey").text();
-					var updateContents = $("#updateForm").text();
-					$("#updateForm").html("<input type='text' value='"+updateContents+"' id='editDo'>");
+					var updateContent = $(this).parent().parent().parent().children("#updateContents").text();
+					console.log(updateContent);
+					$("#updateForm").html("<input type='text' value='"+updateContent+"' id='editDo'>");
 					$("#editBtn").html("<button type='button' id='endUpdate'>수정</button>");
-				});
+				})
 			$(document).on("click","#endUpdate",function(){
 					$("#updateForm").text($("#editDo").val());
 					$("#editBtn").html("<button type='button' class='btn btn-default id='updateBtn'><div data-toggle='tooltip' data-placement='top' title='수정하기'><i class='fa fa-list-alt'></i></div></button>");
