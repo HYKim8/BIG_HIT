@@ -89,7 +89,7 @@
 					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
 					 		<c:if test="${sessionScope.usersVO.user_serial == list.regId}">
 					 		<div id="editBtn">
-					 		<button id="updateBtn" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="수정하기"><i class="fa fa-list-alt"></i></div></button>
+					 		<button id="updateBtn" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="수정하기"><i class="fa fa-undo"></i></div></button>
 					 		</div>
 					 		</c:if>
 					</div>	
@@ -216,6 +216,48 @@
 			
 				
             </div>
+            <!-- End of Main Content -->
+
+
+			
+
+
+
+
+
+
+
+
+
+            <!-- Footer -->
+            <!-- 입력 폼 -->
+            <form method="post" action="${hContext}/thread/doInsert.do">
+			    <div class="sticky-footer bg-white">                
+			                <div style="padding-left: 20px; padding-right: 20px;"class="row">
+			                	<div class="col-md-12"><textarea class="form-control" name="contents" id="contents" placeholder="내용을 입력하세요"
+			                    maxlength="400"></textarea>
+			                    </div>
+			                    <div data-toggle="tooltip" data-placement="bottom" title="쓰레드 등록">
+			                    	<button id="insertBtn" class="btn btn-default btn-sm" type="button" >
+			                    		<i class="fa fa-edit"></i>
+			                    	</button>  
+			                    </div>           
+			                    <div data-toggle="tooltip" data-placement="bottom" title="파일 등록">
+			                    	<button data-toggle="modal" data-target="#fileUploadModal1" id="fileUploadModal" class="btn btn-default btn-sm" type="button" > 
+			                    		<i class="fa fa-folder-open"></i>
+			                    	</button> 
+			                    </div> 
+			                </div>
+			    </div>   
+			  </form>
+            <!-- End of Footer -->
+			
+			
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
