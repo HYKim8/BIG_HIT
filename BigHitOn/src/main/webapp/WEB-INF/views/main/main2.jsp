@@ -85,6 +85,7 @@
 					 		<button id="saveThread" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="저장하기"><i class="fa fa-check-square"></i></div></button>
 					 		<button id="likeBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
 					 		<button id="pinBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
+					 		<button data-toggle="modal" id="reminderInsertBtn" class="btn btn-default" type="button" data-target="#reminderInsertBtn1" ><div data-toggle="tooltip" data-placement="top" title="리마인더"><i class="fa fa-bell"></i></div></button>
 					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
 					 		<c:if test="${sessionScope.usersVO.user_serial == list.regId}">
 					 		<div id="editBtn">
