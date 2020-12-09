@@ -98,4 +98,9 @@ public class ThreadServiceImpl implements ThreadService {
 		return thrDao.updateContents(threadVO);
 	}
 
+	@Override
+	public String doGetNowKey() {
+		return thrDao.doGetNowKey();
+	}
+
 }

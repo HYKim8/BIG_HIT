@@ -33,4 +33,6 @@ public interface ThreadService {
    public List<String> doSelectList(ChannelVO channelVO);
    
    int updateContents(ThreadVO threadVO);
+   
+   public String doGetNowKey();
 }

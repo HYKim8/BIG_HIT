@@ -532,7 +532,7 @@
                console.log("regId="+jsonObj.regId);
                 console.log("contents="+jsonObj.contents);
                 $("#contents").val('');
-                location.reload();
+                
                 },
                    error:function(xhr,status,error){
                     alert("error:"+error);
@@ -542,7 +542,28 @@
                 }  
                      
             });
-         
+         	//ajax
+			if($("input[name=form_data_file_upload_input]")[0].files[0] != null)
+			{
+				 $.ajax({
+			            type:"POST",
+			            url:"${hContext}/thread/doGetNowKey.do",
+			            dataType:"html",
+			            data:{
+			               },
+			               success:function(data){
+								console.log(data);
+								uploadFileMain(data);
+			               },
+			               error:function(xhr,status,error){
+			                    alert("error:"+error);
+			               },
+			               complete:function(data){
+			                   
+			               }		                     
+			      });
+			}
+			location.reload();
          });
 		$(function () {
 	    $('[data-toggle="popover"]').popover()

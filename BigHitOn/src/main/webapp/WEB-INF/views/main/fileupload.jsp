@@ -41,18 +41,19 @@
 //-----------파일 업로드--------------
 	$("#uploadFileMain2").on("click", function(){
 			console.log("uploadFileMain clicked");
-			uploadFileMain();
+			//uploadFileMain();
+			console.log($("input[name=form_data_file_upload_input]")[0].files[0]);
 		});
 	
-	function uploadFileMain() {
+	function uploadFileMain(paramThrKey) {
 		var formData = new FormData($("#form_data_file_upload")[0]);
 		formData.append("file", $("input[name=form_data_file_upload_input]")[0].files[0]);
 		var fileType = document.getElementById("form_data_file_upload_input").value.split(".");
 		var last_element = fileType[fileType.length - 1];
 
 		//----------추가해야할 값--------------
-		var thrKey = $("#tmpThrKey2").val();
-		var chLink = $("#tmpChLink2").val();
+		var thrKey = paramThrKey;
+		var chLink = $("#searchWord").val();
 		//----------추가해야할 값--------------
 		
 		formData.append("fileType", last_element);

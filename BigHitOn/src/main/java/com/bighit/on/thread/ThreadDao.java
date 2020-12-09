@@ -247,7 +247,10 @@ public class ThreadDao {
          
         
      }
-     
+     public String doGetNowKey() {
+    	 String statement = NAMESPACE+".doGetNowThrKey";
+    	 return this.sqlSessionTemplate.selectOne(statement);
+     }
 }
       
     

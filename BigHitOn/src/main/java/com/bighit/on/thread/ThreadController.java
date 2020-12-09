@@ -307,6 +307,10 @@ public class ThreadController {
            
        return message;
    }
-   
+   @RequestMapping(value="thread/doGetNowKey.do", method = RequestMethod.POST)
+   @ResponseBody
+   public String doGetNowKey() {
+	   return threadService.doGetNowKey();     
+   }
    
 }
