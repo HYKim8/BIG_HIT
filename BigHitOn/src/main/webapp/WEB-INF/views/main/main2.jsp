@@ -28,7 +28,8 @@
     <link href="${hContext }/resources/assets/css/sb-admin-2.min.css" rel="stylesheet">
 	<style>
 		#threadList #thrbtns #subBtns { opacity:0; float:right}
-		#threadList #thrbtns:hover #subBtns { opacity:1}
+		#threadList #thrbtns:hover #subBtns { opacity:1}		
+		
 	</style>
 </head>
 
@@ -89,14 +90,16 @@
 					 		<button data-toggle="modal" id="reminderInsertBtn" class="btn btn-default" type="button" data-target="#reminderInsertBtn1" ><div data-toggle="tooltip" data-placement="top" title="리마인더"><i class="fa fa-bell"></i></div></button>
 					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
 					 		<c:if test="${sessionScope.usersVO.user_serial == list.regId}">
-					 		<div id="editBtn">
 					 		<button id="updateBtn" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="수정하기"><i class="fa fa-undo"></i></div></button>
-					 		</div>
 					 		</c:if>
 					</div>	
 				 	<p  id ="updateForm">
 				 		<%-- <c:set var = "updateContents" value="${list.contents}"/> --%>
 				 		<c:out value="${list.contents}"/>
+				 		<div id="editEnd">
+				 		</div>
+				 		<div id="exitUpdate">
+				 		</div>
 				 	</p>	 
 					 				 		
 				 					 					 		
@@ -461,7 +464,6 @@
 		});
 	$("#insertRepBtn").on("click", function(){
         console.log("insertRepBtn");
-
         var contentsRep = $("#contentsRep").val();
         console.log("contentsRep:"+contentsRep);
        
@@ -472,8 +474,6 @@
            alert("내용을 입력하세요");
            return;
            }
-
-
         
         $.ajax({
            type:"POST",
@@ -488,7 +488,6 @@
                  "regDt" : ""
               },
               success:function(data){
-
              	 var jsonObj = JSON.parse(data);
               	console.log("regId="+jsonObj.regId);
                console.log("contents="+jsonObj.contentsRep);
@@ -503,15 +502,12 @@
                }  
                     
            });
-
 		
         });
 	 $("#insertBtn").on("click", function(){
          console.log("insertBtn");
-
          var contents = $("#contents").val();
          console.log("contents:"+contents);
-
          if(null == contents || contents.trim().length==0){
             $("#contents").focus();
             alert("내용을 입력하세요");
@@ -529,7 +525,6 @@
                   "regId" : "${sessionScope.usersVO.user_serial}"
                },
                success:function(data){
-
                var jsonObj = JSON.parse(data);
                console.log("regId="+jsonObj.regId);
                 console.log("contents="+jsonObj.contents);
@@ -575,7 +570,6 @@
 		$("body").click(function(event) {
 			console.log(event.target);
 		}) 
-
 		
 		
 		// ----------Add Channel----------
@@ -583,7 +577,6 @@
 			console.log("channelCreateBtn Clicked");
 			doChannelCreate();
 		})
-
 		function doChannelCreate() {
 			$.ajax({
 				type : "POST",
@@ -603,7 +596,6 @@
 					html += "<a class='collapse-item'>#";
 					html += parseData.chName;
 					html += "</a>";
-
 					$("#addChannelin").before(html);
 				},
 				error : function() {
@@ -612,7 +604,6 @@
 			});
 		}
 		// ----------Add Channel----------
-
 		//팀원추가시 이메일 보내기 이벤트
 		$("#send_btn").on("click", function() {
 			var email = $('#email').val();
@@ -621,7 +612,6 @@
 				alert("추가할 팀원의 이메일을 입력해주세요.");
 				return;
 			}
-
 			$.ajax({
 				type : "POST",
 				url : "${hContext}/workspace/sendEmail.do",
@@ -652,11 +642,8 @@
 					alert("error:" + error);
 				},
 				complete : function(data) {
-
 				}
-
 			});//--ajax
-
 		});
 		 /* document.getElementById("profileOpenModal").onclick = function() {
 	           document.getElementById("modal").style.display="block";
@@ -665,7 +652,6 @@
 	       document.getElementById("modal_close_btn").onclick = function() {
 	           document.getElementById("modal").style.display="none";
 	       }   
-
 	       document.getElementById("modal_save_close_btn").onclick = function() {
 	           document.getElementById("modal").style.display="none";
 	       }   */
@@ -685,14 +671,11 @@
 	       $("#sideclosebtn").click(function(){
 	    	   halfOnOff(false);
 		   });
-
-
 	       $(document).on('click',"#thrbtns",function(){
 				var tmp = $(this).children("#thrKey").text();
 		       console.log(tmp)
 	    	   $("#tmpThrKey2").val(tmp);
 	   		   $("#tmpChLink2").val($("#searchWord").val());
-
 		       });
 	
 	       function selectCnt(){
@@ -710,7 +693,6 @@
 								alert("error:" + error);
 							},
 							complete : function(data) {
-
 							}
 			   });	
 		   }
@@ -750,7 +732,6 @@
 									"thrKey" : likeThrKey
 							   		},
 							   		success : function(data){
-
 								   			console.log("cnt성공");
 											console.log(data);		
 									   	
@@ -758,17 +739,14 @@
 											alert("error:" + error);
 										},
 										complete : function(data) {
-
 										}
 						   });	//안쪽 ajax				
 		 
 						    },error : function(xhr, status, error) {
 								alert("error:" + error);
 							},
-
 							
 							complete : function(data) {
-
 							}
 					    
 				   }); 
@@ -829,11 +807,8 @@
 						alert("error:" + error);
 					},
 					complete : function(data) {
-
 					}
-
 				});//--ajax
-
 			});
 			//쓰레드 핀 고정 
 		   $(document).on("click","#pinBtns",function(){
@@ -868,25 +843,50 @@
 						alert("error:" + error);
 					},
 					complete : function(data) {
-
 					}
-
 				});//--ajax 
-
 			});
-
 			//스레드 글 수정 부분
+		  
 		   $(function(){
 			$(document).on("click","#updateBtn",function(){ 
-					//var thrKey = $(this).parent().parent().children("#thrKey").text();
-					var updateContent = $(this).parent().parent().parent().children("#updateContents").text();
+					var updateThrKey = $(this).parent().parent().children("#thrKey").text();
+					var updateContent = $(this).parent().parent().children("#updateContents").text();
+					
 					console.log(updateContent);
-					$("#updateForm").html("<input type='text' value='"+updateContent+"' id='editDo'>");
-					$("#editBtn").html("<button type='button' id='endUpdate'>수정</button>");
+					$(this).parent().parent().children("#updateForm").html("<input type='text' value='"+updateContent+"' id='editDo'>");
+					$(this).parent().parent().children("#editEnd").html("<button type='button' id='endUpdate' class='btn btn-default'><div data-toggle='tooltip' data-placement='top' title='수정완료'><i class='fa fa-undo'></i></div></button>");
+					//$(this).parent().parent().children("#exitUpdate").html("<button type='button' id='exitBtns' class='btn btn-default'><div data-toggle='tooltip' data-placement='top' title='나가기'><i class='fa fa-undo'></i></div></button>");	
+									
 				})
 			$(document).on("click","#endUpdate",function(){
-					$("#updateForm").text($("#editDo").val());
-					$("#editBtn").html("<button type='button' class='btn btn-default id='updateBtn'><div data-toggle='tooltip' data-placement='top' title='수정하기'><i class='fa fa-list-alt'></i></div></button>");
+					//$("#subBtns").html("<button type='button' class='btn btn-default id='updateBtn'><div data-toggle='tooltip' data-placement='top' title='수정하기'><i class='fa fa-list-alt'></i></div></button>");
+					 $(this).parent().parent().children("#updateForm").text($("#editDo").val());
+					 var updateContent =  $(this).parent().parent().children("#updateForm").text();
+					 var updateThrKey = $(this).parent().parent().children("#thrKey").text();
+					
+					$.ajax({
+						type : "POST",
+						url : "${hContext}/thread/updateContents.do",
+						dataType : "html",
+						data : {
+								"thrKey" : updateThrKey,
+								"contents" : updateContent
+							   },
+							   success : function(data) { //성공
+									console.log("data="+data);
+									var jsonObj = JSON.parse(data);
+								    console.log("msgContents="+jsonObj.msgContents);
+								    location.reload();
+								},
+								error : function(xhr, status, error) {
+									alert("error:" + error);
+								},
+								complete : function(data) {
+
+								}	
+						});
+									
 				});				
 		   });
 		   
@@ -923,11 +923,8 @@
 						alert("error:" + error);
 					},
 					complete : function(data) {
-
 					}
-
 				});//--ajax 
-
 			});
 		  function makeChildList(thrKey){
 			  $.ajax({
@@ -939,7 +936,6 @@
   	            success:function(data){ //성공
   	                  //console.log("data="+data);
   	                     console.log(data);
-
   	                 var list2 = JSON.parse(data);
   	                 $("#selectChildList").empty();
   	                 console.log(list2.childCnt);
@@ -984,7 +980,6 @@
                            if(list2.regDt != list2.modDt )
                                html+= "<div data-toggle=\"tooltip\" data-placement=\"right\" title=\""+ list2.modDt+ "\">(편집됨)</div>";
   	                   console.log(html);
-
   	                   $("#selectOneList").html(html);     
   	              },
   	            error:function(xhr,status,error){
