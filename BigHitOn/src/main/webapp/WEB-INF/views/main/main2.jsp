@@ -119,8 +119,26 @@
 					 		</c:forEach>
 				 		</div>	 
 				 	</c:if>
-				 	<c:if test="${list.childCnt != 0 }">
-				 		<button id="childList" class="btn btn-default" type="button" ><c:out value="${list.childCnt}개의 댓글"/></button></c:if>
+					 	<c:if test="${list.childCnt != 0 }">
+					 		<button id="childList" class="btn btn-default" type="button" ><c:out value="${list.childCnt}개의 댓글"/></button>
+				 		</c:if>
+				 			<c:if test="${! empty fileHash[list.thrKey]}">
+				 				<c:set var="fl" value="${fileHash[list.thrKey] }"/>
+					 				<div class="card border-left-primary shadow h-50 py-1">
+				                                <div class="card-body" id="getFileDownloadURL" onclick="javascript:getFileDownloadURL(${fl.fileId})">
+				                                	<div id="fileIdInCard" style='display:none'>
+				                                		<c:out value="${fl.fileId}"/>
+				                                	</div>
+				                                    <div class="row no-gutters align-items-center">
+				                                        <div class="col mr-2">				                                            
+				                                            <div class="h6 mb-0 text-gray-800"><c:out value="${fl.fileName}"/></div>				                                            
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                     </div>
+				 			</c:if>
+				 			
+		   						 		
 				 	</div>					 	
 				 	</c:forEach>				    
 				</div>				
@@ -230,7 +248,7 @@
 		                    	<c:forEach var="fl" items="${fileHash}">
 		   						 	<a class="collapse-item">
 		   						 		<div class="card border-left-primary shadow h-100 py-2">
-			                                <div class="card-body" id="getFileDownloadURL">
+			                                <div class="card-body" id="getFileDownloadURL" onclick="javascript:getFileDownloadURL(${fl.value.fileId})">
 			                                	<div id="fileIdInCard" style='display:none'>
 			                                		<c:out value="${fl.value.fileId}"/>
 			                                	</div>

@@ -35,12 +35,17 @@ $("#ListingFileDownloadChLink").on("click", function(){
 	ListingFileDownloadChLink();
 })
 
-$("#getFileDownloadURL").on("click", function(){
+/* $("#getFileDownloadURL").on("click", function(){
 	var filekey = $(this).children("#fileIdInCard").text();
 	console.log(filekey);
 	getFileDownloadURL(filekey);
-})
-
+}) */
+/* $(document).on("click",$("#getFileDownloadURL2"),function(){
+	var filekey = $(this).children("#fileIdInCard").text();
+	console.log(filekey);
+	//getFileDownloadURL(filekey);
+	
+}); */
 
 function ListingFileDownloadThrKey(){
 	$.ajax({
@@ -94,7 +99,7 @@ function getFileDownloadURL(filekey){
 	        		var parseData = JSON.parse(data);
 					console.log("get download url success!");
 					console.log("parseData : " + parseData);
-
+					window.location.href=parseData;
 										
 	        	}  
 		});
