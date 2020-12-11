@@ -65,7 +65,7 @@ public class MainController {
 		ReminderVO reminderVO = new ReminderVO();
 		
 		ModelAndView mav = new ModelAndView();
-		
+		//채널 검색용 값 세팅
 		Search search = new Search();
 		Search chSearch = null;
 		List<ThreadVO> threadList = null;
@@ -74,6 +74,7 @@ public class MainController {
 		List<ThreadVO> pinThrList = null;
 		String wsLink = usersVO.getWs_link();
 		HashMap<String,UsersVO> userHash = null;
+		HashMap<String,FileVO> fileHash = null;
 		//첫번째 키 - 쓰레드키 
 		//두번째 키 - emoji
 		//값 -> 메시지(반응 갯수,간단 메시지 (a님,b님 외 n명 )) 
@@ -141,6 +142,16 @@ public class MainController {
 		    	}
 		    }
 		    
+		    //파일 처리 파트 . 해당 채널의 파일VO 불러옴
+		    FileVO searchFileVO = new FileVO();
+		    searchFileVO.setChLink(nowCh.getChLink());
+		    List<FileVO> fileList = fileService.doSelectListChLink(searchFileVO);
+		    //파일 해쉬 키: 쓰레드 키 , 값: 파일VO
+		    fileHash = new HashMap<String, FileVO>();
+		    
+		    for(FileVO vo:fileList) {
+		    	fileHash.put(vo.getThrKey(), vo);		    	
+		    }
 		}
 		
 		
@@ -191,6 +202,7 @@ public class MainController {
 			mav.addObject("uslist",userHash);
 			mav.addObject("pinList",pinThrList);
 			mav.addObject("reactHash",reactionHash);
+			mav.addObject("fileHash", fileHash);
 //			ChannelVO nowCh = null;
 //			List<UsersVO> uslist = null;
 		}

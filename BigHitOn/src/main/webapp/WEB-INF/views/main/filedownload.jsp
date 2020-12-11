@@ -36,8 +36,9 @@ $("#ListingFileDownloadChLink").on("click", function(){
 })
 
 $("#getFileDownloadURL").on("click", function(){
-	console.log("getFileDownloadURL clicked");
-	getFileDownloadURL();
+	var filekey = $(this).children("#fileIdInCard").text();
+	console.log(filekey);
+	getFileDownloadURL(filekey);
 })
 
 
@@ -80,14 +81,14 @@ function ListingFileDownloadChLink(){
 	
 }
 
-function getFileDownloadURL(){
+function getFileDownloadURL(filekey){
 	$.ajax({
 		type:'POST',
 		url:'${hContext}/file/doDownload.do',
 		dataType:"html",
         async: true,
         data:{
-			"fileId":$("#tmpfileId1").val()
+			"fileId":filekey
             },
         success:function(data){
 	        		var parseData = JSON.parse(data);

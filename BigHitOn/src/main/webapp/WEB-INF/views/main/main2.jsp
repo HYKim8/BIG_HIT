@@ -183,7 +183,8 @@
 		                       	         	
 		                    </div>
 	                	</div>
-	                	</li>	                	
+	                	</li>	
+	                	<!-- 고정 핀 -->                	
 	                	<li>
 	                	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chpins"
 		                    aria-expanded="true" aria-controls="collapseMem">
@@ -215,6 +216,43 @@
 		                    </div>
 	                	</div>
 	                	</li>
+	                	<!-- 고정 핀 end -->
+	                	<!-- 채널 파일  -->
+	                	<li>
+	                	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chfiles"
+		                    aria-expanded="true" aria-controls="collapseMem">
+		                    <i class="fas fa-fw fa-cog"></i>
+		                    <span>파일</span>
+		                </a>
+		                 <div id="chfiles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		                    <div class="bg-white py-2 collapse-inner rounded">
+		                    
+		                    	<c:forEach var="fl" items="${fileHash}">
+		   						 	<a class="collapse-item">
+		   						 		<div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body" id="getFileDownloadURL">
+			                                	<div id="fileIdInCard" style='display:none'>
+			                                		<c:out value="${fl.value.fileId}"/>
+			                                	</div>
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-s font-weight-bold text-gray">			                                            
+			                                                <c:out value="${uslist[fl.value.regId].name}"/></div>
+			                                            <div class="h5 mb-0 text-gray-800"><c:out value="${fl.value.fileName}"/></div>
+			                                            <div class="text-xs">			                                            
+			                                                <c:out value="${fl.value.regDt}"/></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+		   						 		
+		   						 	</a>
+								</c:forEach>
+		                       	         	
+		                    </div>
+	                	</div>
+	                	</li>
+	                	<!-- 채널 파일 end -->
                 	</ul>
 				</div>
 			</div>
