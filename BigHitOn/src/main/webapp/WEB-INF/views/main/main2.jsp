@@ -88,9 +88,11 @@
 					 		<button id="likeBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="좋아요"><i class="fa fa-thumbs-up"></i></div></button>
 					 		<button id="pinBtns" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="고정하기"><i class="fa fa-paperclip"></i></div></button>
 					 		<button data-toggle="modal" id="reminderInsertBtn" class="btn btn-default" type="button" data-target="#reminderInsertBtn1" ><div data-toggle="tooltip" data-placement="top" title="리마인더"><i class="fa fa-bell"></i></div></button>
-					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>
+					 		<button id="childList" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="댓글보기"><i class="fa fa-list-alt"></i></div></button>					 		
 					 		<c:if test="${sessionScope.usersVO.user_serial == list.regId}">
-					 		<button id="updateBtn" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="수정하기"><i class="fa fa-undo"></i></div></button>
+					 							 						 		
+					 		 <button id="updateBtn" class="btn btn-default" type="button" ><div data-toggle="tooltip" data-placement="top" title="수정하기"><i class="fas fa-edit"></i></div></button> 
+					 		 <button id="deleteBtn" class="btn btn-default" type="button"><div data-toggle="tooltip" data-placement="top" title="삭제하기"><i class="fas fa-trash-alt"></i></div></button>			
 					 		</c:if>
 					</div>	
 				 	<p  id ="updateForm">
@@ -902,8 +904,37 @@
 					}
 				});//--ajax 
 			});
-			//스레드 글 수정 부분
-		  
+
+			
+		 //스레드 삭제
+		   $(document).on("click","#deleteBtn",function(){
+				var deleteThrKey = $(this).parent().parent().children("#thrKey").text();
+
+				$.ajax({
+					type : "POST",
+					url : "${hContext}/thread/doDelete.do",
+					dataType : "html",
+					data : {
+							"thrKey" : deleteThrKey
+						   },
+						   success : function(data){
+							   var jsonObj = JSON.parse(data);
+							   console.log("msgContents="+jsonObj.msgContents);
+							   location.reload();
+							  
+							},
+							error : function(xhr, status, error) {
+								alert("error:" + error);
+							},
+							complete : function(data) {
+								
+							}								   
+					});
+				
+				});
+
+			
+			//스레드 글 수정 부분			
 		   $(function(){
 			$(document).on("click","#updateBtn",function(){ 
 					var updateThrKey = $(this).parent().parent().children("#thrKey").text();
@@ -911,16 +942,17 @@
 					
 					console.log(updateContent);
 					$(this).parent().parent().children("#updateForm").html("<input type='text' value='"+updateContent+"' id='editDo'>");
-					$(this).parent().parent().children("#editEnd").html("<button type='button' id='endUpdate' class='btn btn-default'><div data-toggle='tooltip' data-placement='top' title='수정완료'><i class='fa fa-undo'></i></div></button>");
-					//$(this).parent().parent().children("#exitUpdate").html("<button type='button' id='exitBtns' class='btn btn-default'><div data-toggle='tooltip' data-placement='top' title='나가기'><i class='fa fa-undo'></i></div></button>");	
-									
-				})
+					$(this).parent().parent().children("#editEnd").html("<button type='button' id='endUpdate' class='btn btn-default'><div data-toggle='tooltip' data-placement='top' title='수정완료'><i class='fas fa-check'></i></div></button>");
+					$(this).parent().parent().children("#editEnd").append("<button type='button' id='exitBtns' class='btn btn-default'><div data-toggle='tooltip' data-placement='top' title='나가기'><i class='fas fa-times'></i></div></button>");	
+					$(this).parent().parent().children("#editEnd").show();				
+				}) 
 			$(document).on("click","#endUpdate",function(){
 					//$("#subBtns").html("<button type='button' class='btn btn-default id='updateBtn'><div data-toggle='tooltip' data-placement='top' title='수정하기'><i class='fa fa-list-alt'></i></div></button>");
 					 $(this).parent().parent().children("#updateForm").text($("#editDo").val());
 					 var updateContent =  $(this).parent().parent().children("#updateForm").text();
 					 var updateThrKey = $(this).parent().parent().children("#thrKey").text();
-					
+					 $(this).parent().parent().children("#editEnd").hide();	
+					 
 					$.ajax({
 						type : "POST",
 						url : "${hContext}/thread/updateContents.do",
@@ -934,16 +966,20 @@
 									var jsonObj = JSON.parse(data);
 								    console.log("msgContents="+jsonObj.msgContents);
 								    location.reload();
+								  
 								},
 								error : function(xhr, status, error) {
 									alert("error:" + error);
 								},
 								complete : function(data) {
-
+									
 								}	
 						});
-									
-				});				
+							
+				});		
+			$(document).on("click","#exitBtns",function(){
+					location.reload();
+				});		
 		   });
 		   
 		 // 반응 버튼 (토글링) 
