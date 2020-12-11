@@ -1,5 +1,7 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
  <!-- Sidebar -->
+ <%@ include file="/WEB-INF/views/main/channeldelete.jsp" %>
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -68,6 +70,7 @@
             
 
             <!-- Nav Item - Pages Collapse Menu -->
+            <!-- channels -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMem"
                     aria-expanded="true" aria-controls="collapseMem">
@@ -83,6 +86,7 @@
    						 		<div id="channelLk" style="display: none"><c:out value="${ChannelVO.chLink}" /></div>
    						 	</a>
 						</c:forEach>
+   					
                        	
                         <a id="addChannelin" class="collapse-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
                                 + Add Channel
@@ -181,5 +185,12 @@
 			console.log("====="+tmp); */
 			window.location.href="${hContext}/main/index.do?searchWord="+"${ChannelVO.chLink}";						
 		});
+
+
+		$("#channelDelBtn").click(function(event) {
+			alert("chdel test");
+			 $("channel_btn").hide();		
+		});
+					
 
         </script>
