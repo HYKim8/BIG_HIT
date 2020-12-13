@@ -113,6 +113,7 @@
                     	<c:forEach var="ChannelVO" items="${channelListDM}">
    						 	<a class="collapse-item">#<c:out value="${ChannelVO.chName}" /></a>
 						</c:forEach>
+						
                         <a class="collapse-item" href="utilities-other.html" data-toggle="modal" data-target="#addteamModal">
                         	+ Add Teammates
                         </a>
