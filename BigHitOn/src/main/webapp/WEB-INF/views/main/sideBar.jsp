@@ -190,7 +190,7 @@
 
 		$("#channelDelBtn").click(function(event) {
 			alert("chdel test");
-			 $("channel_btn").hide();		
+			 $("#channel_btn").hide();		
 		});
 
 		//마우스우클릭
