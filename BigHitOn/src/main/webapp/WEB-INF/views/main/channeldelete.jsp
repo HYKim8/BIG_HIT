@@ -81,8 +81,8 @@ h1 {
 
 
 
-<ul class="contextmenu">
-  <li><a href="#" id = "channelDelBtn">채널 나가기</a></li>
+<ul class="contextmenu" id="channelDelBtn1">
+  	<li><a href="#" id = "channelDelBtn">채널나가기</a></li>
 </ul>
 
 <!-- Google Fonts -->
@@ -92,24 +92,11 @@ h1 {
 
 <script type="text/javascript">
 
-/*
-===============================================================
 
-Hi! Welcome to my little playground!
-
-My name is Tobias Bogliolo. 'Open source' by default and always 'responsive',
-I'm a publicist, visual designer and frontend developer based in Barcelona. 
-
-Here you will find some of my personal experiments. Sometimes usefull,
-sometimes simply for fun. You are free to use them for whatever you want 
-but I would appreciate an attribution from my work. I hope you enjoy it.
-
-===============================================================
-*/
-
-$(document).ready(function(){
+/* $(document).ready(function(){
   //Show contextmenu:
   $(document).contextmenu(function(e){
+	
     //Get window size:
     var winWidth = $(document).width();
     var winHeight = $(document).height();
@@ -155,7 +142,7 @@ $(document).ready(function(){
   $(document).click(function(){
     $(".contextmenu").hide();
   });
-});
+}); */
 
 </script>
 
