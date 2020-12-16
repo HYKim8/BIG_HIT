@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.cmn.DTO;
 import com.bighit.on.cmn.Search;
 import com.bighit.on.user.dao.UsersDaoImpl;
@@ -82,6 +83,26 @@ public class ChannelDaoImpl {
 		LOG.debug("=param=="+channelVO);
 		
 		int flag = sqlSessionTemplate.delete(statement,channelVO);
+		LOG.debug("-doDelete flag==" + flag);
+		
+		return flag;
+	}
+	
+	/**
+	 * 채널 나가기
+	 * @param channelVO
+	 * @return
+	 */
+	public int doDelete2(ChannelUsersVO channelUsersVO) {
+		LOG.debug("=====================");
+		LOG.debug("=doDelete=");
+		LOG.debug("=====================");
+		//삭제 : namespace+id = com.bighit.on.channel.doDelete
+		String statement = NAMESPACE +".doDelete2";
+		LOG.debug("=statement="+statement);
+		LOG.debug("=param=="+channelUsersVO);
+		
+		int flag = sqlSessionTemplate.delete(statement,channelUsersVO);
 		LOG.debug("-doDelete flag==" + flag);
 		
 		return flag;

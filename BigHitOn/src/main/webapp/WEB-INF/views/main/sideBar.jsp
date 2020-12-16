@@ -67,11 +67,11 @@
 			<!-- Divider -->
             <hr class="sidebar-divider">
 
-            
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- channels -->
             <li class="nav-item">
+            <input type='hidden' id='helloworld'>
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMem"
                     aria-expanded="true" aria-controls="collapseMem">
                     <i class="fas fa-fw fa-cog"></i>
@@ -189,17 +189,43 @@
 
 		//채널나가기 이벤트
 		$("#channelDelBtn").click(function(event) {
-			alert("chdel test");
-			 $("#channel_btn").hide();		
+			/* alert("chdel test"); */
+			 
+			 var chLinkToDelete = $("#helloworld").val();
+			 console.log("chLinkToDelete1:"+chLinkToDelete);	
+
+			 var result = confirm("채널을 나가시겠습니까?");
+			 if(!result){
+			 return;
+			 
+			 }
+			 
+			 $.ajax({
+	             type:"POST",
+	             url:"${hContext}/channel/doDelete2.do",
+	             dataType:"html", 
+	             data:{
+	                "chLink" : $("#helloworld").val(),
+				    "userSerial" : "${sessionScope.usersVO.user_serial }"
+	             },
+	             
+	             success:function(data){ //성공
+	            	 location.reload();
+	            
+	             }
+	           
+	         });//--ajax 
 		});
 
 		//마우스우클릭
 		$("#channelBtn").ready(function(){
 			  //Show contextmenu:
 			  $("#channelBtn").contextmenu(function(e){
-				  var test1 = $(this).parent().find('div').eq(0);
+				  var test1 = e.target.childNodes.item(1).textContent;
 				  var test2 = JSON.stringify(test1);
-				  console.log("test123:"+test2);
+				  console.log(test1);
+				  console.log("test1123:"+test2);
+				  document.getElementById('helloworld').value=test1;
 			    //Get window size:
 			    var winWidth = $(document).width();
 			    var winHeight = $(document).height();

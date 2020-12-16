@@ -7,6 +7,16 @@
 				WHERE is_used = 0
 				AND ROWNUM = 1
 	</select>
+	
+	<select id="doDelete2" parameterType="ChannelUsersVO">
+		<![CDATA[
+		DELETE
+		FROM channel_users
+		WHERE ch_link = #{chLink} and
+			  user_serial = #{userSerial}
+		]]>  		  
+	</select>
+	
 	<!-- 세션 유저 채널 목록조회 -->
 	<select id="chlistFromUser" parameterType="UsersVO" resultType="ChannelVO">
 		SELECT             

@@ -15,6 +15,12 @@ public class ChannelUsersVO extends DTO {
 		this.userSerial = userSerial;
 		this.notification = notification;
 	}
+	
+	public ChannelUsersVO(String chLink, String userSerial) {
+		super();
+		this.chLink = chLink;
+		this.userSerial = userSerial;
+	}
 
 	public String getChLink() {
 		return chLink;

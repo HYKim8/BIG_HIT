@@ -24,4 +24,5 @@ public interface ChannelService {
 	
 	public ChannelVO doSelectOne2(String wsLink);
 	
+	public int doDelete2(ChannelUsersVO channelUsersVO);
 }
