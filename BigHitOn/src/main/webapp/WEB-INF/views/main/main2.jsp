@@ -502,6 +502,7 @@
 					html += "</a>";
 
 					$("#addChannelin").before(html);
+					location.reload();
 				},
 				error : function() {
 					console.log("error");
