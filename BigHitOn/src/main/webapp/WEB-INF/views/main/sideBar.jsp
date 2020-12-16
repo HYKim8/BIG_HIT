@@ -81,7 +81,7 @@
                     <div class="bg-white py-2 collapse-inner rounded" id="channelBtn">
                     
                     	<c:forEach var="ChannelVO" items="${channelList}">
-   						 	<a class="collapse-item" type="button" id="channel_btn">
+   						 	<a class="collapse-item" type="button" id="channel_btn" >
    						 		<c:out value="${ChannelVO.chName}" />
    						 		<div id="channelLk" style="display: none"><c:out value="${ChannelVO.chLink}" /></div>
    						 	</a>
@@ -187,7 +187,7 @@
 			window.location.href="${hContext}/main/index.do?searchWord="+"${ChannelVO.chLink}";						
 		});
 
-
+		//채널나가기 이벤트
 		$("#channelDelBtn").click(function(event) {
 			alert("chdel test");
 			 $("#channel_btn").hide();		
@@ -197,7 +197,9 @@
 		$("#channelBtn").ready(function(){
 			  //Show contextmenu:
 			  $("#channelBtn").contextmenu(function(e){
-				
+				  var test1 = $(this).parent().find('div').eq(0);
+				  var test2 = JSON.stringify(test1);
+				  console.log("test123:"+test2);
 			    //Get window size:
 			    var winWidth = $(document).width();
 			    var winHeight = $(document).height();
