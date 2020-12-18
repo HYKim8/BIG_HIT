@@ -142,8 +142,8 @@
             success:function(data){//통신성공, data
 	        	//alert(data);
 	            var jsonData = JSON.parse(data);
-	            
-				if(data == true){
+	            console.log(data);
+				if(data=='true'){
 					pwCheck.innerHTML = "성공";
 				}else{
 					pwCheck.innerHTML = "영문자,숫자,특수문자를 적어도 한개 포함해야 합니다.";
