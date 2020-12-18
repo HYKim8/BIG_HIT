@@ -21,6 +21,7 @@ import com.bighit.on.channel.ChannelVO;
 import com.bighit.on.cmn.Message;
 import com.bighit.on.cmn.Search;
 import com.bighit.on.thread.ThreadVO;
+import com.bighit.on.workspace.WorkSpaceController;
 import com.bighit.on.workspace.WorkSpaceService;
 import com.bighit.on.workspace.WorkSpaceVO;
 import com.google.gson.Gson;
@@ -59,6 +60,9 @@ public class UsersController {
 		
 		HttpSession session =  req.getSession();
 		session.setAttribute("usersVO", sessionUser);
+		
+		
+//		session.setAttribute("workspaceVO", session.getAttribute("WorkSpaceVO"));
 //		int flag = this.usersService.emailCheck(usersVO);
 //		if(1==flag) {
 //			

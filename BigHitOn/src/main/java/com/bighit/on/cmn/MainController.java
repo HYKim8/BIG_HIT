@@ -63,7 +63,12 @@ public class MainController {
 		UsersVO usersVO = new UsersVO();
 		usersVO = (UsersVO) session.getAttribute("usersVO");
 		ReminderVO reminderVO = new ReminderVO();
+		WorkSpaceVO ws = new WorkSpaceVO();
+		ws.setWsLink(usersVO.getWs_link());
 		
+		ws = workSpaceService.doSelectOne(ws);
+		
+		boolean isReg = usersVO.getUser_serial().equals(ws.getRegId());
 		ModelAndView mav = new ModelAndView();
 		//채널 검색용 값 세팅
 		Search search = new Search();
@@ -194,6 +199,7 @@ public class MainController {
 		mav.addObject("channelList", channelList);
 		mav.addObject("channelListDM", channelListDM);
 		mav.addObject("reminderList", reminderList);
+		mav.addObject("isReg",isReg);
 		if(chSearch!=null )
 		{
 			mav.addObject("searchVO",chSearch);
@@ -220,9 +226,12 @@ public class MainController {
 		String workLink= toWsLink;
 		String email = usersVO.getEmail();
 		usersVO=usersService.doSelectOne(workLink, email);
+		ChannelVO channelVO = channelService.doSelectOne2(workLink);
 		session.setAttribute("usersVO", usersVO);
+		session.setAttribute("channelVO", channelVO);
 		LOG.debug("==userVO=="+usersVO);
-		return "main/main2";
+		LOG.debug("==channelVO123123=="+session.getAttribute("channelVO"));
+		return channelVO.getChLink();
 	}
 	
 	@RequestMapping(value = "main/addchannel.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")

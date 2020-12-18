@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.bighit.on.channelusers.ChannelUsersVO;
 import com.bighit.on.cmn.DTO;
 import com.bighit.on.cmn.Search;
 import com.bighit.on.user.dao.UsersDaoImpl;
@@ -88,6 +89,26 @@ public class ChannelDaoImpl {
 	}
 	
 	/**
+	 * 채널 나가기
+	 * @param channelVO
+	 * @return
+	 */
+	public int doDelete2(ChannelUsersVO channelUsersVO) {
+		LOG.debug("=====================");
+		LOG.debug("=doDelete=");
+		LOG.debug("=====================");
+		//삭제 : namespace+id = com.bighit.on.channel.doDelete
+		String statement = NAMESPACE +".doDelete2";
+		LOG.debug("=statement="+statement);
+		LOG.debug("=param=="+channelUsersVO);
+		
+		int flag = sqlSessionTemplate.delete(statement,channelUsersVO);
+		LOG.debug("-doDelete flag==" + flag);
+		
+		return flag;
+	}
+	
+	/**
 	 * 채널 단건조회
 	 * @param chLink
 	 * @return
@@ -109,6 +130,30 @@ public class ChannelDaoImpl {
 		return outVO;
 		
 	}
+	
+	/**
+	 * 채널'일반' 단건조회
+	 * @param chLink
+	 * @return
+	 */
+	public ChannelVO doSelectOne2(String wsLink) {
+//		LOG.debug("=====================");
+//		LOG.debug("=doSelectOne=");
+//		LOG.debug("=====================");	
+//		
+//		//단건조회 : namespace+id = com.bighit.on.channel.doSelectOne		
+//		String statement = NAMESPACE +".doSelectOne2";
+//		LOG.debug("=statement="+statement);
+//		LOG.debug("=param=="+wsLink);
+//		
+//		Object args[] = {wsLink};
+//		ChannelVO outVO = sqlSessionTemplate.selectOne( NAMESPACE +".doSelectOne2",wsLink);
+//		LOG.debug("=doSelectOne outVO="+outVO);
+//		
+		return sqlSessionTemplate.selectOne( NAMESPACE +".doSelectOne2",wsLink);
+		
+	}
+	
 	
 	/**
 	 * 채널 리스트

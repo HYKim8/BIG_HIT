@@ -71,4 +71,16 @@ public class ChannelServiceImpl implements ChannelService {
 		// TODO Auto-generated method stub
 		return channelDao.doSelectList(search);
 	}
+
+	@Override
+	public ChannelVO doSelectOne2(String wsLink) {
+		// TODO Auto-generated method stub
+		return channelDao.doSelectOne2(wsLink);
+	}
+
+	@Override
+	public int doDelete2(ChannelUsersVO channelUsersVO) {
+		// TODO Auto-generated method stub
+		return channelDao.doDelete2(channelUsersVO);
+	}
 }
