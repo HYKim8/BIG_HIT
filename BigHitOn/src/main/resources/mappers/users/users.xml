@@ -6,9 +6,15 @@
 		SELECT COUNT(*) 
 		FROM  users
 		WHERE email = #{email,jdbcType=VARCHAR}
-		AND ws_link = #{ws_link}
+		AND ws_link = #{ws_link,jdbcType=VARCHAR}
 	</select>
 	
+	<select id="pwCheck" parameterType="UsersVO" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM users
+		WHERE email = #{email,jdbcType=VARCHAR}
+		AND password = #{password,jdbcType=VARCHAR}
+	</select>
 
 	<select id="getNowKey" resultType="string">
 		SELECT serial_key
@@ -21,7 +27,7 @@
 	<select id="doSelectListFromWs" parameterType="WorkSpaceVO" resultType="UsersVO">
 		SELECT *                                   
 		FROM users                                    
-		WHERE ws_link = #{wsLink}  
+		WHERE ws_link = #{wsLink,jdbcType=VARCHAR}  
 	</select>
 	
 	<!-- list 조회(채널에 소속된 유저들)-->
@@ -31,8 +37,9 @@
 		FROM users                                         
 		JOIN channel_users                                 
 		ON users.user_serial = channel_users.user_serial   
-		AND channel_users.ch_link = #{chLink}  
+		AND channel_users.ch_link = #{chLink,jdbcType=VARCHAR}  
 	</select>
+	
 	
 	<!-- 단건조회 -->
 	<!-- com.bighit.on.users.doSelectOne -->
@@ -75,8 +82,8 @@
 		    reg_dt,
 		    thumb            
 		FROM users            
-		WHERE ws_link = #{ws_link} 
-		AND email = #{email}
+		WHERE ws_link = #{ws_link, jdbcType=VARCHAR} 
+		AND email = #{email,jdbcType=VARCHAR}
 	
 	</select>
 	
@@ -102,7 +109,7 @@
 	<!-- com.bighit.on.users.doDelete -->
 	<delete id="doDelete" parameterType="UsersVO">
 		DELETE FROM users      
-		WHERE user_serial = #{user_serial}  
+		WHERE user_serial = #{user_serial,jdbcType=VARCHAR}  
 	</delete>
 	
 	<!-- 입력 -->

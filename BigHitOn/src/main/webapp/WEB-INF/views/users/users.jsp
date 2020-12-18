@@ -90,7 +90,7 @@
       </div>
     </div>
 </div>
-
+	<!-- commit test -->
 	 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
@@ -99,13 +99,22 @@
 	
 		$("#doSignUp").on("click", function(){
 
-			if($("#name").val().length < 5 || $("#name").val().length > 80) {
-				alert("이름은 4자 이상 80자 이하로 입력해주세요.");
+			if($("#name").val().length < 2) {
+				alert("이름은 2글자부터 가능합니다. 다시 입력해주세요.");
 				return ;
 			}
 
-			if($("#password").val().length < 5 || $("#password").val().length > 80) {
-				alert("비밀번호는 4자 이상 80자 이하로 입력해주세요.");
+			if($("#name").val().length >80){
+				alert("이름은 80자를 넘어갈 수 없습니다. 다시 입력해주세요.");
+			}
+
+			if($("#password").val().length < 2) {
+				alert("비밀번호는 2글자부터 가능합니다. 다시 입력해주세요.");
+				return ;
+			}
+
+			if($("#password").val().length > 80) {
+				alert("비밀번호는 80자 이하로 입력해주세요.");
 				return ;
 			}
 
