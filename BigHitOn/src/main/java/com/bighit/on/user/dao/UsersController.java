@@ -53,7 +53,15 @@ public class UsersController {
 		int flag = this.usersService.pwCheck(usersVO);
 		LOG.debug("===========doLogin==========");
 		LOG.debug("usersVO:"+usersVO);
+		//수정 부분 세션 넣었음 문제는 dosignup하고 세션이름이 같음
+		UsersVO sessionUser = this.usersService.doSelectOne(usersVO.getWs_link(),usersVO.getEmail());
+		LOG.debug("=======================");
+		LOG.debug("=sessionUser=="+sessionUser);
+		LOG.debug("=======================");
 		
+		HttpSession session =  req.getSession();
+		session.setAttribute("usersVO", sessionUser);
+		//여기까지
 		return flag;
 	      
 	}

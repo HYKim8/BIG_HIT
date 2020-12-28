@@ -67,7 +67,7 @@ public class MainController {
 		ws.setWsLink(usersVO.getWs_link());
 		
 		ws = workSpaceService.doSelectOne(ws);
-		
+		LOG.debug("--ws----"+ws);
 		boolean isReg = usersVO.getUser_serial().equals(ws.getRegId());
 		ModelAndView mav = new ModelAndView();
 		//채널 검색용 값 세팅
@@ -109,9 +109,10 @@ public class MainController {
 		    
 		    //채널 유저정보들 처리 파트
 		    
-		    WorkSpaceVO workSpaceVO = new WorkSpaceVO();
-			workSpaceVO.setWsLink(wsLink);
-			List<UsersVO> userList = usersService.doSelectList(workSpaceVO);
+		    //이부분 고침 위에 ws가 있어서 겹쳐서 밑에 List<UserVO>부분 끝에 ws로 바꿈 원래는 workSpaceVO 였음
+		    //WorkSpaceVO workSpaceVO = new WorkSpaceVO();
+			//workSpaceVO.setWsLink(wsLink);
+			List<UsersVO> userList = usersService.doSelectList(ws);
 			userHash = new HashMap<String,UsersVO>();
 			for (UsersVO vo : userList) {
 				if (null == vo.getThumb()) 

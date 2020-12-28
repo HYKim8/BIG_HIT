@@ -227,7 +227,8 @@
                   var html = "";
                   for(var i=0;i<list.length;i++){
                     html += '<tr>';
-        
+                    //wslink넣어서 데이터값 보내기함 화면에는 안보이게 none으로 함
+                    html += '<td id=\'wslink\' style="display:none;">'+ list[i].wsLink+'</td>';
                     html += '<td >'+ list[i].wsName+'</td>';
                     //<button class=\'btn btn-primary btn-lg btn-block\' id=\'myWsBtn\' value=\'실행\' />
                     html += "<td> <button type= \'button\' class =\'btn btn-primary btn-md btn-block\' id=\'myWsBtn\'> " + "실행" +"</button></td>"
@@ -263,7 +264,7 @@
 			
 			},
 		success : function(data){
-			var jsonData = JSON.parse(data);			
+			var jsonData = JSON.parse(data);
 			window.location.href="${hContext}/main/index.do"
 		},
 		complete:function(data){
