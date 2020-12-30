@@ -4,123 +4,133 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set> 
 <%@page import="com.bighit.on.user.dao.UsersVO" %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-<title>users</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
- <meta name="author" content="Creative Tim">
- <link rel="icon" href="${hContext}/resources/img/favicon.ico" type="image/x-icon">
- <!-- Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-<!-- Icons -->
-<link rel="stylesheet" href="${hContext}/resources/css/nucleo.css" type="text/css">
-<link rel="stylesheet" href="${hContext}/resources/css/all.min.css" type="text/css">
-<!-- Argon CSS -->
-<link rel="stylesheet" href="${hContext}/resources/css/argon.css" type="text/css">
-
-<title>users Login page</title>
-
+	<title>Sign up_ON</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="${hContext}/resources/img/favicon2.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/util.css">
+	<link rel="stylesheet" type="text/css" href="${hContext}/resources/css/main.css">
+<!--===============================================================================================-->
 </head>
-<body class="bg-white">
-<div class="main-content">
-    <div class="header bg-white py-7 py-lg-8 pt-lg-9">
-      <div class="container">
-        
-      </div>
-    </div>
-	 <!-- Page content -->
-    <div class="container mt--8 pb-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
-          <div class="card bg-white mb-0">
-            <div class="card-header bg-light pb-5">
-              <div class="text-muted text-center mt-2 mb-3"><h1>On에 로그인</h1></div>
-              <div class="btn-wrapper btn-block text-center">
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="${hContext}/resources/img/google.svg"></span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
-              </div>
-            </div>
-            <div class="card-body px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
-                <small>또는</small>
-              </div>
-			  
-              <form role="form" action="${hContext}/users/loginView.do">
-              	<input type="hidden" id="ws_link" name="ws_link" value="${usersVO.getWs_link()}">
-                <div class="form-group mb-3">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <input class="form-control" placeholder="name@work-email.com" type="email" name="email" id="email">
-                  </div>                   
-                </div>                
 
-           
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary my-4" id="doLogin">이메일로 로그인</button>
-                </div>
-               
-               
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form-title" style="background-image: url(${hContext}/resources/img/bg-01.jpg);">
+					<span class="login100-form-title-1">
+						워크스페이스에 참여
+					</span>
+				</div>
 
+				<form class="login100-form validate-form" action="${hContext}/users/signUpView.do">
+					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+						<span class="label-input100">Username</span>
+						<input class="input100" type="email" name="name" id="name" placeholder="사용자 이름을 입력하세요">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password"  name="password" id="password" oninput="pwAvailCheck(password,value)" placeholder="고유한 비밀번호를 입력하세요">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="flex-sb-m w-full p-b-30">
+							<p id="pwCheck" ></p>   
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button type="button" id="doCreate" class="login100-form-btn">
+							참여하기
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-	
-		$("#doLogin").on("click", function(){
-
-			if($("#email").val()=="" || $("#email").val()==false ) {
-				alert("유효한 이메일이 아닙니다");
-				return ;
-			}
-
-			if(confirm("로그인 하시겠습니까?") == false)return;
-
-			$.ajax({
-				type:"POST",
-	            url:"${hContext}/users/doLogin.do",
-	            dataType:"html",
-				data:{
-				"email":$("#email").val().trim()
-				},
-			success : function(data){
-				var jsonData = JSON.parse(data);
-				
-				window.location.href="${hContext}/main/main.do"
+	$("#doCreate").on("click", function(){
+		var name = $('#name').val();
+		var password = $('#password').val();
+		if(null == name || name == false ) {
+			alert("이름을 입력해주세요.");
+			return ;
+		}
+		if(null == password || password == false ) {
+			alert("비밀번호를 입력해주세요.");
+			return ;
+		}
+		if(confirm("새 워크스페이스에 참여하시겠습니까?") == false)return;
+		$.ajax({
+			type:"POST",
+            url:"${hContext}/users/doLogin.do",
+            dataType:"html",
+			data:{
+			"name":name.trim(),
+			"password":password.trim()
 			},
-			complete:function(data){
-	             
-            },
-            error:function(xhr,status,error){
-                alert("error:"+error);
-            }
-
-			});
-
+		success : function(data){
+			var jsonData = JSON.parse(data);
+			window.location.href="${hContext}/main/main.do"
+		},
+		complete:function(data){
+        },
+        error:function(xhr,status,error){
+            alert("error:"+error);
+        }
 		});
-
-		
-
-	
+	});
+	function pwAvailCheck(pw){
+		$.ajax({
+			type:"POST",
+            url:"${hContext}/users/pwAvailCheck.do",
+            dataType:"html", 
+            data:{
+                 "password" :$("#password").val()  
+            },
+            success:function(data){//통신성공, data
+	        	//alert(data);
+	            var jsonData = JSON.parse(data);
+	            console.log("data: "+data);
+				if(data == 'true'){
+					pwCheck.innerHTML = "비밀번호로 사용가능합니다.";
+					pwCheck.style.color= "black";
+				}else{
+					pwCheck.innerHTML = "영문자,숫자,특수문자를 적어도 한개 포함해야 합니다.";
+					pwCheck.style.color= "blue";
+					}
+	        },
+	        error:function(xhr,status,error){
+	        },
+	        complete:function(data){
+	        }
+		});
+	}
 	</script>	
-
-
 </body>
 </html>
-
