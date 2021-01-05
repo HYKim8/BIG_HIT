@@ -130,7 +130,7 @@
 		}
 		if(wsName.trim().length<=2) {
 			$('#wsName').focus();
-			alert("워크스페이스 이름이 짧습니다. 다시 입력해주세요.");
+			alert("워크스페이스 이름이 짧습니다. 3자이상 입력해주세요.");
 			return;
 		}	
 		$('a[href="#pjNM"]').tab('show');
@@ -147,7 +147,7 @@
 		}
 		if(project.trim().length<=2){
 			$('#project').focus();
-			alert("프로젝트 이름이 짧습니다. 다시 입력해주세요.");
+			alert("프로젝트 이름이 짧습니다. 3자이상 입력해주세요.");
 			return;
 		}
 		$('a[href="#addT"]').tab('show');
@@ -175,6 +175,7 @@
 			      "email": $("#email").val()
 		    },
 		    success:function(data){ //성공
+		    	alert("이메일을 보냈습니다.");
 		    	$('a[href="#complete"]').tab('show');		       
 		    },
 		    error:function(xhr,status,error){
@@ -200,14 +201,13 @@
 		          "regId" : "${sessionScope.usersVO.user_serial}"
 		    },
 		    success:function(data){ //성공
-		    	alert("=====");
+		    	alert("워크스페이스 생성 완료!");
 		    	 //json 분리해서 변수
 			       var jsonObj = JSON.parse(data);
 			       console.log("msgId="+jsonObj.regId);
 			       console.log("msgContents="+jsonObj.msgContents);
 			    
 			       if(null !=jsonObj && jsonObj.regId=="1"){
-			    	   alert(jsonObj.msgContents);
 			    	   window.location.href="${hContext}/main/index.do";
 			       }
 		    },		       

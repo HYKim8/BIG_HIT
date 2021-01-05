@@ -695,10 +695,11 @@
 				    	
 				    if(null !=jsonObj && jsonObj.regId=="1"){
 				    	console.log("data="+data);
-				    	alert(jsonObj.msgContents);			    	
+				    	alert("이미 참여되어있는 유저입니다.");
+				    			    	
 					}
 				    else if(null !=jsonObj && jsonObj.regId=="0"){
-				    	alert(jsonObj.msgContents);				    	
+				    	alert("메일을 보냈습니다.");					    	
 					}
 				},
 				error : function(xhr, status, error) {
