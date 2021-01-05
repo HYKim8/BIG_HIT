@@ -18,7 +18,7 @@
 			<li class="nav-item active">
                 <a class="nav-link" href="${hContext}/workspace/teamUserAdd_view.do">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>WorkSpace Create</span>
+                    <span>워크스페이스 생성</span>
                 </a>
             </li>
 			
@@ -30,7 +30,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMes"
                     aria-expanded="true" aria-controls="collapseMes">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>WorkSpace transform</span>
+                    <span>워크스페이스 전환</span>
                 </a>
                 <div id="collapseMes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded" id="workspacetfBtn">                    
@@ -52,7 +52,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="${hContext }/main/storedThread.do">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Stored Thread</span></a>
+                    <span>저장된 항목</span></a>
             </li>
             
             <!-- Divider -->
@@ -61,7 +61,7 @@
 			<li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Mentions & reactions</span></a>
+                    <span>멘션 및 반응</span></a>
             </li>
 
 			<!-- Divider -->
@@ -75,7 +75,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMem"
                     aria-expanded="true" aria-controls="collapseMem">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Channels</span>
+                    <span>채널</span>
                 </a>
                 <div id="collapseMem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded" id="channelBtn">
@@ -89,7 +89,7 @@
    					
                        	
                         <a id="addChannelin" class="collapse-item" href="#" data-toggle="modal" data-target="#channelcreateModal">
-                                + Add Channel
+                                + 채널 추가
                         </a>
                         
                                       	
@@ -105,7 +105,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMessage"
                     aria-expanded="true" aria-controls="collapseMessage">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Direct Message</span>
+                    <span>다이렉트 메시지</span>
                 </a>
                 <div id="collapseMessage" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -115,7 +115,7 @@
 						</c:forEach>
 						
                         <a class="collapse-item" href="utilities-other.html" data-toggle="modal" data-target="#addteamModal">
-                        	+ Add Teammates
+                        	+ 팀원 추가
                         </a>
                     </div>
                 </div>
