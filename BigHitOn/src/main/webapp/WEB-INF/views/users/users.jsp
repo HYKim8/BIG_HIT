@@ -68,9 +68,9 @@
                 </div>
                 <p class="text-lead text-gray"><small> 비번</small> </p>
                 <div class="form-group">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    
-                    <input class="form-control" placeholder="고유한 비밀번호" type="password" name="password" id="password">
+                  <div class="input-group input-group-merge input-group-alternative">                    
+                    <input class="form-control" placeholder="고유한 비밀번호" type="password" name="password" id="password" oninput="pwAvailCheck(password,value)">
+                  	<p id="pwCheck"></p>
                   </div>
                 </div>
                 <div class="text-center">
@@ -152,7 +152,33 @@
 		});
 
 		
+		function pwAvailCheck(pw){
+			$.ajax({
+				type:"POST",
+	            url:"${hContext}/users/pwAvailCheck.do",
+	            dataType:"html", 
+	            data:{
+	                 "password" :$("#password").val()  
+	            },
+	            success:function(data){//통신성공, data
+		        	//alert(data);
+		            var jsonData = JSON.parse(data);
+		            console.log(data);
+					if(data=='true'){
+						pwCheck.innerHTML = "성공";
+					}else{
+						pwCheck.innerHTML = "영문자,숫자,특수문자를 적어도 한개 포함해야 합니다.";
+						}
 
+		        },
+		        error:function(xhr,status,error){
+		        	
+		        },
+		        complete:function(data){
+		        	
+		        }
+			});
+		}
 	
 	</script>	
 

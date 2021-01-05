@@ -91,7 +91,7 @@ public class UsersController {
 		model.addAttribute("usersVO", user);
 		LOG.debug("=user=="+user);
 		
-		return "users/signup";
+		return "users/users";
 	}
 	
 	@RequestMapping(value="users/doSignUp.do", method = RequestMethod.POST)
