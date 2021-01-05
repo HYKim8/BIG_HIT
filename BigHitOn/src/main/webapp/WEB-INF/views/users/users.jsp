@@ -70,8 +70,9 @@
                 <div class="form-group">
                   <div class="input-group input-group-merge input-group-alternative">                    
                     <input class="form-control" placeholder="고유한 비밀번호" type="password" name="password" id="password" oninput="pwAvailCheck(password,value)">
-                  	<p id="pwCheck"></p>
+                  	
                   </div>
+                  <p id="pwCheck"></p>
                 </div>
                 <div class="text-center">
                   <button type="button" class="btn btn-primary my-4" id="doSignUp">Sign up</button>

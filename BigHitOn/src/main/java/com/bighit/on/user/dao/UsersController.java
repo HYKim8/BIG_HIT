@@ -119,10 +119,13 @@ public class UsersController {
 //			message.setMsgContents("회원가입 성공.");
 //		}
 		String key = this.usersService.doGetKey();
-		int sessionUser = this.usersService.doInsert(usersVO);
+		int flag = this.usersService.doInsert(usersVO);
 		LOG.debug("=======================");
-		LOG.debug("=sessionUser=="+sessionUser);
+		LOG.debug("=sessionUser flag=="+flag);
 		LOG.debug("=======================");
+		
+		message.setRegId(flag+"");
+		message.setMsgContents(flag == 1 ? "회원가입 성공" : "회원가입 실패"); 
 		
 		HttpSession session =  req.getSession();
 		session.setAttribute("usersVO", this.usersService.doSelectOne(key));
