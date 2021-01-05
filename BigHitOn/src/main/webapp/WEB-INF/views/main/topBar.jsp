@@ -74,22 +74,22 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" data-toggle="modal" data-target="#profileOpenModal1" id="profileOpenModal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    프로필
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    환경설정
                                 </a>
                                 <c:if test="${isReg}"> 
                                 <a class="dropdown-item" data-toggle="modal" data-target="#workspaceDeleteModal1">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-									 workspace delete
+									 워크스페이스 삭제
                                 </a>
                                 </c:if> 
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    로그아웃
                                 </a>
                             </div>
                         </li>
