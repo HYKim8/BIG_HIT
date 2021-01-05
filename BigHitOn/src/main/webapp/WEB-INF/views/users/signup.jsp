@@ -97,12 +97,14 @@
 	            url:"${hContext}/users/doLogin.do",
 	            dataType:"html",
 				data:{
+					//wslink데이터 넣었음
+				"ws_link":"${sessionScope.usersVO.ws_link }",
 				"email":$("#email").val().trim()
 				},
 			success : function(data){
 				var jsonData = JSON.parse(data);
 				
-				window.location.href="${hContext}/main/main.do"
+				window.location.href="${hContext}/main/index.do"
 			},
 			complete:function(data){
 	             
