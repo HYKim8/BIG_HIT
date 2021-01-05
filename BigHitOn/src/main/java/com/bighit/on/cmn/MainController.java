@@ -257,12 +257,33 @@ public class MainController {
 	    ChannelUsersVO channelUsersVO = new ChannelUsersVO();
 	    // 클라이언트 2명이 동시에 만들면 유령 채널이 생기지 않을까?
 	    String tmpKey = channelDao.doGetKey();
-	    channelUsersVO.setChLink(tmpKey);
-	    channelUsersVO.setUserSerial(User_serial);
-	    channelUsersVO.setNotification(1);
+	    
+	    //여기서부터 주석 처리 수정
+	    //channelUsersVO.setChLink(tmpKey);
+	    //channelUsersVO.setUserSerial(User_serial);
+	    //channelUsersVO.setNotification(1);
+	    //여기까지 주석 처리 수정
 	    
 	    channelService.doInsert(channelVO);
-	    channelUsersService.doInsert(channelUsersVO);
+	    
+	    //여기서부터 주석 처리 수정
+	    //channelUsersService.doInsert(channelUsersVO);
+	    
+	    //채널추가시 현재 워크스페이스 소속멤버들도 채널추가되게 완료함
+	    WorkSpaceVO workspaceVO=new WorkSpaceVO();
+	    workspaceVO.setWsLink(wsLink);
+	    List<UsersVO> UsersList = usersService.doSelectList(workspaceVO);
+	    UsersList.get(0).getUser_serial();
+	    LOG.debug("------UsersList.size()----"+UsersList.size()); 
+	    LOG.debug("------UsersList==----"+UsersList);
+	    for(int i = 0; i<UsersList.size(); i++) {
+	    	LOG.debug("------UsersList.get(0).getUser_serial()==----"+UsersList.get(i).getUser_serial());
+	    	channelUsersVO.setChLink(tmpKey);
+		    channelUsersVO.setUserSerial(UsersList.get(i).getUser_serial());
+		    channelUsersVO.setNotification(1);
+		    channelUsersService.doInsert(channelUsersVO);
+	    }
+	    //채널추가시 현재 워크스페이스 소속멤버들도 채널추가되게 완료함
 	    
 	    Gson gson = new Gson();
     	String json = gson.toJson(channelVO);
