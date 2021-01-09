@@ -59,7 +59,7 @@
             <hr class="sidebar-divider my-0">
 
 			<li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.do">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>멘션 및 반응</span></a>
             </li>
